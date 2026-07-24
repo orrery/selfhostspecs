@@ -1,0 +1,29 @@
+{
+  "name": "Vaultwarden",
+  "slug": "vaultwarden",
+  "category": "security",
+  "website": "https://github.com/dani-garcia/vaultwarden",
+  "repo": "https://github.com/dani-garcia/vaultwarden",
+  "description": "Lightweight Bitwarden-compatible password manager server in Rust.",
+  "status": "pending-verification",
+  "specs": {
+    "no_official_figure": {
+      "fields": ["ram_min_mb", "ram_rec_mb", "cpu_min_cores"],
+      "evidence_url": "https://github.com/dani-garcia/vaultwarden/discussions/5075"
+    }
+  },
+  "deps": [
+    { "service": "none", "required": false, "source_url": "https://github.com/dani-garcia/vaultwarden/wiki" }
+  ],
+  "docker": {
+    "image": "vaultwarden/server",
+    "size_mb": null,
+    "arches": [],
+    "source_url": "https://hub.docker.com/r/vaultwarden/server",
+    "retrieved": null
+  },
+  "sources_of_truth": [
+    "https://github.com/dani-garcia/vaultwarden/wiki",
+    "https://github.com/dani-garcia/vaultwarden/discussions/5075"
+  ]
+}

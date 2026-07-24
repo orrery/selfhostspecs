@@ -1,0 +1,37 @@
+name: Analytics snapshot
+
+# Cloud agent runs can't reach goatcounter.com directly (egress policy) — so we snapshot
+# stats into the repo daily; ANALYZE reads files, not networks. Requires the
+# GOATCOUNTER_TOKEN secret (owner adds it after creating the GoatCounter site).
+
+on:
+  schedule:
+    - cron: "7 21 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Snapshot GoatCounter stats
+        env:
+          TOKEN: ${{ secrets.GOATCOUNTER_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then echo "GOATCOUNTER_TOKEN not set yet — skipping"; exit 0; fi
+          mkdir -p reports/stats
+          curl -sf -H "Authorization: Bearer $TOKEN" \
+            "https://selfhostspecs.goatcounter.com/api/v0/stats/hits" > reports/stats/hits.json
+          curl -sf -H "Authorization: Bearer $TOKEN" \
+            "https://selfhostspecs.goatcounter.com/api/v0/stats/total" > reports/stats/total.json
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > reports/stats/updated-at.txt
+      - name: Commit snapshot
+        run: |
+          git config user.name "stats-snapshot"
+          git config user.email "actions@users.noreply.github.com"
+          git add reports/stats || true
+          git diff --cached --quiet || git commit -m "stats: daily snapshot"
+          git push

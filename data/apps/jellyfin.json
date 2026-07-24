@@ -1,0 +1,35 @@
+{
+  "name": "Jellyfin",
+  "slug": "jellyfin",
+  "category": "media",
+  "website": "https://jellyfin.org",
+  "repo": "https://github.com/jellyfin/jellyfin",
+  "description": "Free media server for movies, TV, and music — no accounts, no tracking.",
+  "status": "pending-verification",
+  "specs": {
+    "ram_rec_mb": {
+      "value": 8192,
+      "source_url": "https://jellyfin.org/docs/general/administration/hardware-selection/",
+      "quote": "at least 8GB is recommended ... For a Linux server without a GUI, 4GB may be enough",
+      "retrieved": "2026-07-24",
+      "scope": "general server; docs explicitly avoid hard minimums"
+    },
+    "no_official_figure": {
+      "fields": ["ram_min_mb", "cpu_min_cores"],
+      "evidence_url": "https://jellyfin.org/docs/general/administration/hardware-selection/"
+    }
+  },
+  "deps": [
+    { "service": "ffmpeg", "required": true, "source_url": "https://jellyfin.org/docs/general/administration/hardware-selection/" }
+  ],
+  "docker": {
+    "image": "jellyfin/jellyfin",
+    "size_mb": null,
+    "arches": [],
+    "source_url": "https://hub.docker.com/r/jellyfin/jellyfin",
+    "retrieved": null
+  },
+  "sources_of_truth": [
+    "https://jellyfin.org/docs/general/administration/hardware-selection/"
+  ]
+}

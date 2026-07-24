@@ -1,0 +1,53 @@
+{
+  "name": "Immich",
+  "slug": "immich",
+  "category": "photos",
+  "website": "https://immich.app",
+  "repo": "https://github.com/immich-app/immich",
+  "description": "Self-hosted photo and video backup with machine-learning search.",
+  "status": "pending-verification",
+  "specs": {
+    "ram_min_mb": {
+      "value": 6144,
+      "source_url": "https://docs.immich.app/install/requirements/",
+      "quote": "Minimum 6GB, recommended 8GB",
+      "retrieved": "2026-07-24",
+      "scope": "Docker, general installation"
+    },
+    "ram_rec_mb": {
+      "value": 8192,
+      "source_url": "https://docs.immich.app/install/requirements/",
+      "quote": "Minimum 6GB, recommended 8GB",
+      "retrieved": "2026-07-24",
+      "scope": "Docker, general installation"
+    },
+    "cpu_min_cores": {
+      "value": 2,
+      "source_url": "https://docs.immich.app/install/requirements/",
+      "quote": "Minimum 2 cores, recommended 4 cores",
+      "retrieved": "2026-07-24",
+      "scope": "Docker, general installation"
+    },
+    "cpu_rec_cores": {
+      "value": 4,
+      "source_url": "https://docs.immich.app/install/requirements/",
+      "quote": "Minimum 2 cores, recommended 4 cores",
+      "retrieved": "2026-07-24",
+      "scope": "Docker, general installation"
+    }
+  },
+  "deps": [
+    { "service": "postgresql", "required": true, "source_url": "https://docs.immich.app/install/requirements/" },
+    { "service": "redis", "required": true, "source_url": "https://docs.immich.app/install/requirements/" }
+  ],
+  "docker": {
+    "image": "ghcr.io/immich-app/immich-server",
+    "size_mb": null,
+    "arches": [],
+    "source_url": "https://github.com/immich-app/immich/pkgs/container/immich-server",
+    "retrieved": null
+  },
+  "sources_of_truth": [
+    "https://docs.immich.app/install/requirements/"
+  ]
+}

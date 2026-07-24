@@ -1,0 +1,29 @@
+{
+  "name": "Uptime Kuma",
+  "slug": "uptime-kuma",
+  "category": "monitoring",
+  "website": "https://github.com/louislam/uptime-kuma",
+  "repo": "https://github.com/louislam/uptime-kuma",
+  "description": "Self-hosted uptime monitoring with status pages and notifications.",
+  "status": "pending-verification",
+  "specs": {
+    "no_official_figure": {
+      "fields": ["ram_min_mb", "ram_rec_mb", "cpu_min_cores"],
+      "evidence_url": "https://github.com/louislam/uptime-kuma/issues/5884"
+    }
+  },
+  "deps": [
+    { "service": "none", "required": false, "source_url": "https://github.com/louislam/uptime-kuma" }
+  ],
+  "docker": {
+    "image": "louislam/uptime-kuma",
+    "size_mb": null,
+    "arches": [],
+    "source_url": "https://hub.docker.com/r/louislam/uptime-kuma",
+    "retrieved": null
+  },
+  "sources_of_truth": [
+    "https://github.com/louislam/uptime-kuma",
+    "https://github.com/louislam/uptime-kuma/issues/5884"
+  ]
+}

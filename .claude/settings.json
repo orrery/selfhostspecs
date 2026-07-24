@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && LOG=\"${TMPDIR:-/tmp}/selfhostspecs-stop-tests.log\"; if ! node --test tests/*.test.mjs > \"$LOG\" 2>&1; then echo \"BLOCKED: the SelfhostSpecs test suite is failing — a session may not end red (OPERATIONS.md rule 7). Fix the product, never the test. Log: $LOG\" >&2; exit 2; fi"
+          }
+        ]
+      }
+    ]
+  }
+}

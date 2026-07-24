@@ -1,0 +1,35 @@
+{
+  "name": "Home Assistant",
+  "slug": "home-assistant",
+  "category": "home-automation",
+  "website": "https://www.home-assistant.io",
+  "repo": "https://github.com/home-assistant/core",
+  "description": "Open-source home automation hub with local control and privacy focus.",
+  "status": "pending-verification",
+  "specs": {
+    "ram_min_mb": {
+      "value": 2048,
+      "source_url": "https://www.home-assistant.io/installation/",
+      "quote": "Raspberry Pi 4 or 5 ... minimum 2 GB RAM",
+      "retrieved": "2026-07-24",
+      "scope": "Home Assistant OS on Raspberry Pi ONLY — no official x86 figure published"
+    },
+    "no_official_figure": {
+      "fields": ["cpu_min_cores"],
+      "evidence_url": "https://www.home-assistant.io/installation/"
+    }
+  },
+  "deps": [
+    { "service": "none", "required": false, "source_url": "https://www.home-assistant.io/installation/" }
+  ],
+  "docker": {
+    "image": "ghcr.io/home-assistant/home-assistant",
+    "size_mb": null,
+    "arches": [],
+    "source_url": "https://github.com/home-assistant/core/pkgs/container/home-assistant",
+    "retrieved": null
+  },
+  "sources_of_truth": [
+    "https://www.home-assistant.io/installation/"
+  ]
+}

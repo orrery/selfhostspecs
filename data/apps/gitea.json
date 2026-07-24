@@ -1,0 +1,39 @@
+{
+  "name": "Gitea",
+  "slug": "gitea",
+  "category": "dev-tools",
+  "website": "https://about.gitea.com",
+  "repo": "https://github.com/go-gitea/gitea",
+  "description": "Self-hosted Git service with issues, CI, and package registry.",
+  "status": "pending-verification",
+  "specs": {
+    "ram_min_mb": {
+      "value": 1024,
+      "source_url": "https://docs.gitea.com/installation/comparison",
+      "quote": "2 CPU cores and 1GB RAM is typically sufficient for small teams",
+      "retrieved": "2026-07-24",
+      "scope": "small teams, general installation"
+    },
+    "cpu_min_cores": {
+      "value": 2,
+      "source_url": "https://docs.gitea.com/installation/comparison",
+      "quote": "2 CPU cores and 1GB RAM is typically sufficient for small teams",
+      "retrieved": "2026-07-24",
+      "scope": "small teams, general installation"
+    }
+  },
+  "deps": [
+    { "service": "none", "required": false, "source_url": "https://docs.gitea.com/installation/database-prep" }
+  ],
+  "docker": {
+    "image": "gitea/gitea",
+    "size_mb": null,
+    "arches": [],
+    "source_url": "https://hub.docker.com/r/gitea/gitea",
+    "retrieved": null
+  },
+  "sources_of_truth": [
+    "https://docs.gitea.com/installation/comparison",
+    "https://hub.docker.com/r/gitea/gitea"
+  ]
+}
