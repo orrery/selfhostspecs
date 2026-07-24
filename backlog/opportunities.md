@@ -3,57 +3,63 @@
 Statuses: `unverified` → (verifier sign-off) → `queued` → `building` → `shipped`, or
 `rejected` (with refutation, kept below as the graveyard). Dedupe against BOTH lists.
 
-## Queued (verifier-signed)
-(none yet — first FIND run populates)
+## Queued (verifier-signed) — 2026-07-24 FIND run
+Verifier confirmed all 11 items below CONFIRMED (0 refuted). Independent agent pre-checked:
+exactly 6 live entries exist (gitea, home-assistant, immich, jellyfin, uptime-kuma, vaultwarden);
+none of the below collide with them or with each other; none appear in the Rejected graveyard.
 
-## Unverified — scored 2026-07-24 FIND run (pending independent verifier)
-Scoring: Coverage-value · Sourceability · Effort · Channel-value, each /5, total /20. ≥14 proposed
-to verifier. Note: WebFetch returned 403 on nearly every external docs domain tried this run
-(Nextcloud, Paperless-ngx, Pi-hole, n8n, Frigate, Photoprism, Mealie, BookStack, even Wikipedia)
-while github.com/gist.github.com succeeded — looks like a session-level fetch issue, not
-per-site bot-blocking. Sourceability scores below are from GitHub-confirmed project activity +
-trained knowledge of these projects' official docs, NOT a live fetch this run. Every figure
-still requires the harvester's live fetch + independent verifier re-fetch before it ships —
-this only affects whether FIND's sourceability *estimate* is live-confirmed today.
+### Coverage-gap apps — ready for BUILD
+- **Nextcloud** (file sync/collab) — 36.2k stars, v34.0.2 released 2026-07-23 (active). Fork
+  lineage from ownCloud confirmed, no collision with covered apps. Official system-requirements
+  page confirmed to exist (docs.nextcloud.com).
+- **Pi-hole** (DNS/ad-block) — v6.4.3, active. Confirmed a distinct project from AdGuard Home
+  (independent origins, 2015 vs 2018). Official docs repo prerequisites.md carries RAM figures.
+- **Frigate NVR** (camera/NVR) — v0.17.2, active. Distinct from Immich. Hardware docs page is
+  unusually strong (AVX/AVX2 CPU requirement, RAM figure stated) — strongest sourceability in
+  this batch.
+- **Grafana** (dashboards/observability) — v13.1.1 released 3 days pre-run, active. No fork/
+  rename history. Official requirements page exists; expect a sparse/soft minimum (Learning #4).
+- **Paperless-ngx** (document mgmt) — v3.0.2 released same day. Legitimate succession chain
+  (Paperless → Paperless-ng, abandoned 2021 → Paperless-ngx, current) — not a rename collision.
+  Docs exist; likely no crisp RAM minimum (Redis OOM guidance only, not a stated floor).
+- **Syncthing** (P2P file sync) — v2.1.2, active. Distinct from proprietary Resilio Sync.
+  **Weakest sourceability in the batch** — no dedicated requirements page found, only forum
+  threads. BUILD should expect a likely `no_official_figure` outcome on RAM specifically.
+- **n8n** (workflow automation) — v2.31.5 released 2 days pre-run, very active (322 open
+  issues/1.1k PRs). Distinct from Node-RED. Official memory-errors doc gives usage figures
+  (~180MiB average; 250Mi/500Mi in example k8s manifests) — sourceable, not a crisp minimum.
+- **AdGuard Home** (DNS/ad-block) — 35.6k stars, active. Confirmed distinct from Pi-hole.
+  Official wiki states a min/recommended RAM figure.
 
-### Coverage-gap apps (candidate Wave 1, scored individually — no more vague batches)
-| App | Category | Coverage | Source | Effort | Channel | Total |
-|---|---|---|---|---|---|---|
-| Nextcloud | file sync/collab | 5 | 4 | 3 | 5 | **17** |
-| Pi-hole | DNS/ad-block | 5 | 3 | 4 | 5 | **17** |
-| Frigate NVR | camera/NVR | 4 | 5 | 3 | 4 | **16** |
-| Grafana | dashboards/observability | 4 | 5 | 3 | 4 | **16** |
-| Paperless-ngx | document mgmt | 4 | 4 | 3 | 4 | **15** |
-| Syncthing | P2P file sync | 4 | 3 | 4 | 4 | **15** |
-| n8n | workflow automation | 4 | 4 | 3 | 4 | **15** |
-| AdGuard Home | DNS/ad-block | 4 | 3 | 4 | 4 | **15** |
-
-Held below the ≥14 bar this run (real projects, weaker official RAM/CPU documentation per
-Learning #4 — revisit if sourceability improves, do not re-propose without new evidence):
-Navidrome (13), Audiobookshelf (13), Miniflux (13), Photoprism (12), Mealie (12), BookStack (12),
-Firefly III (12).
-
-### Column opportunities
-- **Docker image size + arches harvest** for the existing 6 entries (Docker Hub API / ghcr
-  manifests — objective, mechanical, always available). Coverage 3 · Source 5 · Effort 5 ·
-  Channel 3 = **16**.
+### Column opportunities — ready for BUILD
+- **Docker image size + arches harvest** for the existing 6 entries. Verifier live-tested the
+  Docker Hub API this run (`hub.docker.com/v2/repositories/jellyfin/jellyfin/tags/latest`):
+  confirmed a real per-architecture `images[]` array with `architecture` + `size` fields.
+  Mechanical, no judgment calls — highest-confidence item in this batch.
 - **GPU / hardware-transcoding support column** (Jellyfin, Immich, Frigate, Photoprism-class
-  apps) — sourced from each project's official hardware-acceleration docs (NVENC/QSV/VAAPI/
-  RKMPP support, cited per app). Coverage 4 · Source 4 · Effort 2 · Channel 4 = **14**.
-- Considered and deferred: disk/storage-footprint column — too inconsistently documented
-  officially to score ≥14 (Sourceability ~2); not proposed to verifier.
+  apps), sourced from each project's official hardware-acceleration docs (NVENC/QSV/VAAPI/
+  RKMPP support). Verifier explicitly cleared this against the owner's permanent territory
+  exclusion: it's a sourced fact column (same shape as the existing ARM-support column), not
+  a "which GPU should I buy" calculator — no user input, no computed answer.
 
-### Collection pages
+### Collection page — ready for BUILD
 - **"Self-hosted apps without an external database"** (SQLite-only / zero required external
-  service — derived from the existing `deps[].required` field, no new harvesting needed).
-  3 distinct search phrasings found no dedicated incumbent owning this angle (generic
-  directories like selfhosted.directory support filtering but don't publish this as a page).
-  Coverage 4 · Source 5 · Effort 5 · Channel 4 = **18**.
-- **"Runs on a 1GB VPS"** — re-scored down from bootstrap. Blocked on its own precondition:
-  Learning #4 says only ~2/7 popular apps state a clean RAM minimum, so we don't yet have
-  enough sourced RAM-min data to populate a credible filtered page; SERP is blogspam, not a
-  strong incumbent, but that's moot until coverage exists. Coverage 3 · Source 2 · Effort 2 ·
-  Channel 3 = **10**. Held — revisit after the Wave 1 apps above are live with RAM figures.
+  service), derived entirely from the existing `deps[].required` schema field — zero new
+  harvesting. Verifier confirmed the field is already CI-enforced, and ran 3 additional
+  independent search phrasings beyond FIND's own 3 (6 total) — no dedicated incumbent page
+  found owning this angle; general directories filter but don't publish it as a standalone page.
+
+## Unverified / held (not sent to verifier this run)
+- **Collection page: "runs on a 1GB VPS"** — held on its own precondition, sanity-checked by
+  the verifier: of the 6 live entries, only home-assistant carries any `ram_min_mb`, and it's
+  scope-restricted (RPi/HA-OS only, not general x86). Revisit once the Wave 1 apps above are
+  live with RAM figures.
+- **Below the ≥14 score bar this FIND run** (not sent to verifier; real projects, weaker
+  official RAM/CPU documentation per Learning #4 — do not re-propose without new sourceability
+  evidence): Navidrome (13), Audiobookshelf (13), Miniflux (13), Photoprism (12), Mealie (12),
+  BookStack (12), Firefly III (12).
+- Considered and deferred: disk/storage-footprint column — too inconsistently documented
+  officially to clear the bar (Sourceability ~2); not proposed to verifier.
 
 ### Freshness work
 None. All 6 live entries retrieved 2026-07-24 (today); nothing crosses the 90-day staleness
