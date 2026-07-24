@@ -3,6 +3,15 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-07-24 — Infrastructure wiring
+
+0. **A 404 from an authenticated API is not proof of absence.** GoatCounter masks
+   permission denials as 404s; the operator declared `/stats/total` nonexistent from a single
+   404 with one token, and the "fix" would have silently dropped a working data source. The
+   owner's revert was correct. → Downstream: before declaring any endpoint/source dead, test
+   with a second credential or from a second vantage point, and treat auth-adjacent 404s as
+   "permission?" first. This is defect-class thinking applied to our own tooling.
+
 ## 2026-07-24 — Bootstrap research sprint (5 finders, 2 verifiers)
 
 1. **Verification cuts finder scores 20–40%; design for it.** Finders proposed at 15/20;
