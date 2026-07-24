@@ -155,8 +155,14 @@ Total spent: **~$11**. Standing cap: $0 unapproved.
 - Analytics: GoatCounter site `selfhostspecs` (pending owner creation under existing account);
   snapshot Action writes reports/stats/ daily for cloud runs (egress policy blocks direct API).
 - Site is built from `data/` by `scripts/build.mjs`; `docs/` is gitignored build output.
-- Schedules: to be installed in Phase 3 (specs-find daily; specs-loop Wed & Sun; specs-audit Mon).
-- Search Console: pending owner verification after DNS.
+- Schedules: claude.ai cloud routines (manage at https://claude.ai/code/routines) —
+  `specs-find` trig_01RmqEmUviFQm61LaDQS6ni3 (daily 23:23 UTC = ~9:23am Melbourne),
+  `specs-loop` trig_01UuSPBJZ2eJeLUGi96L1cGW (Wed & Sun 08:41 UTC = ~6:41pm Melbourne),
+  `specs-audit` trig_01XsWhF6rTVTYBpZgxALHtCR (Mon 08:41 UTC = ~6:41pm Melbourne).
+  Cron is UTC-fixed, so local times shift one hour across Melbourne DST — accepted.
+  They clone this repo in the cloud and push results.
+- Search Console: DNS TXT verified present 2026-07-24; owner to submit sitemap.xml once the
+  property shows verified.
 
 ## Known Defect Classes (BUILD/TEST checklist — every builder addresses ALL; AUDIT verifies)
 1. **Unit errors:** MB vs GB vs GiB; store MB integers, display with the source quote visible;
