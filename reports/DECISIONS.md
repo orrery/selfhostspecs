@@ -20,3 +20,13 @@ Append-only log of material decisions with their evidence. AUDIT checks cadence 
   custom domain set via API. Operator flipped visibility via API on owner instruction.
 - 2026-07-24 — **Launch gate installed** (≥100 well-sourced entries etc. — OPERATIONS.md).
   Evidence: one-shot channel dynamics (LEARNINGS #7).
+- 2026-07-24 — **First full cycle shipped: 14 apps live at selfhostspecs.com** through the
+  complete gate (harvest → independent verification → CI → independent QA BLOCK → fixes →
+  re-QA → deterministic test pins → deploy green). QA refuted/blocked once (4 SEV-2), re-QA
+  blocked once (scope-marker leak) — both rounds produced fixes now CI-enforced.
+- 2026-07-24 — **GPU/hw-transcoding column deferred to the next loop run** (verifier-approved
+  but requires a schema extension; one schema change per reviewed batch — QA-capacity pacing,
+  not calendar pacing). Remains queued in backlog.
+- 2026-07-24 — **Verifier refutation rate 0/11 flagged for AUDIT**: coverage-gap items are
+  mechanically confirmable so a high pass rate is plausible, but Monday's audit must red-team
+  whether FIND verification is soft.
