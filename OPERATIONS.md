@@ -143,8 +143,8 @@ Pre-launch trickle (GitHub repo public, awesome-list PRs) is allowed and encoura
 ## Budget Ledger
 | Date | Item | Cost | Approved by |
 |------|------|------|-------------|
-| 2026-07-24 | selfhostspecs.com 1yr (Porkbun) | ~$11 | Owner-approved at checkpoint; purchase pending |
-Total spent: **$0 so far**. Standing cap: $0 unapproved.
+| 2026-07-24 | selfhostspecs.com 1yr (Porkbun) | ~$11 | Owner (approved at checkpoint; purchased directly — confirmed via live DNS 2026-07-24) |
+Total spent: **~$11**. Standing cap: $0 unapproved.
 
 ## Infrastructure
 - Repo: github.com/<owner>/selfhostspecs (created private; owner flips public before Pages —
