@@ -1,0 +1,43 @@
+{
+  "name": "Syncthing",
+  "slug": "syncthing",
+  "category": "file-sync",
+  "website": "https://syncthing.net",
+  "repo": "https://github.com/syncthing/syncthing",
+  "description": "Continuous file synchronization program that syncs files directly between devices without a central server.",
+  "status": "live",
+  "specs": {
+    "no_official_figure": {
+      "fields": [
+        "ram_min_mb",
+        "ram_rec_mb",
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://docs.syncthing.net/users/faq.html"
+    }
+  },
+  "deps": [
+    {
+      "service": "none",
+      "required": false,
+      "source_url": "https://docs.syncthing.net/intro/getting-started.html"
+    }
+  ],
+  "docker": {
+    "image": "syncthing/syncthing",
+    "size_mb": 18,
+    "arches": [
+      "amd64",
+      "arm64",
+      "armv7"
+    ],
+    "source_url": "https://hub.docker.com/r/syncthing/syncthing",
+    "retrieved": "2026-07-24"
+  },
+  "sources_of_truth": [
+    "https://docs.syncthing.net/users/faq.html",
+    "https://docs.syncthing.net/intro/getting-started.html",
+    "https://hub.docker.com/r/syncthing/syncthing"
+  ]
+}

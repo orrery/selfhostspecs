@@ -23,6 +23,11 @@ verified — or honestly absent."
 - `docker`: `{ "image", "size_mb": int|null, "arches": ["amd64","arm64","armv7"], "source_url", "retrieved" }`.
 - `sources_of_truth`: list of official URLs the freshness sweep re-checks.
 
+**Image-size convention:** `docker.size_mb` is the COMPRESSED amd64 image size in MB —
+Docker Hub API `images[].size` for the amd64 entry, or the sum of OCI layer sizes from a
+registry manifest. Pages label it "compressed size (amd64)"; never present it as
+installed/uncompressed size. Multi-arch sizes differ; we index amd64 and say so.
+
 ## Sourcing rules
 1. Official only: the project's own docs, README, compose files, image manifests. Third-party
    blogs are never sources for figures (they may be FIND leads, nothing more).
@@ -37,10 +42,11 @@ verified — or honestly absent."
 
 ## Page conventions (build emits these; QA judges them)
 - Every page: canonical URL, viewport meta, GoatCounter snippet, plain honest tone, dark-mode
-  support, no layout shift on filter, mobile-first table (cards under 640px).
+  support, no layout shift on filter, mobile-first table (non-essential columns hide under
+  640px; what remains must be sufficient and honest on a 320px screen).
 - Per-app page: the figures WITH their quotes and dates visible, "no official figure" stated
-  plainly with the upstream issue linked, related apps (same category) linked — ≥2 inbound
-  links per app page across the site.
+  plainly with the evidence linked, related apps ring-linked (deterministic ring guarantees
+  every app page ≥2 inbound links; category affinity is a nice-to-have, not the mechanism).
 - Index: client-side filter/sort over embedded JSON; zero-result states say so honestly;
   counts always computed from data, never hardcoded.
 - Claims discipline: nothing on any page may overstate coverage or freshness ("re-verified

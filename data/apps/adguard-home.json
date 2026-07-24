@@ -1,0 +1,43 @@
+{
+  "name": "AdGuard Home",
+  "slug": "adguard-home",
+  "category": "dns",
+  "website": "https://adguard.com/en/adguard-home/overview.html",
+  "repo": "https://github.com/AdguardTeam/AdGuardHome",
+  "description": "Network-wide DNS server that blocks ads and trackers for all devices on the network.",
+  "status": "live",
+  "specs": {
+    "no_official_figure": {
+      "fields": [
+        "ram_min_mb",
+        "ram_rec_mb",
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://adguard-dns.io/kb/adguard-home/getting-started/"
+    }
+  },
+  "deps": [
+    {
+      "service": "none",
+      "required": false,
+      "source_url": "https://adguard-dns.io/kb/adguard-home/getting-started/"
+    }
+  ],
+  "docker": {
+    "image": "adguard/adguardhome",
+    "size_mb": 28,
+    "arches": [
+      "amd64",
+      "arm64",
+      "armv7"
+    ],
+    "source_url": "https://hub.docker.com/r/adguard/adguardhome",
+    "retrieved": "2026-07-24"
+  },
+  "sources_of_truth": [
+    "https://adguard-dns.io/kb/adguard-home/getting-started/",
+    "https://adguard-dns.io/kb/adguard-home/platforms/",
+    "https://hub.docker.com/r/adguard/adguardhome"
+  ]
+}

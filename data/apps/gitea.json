@@ -5,35 +5,49 @@
   "website": "https://about.gitea.com",
   "repo": "https://github.com/go-gitea/gitea",
   "description": "Self-hosted Git service with issues, CI, and package registry.",
-  "status": "pending-verification",
+  "status": "live",
   "specs": {
     "ram_min_mb": {
       "value": 1024,
-      "source_url": "https://docs.gitea.com/installation/comparison",
-      "quote": "2 CPU cores and 1GB RAM is typically sufficient for small teams",
+      "source_url": "https://docs.gitea.com/",
+      "quote": "2 CPU cores and 1GB RAM is typically sufficient for small teams/projects.",
       "retrieved": "2026-07-24",
-      "scope": "small teams, general installation"
+      "scope": "small teams/projects, general installation"
     },
     "cpu_min_cores": {
       "value": 2,
-      "source_url": "https://docs.gitea.com/installation/comparison",
-      "quote": "2 CPU cores and 1GB RAM is typically sufficient for small teams",
+      "source_url": "https://docs.gitea.com/",
+      "quote": "2 CPU cores and 1GB RAM is typically sufficient for small teams/projects.",
       "retrieved": "2026-07-24",
-      "scope": "small teams, general installation"
+      "scope": "small teams/projects, general installation"
+    },
+    "no_official_figure": {
+      "fields": [
+        "ram_rec_mb",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://docs.gitea.com/"
     }
   },
   "deps": [
-    { "service": "none", "required": false, "source_url": "https://docs.gitea.com/installation/database-prep" }
+    {
+      "service": "none",
+      "required": false,
+      "source_url": "https://docs.gitea.com/installation/database-prep"
+    }
   ],
   "docker": {
     "image": "gitea/gitea",
-    "size_mb": null,
-    "arches": [],
-    "source_url": "https://hub.docker.com/r/gitea/gitea",
-    "retrieved": null
+    "size_mb": 69,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://hub.docker.com/v2/repositories/gitea/gitea/tags/latest",
+    "retrieved": "2026-07-24"
   },
   "sources_of_truth": [
-    "https://docs.gitea.com/installation/comparison",
+    "https://docs.gitea.com/",
     "https://hub.docker.com/r/gitea/gitea"
   ]
 }

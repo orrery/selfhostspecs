@@ -38,9 +38,15 @@ function noFigureFields(app) {
 }
 function cell(app, key, unit) {
   const f = figure(app, key);
-  if (f) return esc(unit === "mb" ? fmtMb(f.value) : String(f.value));
-  const declaredAbsent = noFigureFields(app).some((x) => x.startsWith(key));
-  return declaredAbsent ? "none published" : "—";
+  if (f) {
+    const v = esc(unit === "mb" ? fmtMb(f.value) : String(f.value));
+    // Scoped figures get a visible marker in sortable tables — a per-process or
+    // Pi-only number presented bare would mislead (defect class 3). Whether a figure
+    // is safe to show bare is an explicit data decision (`general: true`), never a
+    // heuristic over the scope prose — "Per process, general installation" broke that.
+    return f.general === true ? v : `${v}<span class="scopemark" title="${esc(f.scope)}">*</span>`;
+  }
+  return noFigureFields(app).includes(key) ? "none published" : "—";
 }
 function depsSummary(app) {
   const req = (app.deps ?? []).filter((d) => d.required && d.service !== "none").map((d) => d.service);
@@ -97,8 +103,8 @@ function page({ title, desc, canonical, body, jsonld }) {
 <main>
 ${body}
 <footer>
-<p>Every figure on this site carries its official source, a verbatim quote, and the date we read it — or says so when no official figure exists. Corrections welcome${SITE.repo ? ` via <a href="${SITE.repo}">GitHub</a>` : ""}.</p>
-<p><a href="/">All apps</a> · <a href="/changelog/">Changelog</a> · <a href="/about/">About &amp; methodology</a></p>
+<p>Every figure on this site carries its official source, a verbatim quote or precise locator, and the date we read it — or says so when no official figure exists. Corrections welcome${SITE.repo ? ` via <a href="${SITE.repo}">GitHub</a>` : ""}.</p>
+<p><a href="/">All apps</a> · <a href="/collections/no-external-database/">No external database</a> · <a href="/changelog/">Changelog</a> · <a href="/about/">About &amp; methodology</a></p>
 </footer>
 </main>
 ${GC_SNIPPET}
@@ -140,6 +146,7 @@ ${rows}
 </tbody>
 </table></div>
 <p id="noresults">No apps match those filters.</p>
+<p class="absent" style="font-size:.82rem">* scoped figure — hover for the qualifier, or see the app's page (e.g. per-process or platform-specific numbers).</p>
 <script>
 (function(){
 var q=document.getElementById("q"),cat=document.getElementById("cat"),noext=document.getElementById("noext"),hasram=document.getElementById("hasram");
@@ -173,13 +180,22 @@ function appBody(apps, i) {
   ];
   for (const [label, key, unit] of defs) {
     const f = figure(a, key);
-    if (f) figs.push(figureBlock(label, { ...f, display: unit === "mb" ? fmtMb(f.value) : `${f.value} cores` }));
+    if (f) figs.push(figureBlock(label, { ...f, display: unit === "mb" ? fmtMb(f.value) : `${f.value} ${f.value === 1 ? "core" : "cores"}` }));
   }
+  const FRIENDLY = {
+    ram_min_mb: "minimum RAM",
+    ram_rec_mb: "recommended RAM",
+    cpu_min_cores: "minimum CPU cores",
+    cpu_rec_cores: "recommended CPU cores",
+  };
   const absent = noFigureFields(a);
+  const absentNote = a.specs?.no_official_figure?.note;
   const absentHtml = absent.length
-    ? `<div class="figure"><div>No official figure published for: <strong>${absent.map(esc).join(", ")}</strong></div><div class="meta absent">We publish nothing we can't source. Evidence of the gap: <a href="${esc(
+    ? `<div class="figure"><div>No official figure published for: <strong>${absent.map((k) => esc(FRIENDLY[k] ?? k)).join(", ")}</strong></div>${
+        absentNote ? `<div class="meta">${esc(absentNote)}</div>` : ""
+      }<div class="meta absent">We publish nothing we can't source. <a href="${esc(
         a.specs.no_official_figure.evidence_url
-      )}">upstream discussion</a>.</div></div>`
+      )}">Evidence of the gap</a>.</div></div>`
     : "";
   const deps = (a.deps ?? [])
     .map((d) =>
@@ -199,21 +215,55 @@ function appBody(apps, i) {
 ${figs.join("\n")}
 ${absentHtml}
 <h2>External services</h2><ul>${deps}</ul>
-<h2>Container</h2><p>Image: <code>${esc(a.docker?.image ?? "not yet checked")}</code> · size: ${esc(dockerSize)} · architectures: ${esc(armSummary(a))}</p>
+<h2>Container</h2><p>Image: <code>${esc(a.docker?.image ?? "not yet checked")}</code> · compressed size (amd64): ${esc(dockerSize)} · architectures: ${esc((a.docker?.arches ?? []).length ? a.docker.arches.join(", ") : "not yet checked")}${a.docker?.retrieved ? ` · <a href="${esc(a.docker.source_url)}">source</a>, retrieved ${esc(a.docker.retrieved)}` : ""}</p>
 <h2>Related apps</h2><ul>${rel}</ul>`;
+}
+
+// Collection membership predicates — derived from data, never hand-curated lists.
+export function noExternalServices(app) {
+  return !(app.deps ?? []).some((d) => d.required && d.service !== "none");
+}
+
+function collectionNoExtDbBody(apps) {
+  const members = apps.filter(noExternalServices);
+  const rows = members
+    .map(
+      (a) => `<tr><td><a href="/apps/${esc(a.slug)}/">${esc(a.name)}</a></td><td>${esc(a.category)}</td><td>${cell(
+        a,
+        "ram_min_mb",
+        "mb"
+      )}</td><td>${a.docker?.size_mb ? esc(fmtMb(a.docker.size_mb)) : "not yet checked"}</td></tr>`
+    )
+    .join("\n");
+  return `<header class="site"><p><a href="/">← ${esc(SITE.name)}</a></p>
+<h1>Self-hosted apps without an external database</h1>
+<p>Every app below runs with no required external services — no Postgres, no Redis, no
+separate database container to feed and water. Membership is derived automatically from each
+app's sourced dependency data, so this list updates itself as the dataset grows.
+Currently <strong>${members.length}</strong> of ${apps.length} tracked apps qualify.</p>
+</header>
+<div class="tablewrap"><table>
+<thead><tr><th>App</th><th>Category</th><th>RAM min</th><th>Image size</th></tr></thead>
+<tbody>
+${rows}
+</tbody>
+</table></div>
+<p>Figures follow the same rules as everywhere on ${esc(SITE.name)}: quoted verbatim from
+official docs with source and date, or honestly absent. Image sizes are compressed amd64.
+Figures marked * are scoped (per-process or platform-specific) — see the app's page.</p>`;
 }
 
 function aboutBody(apps) {
   return `<header class="site"><p><a href="/">← ${esc(SITE.name)}</a></p><h1>About &amp; methodology</h1></header>
 <p>${esc(SITE.name)} answers one question: <em>what does a self-hosted app actually need to run?</em> —
 with figures that can be trusted because each one is quoted verbatim from the project's own
-documentation, linked, dated, and re-checked on a schedule.</p>
+documentation, linked, dated, and independently re-fetched before publication.</p>
 <ul>
 <li><strong>Source-or-silence:</strong> if a project publishes no official figure, we say exactly that and link the upstream discussion asking for one. We never estimate.</li>
 <li><strong>Minimum ≠ recommended:</strong> we never promote one into the other.</li>
 <li><strong>Scoped:</strong> a figure valid for one install path is labeled with that path.</li>
 <li><strong>Independently verified:</strong> a second reviewer re-fetches every source before an entry loses its "verification pending" badge.</li>
-<li><strong>Change-tracked:</strong> when upstream requirements change, the <a href="/changelog/">changelog</a> records what changed and when.</li>
+<li><strong>Change-tracked:</strong> the <a href="/changelog/">changelog</a> records every change to published data — our own corrections included — and upstream requirement changes as we detect them.</li>
 </ul>
 <p>Currently tracking ${apps.length} apps. This is a young dataset growing continuously.</p>`;
 }
@@ -227,7 +277,7 @@ function changelogBody(entries) {
         )
         .join("")
     : "<li>No upstream requirement changes recorded yet — the dataset is new. Entries appear here the day a source changes.</li>";
-  return `<header class="site"><p><a href="/">← ${esc(SITE.name)}</a></p><h1>Changelog — upstream requirement changes</h1></header><ul>${items}</ul>`;
+  return `<header class="site"><p><a href="/">← ${esc(SITE.name)}</a></p><h1>Changelog — data corrections &amp; upstream changes</h1><p>Every change to published data, dated and sourced: our own corrections included, and upstream requirement changes as we detect them. No silent edits.</p></header><ul>${items}</ul>`;
 }
 
 export function build(root = ROOT) {
@@ -285,6 +335,22 @@ export function build(root = ROOT) {
   );
 
   emit(
+    "collections/no-external-database",
+    page({
+      title: `Self-hosted apps without an external database | ${SITE.name}`,
+      desc: "Self-hosted apps with no required Postgres/Redis/external services — derived from sourced dependency data.",
+      canonical: `${SITE.origin}/collections/no-external-database/`,
+      body: collectionNoExtDbBody(apps),
+      jsonld: {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        name: "Self-hosted apps without an external database",
+        url: `${SITE.origin}/collections/no-external-database/`,
+      },
+    })
+  );
+
+  emit(
     "about",
     page({
       title: `About & methodology | ${SITE.name}`,
@@ -298,8 +364,8 @@ export function build(root = ROOT) {
   emit(
     "changelog",
     page({
-      title: `Changelog — upstream requirement changes | ${SITE.name}`,
-      desc: "Dated record of every upstream hardware-requirement change we detect.",
+      title: `Changelog — data corrections & upstream changes | ${SITE.name}`,
+      desc: "Dated, sourced record of every change to published data — corrections and upstream requirement changes alike.",
       canonical: `${SITE.origin}/changelog/`,
       body: changelogBody(changelog),
       jsonld: { "@context": "https://schema.org", "@type": "WebPage", url: `${SITE.origin}/changelog/` },

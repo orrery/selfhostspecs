@@ -1,0 +1,47 @@
+{
+  "name": "n8n",
+  "slug": "n8n",
+  "category": "automation",
+  "website": "https://n8n.io",
+  "repo": "https://github.com/n8n-io/n8n",
+  "description": "Workflow automation platform that connects apps and services through node-based workflows.",
+  "status": "live",
+  "specs": {
+    "no_official_figure": {
+      "fields": [
+        "ram_min_mb",
+        "ram_rec_mb",
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://docs.n8n.io/deploy/host-n8n/configure-n8n/scaling/fix-memory-issues"
+    }
+  },
+  "deps": [
+    {
+      "service": "postgresql",
+      "required": false,
+      "source_url": "https://docs.n8n.io/deploy/host-n8n/configure-n8n/choose-n8ns-database"
+    },
+    {
+      "service": "redis",
+      "required": false,
+      "source_url": "https://docs.n8n.io/deploy/host-n8n/configure-n8n/scaling/enable-queue-mode"
+    }
+  ],
+  "docker": {
+    "image": "n8nio/n8n",
+    "size_mb": 363,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://hub.docker.com/r/n8nio/n8n",
+    "retrieved": "2026-07-24"
+  },
+  "sources_of_truth": [
+    "https://docs.n8n.io/deploy/host-n8n/configure-n8n/scaling/fix-memory-issues",
+    "https://docs.n8n.io/deploy/host-n8n/configure-n8n/choose-n8ns-database",
+    "https://docs.n8n.io/deploy/host-n8n/configure-n8n/scaling/enable-queue-mode"
+  ]
+}

@@ -26,6 +26,10 @@ OPERATIONS.md is the law. If they ever disagree, OPERATIONS.md wins.
 6. Never spend, never create accounts, never post to communities — draft and hand to owner.
 7. Territory exclusions (no calculators/tools, no games) apply to EVERY idea, including
    expansions that feel natural. When in doubt, it's excluded; flag to owner instead.
+8. Subagent cost policy (owner directive 2026-07-24): mechanical stages — harvesting,
+   docker/API queries, schema fixes, routine QA sweeps — run on the economical model tier
+   (Sonnet). Reserve the strongest model for genuine judgment tiebreaks and only when the
+   stakes warrant it. Cloud routines already run claude-sonnet-5.
 
 ## Stage notes (details in OPERATIONS.md §1–5)
 - **FIND:** read LEARNINGS; mine coverage gaps / columns / collections / freshness; score /20;

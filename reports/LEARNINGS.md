@@ -3,6 +3,30 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-07-24 — First full BUILD/TEST cycle (14 entries)
+
+9. **Quotes written from notes drift: 3 of 4 seed quotes were paraphrases** (only Immich's
+   survived byte-for-byte); one seed cited the wrong docs page outright. → Downstream: quotes
+   are copied only from a live fetch in the same session — never from research notes. Seeding
+   from memory is banned.
+10. **FIND intel produced without live fetches is unreliable in both directions:** it claimed
+    figures AdGuard doesn't have and (via the harvester trusting the "hardware page" framing)
+    helped miss figures Frigate does have — on a sibling page (planning_setup). → Downstream:
+    absence claims require a sibling-page sweep of the docs tree, not just the obvious page;
+    FIND sourceability scores from a no-fetch environment are estimates and say so.
+11. **The cloud routine environment 403s most external docs domains** (GitHub/Docker Hub work).
+    → Downstream: cloud runs do FIND scoring, backlog work, and derived builds; anything
+    needing external-docs fetches (harvest, verification) runs in local sessions — or the
+    owner provisions a cloud environment with a network allowlist. Flagged to owner.
+12. **QA on our own first build found 4 SEV-2s** — silent absences the schema test didn't
+    enforce (now it does: field-level completeness), a reused template helper rendering a
+    false label, scoped figures unmarked in sortable tables, and a freshness claim ahead of
+    reality. Three new defect classes (10–12) added to OPERATIONS.md. → Downstream: the
+    builder checklist grew; the schema contract now makes silent absence impossible.
+13. **Registry tags: `:latest` often doesn't exist** (Immich uses `:release`, Frigate
+    `:stable`). → Downstream: record the tag in the image string whenever it isn't `latest`;
+    a size without its tag is unattributable.
+
 ## 2026-07-24 — Infrastructure wiring
 
 0. **A 404 from an authenticated API is not proof of absence.** GoatCounter masks

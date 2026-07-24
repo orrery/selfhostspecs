@@ -1,0 +1,57 @@
+{
+  "name": "Paperless-ngx",
+  "slug": "paperless-ngx",
+  "category": "documents",
+  "website": "https://docs.paperless-ngx.com",
+  "repo": "https://github.com/paperless-ngx/paperless-ngx",
+  "description": "Document management system that indexes and archives scanned documents with OCR.",
+  "status": "live",
+  "specs": {
+    "no_official_figure": {
+      "fields": [
+        "ram_min_mb",
+        "ram_rec_mb",
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://github.com/paperless-ngx/paperless-ngx/blob/main/docs/setup.md"
+    }
+  },
+  "deps": [
+    {
+      "service": "valkey",
+      "required": true,
+      "source_url": "https://github.com/paperless-ngx/paperless-ngx/blob/main/docker/compose/docker-compose.sqlite.yml"
+    },
+    {
+      "service": "redis",
+      "required": false,
+      "source_url": "https://github.com/paperless-ngx/paperless-ngx/blob/main/docs/setup.md"
+    },
+    {
+      "service": "postgresql",
+      "required": false,
+      "source_url": "https://github.com/paperless-ngx/paperless-ngx/blob/main/docs/setup.md"
+    },
+    {
+      "service": "mariadb",
+      "required": false,
+      "source_url": "https://github.com/paperless-ngx/paperless-ngx/blob/main/docs/setup.md"
+    }
+  ],
+  "docker": {
+    "image": "ghcr.io/paperless-ngx/paperless-ngx",
+    "size_mb": 766,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://github.com/paperless-ngx/paperless-ngx/pkgs/container/paperless-ngx",
+    "retrieved": "2026-07-24"
+  },
+  "sources_of_truth": [
+    "https://docs.paperless-ngx.com/setup/",
+    "https://github.com/paperless-ngx/paperless-ngx/blob/main/docs/setup.md",
+    "https://github.com/paperless-ngx/paperless-ngx/tree/main/docker/compose"
+  ]
+}

@@ -180,6 +180,15 @@ Total spent: **~$11**. Standing cap: $0 unapproved.
 8. **Quote drift:** the stored quote must appear verbatim at the source; verifier and AUDIT check
    literal presence, not gist.
 9. **DOM safety:** any page JS builds DOM via createElement/textContent — no innerHTML with data.
+10. **Template-label reuse** (QA 2026-07-24): never reuse a summary function under a different
+    label — "architectures: yes (arm64)" happened because an ARM-question helper was pasted
+    after an "architectures" label. Every rendered label must match what its value answers.
+11. **Alternative-dependency (OR) flattening** (QA 2026-07-24): "Valkey OR Redis" rendered as
+    required+optional pair hides the either/or. Until the schema can express alternatives,
+    page copy must not imply both are separate services; note the OR in prose where it matters.
+12. **Bundled-dependency misclassification** (QA 2026-07-24): a binary shipped inside the
+    image (ffmpeg in Frigate/Jellyfin) is not an "external service" and must not affect
+    external-service filters or collections.
 
 ## Rejected directions (with refutations, from the 2026-07-24 research sprint)
 - Static JSON "API hub" — occupied (dr5hn weekly-updated CDN datasets; concept exists at 21

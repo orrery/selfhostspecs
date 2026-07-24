@@ -5,7 +5,7 @@ import assert from "node:assert/strict";
 import { readFileSync, readdirSync, existsSync, statSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { build, loadApps } from "../scripts/build.mjs";
+import { build, loadApps, noExternalServices } from "../scripts/build.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DOCS = join(ROOT, "docs");
@@ -121,6 +121,45 @@ test("index counts are computed from data, not hardcoded", () => {
   assert.ok(html.includes(`<strong>${apps.length}</strong>`), "app count on index != data count");
   const rows = (html.match(/<tr data-name=/g) ?? []).length;
   assert.equal(rows, apps.length, "table rows != app count");
+});
+
+test("collection page membership exactly matches the data-derived predicate", () => {
+  const p = join(DOCS, "collections", "no-external-database", "index.html");
+  assert.ok(existsSync(p), "collection page missing");
+  const html = readFileSync(p, "utf8");
+  const members = apps.filter(noExternalServices);
+  const nonMembers = apps.filter((a) => !noExternalServices(a));
+  const tableRegion = html.slice(html.indexOf("<tbody>"), html.indexOf("</tbody>"));
+  for (const a of members) {
+    assert.ok(tableRegion.includes(`/apps/${a.slug}/`), `collection missing member ${a.slug}`);
+  }
+  for (const a of nonMembers) {
+    assert.ok(!tableRegion.includes(`/apps/${a.slug}/`), `collection wrongly lists ${a.slug}`);
+  }
+  assert.ok(
+    html.includes(`<strong>${members.length}</strong> of ${apps.length}`),
+    "collection count not computed from data"
+  );
+});
+
+test("scoped figures carry visible markers in tables; legend present", () => {
+  const index = readFileSync(join(DOCS, "index.html"), "utf8");
+  const collection = readFileSync(join(DOCS, "collections", "no-external-database", "index.html"), "utf8");
+  // every non-general figure rendered in a table cell must carry the scopemark with its scope as title
+  for (const a of apps) {
+    for (const key of ["ram_min_mb", "ram_rec_mb"]) {
+      const f = a.specs?.[key];
+      if (f && f.general !== true) {
+        assert.ok(
+          index.includes(`title="${f.scope.replaceAll("&", "&amp;").replaceAll('"', "&quot;")}"`),
+          `index: ${a.slug} ${key} scoped figure missing scopemark/title`
+        );
+      }
+    }
+  }
+  assert.ok(index.includes("scopemark"), "index missing scopemarks entirely");
+  assert.ok(index.includes("scoped figure — hover"), "index missing scope legend");
+  assert.ok(collection.includes("Figures marked *"), "collection missing scope legend");
 });
 
 test("unverified entries visibly carry the verification-pending badge", () => {

@@ -25,6 +25,7 @@ function assertFigure(f, name, file) {
   assert.match(f.retrieved ?? "", ISO, `${file}: ${name}.retrieved must be YYYY-MM-DD`);
   assert.ok(f.retrieved <= new Date().toISOString().slice(0, 10), `${file}: ${name}.retrieved must not be in the future`);
   assert.ok(typeof f.scope === "string" && f.scope.trim().length >= 3, `${file}: ${name}.scope must state the install path`);
+  assert.ok(f.general === undefined || f.general === true, `${file}: ${name}.general must be true or absent`);
 }
 
 test("at least one app entry exists", () => {
@@ -64,10 +65,16 @@ for (const file of files) {
       const n = a.specs.no_official_figure;
       assert.ok(Array.isArray(n.fields) && n.fields.length > 0, `${file}: no_official_figure.fields required`);
       assert.match(n.evidence_url ?? "", HTTPS, `${file}: no_official_figure.evidence_url must be https`);
+      assert.ok(n.note === undefined || (typeof n.note === "string" && n.note.length > 0), `${file}: note must be a non-empty string if present`);
       for (const declared of n.fields) {
-        const base = declared.split(" ")[0];
-        assert.ok(!a.specs[base], `${file}: ${base} declared absent but a figure exists — contradiction`);
+        assert.ok(FIGURE_KEYS.includes(declared), `${file}: no_official_figure field "${declared}" must be an exact figure key (prose goes in note)`);
+        assert.ok(!a.specs[declared], `${file}: ${declared} declared absent but a figure exists — contradiction`);
       }
+    }
+    // field-level completeness: every figure key is either present or explicitly declared absent
+    for (const k of FIGURE_KEYS) {
+      const covered = Boolean(a.specs?.[k]) || (a.specs?.no_official_figure?.fields ?? []).includes(k);
+      assert.ok(covered, `${file}: ${k} is neither sourced nor declared absent — silent absence (defect class 7)`);
     }
     // min/rec sanity: recommended >= minimum when both present
     if (a.specs?.ram_min_mb && a.specs?.ram_rec_mb) {

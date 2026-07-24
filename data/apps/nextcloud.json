@@ -1,0 +1,64 @@
+{
+  "name": "Nextcloud",
+  "slug": "nextcloud",
+  "category": "file-sync",
+  "website": "https://nextcloud.com",
+  "repo": "https://github.com/nextcloud/server",
+  "description": "Self-hosted file sync and collaboration platform with file sharing, calendar, and contacts apps.",
+  "status": "live",
+  "specs": {
+    "ram_min_mb": {
+      "value": 128,
+      "source_url": "https://docs.nextcloud.com/server/latest/admin_manual/installation/system_requirements.html",
+      "quote": "Nextcloud needs a minimum of 128MB RAM per process, and we recommend a minimum of 512MB RAM per process.",
+      "retrieved": "2026-07-24",
+      "scope": "Per process, general server installation"
+    },
+    "ram_rec_mb": {
+      "value": 512,
+      "source_url": "https://docs.nextcloud.com/server/latest/admin_manual/installation/system_requirements.html",
+      "quote": "Nextcloud needs a minimum of 128MB RAM per process, and we recommend a minimum of 512MB RAM per process.",
+      "retrieved": "2026-07-24",
+      "scope": "Per process, general server installation"
+    },
+    "no_official_figure": {
+      "fields": [
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://docs.nextcloud.com/server/latest/admin_manual/installation/system_requirements.html"
+    }
+  },
+  "deps": [
+    {
+      "service": "mariadb",
+      "required": false,
+      "source_url": "https://docs.nextcloud.com/server/latest/admin_manual/installation/system_requirements.html"
+    },
+    {
+      "service": "postgresql",
+      "required": false,
+      "source_url": "https://docs.nextcloud.com/server/latest/admin_manual/installation/system_requirements.html"
+    },
+    {
+      "service": "mysql",
+      "required": false,
+      "source_url": "https://docs.nextcloud.com/server/latest/admin_manual/installation/system_requirements.html"
+    }
+  ],
+  "docker": {
+    "image": "nextcloud",
+    "size_mb": 526,
+    "arches": [
+      "amd64",
+      "arm64",
+      "armv7"
+    ],
+    "source_url": "https://hub.docker.com/_/nextcloud",
+    "retrieved": "2026-07-24"
+  },
+  "sources_of_truth": [
+    "https://docs.nextcloud.com/server/latest/admin_manual/installation/system_requirements.html",
+    "https://hub.docker.com/_/nextcloud"
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "name": "Grafana",
+  "slug": "grafana",
+  "category": "observability",
+  "website": "https://grafana.com",
+  "repo": "https://github.com/grafana/grafana",
+  "description": "Open-source platform for querying, visualizing, and alerting on metrics, logs, and traces.",
+  "status": "live",
+  "specs": {
+    "ram_min_mb": {
+      "value": 512,
+      "source_url": "https://grafana.com/docs/grafana/latest/setup-grafana/installation/",
+      "quote": "Minimum recommended memory: 512 MB",
+      "retrieved": "2026-07-24",
+      "scope": "General installation, all supported platforms (listed under \"minimum system resources\")",
+      "general": true
+    },
+    "cpu_min_cores": {
+      "value": 1,
+      "source_url": "https://grafana.com/docs/grafana/latest/setup-grafana/installation/",
+      "quote": "Minimum recommended CPU: 1 core",
+      "retrieved": "2026-07-24",
+      "scope": "General installation, all supported platforms (listed under \"minimum system resources\")",
+      "general": true
+    },
+    "no_official_figure": {
+      "fields": [
+        "ram_rec_mb",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://grafana.com/docs/grafana/latest/setup-grafana/installation/",
+      "note": "The requirements page publishes only tier-based sizing tables (Small/Medium/Large), no single general recommended figure."
+    }
+  },
+  "deps": [
+    {
+      "service": "mysql",
+      "required": false,
+      "source_url": "https://grafana.com/docs/grafana/latest/setup-grafana/installation/"
+    },
+    {
+      "service": "postgresql",
+      "required": false,
+      "source_url": "https://grafana.com/docs/grafana/latest/setup-grafana/installation/"
+    }
+  ],
+  "docker": {
+    "image": "grafana/grafana",
+    "size_mb": 361,
+    "arches": [
+      "amd64",
+      "arm64",
+      "armv7"
+    ],
+    "source_url": "https://hub.docker.com/r/grafana/grafana",
+    "retrieved": "2026-07-24"
+  },
+  "sources_of_truth": [
+    "https://grafana.com/docs/grafana/latest/setup-grafana/installation/",
+    "https://hub.docker.com/r/grafana/grafana"
+  ]
+}

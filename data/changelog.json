@@ -1,1 +1,56 @@
-[]
+[
+  {
+    "date": "2026-07-24",
+    "app": "gitea",
+    "change": "Verification: RAM/CPU figure source corrected \u2014 the quote lives on the docs home page (System Requirements), not /installation/comparison; quote restored to the literal sentence ending 'small teams/projects.' (seed had truncated it). Values unchanged.",
+    "source_url": "https://docs.gitea.com/"
+  },
+  {
+    "date": "2026-07-24",
+    "app": "immich",
+    "change": "Verification: redis dependency re-sourced to the official docker-compose.yml \u2014 the requirements page no longer mentions Redis/Valkey, but the compose file still runs a required redis service (valkey image). Dependency itself unchanged.",
+    "source_url": "https://github.com/immich-app/immich/blob/main/docker/docker-compose.yml"
+  },
+  {
+    "date": "2026-07-24",
+    "app": "home-assistant",
+    "change": "Verification: RAM minimum quote replaced with the full literal bullet 'Raspberry Pi 4 or 5 with power supply (minimum 2 GB RAM)' \u2014 seed had an ellipsis-joined fragment. Value and scope unchanged.",
+    "source_url": "https://www.home-assistant.io/installation/"
+  },
+  {
+    "date": "2026-07-24",
+    "app": "jellyfin",
+    "change": "Verification: recommended-RAM quote replaced with the full literal sentences (seed paraphrase dropped the word 'running'); scope softened \u2014 the docs state no hard minimum but do not 'explicitly avoid' one. Value unchanged.",
+    "source_url": "https://jellyfin.org/docs/general/administration/hardware-selection/"
+  },
+  {
+    "date": "2026-07-24",
+    "app": "frigate",
+    "change": "Verification: added official RAM figures (4GB basic minimum, 16GB recommended) from the 'Planning a New Installation' page, which the harvest missed; recorded GHCR image size/arches for the :stable tag (no :latest tag exists); deps changed from none to ffmpeg (bundled, required).",
+    "source_url": "https://docs.frigate.video/frigate/planning_setup/"
+  },
+  {
+    "date": "2026-07-24",
+    "app": "paperless-ngx",
+    "change": "Verification: broker dependency restructured \u2014 docs require 'a Redis-compatible broker (a current release of Valkey or Redis)' and the official compose ships valkey, so valkey is listed required with redis as an accepted alternative (optional); filled GHCR image size/arches.",
+    "source_url": "https://github.com/paperless-ngx/paperless-ngx/blob/main/docker/compose/docker-compose.sqlite.yml"
+  },
+  {
+    "date": "2026-07-24",
+    "app": "frigate",
+    "change": "QA: ffmpeg reclassified \u2014 it is bundled inside the official image, not an external service the operator runs; deps now 'none required'.",
+    "source_url": "https://docs.frigate.video/frigate/installation/"
+  },
+  {
+    "date": "2026-07-24",
+    "app": "jellyfin",
+    "change": "QA: ffmpeg reclassified \u2014 jellyfin-ffmpeg ships with the server, not an external service; deps now 'none required'.",
+    "source_url": "https://jellyfin.org/docs/general/administration/hardware-selection/"
+  },
+  {
+    "date": "2026-07-24",
+    "app": "adguard-home",
+    "change": "QA: absence evidence_url replaced \u2014 discussion 7350 did not evidence the gap; now cites the official getting-started page that publishes no hardware figures.",
+    "source_url": "https://adguard-dns.io/kb/adguard-home/getting-started/"
+  }
+]

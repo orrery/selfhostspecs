@@ -1,0 +1,54 @@
+{
+  "name": "Frigate",
+  "slug": "frigate",
+  "category": "nvr",
+  "website": "https://frigate.video",
+  "repo": "https://github.com/blakeblackshear/frigate",
+  "description": "Open-source network video recorder with real-time local AI object detection for IP cameras.",
+  "status": "live",
+  "specs": {
+    "ram_min_mb": {
+      "value": 4096,
+      "source_url": "https://docs.frigate.video/frigate/planning_setup/",
+      "quote": "Basic Minimum: 4GB RAM",
+      "retrieved": "2026-07-24",
+      "scope": "Docker install; very basic setup with a few cameras and a dedicated object detection accelerator, no enrichments (same page states 8GB minimum if enrichment features are used)"
+    },
+    "ram_rec_mb": {
+      "value": 16384,
+      "source_url": "https://docs.frigate.video/frigate/planning_setup/",
+      "quote": "For most users, especially those with many cameras (8+) or who plan to heavily leverage enrichments, 16GB of RAM is highly recommended.",
+      "retrieved": "2026-07-24",
+      "scope": "Docker install; most users, especially many cameras (8+) or heavy enrichment use"
+    },
+    "no_official_figure": {
+      "fields": [
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://docs.frigate.video/frigate/planning_setup/"
+    }
+  },
+  "deps": [
+    {
+      "service": "none",
+      "required": false,
+      "source_url": "https://docs.frigate.video/frigate/installation/"
+    }
+  ],
+  "docker": {
+    "image": "ghcr.io/blakeblackshear/frigate:stable",
+    "size_mb": 1715,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://github.com/blakeblackshear/frigate/pkgs/container/frigate",
+    "retrieved": "2026-07-24"
+  },
+  "sources_of_truth": [
+    "https://docs.frigate.video/frigate/hardware/",
+    "https://docs.frigate.video/frigate/planning_setup/",
+    "https://docs.frigate.video/frigate/installation/"
+  ]
+}

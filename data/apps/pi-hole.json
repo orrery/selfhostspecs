@@ -1,0 +1,48 @@
+{
+  "name": "Pi-hole",
+  "slug": "pi-hole",
+  "category": "dns",
+  "website": "https://pi-hole.net",
+  "repo": "https://github.com/pi-hole/pi-hole",
+  "description": "Network-wide DNS sinkhole that blocks ads and trackers for every device on the local network.",
+  "status": "live",
+  "specs": {
+    "ram_min_mb": {
+      "value": 512,
+      "source_url": "https://docs.pi-hole.net/main/prerequisites/",
+      "quote": "512MB RAM",
+      "retrieved": "2026-07-24",
+      "scope": "Hardware prerequisites list, bare-metal install on a supported OS (no min/rec qualifier in source)"
+    },
+    "no_official_figure": {
+      "fields": [
+        "ram_rec_mb",
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://docs.pi-hole.net/main/prerequisites/"
+    }
+  },
+  "deps": [
+    {
+      "service": "none",
+      "required": false,
+      "source_url": "https://docs.pi-hole.net/main/prerequisites/"
+    }
+  ],
+  "docker": {
+    "image": "pihole/pihole",
+    "size_mb": 41,
+    "arches": [
+      "amd64",
+      "arm64",
+      "armv7"
+    ],
+    "source_url": "https://hub.docker.com/r/pihole/pihole",
+    "retrieved": "2026-07-24"
+  },
+  "sources_of_truth": [
+    "https://docs.pi-hole.net/main/prerequisites/",
+    "https://hub.docker.com/r/pihole/pihole"
+  ]
+}
