@@ -3,6 +3,16 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-07-24 — FIND run #2 (3 new apps queued, 1 collection held)
+
+14. **Component-vs-whole-app scoping is a new shape of Defect Class #3.** Nextcloud's sourced
+    "128MB RAM" is scoped "per process" in its own quote — a real install runs several
+    processes plus a database. A "fits on a 1GB VPS" collection built by filtering on
+    `ram_min_mb <= 1024` alone would silently present a component figure as the whole app's
+    footprint. → Downstream: any collection/filter over `ram_min_mb` must check each figure's
+    `scope` text for per-process/per-component language and exclude those entries explicitly,
+    not just threshold the number.
+
 ## 2026-07-24 — First full BUILD/TEST cycle (14 entries)
 
 9. **Quotes written from notes drift: 3 of 4 seed quotes were paraphrases** (only Immich's

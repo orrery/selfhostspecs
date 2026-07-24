@@ -3,73 +3,71 @@
 Statuses: `unverified` → (verifier sign-off) → `queued` → `building` → `shipped`, or
 `rejected` (with refutation, kept below as the graveyard). Dedupe against BOTH lists.
 
-## Queued (verifier-signed) — 2026-07-24 FIND run
-Verifier confirmed all 11 items below CONFIRMED (0 refuted). Independent agent pre-checked:
-exactly 6 live entries exist (gitea, home-assistant, immich, jellyfin, uptime-kuma, vaultwarden);
-none of the below collide with them or with each other; none appear in the Rejected graveyard.
+## Shipped (previous FIND batch, 2026-07-24 first cycle)
+The 8 coverage-gap apps, docker-column harvest, and no-external-database collection queued by
+the 2026-07-24 FIND run all shipped in the first BUILD/TEST cycle — 14 apps now live (gitea,
+home-assistant, immich, jellyfin, uptime-kuma, vaultwarden + adguard-home, frigate, grafana,
+n8n, nextcloud, paperless-ngx, pi-hole, syncthing). See reports/DECISIONS.md.
+
+Still pending BUILD from that batch (verifier-signed, not yet built — schema changes, paced
+one per reviewed batch):
+- **GPU / hardware-transcoding support column** (Jellyfin, Immich, Frigate) — verifier-cleared
+  against territory exclusions.
+- **Community-figures column** (owner directive rule 8 amendment) — candidates: vaultwarden,
+  adguard-home, uptime-kuma, syncthing, paperless-ngx.
+
+## Queued (verifier-signed) — 2026-07-24 FIND run #2
+Verifier (independent agent, did not propose these) ran 10 WebSearch passes (2-3 phrasings per
+candidate), confirmed no collision with the 14 live entries or the Rejected graveyard below.
 
 ### Coverage-gap apps — ready for BUILD
-- **Nextcloud** (file sync/collab) — 36.2k stars, v34.0.2 released 2026-07-23 (active). Fork
-  lineage from ownCloud confirmed, no collision with covered apps. Official system-requirements
-  page confirmed to exist (docs.nextcloud.com).
-- **Pi-hole** (DNS/ad-block) — v6.4.3, active. Confirmed a distinct project from AdGuard Home
-  (independent origins, 2015 vs 2018). Official docs repo prerequisites.md carries RAM figures.
-- **Frigate NVR** (camera/NVR) — v0.17.2, active. Distinct from Immich. Hardware docs page is
-  unusually strong (AVX/AVX2 CPU requirement, RAM figure stated) — strongest sourceability in
-  this batch.
-- **Grafana** (dashboards/observability) — v13.1.1 released 3 days pre-run, active. No fork/
-  rename history. Official requirements page exists; expect a sparse/soft minimum (Learning #4).
-- **Paperless-ngx** (document mgmt) — v3.0.2 released same day. Legitimate succession chain
-  (Paperless → Paperless-ng, abandoned 2021 → Paperless-ngx, current) — not a rename collision.
-  Docs exist; likely no crisp RAM minimum (Redis OOM guidance only, not a stated floor).
-- **Syncthing** (P2P file sync) — v2.1.2, active. Distinct from proprietary Resilio Sync.
-  **Weakest sourceability in the batch** — no dedicated requirements page found, only forum
-  threads. BUILD should expect a likely `no_official_figure` outcome on RAM specifically.
-- **n8n** (workflow automation) — v2.31.5 released 2 days pre-run, very active (322 open
-  issues/1.1k PRs). Distinct from Node-RED. Official memory-errors doc gives usage figures
-  (~180MiB average; 250Mi/500Mi in example k8s manifests) — sourceable, not a crisp minimum.
-- **AdGuard Home** (DNS/ad-block) — 35.6k stars, active. Confirmed distinct from Pi-hole.
-  Official wiki states a min/recommended RAM figure.
+- **Portainer** (Docker management UI) — official docs.portainer.io requirements page confirmed
+  live at multiple versioned paths (real, maintained, not stale). No fork/rename collision
+  (Dockge/Yacht/Arcane/CapRover are distinct competitors). CE vs BE share one requirements doc
+  (low edition-mixup risk). **Harvester note:** third-party citations disagree on the exact
+  figure (1GB vs 2GB RAM) — fetch and quote the live page directly, don't inherit a number from
+  this brief.
+- **Netdata** (real-time monitoring agent) — official learn.netdata.cloud sizing docs confirmed
+  current. Distinct from Grafana (agent/collector vs. visualization layer — sources frame them
+  as complementary) and from Uptime Kuma (full-stack metrics vs. uptime pings). **Harvester
+  note:** RAM story is formula-based (`UNIQUE_METRICS × 16KiB + 32MiB cache`), not a single
+  minimum. Harvest the stated **default-footprint quote** ("100MB to 200MB… depending on the
+  number of metrics") as the figure — same shape as n8n's accepted usage-figure precedent.
+  Do not force the scaling formula into a single number or extrapolate a worst case.
+- **PeerTube** (federated video hosting) — official docs.joinpeertube.org FAQ confirmed current
+  and specific: "1.5GB RAM plenty for a basic instance, usually takes at most 500MB"; tiered
+  guidance for concurrent viewers (4GB/1000 viewers) and on-box transcoding (8GB). No rename
+  history (Framasoft, since 2017); "alternatives" found are unrelated competing projects.
+  Strongest sourceability of this batch.
 
-### Column opportunities — ready for BUILD
-- **Docker image size + arches harvest** for the existing 6 entries. Verifier live-tested the
-  Docker Hub API this run (`hub.docker.com/v2/repositories/jellyfin/jellyfin/tags/latest`):
-  confirmed a real per-architecture `images[]` array with `architecture` + `size` fields.
-  Mechanical, no judgment calls — highest-confidence item in this batch.
-- **GPU / hardware-transcoding support column** (Jellyfin, Immich, Frigate, Photoprism-class
-  apps), sourced from each project's official hardware-acceleration docs (NVENC/QSV/VAAPI/
-  RKMPP support). Verifier explicitly cleared this against the owner's permanent territory
-  exclusion: it's a sourced fact column (same shape as the existing ARM-support column), not
-  a "which GPU should I buy" calculator — no user input, no computed answer.
-
-### Community-figures column (owner directive 2026-07-24) — queued, schema change
-Add `community_*` spec fields per OPERATIONS.md rule 8 amendment: where officials are absent,
-harvest maintainer statements / project-forum consensus with full provenance + basis grade,
-rendered as a clearly-labeled separate class. Immediate candidates: vaultwarden (collaborator
-Pi-Zero statements in discussion #5075), adguard-home, uptime-kuma, syncthing, paperless-ngx.
-One schema change per reviewed batch: GPU column first (Sunday), this next (Wednesday).
-
-### Collection page — ready for BUILD
-- **"Self-hosted apps without an external database"** (SQLite-only / zero required external
-  service), derived entirely from the existing `deps[].required` schema field — zero new
-  harvesting. Verifier confirmed the field is already CI-enforced, and ran 3 additional
-  independent search phrasings beyond FIND's own 3 (6 total) — no dedicated incumbent page
-  found owning this angle; general directories filter but don't publish it as a standalone page.
-
-## Unverified / held (not sent to verifier this run)
-- **Collection page: "runs on a 1GB VPS"** — held on its own precondition, sanity-checked by
-  the verifier: of the 6 live entries, only home-assistant carries any `ram_min_mb`, and it's
-  scope-restricted (RPi/HA-OS only, not general x86). Revisit once the Wave 1 apps above are
-  live with RAM figures.
-- **Below the ≥14 score bar this FIND run** (not sent to verifier; real projects, weaker
-  official RAM/CPU documentation per Learning #4 — do not re-propose without new sourceability
+## Unverified / held (not sent further this run)
+- **Collection page: "runs on a 1GB VPS"** — precondition partially met (was blocked on zero
+  general RAM figures; now 4 of 14 live entries carry `ram_min_mb`), but verifier's full sweep
+  found only **3 honestly-qualifying members**: gitea (1024), grafana (512), pi-hole (512).
+  **Nextcloud's 128MB EXCLUDED** — verifier flagged its source quote is scoped "per process";
+  presenting it as "fits on 1GB" would conflate one PHP-FPM process with the whole multi-process
+  + database stack (a new shape of Defect Class #3, logged to LEARNINGS). Held: 3 members is
+  thin for a launch-worthy page — revisit once Portainer/Netdata/PeerTube (or a future batch)
+  add more general (non-Pi-scoped) RAM minimums. When built, hard-code the Nextcloud exclusion
+  rule, don't just filter on "has a value."
+- **Below the ≥14 score bar, not sent to verifier** (do not re-propose without new sourceability
   evidence): Navidrome (13), Audiobookshelf (13), Miniflux (13), Photoprism (12), Mealie (12),
-  BookStack (12), Firefly III (12).
-- Considered and deferred: disk/storage-footprint column — too inconsistently documented
-  officially to clear the bar (Sourceability ~2); not proposed to verifier.
+  BookStack (12), Firefly III (12) — from the prior run. This run: **Zabbix** (13) — official
+  docs cite "128MB physical memory," essentially unchanged since v1.8, while real deployments
+  need ~8GB; reads as a stale legacy floor, not a representative minimum. **NetBox** (12) —
+  Community/OSS docs (~1GB min) and NetBox **Enterprise** embedded-cluster docs (16GB+) now
+  live under the same netboxlabs.com domain differing only by URL path; a generic harvest could
+  plausibly grab the wrong product's figure. Standing caution if NetBox is ever revisited.
+  **Outline** wiki — no official requirements documentation found in 3 search phrasings
+  (third-party guides only); not scoreable, not proposed.
+- Considered and rejected: **"ARM/Raspberry Pi-ready apps" collection** — checked `docker.arches`
+  across all 14 live entries: 14/14 already carry arm64 or armv7. Zero differentiating value
+  (would list the entire dataset); not proposed to verifier.
+- Considered and deferred (prior run): disk/storage-footprint column — too inconsistently
+  documented officially to clear the bar (Sourceability ~2); not proposed to verifier.
 
 ### Freshness work
-None. All 6 live entries retrieved 2026-07-24 (today); nothing crosses the 90-day staleness
+None. All 14 live entries retrieved 2026-07-24 (today); nothing crosses the 90-day staleness
 line yet.
 
 ## Rejected (the graveyard — do not re-propose without new evidence)
