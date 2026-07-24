@@ -147,8 +147,10 @@ Pre-launch trickle (GitHub repo public, awesome-list PRs) is allowed and encoura
 Total spent: **~$11**. Standing cap: $0 unapproved.
 
 ## Infrastructure
-- Repo: github.com/<owner>/selfhostspecs (created private; owner flips public before Pages —
-  free-plan Pages requires a public repo, and public data is a distribution channel here).
+- Repo: github.com/orrery/selfhostspecs — PUBLIC (owner decision 2026-07-24, made with the
+  trade-off surfaced: open data/stars/corrections channel vs. visible playbook; owner has
+  GitHub Pro so this was a choice, not a constraint). Nothing secret lives in the repo —
+  tokens are Actions secrets only.
 - Hosting: GitHub Pages via CI-gated deploy workflow; custom domain selfhostspecs.com.
 - Analytics: GoatCounter site `selfhostspecs` (pending owner creation under existing account);
   snapshot Action writes reports/stats/ daily for cloud runs (egress policy blocks direct API).

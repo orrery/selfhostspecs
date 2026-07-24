@@ -14,8 +14,9 @@ Append-only log of material decisions with their evidence. AUDIT checks cadence 
   Deviation from the littlecalcs pattern (committed docs/): eliminates hand-edit drift and
   makes the schema test the single contract. Red-teamed: risk is deploy-only breakage invisible
   locally — mitigated by site-invariants running the real build in CI.
-- 2026-07-24 — **Repo will be created private, flipped public by owner before Pages.**
-  Free-plan Pages needs public; public data is also a distribution channel (stars). The flip
-  is an owner checklist item, not an operator action.
+- 2026-07-24 — **Repo made PUBLIC (owner call, trade-off surfaced).** Owner has GitHub Pro so
+  private+Pages was available; owner chose public anyway after hearing both sides (open
+  data/stars/corrections channel vs. visible playbook). Pages had already been enabled +
+  custom domain set via API. Operator flipped visibility via API on owner instruction.
 - 2026-07-24 — **Launch gate installed** (≥100 well-sourced entries etc. — OPERATIONS.md).
   Evidence: one-shot channel dynamics (LEARNINGS #7).
