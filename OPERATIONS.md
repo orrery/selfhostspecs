@@ -147,6 +147,13 @@ the RAM column sourced-or-honestly-absent for all, zero open defect-class findin
 changelog demonstrably working. The operator drafts the posts; the owner fires them (rule 10).
 Pre-launch trickle (GitHub repo public, awesome-list PRs) is allowed and encouraged.
 
+## File-size guardrails (owner directive 2026-07-24)
+Governance files are read by every run; their size is a per-run tax. CI enforces byte budgets
+(`tests/file-budgets.test.mjs`) — exceeding one means COMPACT, never raise the budget (budget
+raises are owner decisions). Compaction rules: a LEARNING that has graduated into a CI test or
+defect class shrinks to one line; DECISIONS/AUDIT entries older than a quarter roll into
+`reports/archive/`; backlog graveyard entries are one line each. Write tersely from the start.
+
 ## Budget Ledger
 | Date | Item | Cost | Approved by |
 |------|------|------|-------------|
