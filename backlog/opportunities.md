@@ -42,6 +42,13 @@ none of the below collide with them or with each other; none appear in the Rejec
   exclusion: it's a sourced fact column (same shape as the existing ARM-support column), not
   a "which GPU should I buy" calculator — no user input, no computed answer.
 
+### Community-figures column (owner directive 2026-07-24) — queued, schema change
+Add `community_*` spec fields per OPERATIONS.md rule 8 amendment: where officials are absent,
+harvest maintainer statements / project-forum consensus with full provenance + basis grade,
+rendered as a clearly-labeled separate class. Immediate candidates: vaultwarden (collaborator
+Pi-Zero statements in discussion #5075), adguard-home, uptime-kuma, syncthing, paperless-ngx.
+One schema change per reviewed batch: GPU column first (Sunday), this next (Wednesday).
+
 ### Collection page — ready for BUILD
 - **"Self-hosted apps without an external database"** (SQLite-only / zero required external
   service), derived entirely from the existing `deps[].required` schema field — zero new

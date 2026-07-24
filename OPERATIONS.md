@@ -35,6 +35,13 @@ Owner: Antony (antony.iorio@icloud.com). Operator: Claude. Started: 2026-07-24.
    quote (or precise locator), and a retrieved date. A figure that cannot be sourced is
    published as "no official figure" — never estimated, never borrowed from unsourced third
    parties. Honest absence is a feature (link the upstream issue asking for the number).
+   **Community-figure amendment (owner directive 2026-07-24):** where no official figure
+   exists, a COMMUNITY figure may be published as a visibly separate class — same provenance
+   object (URL, verbatim quote, retrieved date) plus a `basis` grade: maintainer/collaborator
+   statement > sustained consensus in the project's own forum/discussions; random blogs
+   inadmissible. Community figures never enter official columns, never replace the
+   "no official figure" declaration, and are always labeled community-reported on every
+   surface. Independent verification applies identically.
 9. **Harvester ≠ verifier:** no figure goes live until a second agent that did not harvest it
    re-fetches the source and confirms quote, value, units, and scope. Research is judged like
    code: the writer never grades their own work.
