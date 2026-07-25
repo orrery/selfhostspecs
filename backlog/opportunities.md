@@ -40,6 +40,37 @@ candidate), confirmed no collision with the 14 live entries or the Rejected grav
   history (Framasoft, since 2017); "alternatives" found are unrelated competing projects.
   Strongest sourceability of this batch.
 
+## Queued (verifier-signed) — 2026-07-25 FIND run #3
+Verifier (independent agent, did not propose these) ran 2-3 independently-phrased WebSearch
+passes per candidate, confirmed no collision with live/queued entries or the Rejected graveyard.
+
+### Coverage-gap apps — ready for BUILD
+- **Vikunja** (self-hosted task/project management) — official vikunja.io/docs/installing
+  states a ~256MB minimum, corroborated across multiple independent secondary sources; ~4.7k
+  GitHub stars, active releases through July 2026. Strongest sourceability of this batch — also
+  the lightest-footprint app in the pipeline. **Harvester note:** WebFetch to vikunja.io 403s
+  from cloud sessions; pin the exact quote from vikunja.io/docs/installing in a local session,
+  don't inherit the corroborating third-party numbers used for verification.
+- **Zulip** (self-hosted team chat, Slack alternative) — official zulip.readthedocs.io (mirrored
+  at github.com/zulip/zulip docs/production/requirements.md) states tiered RAM-by-user-count
+  figures (~2GB+2GB swap small installs, 4GB+ for 100+ users) — same shape as the accepted
+  Netdata formula precedent. **Collision hazard found:** `zulipaaa.readthedocs.io` is a real,
+  live, unofficial ReadTheDocs mirror of the same docs tree under a confusingly similar name —
+  harvester must cite ONLY zulip.readthedocs.io or github.com/zulip/zulip, never the mirror.
+- **Rocket.Chat** (self-hosted team chat, Slack alternative) — official
+  docs.rocket.chat/docs/system-requirements (backed by github.com/RocketChat/docs) gives a real
+  tiered scale (1 core/1GB for ≤200 users/50 concurrent → up to 16 vCPU/12GiB enterprise tier);
+  finder's initial "conflicting numbers" concern was resolved — it's one tiered official page,
+  not ambiguity. **Harvester note:** pin the minimum tier (1 core/1GB/≤200 users), not the
+  enterprise number out of context; unofficial doc forks exist (abrom, iuvei GitHub mirrors) —
+  cite only docs.rocket.chat or github.com/RocketChat/docs.
+- **Discourse** (self-hosted forum/community platform) — official
+  github.com/discourse/discourse/blob/main/docs/INSTALL.md (org-maintained, main branch) states
+  1GB RAM minimum with mandatory swap, 2GB+ recommended for production; corroborated (not
+  substituted) by long-running meta.discourse.org threads. 22,000+ communities, 46.5k+ GitHub
+  stars — resolves finder's uncertainty about source authority. **Harvester note:** the swap
+  requirement is load-bearing to the 1GB figure — don't drop that qualifier when harvesting.
+
 ## Unverified / held (not sent further this run)
 - **Collection page: "runs on a 1GB VPS"** — precondition partially met (was blocked on zero
   general RAM figures; now 4 of 14 live entries carry `ram_min_mb`), but verifier's full sweep
@@ -49,7 +80,13 @@ candidate), confirmed no collision with the 14 live entries or the Rejected grav
   + database stack (a new shape of Defect Class #3, logged to LEARNINGS). Held: 3 members is
   thin for a launch-worthy page — revisit once Portainer/Netdata/PeerTube (or a future batch)
   add more general (non-Pi-scoped) RAM minimums. When built, hard-code the Nextcloud exclusion
-  rule, don't just filter on "has a value."
+  rule, don't just filter on "has a value." **2026-07-25 update:** Vikunja (~256MB, verifier-
+  confirmed above) would be a strong 4th qualifying member once built — re-check its scope text
+  for per-process language before counting it, same discipline as Nextcloud's exclusion.
+- **No new column proposed this run** — GPU/transcoding and community-figures columns are
+  already verifier-signed and unbuilt (see Shipped section above); OPERATIONS.md paces one
+  schema change per reviewed BUILD batch, so a third would just be backlog bloat ahead of
+  capacity. Revisit column-mining once one of the two queued columns ships.
 - **Below the ≥14 score bar, not sent to verifier** (do not re-propose without new sourceability
   evidence): Navidrome (13), Audiobookshelf (13), Miniflux (13), Photoprism (12), Mealie (12),
   BookStack (12), Firefly III (12) — from the prior run. This run: **Zabbix** (13) — official
@@ -59,7 +96,12 @@ candidate), confirmed no collision with the 14 live entries or the Rejected grav
   live under the same netboxlabs.com domain differing only by URL path; a generic harvest could
   plausibly grab the wrong product's figure. Standing caution if NetBox is ever revisited.
   **Outline** wiki — no official requirements documentation found in 3 search phrasings
-  (third-party guides only); not scoreable, not proposed.
+  (third-party guides only); not scoreable, not proposed. **Authentik** (self-hosted SSO/
+  identity, ~12-13, this run) — official docs state a 2GB minimum, but
+  github.com/goauthentik/authentik/issues/21413 (opened 2026-04-06) documents a real ~1400-user
+  production deployment needing 7.4GB (worker) + 1.4GB (postgres) — the official floor is
+  stale/unrepresentative, same shape as the Zabbix rejection. Not sent to verifier. Revisit only
+  if the project publishes a realistic sizing tier (not just the disputed legacy minimum).
 - Considered and rejected: **"ARM/Raspberry Pi-ready apps" collection** — checked `docker.arches`
   across all 14 live entries: 14/14 already carry arm64 or armv7. Zero differentiating value
   (would list the entire dataset); not proposed to verifier.
@@ -67,8 +109,8 @@ candidate), confirmed no collision with the 14 live entries or the Rejected grav
   documented officially to clear the bar (Sourceability ~2); not proposed to verifier.
 
 ### Freshness work
-None. All 14 live entries retrieved 2026-07-24 (today); nothing crosses the 90-day staleness
-line yet.
+None. All 14 live entries retrieved 2026-07-24 (yesterday, 1 day old); nothing crosses the
+90-day staleness line yet.
 
 ## Rejected (the graveyard — do not re-propose without new evidence)
 - Static JSON "API hub" (2026-07-24): occupied + dead channels + LLM drain. Verifier-refuted.

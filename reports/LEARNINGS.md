@@ -3,6 +3,16 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-07-25 — FIND run #3 (4 new apps queued)
+
+15. **Unofficial doc mirrors are a live collision risk, not a hypothetical one.** Verifying
+    Zulip's requirements page surfaced `zulipaaa.readthedocs.io` — a real, currently-live,
+    unofficial ReadTheDocs clone of `zulip.readthedocs.io` under a confusingly similar name;
+    Rocket.Chat has the same shape (GitHub doc forks: abrom, iuvei). → Downstream: every
+    harvester note must name the canonical org-owned domain/repo explicitly, not just "official
+    docs" — verifier's job includes checking the citation target is the org's own property, not
+    a same-content mirror a lazy search hit could substitute in.
+
 ## 2026-07-24 — FIND run #2 (3 new apps queued, 1 collection held)
 
 14. **Component-vs-whole-app scoping is a new shape of Defect Class #3.** Nextcloud's sourced
