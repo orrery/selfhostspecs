@@ -22,6 +22,20 @@ Still pending BUILD (verifier-signed, schema changes, paced one per reviewed bat
   the FIND brief's stale "1GB/≤200 users" — re-sourced, see LEARNINGS #21), deps: mongodb
   required.
 
+## Queued (verifier-signed), buildable now — FIND run #4 (2026-07-26)
+Both fetched clean via GitHub-hosted mirrors this run (no egress block); verifier re-fetched
+independently and signed off. Next BUILD batch candidates.
+- **OpenProject** (project management, heavyweight counterpart to queued Vikunja) — 17/20.
+  `opf/openproject` docs: "Quad Core CPU (>=2ghz)" / "4096 MB" RAM / "20 GB" disk, for
+  "up to 200 total users" single-server; scaling table to 1500 users. **Deps correction from
+  verifier: postgresql + memcached (NOT Postgres-only as first drafted) — memcached runs as
+  its own container per the official docker-compose, not bundled** (Zulip-shape, LEARNINGS #20).
+- **Plausible Community Edition** (self-hosted analytics, new category) — 15/20.
+  `plausible/community-edition` README: "At least 2 GB of RAM is recommended... without fear
+  of OOMs" (RECOMMENDED only — no official minimum, publish minimum as `no_official_figure`
+  per Defect Class #2); CPU requires SSE4.2/NEON (useful ARM-column signal: excludes old
+  ARMv6 boards). Deps: postgres + clickhouse (compose-confirmed).
+
 ## Queued (verifier-signed), still unbuilt — 2026-07-24/25 FIND runs #2/#3
 Blocked this cycle on a confirmed cloud-egress constraint, not a judgment call: their official
 docs domains hard-block from this cloud session (curl exit 56); no GitHub-hosted mirror exists
@@ -49,6 +63,12 @@ owner-provisioned network allowlist.
   Firefly III (12), Zabbix (13, stale legacy floor), NetBox (12, product/URL collision risk),
   Outline (no official reqs doc found), Authentik (~12-13, official floor stale vs. a real
   7.4GB deployment in issue #21413 — revisit only if a realistic tier is published).
+  FIND run #4: Matrix Synapse (12, only a scoped "large public rooms" caveat, no general min;
+  chat category already saturated this cycle), FreshRSS (11, prose only, no figure — Miniflux
+  shape), Umami (11, deps only, no RAM figure — superseded by Plausible CE this run), Karakeep
+  (10), Beszel (10), Passbolt (9), Wiki.js (9), Duplicati (9), Kavita (8), Kopia (7),
+  Calibre-Web (6) — all: no numeric official hardware figure reachable from any fetchable
+  source this run.
 - Rejected: **"ARM/Pi-ready" collection** — 14/14 live entries already arm64/armv7, zero
   differentiating value.
 - Deferred: disk/storage-footprint column — too inconsistently documented (Sourceability ~2).

@@ -3,6 +3,21 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-07-26 — FIND run #4 (OpenProject, Plausible CE queued)
+
+25. **WebFetch's AI-summarized pass can silently drift scope-critical wording even when the
+    raw source is correct** — verifier's own WebFetch call on OpenProject's requirements doc
+    paraphrased "up to 200 total users" as "up to 200 **concurrent** users" (a real Defect
+    Class #3 scoping error), while a direct curl/raw fetch of the identical URL preserved the
+    exact wording. → Downstream: for scope-critical phrases (min-vs-recommended, total-vs-
+    concurrent, per-process-vs-whole-app), harvesters and verifiers must confirm against a raw
+    fetch, not just a summarized WebFetch pass, before locking the quote.
+26. **A harvester's draft dependency list can look complete from the requirements prose alone
+    and still be wrong** — OpenProject's system-requirements page names only Postgres, but the
+    official docker-compose runs memcached as its own container (Zulip-shape, LEARNINGS #20,
+    second occurrence). → Downstream: always cross-check named deps against the actual official
+    compose/docker file, not just the prose requirements section.
+
 ## 2026-07-26 — ANALYZE + BUILD (Discourse, Zulip, Rocket.Chat)
 
 23. **A fixed prose block can go stale the moment a new member joins its collection.**
