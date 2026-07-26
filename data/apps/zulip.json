@@ -1,0 +1,69 @@
+{
+  "name": "Zulip",
+  "slug": "zulip",
+  "category": "team-chat",
+  "website": "https://zulip.com",
+  "repo": "https://github.com/zulip/zulip",
+  "description": "Self-hosted team chat with topic-based threading, an alternative to Slack.",
+  "status": "pending-qa",
+  "specs": {
+    "ram_min_mb": {
+      "value": 2048,
+      "source_url": "https://github.com/zulip/zulip/blob/main/docs/production/requirements.md",
+      "quote": "For installations with fewer users, 1 CPU and 2 GB RAM with 2 GB of swap is sufficient.",
+      "retrieved": "2026-07-26",
+      "scope": "General self-hosted install (bare installer or Docker), fewer than ~100 users"
+    },
+    "cpu_min_cores": {
+      "value": 1,
+      "source_url": "https://github.com/zulip/zulip/blob/main/docs/production/requirements.md",
+      "quote": "For installations with fewer users, 1 CPU and 2 GB RAM with 2 GB of swap is sufficient.",
+      "retrieved": "2026-07-26",
+      "scope": "General self-hosted install (bare installer or Docker), fewer than ~100 users"
+    },
+    "no_official_figure": {
+      "fields": [
+        "ram_rec_mb",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://github.com/zulip/zulip/blob/main/docs/production/requirements.md",
+      "note": "Above-minimum guidance is a scaling table by daily-active-user count (e.g. 4GB at 25+ DAU, 8GB at 100+ DAU, 16GB+ at 400+ DAU), not a single general recommended figure."
+    }
+  },
+  "deps": [
+    {
+      "service": "postgresql",
+      "required": true,
+      "source_url": "https://github.com/zulip/docker-zulip/blob/main/compose.yaml"
+    },
+    {
+      "service": "redis",
+      "required": true,
+      "source_url": "https://github.com/zulip/docker-zulip/blob/main/compose.yaml"
+    },
+    {
+      "service": "rabbitmq",
+      "required": true,
+      "source_url": "https://github.com/zulip/docker-zulip/blob/main/compose.yaml"
+    },
+    {
+      "service": "memcached",
+      "required": true,
+      "source_url": "https://github.com/zulip/docker-zulip/blob/main/compose.yaml"
+    }
+  ],
+  "docker": {
+    "image": "ghcr.io/zulip/zulip-server:12.1-0",
+    "size_mb": 1094,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://github.com/zulip/docker-zulip/pkgs/container/zulip-server",
+    "retrieved": "2026-07-26"
+  },
+  "sources_of_truth": [
+    "https://github.com/zulip/zulip/blob/main/docs/production/requirements.md",
+    "https://github.com/zulip/docker-zulip"
+  ]
+}

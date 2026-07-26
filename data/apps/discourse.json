@@ -1,0 +1,61 @@
+{
+  "name": "Discourse",
+  "slug": "discourse",
+  "category": "forum",
+  "website": "https://www.discourse.org",
+  "repo": "https://github.com/discourse/discourse",
+  "description": "Self-hosted forum and community discussion platform, deployed via an all-in-one Docker container.",
+  "status": "pending-qa",
+  "specs": {
+    "ram_min_mb": {
+      "value": 1024,
+      "source_url": "https://github.com/discourse/discourse/blob/main/docs/INSTALL.md",
+      "quote": "1 GB RAM minimum (with [swap][swap])",
+      "retrieved": "2026-07-26",
+      "scope": "Official all-in-one Docker install, general (swap required at this size)"
+    },
+    "cpu_min_cores": {
+      "value": 1,
+      "source_url": "https://github.com/discourse/discourse/blob/main/docs/INSTALL.md",
+      "quote": "modern single core CPU, dual core recommended",
+      "retrieved": "2026-07-26",
+      "scope": "Official all-in-one Docker install, general"
+    },
+    "cpu_rec_cores": {
+      "value": 2,
+      "source_url": "https://github.com/discourse/discourse/blob/main/docs/INSTALL.md",
+      "quote": "modern single core CPU, dual core recommended",
+      "retrieved": "2026-07-26",
+      "scope": "Official all-in-one Docker install, general"
+    },
+    "no_official_figure": {
+      "fields": [
+        "ram_rec_mb"
+      ],
+      "evidence_url": "https://github.com/discourse/discourse/blob/main/docs/INSTALL.md",
+      "note": "INSTALL.md states a RAM minimum and a CPU minimum/recommended pair, but no separate recommended RAM figure."
+    }
+  },
+  "deps": [
+    {
+      "service": "none",
+      "required": false,
+      "source_url": "https://github.com/discourse/discourse_docker/blob/main/templates/postgres.template.yml"
+    }
+  ],
+  "docker": {
+    "image": "discourse/discourse",
+    "size_mb": 1144,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://hub.docker.com/v2/repositories/discourse/discourse/tags/latest",
+    "retrieved": "2026-07-26"
+  },
+  "sources_of_truth": [
+    "https://github.com/discourse/discourse/blob/main/docs/INSTALL.md",
+    "https://github.com/discourse/discourse_docker",
+    "https://hub.docker.com/r/discourse/discourse"
+  ]
+}

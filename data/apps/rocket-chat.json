@@ -1,0 +1,55 @@
+{
+  "name": "Rocket.Chat",
+  "slug": "rocket-chat",
+  "category": "team-chat",
+  "website": "https://www.rocket.chat",
+  "repo": "https://github.com/RocketChat/Rocket.Chat",
+  "description": "Self-hosted team chat platform backed by MongoDB, an alternative to Slack.",
+  "status": "pending-qa",
+  "specs": {
+    "ram_min_mb": {
+      "value": 2048,
+      "source_url": "https://github.com/RocketChat/docs/blob/main/deploy/deploy-rocket.chat/system-requirements.md",
+      "quote": "Scenario: Starter - No High Availability - Concurrent users ≤ 25 — Rocket.Chat: 1 vCPU, 2 GiB Memory, 40GB Storage (table image, transcribed from the hardware specifications figure on this page)",
+      "retrieved": "2026-07-26",
+      "scope": "Starter tier (no HA, ≤ 25 concurrent users) — the lowest of three published scenario tiers; excludes MongoDB's own separate resource allocation"
+    },
+    "cpu_min_cores": {
+      "value": 1,
+      "source_url": "https://github.com/RocketChat/docs/blob/main/deploy/deploy-rocket.chat/system-requirements.md",
+      "quote": "Scenario: Starter - No High Availability - Concurrent users ≤ 25 — Rocket.Chat: 1 vCPU, 2 GiB Memory, 40GB Storage (table image, transcribed from the hardware specifications figure on this page)",
+      "retrieved": "2026-07-26",
+      "scope": "Starter tier (no HA, ≤ 25 concurrent users) — the lowest of three published scenario tiers; excludes MongoDB's own separate resource allocation"
+    },
+    "no_official_figure": {
+      "fields": [
+        "ram_rec_mb",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://github.com/RocketChat/docs/blob/main/deploy/deploy-rocket.chat/system-requirements.md",
+      "note": "Requirements page publishes three scenario tables as images (Starter/Pro-HA/Enterprise-HA) rather than a single general recommended figure; Starter used as the minimum."
+    }
+  },
+  "deps": [
+    {
+      "service": "mongodb",
+      "required": true,
+      "source_url": "https://github.com/RocketChat/docs/blob/main/deploy/deploy-rocket.chat/system-requirements.md"
+    }
+  ],
+  "docker": {
+    "image": "rocketchat/rocket.chat",
+    "size_mb": 295,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://hub.docker.com/v2/repositories/rocketchat/rocket.chat/tags/latest",
+    "retrieved": "2026-07-26"
+  },
+  "sources_of_truth": [
+    "https://docs.rocket.chat/docs/system-requirements",
+    "https://github.com/RocketChat/docs/blob/main/deploy/deploy-rocket.chat/system-requirements.md",
+    "https://hub.docker.com/r/rocketchat/rocket.chat"
+  ]
+}

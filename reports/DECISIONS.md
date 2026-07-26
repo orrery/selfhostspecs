@@ -30,3 +30,33 @@ Append-only log of material decisions with their evidence. AUDIT checks cadence 
 - 2026-07-24 — **Verifier refutation rate 0/11 flagged for AUDIT**: coverage-gap items are
   mechanically confirmable so a high pass rate is plausible, but Monday's audit must red-team
   whether FIND verification is soft.
+- 2026-07-26 — **ANALYZE this cycle stayed pre-launch/dataset-readiness framed, no traffic
+  kills.** Evidence: repo 0 stars/0 forks/0 open issues, site 26 total hits (mostly operator
+  checks) — OPERATIONS.md's pre-launch rule (readiness, not traffic, is the metric) applies
+  cleanly; nothing meets any kill bar yet, nothing to kill.
+- 2026-07-26 — **BUILD batch scoped down from 7 queued apps to 3 (Discourse, Zulip,
+  Rocket.Chat) on a confirmed infrastructure constraint, not a judgment call.** Tested: Docker
+  Hub API, ghcr.io registry API, and raw.githubusercontent.com are reachable from this cloud
+  session; docs.portainer.io, learn.netdata.cloud, docs.joinpeertube.org, and vikunja.io are
+  not (curl exit 56, both via WebFetch and direct Bash curl — connection-level block, not a
+  tool limitation). Portainer/Netdata/PeerTube/Vikunja stay `queued`, unbuilt, for a local
+  session or an owner-provisioned network allowlist (LEARNINGS #11, reconfirmed #18).
+- 2026-07-26 — **Rocket.Chat's minimum-tier figure re-sourced live, not inherited from the
+  FIND brief, and it had drifted:** brief said "1 core/1GB, ≤200 users/50 concurrent"; the
+  live official table (a PNG embedded in otherwise-fetchable markdown, viewed directly) reads
+  1 vCPU/2 GiB for a "Starter" tier at ≤25 concurrent users. Built on the live figure only.
+- 2026-07-26 — **Independent verifier BLOCKED Zulip on first pass**: memcached (a real,
+  confirmed-required compose.yaml service) had been omitted from deps rather than flagged, and
+  `docker.source_url` cited compose.yaml for size/arches data that page doesn't contain. Fixed:
+  added `memcached` to the deps enum (this batch's one schema change — GPU/community-figures
+  stay queued) and re-pointed `docker.source_url` to the GHCR package page. Harvester≠verifier
+  working exactly as designed — first pass caught a real gap before it reached QA.
+- 2026-07-26 — **Discourse's Postgres/Redis classified as bundled (`service: none`), not
+  external deps**, per Defect Class #12: the official all-in-one Docker image runs them via
+  runit inside the same container (confirmed in discourse_docker's postgres template), same
+  shape as Frigate's bundled ffmpeg. An advanced multi-container path exists but isn't the
+  default/documented image this entry describes.
+- 2026-07-26 — **Analytics-snapshot Action failure (2026-07-25, exit 22) flagged to owner**,
+  not silently retried or worked around: cloud sessions can't reach the GoatCounter API to
+  diagnose further (egress policy), and CI's two workflows don't cross-gate so the outage was
+  invisible without checking Actions directly. Stats are 1 day stale as of this run.

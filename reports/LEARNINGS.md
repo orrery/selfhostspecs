@@ -3,85 +3,62 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-07-26 — ANALYZE + BUILD (Discourse, Zulip, Rocket.Chat)
+
+18. **Cloud-run egress is domain-specific, not blanket, and finer than LEARNINGS #11 implied.**
+    `raw.githubusercontent.com`, Docker Hub's `hub.docker.com/v2/...` API, and `ghcr.io`'s v2
+    registry/token endpoints (via `curl`) all work from this cloud session; standalone docs
+    domains (vikunja.io, docs.portainer.io, learn.netdata.cloud, docs.joinpeertube.org,
+    docs.rocket.chat) still hard-block (curl exit 56, connection-level, confirmed with both
+    WebFetch and raw Bash curl). → Downstream: before holding a queued app for "needs a local
+    session," check whether its official source has a GitHub-hosted mirror (docs-as-markdown
+    repo, or a GHCR-hosted image) — Discourse and Zulip both built this cycle purely via
+    GitHub-hosted sources; Portainer/Netdata/PeerTube/Vikunja have no such mirror and stay held.
+19. **A requirements table can be a PNG embedded in an otherwise-fetchable markdown file**
+    (Rocket.Chat's system-requirements.md renders its numbers as three GitBook screenshot
+    images, not text). WebFetch's markdown conversion silently drops image content — a harvester
+    that stops at the text pass would wrongly conclude "no figure." → Downstream: when a fetched
+    doc references `.gitbook/assets` or similar image embeds near a requirements section,
+    download and view the image directly (Read tool) before declaring the figure unsourceable.
+20. **A harvester silently dropping an unrepresentable dep is still a defect, caught by the
+    independent verifier (not the harvester): the deps enum had no `memcached`, so it was
+    omitted from Zulip instead of flagged as BLOCK-worthy.** The verifier disputed it correctly
+    — "schema can't express it" is not a reason to understate a confirmed required service. →
+    Downstream: added `memcached` to the deps enum (this batch's one schema change; GPU/
+    community-figures columns stay queued) rather than treat the gap as acceptable.
+21. **Backlog-cited figures drift from what's live at harvest time, confirmed again:**
+    the FIND-run brief for Rocket.Chat said "1 core/1GB for ≤200 users/50 concurrent"; the
+    live official table today reads 1 vCPU/2 GiB for ≤25 concurrent users under a differently
+    named tier. Re-sourcing at harvest time (never inheriting the brief's numbers) caught it,
+    as the harvester note itself warned. → Downstream: nothing new — this is why that note
+    exists on every batch; logged as a second concrete instance for the audit's evidence trail.
+22. **Analytics snapshot Action failed 2026-07-25 (exit 22, GoatCounter API), silent since:**
+    CI shows "Analytics snapshot" red on main while "CI & Deploy" stayed green — the two
+    workflows don't gate each other, so a stats-collection outage isn't visible without checking
+    Actions directly. → Downstream: ANALYZE must check the Analytics-snapshot workflow's own
+    run status, not just infer freshness from `updated-at.txt` age; flagged to owner (likely
+    token/site provisioning, cloud session can't debug — egress to GoatCounter blocked here too).
+
+## Compacted (graduated into CI tests / defect classes — see OPERATIONS.md, tests/*.test.mjs)
+- Auth-adjacent 404s can be permission masks, not absence — verify from a second vantage point.
+- Seed quotes from memory drift; harvest quotes only from a live fetch in the same session.
+- No-fetch FIND scoring is an estimate; absence claims need a sibling-page sweep.
+- First QA pass found 4 SEV-2s → defect classes 10–12 (template-label reuse, OR-flattening,
+  bundled-dependency misclassification) — now CI/QA-enforced, not re-litigated per batch.
+- Registry tags: record the tag when it isn't `latest` (Immich `:release`, Frigate `:stable`).
+- Verification cuts finder scores 20–40%; synonym sweeps kill candidates; channel claims need a
+  checked, dated precedent; official RAM minimums are sparse (lead with always-harvestable
+  columns); the moat is provenance depth, not the idea; territory exclusions are absolute;
+  repeat community submissions decay (one-shot launch); scoped ≠ general figures.
+
 ## 2026-07-25 — FIND run #3 (4 new apps queued)
 
-15. **Unofficial doc mirrors are a live collision risk, not a hypothetical one.** Verifying
-    Zulip's requirements page surfaced `zulipaaa.readthedocs.io` — a real, currently-live,
-    unofficial ReadTheDocs clone of `zulip.readthedocs.io` under a confusingly similar name;
-    Rocket.Chat has the same shape (GitHub doc forks: abrom, iuvei). → Downstream: every
-    harvester note must name the canonical org-owned domain/repo explicitly, not just "official
-    docs" — verifier's job includes checking the citation target is the org's own property, not
-    a same-content mirror a lazy search hit could substitute in.
+15. **Unofficial doc mirrors are a live collision risk:** `zulipaaa.readthedocs.io` mirrors
+    Zulip's docs under a confusable name; Rocket.Chat has GitHub doc forks (abrom, iuvei). →
+    Every harvester note must name the canonical org-owned domain/repo explicitly.
 
 ## 2026-07-24 — FIND run #2 (3 new apps queued, 1 collection held)
 
 14. **Component-vs-whole-app scoping is a new shape of Defect Class #3.** Nextcloud's sourced
-    "128MB RAM" is scoped "per process" in its own quote — a real install runs several
-    processes plus a database. A "fits on a 1GB VPS" collection built by filtering on
-    `ram_min_mb <= 1024` alone would silently present a component figure as the whole app's
-    footprint. → Downstream: any collection/filter over `ram_min_mb` must check each figure's
-    `scope` text for per-process/per-component language and exclude those entries explicitly,
-    not just threshold the number.
-
-## 2026-07-24 — First full BUILD/TEST cycle (14 entries)
-
-9. **Quotes written from notes drift: 3 of 4 seed quotes were paraphrases** (only Immich's
-   survived byte-for-byte); one seed cited the wrong docs page outright. → Downstream: quotes
-   are copied only from a live fetch in the same session — never from research notes. Seeding
-   from memory is banned.
-10. **FIND intel produced without live fetches is unreliable in both directions:** it claimed
-    figures AdGuard doesn't have and (via the harvester trusting the "hardware page" framing)
-    helped miss figures Frigate does have — on a sibling page (planning_setup). → Downstream:
-    absence claims require a sibling-page sweep of the docs tree, not just the obvious page;
-    FIND sourceability scores from a no-fetch environment are estimates and say so.
-11. **The cloud routine environment 403s most external docs domains** (GitHub/Docker Hub work).
-    → Downstream: cloud runs do FIND scoring, backlog work, and derived builds; anything
-    needing external-docs fetches (harvest, verification) runs in local sessions — or the
-    owner provisions a cloud environment with a network allowlist. Flagged to owner.
-12. **QA on our own first build found 4 SEV-2s** — silent absences the schema test didn't
-    enforce (now it does: field-level completeness), a reused template helper rendering a
-    false label, scoped figures unmarked in sortable tables, and a freshness claim ahead of
-    reality. Three new defect classes (10–12) added to OPERATIONS.md. → Downstream: the
-    builder checklist grew; the schema contract now makes silent absence impossible.
-13. **Registry tags: `:latest` often doesn't exist** (Immich uses `:release`, Frigate
-    `:stable`). → Downstream: record the tag in the image string whenever it isn't `latest`;
-    a size without its tag is unattributable.
-
-## 2026-07-24 — Infrastructure wiring
-
-0. **A 404 from an authenticated API is not proof of absence.** GoatCounter masks
-   permission denials as 404s; the operator declared `/stats/total` nonexistent from a single
-   404 with one token, and the "fix" would have silently dropped a working data source. The
-   owner's revert was correct. → Downstream: before declaring any endpoint/source dead, test
-   with a second credential or from a second vantage point, and treat auth-adjacent 404s as
-   "permission?" first. This is defect-class thinking applied to our own tooling.
-
-## 2026-07-24 — Bootstrap research sprint (5 finders, 2 verifiers)
-
-1. **Verification cuts finder scores 20–40%; design for it.** Finders proposed at 15/20;
-   adversarial verification landed everything at 9–12.5. → Downstream: FIND scores are
-   provisional until verified; never build on finder enthusiasm; expect and budget the haircut.
-2. **One synonym sweep can kill a candidate.** The classroom mail-merge idea died to a single
-   rephrasing that surfaced free incumbents with the identical privacy claim. → Downstream:
-   the verifier brief for every candidate (apps, collection pages, columns) REQUIRES a synonym
-   sweep, and "no incumbent found" is only claimable after ≥3 distinct phrasings.
-3. **Channel claims must be audited concretely, not believed.** "public-apis merges PRs" was
-   false (recent PRs closed unmerged); "itch.io surfaces new packs immediately" was false
-   (10+ days unindexed). → Downstream: any distribution assumption in a spec cites a checked,
-   dated precedent or it doesn't count.
-4. **Official docs are sparser than expected: ~2 of 7 popular apps state a clean RAM minimum.**
-   → Downstream: lead with always-harvestable columns (deps, image size, ARM); the RAM column
-   is sourced-or-honestly-absent; "no official figure" rows link upstream issues (captured demand).
-5. **The moat is pipeline depth, not the idea.** selfh.st could add a specs column in a weekend;
-   dated quotes, re-verification, and a change log are what they'd have to rebuild. → Downstream:
-   never ship a figure without the full provenance object; the changelog is a product, not a log.
-6. **Owner territory exclusions are absolute:** no interactive calculators/tools, no games —
-   including natural expansions (the "will my box fit" calculator is banned). → Downstream:
-   FIND screens every candidate against the exclusions before scoring.
-7. **Repeat community submissions decay** (awesome-selfhosted HN resubmits fell from 194 to
-   4–6 pts). → Downstream: the launch is one-shot; the launch gate in OPERATIONS.md exists
-   because of this. Don't burn the moment on a thin dataset.
-8. **Schema honesty catches real contradictions immediately.** The very first six seed entries
-   produced one (Home Assistant: scoped figure + blanket absence declaration). → Downstream:
-   scoped figures carry the scope in the figure; absence declarations only for fields with NO
-   figure in any scope.
+    "128MB RAM" is scoped "per process" — a real install runs several processes plus a database.
+    → Any collection/filter over `ram_min_mb` must check `scope` for per-process language.
