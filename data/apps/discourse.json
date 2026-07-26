@@ -5,7 +5,7 @@
   "website": "https://www.discourse.org",
   "repo": "https://github.com/discourse/discourse",
   "description": "Self-hosted forum and community discussion platform, deployed via an all-in-one Docker container.",
-  "status": "pending-qa",
+  "status": "pending-second-qa",
   "specs": {
     "ram_min_mb": {
       "value": 1024,
@@ -40,7 +40,7 @@
     {
       "service": "none",
       "required": false,
-      "source_url": "https://github.com/discourse/discourse_docker/blob/main/templates/postgres.template.yml"
+      "source_url": "https://github.com/discourse/discourse_docker/blob/main/README.md"
     }
   ],
   "docker": {

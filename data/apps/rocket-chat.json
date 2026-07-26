@@ -5,21 +5,21 @@
   "website": "https://www.rocket.chat",
   "repo": "https://github.com/RocketChat/Rocket.Chat",
   "description": "Self-hosted team chat platform backed by MongoDB, an alternative to Slack.",
-  "status": "pending-qa",
+  "status": "pending-second-qa",
   "specs": {
     "ram_min_mb": {
       "value": 2048,
       "source_url": "https://github.com/RocketChat/docs/blob/main/deploy/deploy-rocket.chat/system-requirements.md",
-      "quote": "Scenario: Starter - No High Availability - Concurrent users ≤ 25 — Rocket.Chat: 1 vCPU, 2 GiB Memory, 40GB Storage (table image, transcribed from the hardware specifications figure on this page)",
+      "quote": "Scenario: Starter - No High Availability - Concurrent users \u2264 25 \u2014 Rocket.Chat: 1 vCPU, 2 GiB Memory, 40GB Storage",
       "retrieved": "2026-07-26",
-      "scope": "Starter tier (no HA, ≤ 25 concurrent users) — the lowest of three published scenario tiers; excludes MongoDB's own separate resource allocation"
+      "scope": "Starter tier (no HA, \u2264 25 concurrent users) \u2014 the lowest of three published scenario tiers; excludes MongoDB's own separate resource allocation. Figure transcribed from a table rendered as an image on the source page, not machine-readable text; independently viewed and confirmed by both the harvester and verifier."
     },
     "cpu_min_cores": {
       "value": 1,
       "source_url": "https://github.com/RocketChat/docs/blob/main/deploy/deploy-rocket.chat/system-requirements.md",
-      "quote": "Scenario: Starter - No High Availability - Concurrent users ≤ 25 — Rocket.Chat: 1 vCPU, 2 GiB Memory, 40GB Storage (table image, transcribed from the hardware specifications figure on this page)",
+      "quote": "Scenario: Starter - No High Availability - Concurrent users \u2264 25 \u2014 Rocket.Chat: 1 vCPU, 2 GiB Memory, 40GB Storage",
       "retrieved": "2026-07-26",
-      "scope": "Starter tier (no HA, ≤ 25 concurrent users) — the lowest of three published scenario tiers; excludes MongoDB's own separate resource allocation"
+      "scope": "Starter tier (no HA, \u2264 25 concurrent users) \u2014 the lowest of three published scenario tiers; excludes MongoDB's own separate resource allocation. Figure transcribed from a table rendered as an image on the source page, not machine-readable text; independently viewed and confirmed by both the harvester and verifier."
     },
     "no_official_figure": {
       "fields": [

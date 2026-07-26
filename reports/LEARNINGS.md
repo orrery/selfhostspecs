@@ -5,6 +5,19 @@ learning. FIND and BUILD read this file first, every run. Newest first.
 
 ## 2026-07-26 — ANALYZE + BUILD (Discourse, Zulip, Rocket.Chat)
 
+23. **A fixed prose block can go stale the moment a new member joins its collection.**
+    The "no external database" collection's copy said "no Postgres, no Redis... to feed and
+    water" — true for every prior member (zero DB dependency) but false once Discourse joined
+    with Postgres/Redis genuinely running, just bundled in its own container. QA caught it as
+    a reader-facing overstatement, not a data error. → Downstream: collection-page copy that
+    makes a blanket claim about members must be re-read against the NEWEST member added, not
+    just checked once at the copy's creation; reworded to "no separate container to run
+    yourself" (true for both zero-dep and bundled-dep members).
+24. **`quote` must stay pure transcription — methodology commentary belongs in `scope`.**
+    Rocket.Chat's quote field had "(table image, transcribed from...)" appended inline; QA
+    flagged it as the first instance of commentary inside a field the schema requires to be
+    verbatim. → Downstream: when a figure comes from a non-text source (image, PDF), put the
+    "how we read this" explanation in `scope`, never appended to `quote` itself.
 18. **Cloud-run egress is domain-specific, not blanket, and finer than LEARNINGS #11 implied.**
     `raw.githubusercontent.com`, Docker Hub's `hub.docker.com/v2/...` API, and `ghcr.io`'s v2
     registry/token endpoints (via `curl`) all work from this cloud session; standalone docs

@@ -237,9 +237,10 @@ function collectionNoExtDbBody(apps) {
     .join("\n");
   return `<header class="site"><p><a href="/">← ${esc(SITE.name)}</a></p>
 <h1>Self-hosted apps without an external database</h1>
-<p>Every app below runs with no required external services — no Postgres, no Redis, no
-separate database container to feed and water. Membership is derived automatically from each
-app's sourced dependency data, so this list updates itself as the dataset grows.
+<p>Every app below needs no separate database or cache container for you to run and maintain
+yourself — any such service is either not required at all, or bundled inside the app's own
+container image (check the app's page for which). Membership is derived automatically from
+each app's sourced dependency data, so this list updates itself as the dataset grows.
 Currently <strong>${members.length}</strong> of ${apps.length} tracked apps qualify.</p>
 </header>
 <div class="tablewrap"><table>

@@ -5,7 +5,7 @@
   "website": "https://zulip.com",
   "repo": "https://github.com/zulip/zulip",
   "description": "Self-hosted team chat with topic-based threading, an alternative to Slack.",
-  "status": "pending-qa",
+  "status": "pending-second-qa",
   "specs": {
     "ram_min_mb": {
       "value": 2048,

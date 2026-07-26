@@ -60,3 +60,12 @@ Append-only log of material decisions with their evidence. AUDIT checks cadence 
   not silently retried or worked around: cloud sessions can't reach the GoatCounter API to
   diagnose further (egress policy), and CI's two workflows don't cross-gate so the outage was
   invisible without checking Actions directly. Stats are 1 day stale as of this run.
+- 2026-07-26 — **Independent QA BLOCKED the batch on first pass**: no fabricated/wrong figures
+  (all sampled figures re-verified byte-accurate against live sources), but the "no external
+  database" collection's fixed intro text ("no Postgres, no Redis... to feed and water") went
+  false the moment Discourse joined with bundled-but-real Postgres/Redis. Fixed: reworded to
+  "no separate container to run yourself" (build.mjs copy, not data). Also cleaned two QA nits:
+  moved non-verbatim commentary out of Rocket.Chat's `quote` field into `scope`, and re-pointed
+  Discourse's bundled-deps citation at discourse_docker's README (the actual bundling claim)
+  instead of one template file. Rebuilt, full suite re-run green (38/38). All three entries
+  marked `pending-second-qa` per the unattended-run rule — next run's fresh-eyes QA settles them.
