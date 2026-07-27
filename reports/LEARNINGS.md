@@ -3,6 +3,24 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-07-27 — AUDIT #1
+
+27. **Docker image size sourced from a rolling `latest` tag drifts by design, not by mistake.**
+    Vaultwarden's stored 77MB (retrieved 2026-07-24) read 83MB live via the same
+    `hub.docker.com/v2/.../tags/latest` URL three days later — a real rebuild, not fabrication,
+    but a live figure the site published as still-true. SEV-1 per OPERATIONS.md §5: pulled and
+    fixed this run. → Downstream: `docker.size_mb` needs re-checking every AUDIT (Docker Hub/
+    GHCR API is cheap, always reachable), not just the 90-day RAM/CPU staleness queue — a
+    rolling tag can drift within days, not months.
+28. **This session's egress block is far broader than LEARNINGS #18 characterized.** Every
+    docs domain tried this audit (nextcloud/frigate/gitea/grafana/home-assistant/immich/
+    jellyfin/pi-hole) 403'd at the proxy CONNECT level — and so did selfhostspecs.com and
+    goatcounter.com themselves (confirmed via `/__agentproxy/status`: policy denial, not a tool
+    bug). Only GitHub-hosted infra + Docker Hub/GHCR reach. → Downstream: AUDIT's mandated
+    live-site spot-check and most source re-fetches cannot run from this environment at all;
+    added a post-deploy smoke test to `ci.yml` (GH Actions runners have real internet) so the
+    live-site check happens somewhere authoritative every deploy instead of never.
+
 ## 2026-07-26 — FIND run #4 (OpenProject, Plausible CE queued)
 
 25. **WebFetch's AI-summarized pass can silently drift scope-critical wording even when the
@@ -54,18 +72,14 @@ learning. FIND and BUILD read this file first, every run. Newest first.
     — "schema can't express it" is not a reason to understate a confirmed required service. →
     Downstream: added `memcached` to the deps enum (this batch's one schema change; GPU/
     community-figures columns stay queued) rather than treat the gap as acceptable.
-21. **Backlog-cited figures drift from what's live at harvest time, confirmed again:**
-    the FIND-run brief for Rocket.Chat said "1 core/1GB for ≤200 users/50 concurrent"; the
-    live official table today reads 1 vCPU/2 GiB for ≤25 concurrent users under a differently
-    named tier. Re-sourcing at harvest time (never inheriting the brief's numbers) caught it,
-    as the harvester note itself warned. → Downstream: nothing new — this is why that note
-    exists on every batch; logged as a second concrete instance for the audit's evidence trail.
-22. **Analytics snapshot Action failed 2026-07-25 (exit 22, GoatCounter API), silent since:**
-    CI shows "Analytics snapshot" red on main while "CI & Deploy" stayed green — the two
-    workflows don't gate each other, so a stats-collection outage isn't visible without checking
-    Actions directly. → Downstream: ANALYZE must check the Analytics-snapshot workflow's own
-    run status, not just infer freshness from `updated-at.txt` age; flagged to owner (likely
-    token/site provisioning, cloud session can't debug — egress to GoatCounter blocked here too).
+21. Rocket.Chat's brief said "1 core/1GB, ≤200/50 concurrent"; live table read 1 vCPU/2GiB,
+    ≤25 concurrent — second confirmed instance of backlog figures drifting from live-at-harvest.
+22. **Analytics snapshot Action failed 2026-07-25 (exit 22), and again 2026-07-26 — two
+    straight, still unfixed at AUDIT #1:** CI's two workflows don't cross-gate, so the outage
+    stays invisible without checking Actions directly; stats are now 3 days stale. → Downstream:
+    flagging-to-owner once didn't change the outcome twice more; AUDIT #1 escalates concretely —
+    owner should check whether GOATCOUNTER_TOKEN or the GoatCounter site itself is the fault,
+    since the token is present (curl reaches the auth check and fails past it, not before it).
 
 ## Compacted (graduated into CI tests / defect classes — see OPERATIONS.md, tests/*.test.mjs)
 - Auth-adjacent 404s can be permission masks, not absence — verify from a second vantage point.
@@ -78,15 +92,6 @@ learning. FIND and BUILD read this file first, every run. Newest first.
   checked, dated precedent; official RAM minimums are sparse (lead with always-harvestable
   columns); the moat is provenance depth, not the idea; territory exclusions are absolute;
   repeat community submissions decay (one-shot launch); scoped ≠ general figures.
-
-## 2026-07-25 — FIND run #3 (4 new apps queued)
-
-15. **Unofficial doc mirrors are a live collision risk:** `zulipaaa.readthedocs.io` mirrors
-    Zulip's docs under a confusable name; Rocket.Chat has GitHub doc forks (abrom, iuvei). →
-    Every harvester note must name the canonical org-owned domain/repo explicitly.
-
-## 2026-07-24 — FIND run #2 (3 new apps queued, 1 collection held)
-
-14. **Component-vs-whole-app scoping is a new shape of Defect Class #3.** Nextcloud's sourced
-    "128MB RAM" is scoped "per process" — a real install runs several processes plus a database.
-    → Any collection/filter over `ram_min_mb` must check `scope` for per-process language.
+- Unofficial doc mirrors (zulipaaa.readthedocs.io, GitHub doc forks) are a collision risk —
+  name the canonical org-owned domain. Component-vs-whole-app scoping (Nextcloud's
+  "per process" 128MB) is Defect Class #3 — filters over ram_min_mb must check `scope`.

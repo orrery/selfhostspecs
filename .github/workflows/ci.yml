@@ -46,3 +46,20 @@ jobs:
           path: docs
       - id: deployment
         uses: actions/deploy-pages@v4
+      - name: Smoke test live deployment
+        # AUDIT cannot reach selfhostspecs.com from its cloud sandbox (egress policy blocks it,
+        # confirmed 2026-07-27) — this runner has real internet access, so it's the one place
+        # that can actually confirm the deploy is live and serving the right content.
+        run: |
+          url="${{ steps.deployment.outputs.page_url }}"
+          for attempt in 1 2 3 4 5; do
+            code=$(curl -s -o /tmp/smoke.html -w "%{http_code}" "$url")
+            [ "$code" = "200" ] && break
+            echo "attempt $attempt: HTTP $code, retrying in 5s"
+            sleep 5
+          done
+          if [ "$code" != "200" ]; then
+            echo "::error::Live site returned HTTP $code after 5 attempts"
+            exit 1
+          fi
+          grep -q "SelfhostSpecs" /tmp/smoke.html || { echo "::error::Expected marker text 'SelfhostSpecs' not found on live page"; exit 1; }

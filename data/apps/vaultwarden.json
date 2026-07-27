@@ -26,14 +26,14 @@
   ],
   "docker": {
     "image": "vaultwarden/server",
-    "size_mb": 77,
+    "size_mb": 83,
     "arches": [
       "amd64",
       "arm64",
       "armv7"
     ],
     "source_url": "https://hub.docker.com/v2/repositories/vaultwarden/server/tags/latest",
-    "retrieved": "2026-07-24"
+    "retrieved": "2026-07-27"
   },
   "sources_of_truth": [
     "https://github.com/dani-garcia/vaultwarden/wiki",

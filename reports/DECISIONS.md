@@ -69,3 +69,12 @@ Append-only log of material decisions with their evidence. AUDIT checks cadence 
   Discourse's bundled-deps citation at discourse_docker's README (the actual bundling claim)
   instead of one template file. Rebuilt, full suite re-run green (38/38). All three entries
   marked `pending-second-qa` per the unattended-run rule — next run's fresh-eyes QA settles them.
+- 2026-07-27 — **AUDIT #1: added a post-deploy smoke test to `ci.yml`** (curl the live Pages
+  URL after `deploy-pages`, assert HTTP 200 + title marker, 5 retries). Evidence: this cloud
+  session cannot reach `selfhostspecs.com` at all (proxy CONNECT 403, confirmed policy denial,
+  not a site issue — an unrelated `orrery.github.io` control URL got the same block), so AUDIT's
+  own mandated live-site check has been unexecutable from here since bootstrap; GH Actions
+  runners have real internet and are the one place that can actually confirm a deploy is live.
+  Also fixed a confirmed SEV-1: Vaultwarden's `docker.size_mb` had drifted 77→83 (rolling
+  `latest` tag rebuilt after harvest) — pulled and corrected, LEARNINGS #27 flags that
+  docker-size figures need AUDIT-cadence re-checks, not just the 90-day RAM/CPU sweep.
