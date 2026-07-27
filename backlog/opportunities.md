@@ -36,6 +36,19 @@ independently and signed off. Next BUILD batch candidates.
   per Defect Class #2); CPU requires SSE4.2/NEON (useful ARM-column signal: excludes old
   ARMv6 boards). Deps: postgres + clickhouse (compose-confirmed).
 
+## Queued (verifier-signed), buildable now — FIND run #5 (2026-07-27)
+- **Open WebUI** (self-hosted AI/LLM chat interface, new category) — 16/20. 147k GitHub
+  stars, no current entry close; real community demand (Cloudron forum, Proxmox-VE
+  Discussion #4505) exists precisely because no official RAM/CPU minimum is published
+  anywhere (README + docs repo, independently reverified) — all four RAM/CPU fields ship
+  `no_official_figure`. What's real and official: GPU vs CPU-only vs bundled-Ollama are three
+  first-class install paths (`ghcr.io/open-webui/open-webui:cuda`/`:ollama`/`:main`); `:main`
+  resolved ~1741MB via ghcr.io (Docker Hub's `openwebui/open-webui` is unofficial/unlinked —
+  ghcr.io only). First genuinely GPU-native (not optional-transcoding) app — direct test case
+  for the still-queued GPU/hardware-transcoding column. BUILD trap: the docs performance page's
+  `memory: 8G/cpus: 4.0` compose-limits snippet is a commented "adjust based on usage" example,
+  not a spec — do not harvest it as a figure (LEARNINGS #29).
+
 ## Queued (verifier-signed), still unbuilt — 2026-07-24/25 FIND runs #2/#3
 Blocked this cycle on a confirmed cloud-egress constraint, not a judgment call: their official
 docs domains hard-block from this cloud session (curl exit 56); no GitHub-hosted mirror exists

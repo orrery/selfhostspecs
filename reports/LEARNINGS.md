@@ -51,37 +51,30 @@ learning. FIND and BUILD read this file first, every run. Newest first.
     flagged it as the first instance of commentary inside a field the schema requires to be
     verbatim. → Downstream: when a figure comes from a non-text source (image, PDF), put the
     "how we read this" explanation in `scope`, never appended to `quote` itself.
-18. **Cloud-run egress is domain-specific, not blanket, and finer than LEARNINGS #11 implied.**
-    `raw.githubusercontent.com`, Docker Hub's `hub.docker.com/v2/...` API, and `ghcr.io`'s v2
-    registry/token endpoints (via `curl`) all work from this cloud session; standalone docs
-    domains (vikunja.io, docs.portainer.io, learn.netdata.cloud, docs.joinpeertube.org,
-    docs.rocket.chat) still hard-block (curl exit 56, connection-level, confirmed with both
-    WebFetch and raw Bash curl). → Downstream: before holding a queued app for "needs a local
-    session," check whether its official source has a GitHub-hosted mirror (docs-as-markdown
-    repo, or a GHCR-hosted image) — Discourse and Zulip both built this cycle purely via
-    GitHub-hosted sources; Portainer/Netdata/PeerTube/Vikunja have no such mirror and stay held.
-19. **A requirements table can be a PNG embedded in an otherwise-fetchable markdown file**
-    (Rocket.Chat's system-requirements.md renders its numbers as three GitBook screenshot
-    images, not text). WebFetch's markdown conversion silently drops image content — a harvester
-    that stops at the text pass would wrongly conclude "no figure." → Downstream: when a fetched
-    doc references `.gitbook/assets` or similar image embeds near a requirements section,
-    download and view the image directly (Read tool) before declaring the figure unsourceable.
-20. **A harvester silently dropping an unrepresentable dep is still a defect, caught by the
-    independent verifier (not the harvester): the deps enum had no `memcached`, so it was
-    omitted from Zulip instead of flagged as BLOCK-worthy.** The verifier disputed it correctly
-    — "schema can't express it" is not a reason to understate a confirmed required service. →
-    Downstream: added `memcached` to the deps enum (this batch's one schema change; GPU/
-    community-figures columns stay queued) rather than treat the gap as acceptable.
-21. Rocket.Chat's brief said "1 core/1GB, ≤200/50 concurrent"; live table read 1 vCPU/2GiB,
-    ≤25 concurrent — second confirmed instance of backlog figures drifting from live-at-harvest.
-22. **Analytics snapshot Action failed 2026-07-25 (exit 22), and again 2026-07-26 — two
-    straight, still unfixed at AUDIT #1:** CI's two workflows don't cross-gate, so the outage
-    stays invisible without checking Actions directly; stats are now 3 days stale. → Downstream:
-    flagging-to-owner once didn't change the outcome twice more; AUDIT #1 escalates concretely —
-    owner should check whether GOATCOUNTER_TOKEN or the GoatCounter site itself is the fault,
-    since the token is present (curl reaches the auth check and fails past it, not before it).
+
+## 2026-07-27 — FIND run #5 (Open WebUI queued)
+
+29. **A confirmed source can still yield zero official numeric figures — demand + channel-value
+    can still clear the bar.** Open WebUI (147k stars, no current entry close) has no official
+    RAM/CPU minimum anywhere (README + docs repo, independently reverified) — real demand exists
+    (Cloudron forum, Proxmox-VE Discussion #4505) precisely because it's undocumented. What IS
+    official: GPU vs CPU-only vs bundled-Ollama are three first-class install paths
+    (`ghcr.io/open-webui/open-webui:cuda`/`:ollama`/`:main`; `:main` resolved ~1741MB via ghcr.io).
+    → Downstream: queued 16/20, all four RAM/CPU fields `no_official_figure`; BUILD must NOT
+    harvest the docs performance page's illustrative `memory: 8G/cpus: 4.0` compose-limits
+    example (commented "adjust based on usage") as a real figure — first genuinely GPU-native
+    (not optional-transcoding) app, real test case for the still-queued GPU column.
 
 ## Compacted (graduated into CI tests / defect classes — see OPERATIONS.md, tests/*.test.mjs)
+- GitHub-hosted mirrors (raw.githubusercontent.com, Docker Hub v2, ghcr.io v2) reach from cloud
+  sessions; standalone docs domains hard-block — check for a mirror before holding an app on
+  "needs a local session" (Portainer/Netdata/PeerTube/Vikunja have none, stay held).
+- Requirements tables can be images (GitBook PNG) inside otherwise-fetchable markdown — view
+  the image directly before declaring a figure unsourceable.
+- Deps-enum gaps are BLOCK-worthy, not a reason to silently drop a confirmed service
+  (memcached precedent, twice) — extend the enum instead.
+- Analytics snapshot Action failing since 2026-07-25 (exit 22), unfixed 3 runs straight —
+  keep flagging to owner every run until resolved, don't assume one flag was enough.
 - Auth-adjacent 404s can be permission masks, not absence — verify from a second vantage point.
 - Seed quotes from memory drift; harvest quotes only from a live fetch in the same session.
 - No-fetch FIND scoring is an estimate; absence claims need a sibling-page sweep.
