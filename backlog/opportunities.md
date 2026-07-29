@@ -36,6 +36,28 @@ independently and signed off. Next BUILD batch candidates.
   per Defect Class #2); CPU requires SSE4.2/NEON (useful ARM-column signal: excludes old
   ARMv6 boards). Deps: postgres + clickhouse (compose-confirmed).
 
+## Queued (verifier-signed, CONDITIONAL), buildable now — FIND run #6 (2026-07-29)
+- **Linkwarden** (self-hosted bookmark manager / read-it-later / web archiving) — 15/20
+  (Coverage 4, Sourceability 4, Effort 4, Channel 3). New category, no collision with
+  Karakeep (verifier confirmed distinct project — Karakeep's own README lists Linkwarden as
+  a service it imports FROM, not a rename). Docs mirrored via GitHub
+  (`raw.githubusercontent.com/linkwarden/docs/main/docs/self-hosting/installation.md`,
+  verbatim-checked): "Linkwarden has pretty minimal hardware requirements - it was tested on
+  a VPS with 4gb of memory and it ran pretty smoothly, the most intense part is when you
+  build the app, but once it's running it's relatively lightweight." **Anecdotal, not a
+  spec** — file as `ram_rec_mb` informal figure with this quote in scope; CPU/disk ship
+  `no_official_figure`. **BUILD must apply the verifier's conditions:**
+  (a) Meilisearch deps entry = `required: false` — compose's `depends_on` is plain-list form
+  (start-order only, not a health/functional gate) and
+  `docs/self-hosting/environment-variables.md` confirms "Linkwarden only initializes the
+  MeiliSearch client when [MEILI_MASTER_KEY] is set"; keep postgres `required: true`.
+  (b) Trendshift #4006 / HN-301 badges are project-self-reported (both domains proxy-blocked
+  this session) — label as such, don't present as independently confirmed traction unless a
+  future session verifies directly.
+  (c) Image: `ghcr.io/linkwarden/linkwarden:latest`, multi-arch (amd64+arm64 only, no armv7);
+  no Docker Hub image exists (`linkwarden/linkwarden` 404s). amd64 = 496 MiB via GHCR
+  manifest layer-sum (Docker Hub's convenience `size` field isn't available on GHCR).
+
 ## Queued (verifier-signed), buildable now — FIND run #5 (2026-07-27)
 - **Open WebUI** (self-hosted AI/LLM chat interface, new category) — 16/20. 147k GitHub
   stars, no current entry close; real community demand (Cloudron forum, Proxmox-VE
@@ -82,6 +104,17 @@ owner-provisioned network allowlist.
   (10), Beszel (10), Passbolt (9), Wiki.js (9), Duplicati (9), Kavita (8), Kopia (7),
   Calibre-Web (6) — all: no numeric official hardware figure reachable from any fetchable
   source this run.
+  FIND run #6: Actual Budget (13, near-miss — docs fully GitHub-mirrored and read in full,
+  genuinely zero ram/cpu figure anywhere; revisit only if a future doc revision adds one),
+  NocoDB (11, high egress risk — no in-repo docs mirror found, only standalone
+  nocodb.com/docs), Tandoor Recipes (10, distinct from Mealie but same recipe-manager
+  category already below-bar; no requirements page in its mirrored mkdocs docs), ntfy (9,
+  zero official minimum; only figures found are illustrative Kubernetes example manifests —
+  misharvest trap, do not source from those if revisited), Homepage/gethomepage (9, docs
+  mirrored, zero hardware figures — closer to a widget aggregator than a resource-pressure
+  workload), Listmonk (9, high egress risk — standalone docs only, tiny 14.8MB image but no
+  figure), changedetection.io (8, high egress risk — standalone docs + GitHub wiki also
+  confirmed blocked this run, new evidence below).
 - Rejected: **"ARM/Pi-ready" collection** — 14/14 live entries already arm64/armv7, zero
   differentiating value.
 - Deferred: disk/storage-footprint column — too inconsistently documented (Sourceability ~2).

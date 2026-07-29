@@ -3,24 +3,6 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
-## 2026-07-27 — AUDIT #1
-
-27. **Docker image size sourced from a rolling `latest` tag drifts by design, not by mistake.**
-    Vaultwarden's stored 77MB (retrieved 2026-07-24) read 83MB live via the same
-    `hub.docker.com/v2/.../tags/latest` URL three days later — a real rebuild, not fabrication,
-    but a live figure the site published as still-true. SEV-1 per OPERATIONS.md §5: pulled and
-    fixed this run. → Downstream: `docker.size_mb` needs re-checking every AUDIT (Docker Hub/
-    GHCR API is cheap, always reachable), not just the 90-day RAM/CPU staleness queue — a
-    rolling tag can drift within days, not months.
-28. **This session's egress block is far broader than LEARNINGS #18 characterized.** Every
-    docs domain tried this audit (nextcloud/frigate/gitea/grafana/home-assistant/immich/
-    jellyfin/pi-hole) 403'd at the proxy CONNECT level — and so did selfhostspecs.com and
-    goatcounter.com themselves (confirmed via `/__agentproxy/status`: policy denial, not a tool
-    bug). Only GitHub-hosted infra + Docker Hub/GHCR reach. → Downstream: AUDIT's mandated
-    live-site spot-check and most source re-fetches cannot run from this environment at all;
-    added a post-deploy smoke test to `ci.yml` (GH Actions runners have real internet) so the
-    live-site check happens somewhere authoritative every deploy instead of never.
-
 ## 2026-07-26 — FIND run #4 (OpenProject, Plausible CE queued)
 
 25. **WebFetch's AI-summarized pass can silently drift scope-critical wording even when the
@@ -65,10 +47,35 @@ learning. FIND and BUILD read this file first, every run. Newest first.
     example (commented "adjust based on usage") as a real figure — first genuinely GPU-native
     (not optional-transcoding) app, real test case for the still-queued GPU column.
 
+## 2026-07-29 — FIND run #6 (Linkwarden queued, conditional)
+
+30. **The egress block is broader than #28 characterized: `github.com` HTML pages and GitHub
+    wikis are proxy-blocked too, not just standalone doc domains.** Confirmed twice
+    independently this run (finder + verifier, separate sessions) — only
+    `raw.githubusercontent.com`, `hub.docker.com/v2`, and `ghcr.io/v2` reach. → Downstream:
+    stop citing `github.com/.../pkgs/container/...` HTML pages as a source_url expecting this
+    session to confirm them; treat any `github.com` (non-raw) or `*.wiki` URL as unreachable
+    until a local/non-cloud session proves otherwise.
+31. **A compose file listing a service under `depends_on` does not make it required — check
+    the syntax form and the app's own env-var docs before classifying.** Linkwarden's compose
+    lists Meilisearch via plain-list `depends_on` (start-order only, not
+    `condition: service_healthy`), and its own env-var docs confirm the app "only initializes
+    the MeiliSearch client when [MEILI_MASTER_KEY] is set" — genuinely optional despite always
+    starting by default. Opposite-direction case from #26 (OpenProject: compose had an
+    UNDOCUMENTED required dep) — this time compose OVER-implies a dep the app doesn't need.
+    → Downstream: `required: true/false` in `deps` must be decided from the app's functional
+    behavior (env-var docs, graceful-degradation statements), never inferred from `depends_on`
+    presence alone.
+
 ## Compacted (graduated into CI tests / defect classes — see OPERATIONS.md, tests/*.test.mjs)
 - GitHub-hosted mirrors (raw.githubusercontent.com, Docker Hub v2, ghcr.io v2) reach from cloud
-  sessions; standalone docs domains hard-block — check for a mirror before holding an app on
-  "needs a local session" (Portainer/Netdata/PeerTube/Vikunja have none, stay held).
+  sessions; standalone docs domains AND github.com HTML/wikis hard-block (widened 2026-07-27,
+  confirmed again 2026-07-29) — check for a raw-mirror before holding an app on "needs a local
+  session" (Portainer/Netdata/PeerTube/Vikunja have none, stay held).
+- Rolling `latest`-tag docker image sizes drift within days, not months (Vaultwarden SEV-1,
+  AUDIT #1) — re-check `docker.size_mb` every AUDIT, not just the 90-day RAM/CPU queue.
+  selfhostspecs.com/goatcounter.com are also proxy-blocked from cloud sessions — a post-deploy
+  smoke test in `ci.yml` now covers the live-site check on GH Actions instead.
 - Requirements tables can be images (GitBook PNG) inside otherwise-fetchable markdown — view
   the image directly before declaring a figure unsourceable.
 - Deps-enum gaps are BLOCK-worthy, not a reason to silently drop a confirmed service
