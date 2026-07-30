@@ -52,5 +52,17 @@
     "app": "adguard-home",
     "change": "QA: absence evidence_url replaced \u2014 discussion 7350 did not evidence the gap; now cites the official getting-started page that publishes no hardware figures.",
     "source_url": "https://adguard-dns.io/kb/adguard-home/getting-started/"
+  },
+  {
+    "date": "2026-07-27",
+    "app": "vaultwarden",
+    "change": "AUDIT #1: docker.size_mb corrected 77\u219283 \u2014 the rolling `latest` tag rebuilt after harvest (real image change, not a fabrication). Retroactively logged 2026-07-30: this correction should have produced a changelog entry the day it was made and didn't.",
+    "source_url": "https://hub.docker.com/v2/repositories/vaultwarden/server/tags/latest"
+  },
+  {
+    "date": "2026-07-30",
+    "app": "discourse",
+    "change": "Re-QA: docker.size_mb corrected 1144\u21921173 \u2014 same rolling-`latest`-tag drift pattern as vaultwarden (AUDIT #1); flagged by independent re-QA, not self-caught. Figures/deps otherwise unchanged; status moved pending-second-qa\u2192live.",
+    "source_url": "https://hub.docker.com/v2/repositories/discourse/discourse/tags/latest"
   }
 ]
