@@ -118,7 +118,7 @@ function indexBody(apps) {
     .map((a, i) => {
       const hasRam = figure(a, "ram_min_mb") || figure(a, "ram_rec_mb") ? "1" : "0";
       const noExt = depsSummary(a) === "none required" ? "1" : "0";
-      return `<tr data-name="${esc(a.name.toLowerCase())}" data-cat="${esc(a.category)}" data-hasram="${hasRam}" data-noext="${noExt}">
+      return `<tr data-name="${esc(a.name.toLowerCase().replace(/[^a-z0-9]/g, ""))}" data-cat="${esc(a.category)}" data-hasram="${hasRam}" data-noext="${noExt}">
 <td><a href="/apps/${esc(a.slug)}/">${esc(a.name)}</a>${a.status !== "live" ? '<span class="badge">verification pending</span>' : ""}</td>
 <td class="opt">${esc(a.category)}</td>
 <td>${cell(a, "ram_min_mb", "mb")}</td>
@@ -153,7 +153,7 @@ var q=document.getElementById("q"),cat=document.getElementById("cat"),noext=docu
 var rows=Array.prototype.slice.call(document.querySelectorAll("#apps tbody tr"));
 var empty=document.getElementById("noresults");
 function apply(){
-var t=q.value.trim().toLowerCase(),c=cat.value,n=0;
+var t=q.value.trim().toLowerCase().replace(/[^a-z0-9]/g,""),c=cat.value,n=0;
 rows.forEach(function(r){
 var ok=(!t||r.dataset.name.indexOf(t)>=0)&&(!c||r.dataset.cat===c)&&(!noext.checked||r.dataset.noext==="1")&&(!hasram.checked||r.dataset.hasram==="1");
 r.style.display=ok?"":"none";if(ok)n++;});
