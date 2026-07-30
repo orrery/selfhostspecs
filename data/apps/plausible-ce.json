@@ -1,0 +1,54 @@
+{
+  "name": "Plausible Community Edition",
+  "slug": "plausible-ce",
+  "category": "analytics",
+  "website": "https://plausible.io",
+  "repo": "https://github.com/plausible/community-edition",
+  "description": "Self-hosted, privacy-focused web analytics, community edition of Plausible Analytics.",
+  "status": "pending-qa",
+  "specs": {
+    "ram_rec_mb": {
+      "value": 2048,
+      "source_url": "https://raw.githubusercontent.com/plausible/community-edition/master/README.md",
+      "quote": "At least 2 GB of RAM is recommended for running ClickHouse and Plausible without fear of OOMs.",
+      "retrieved": "2026-07-30",
+      "scope": "Docker Compose install, general"
+    },
+    "no_official_figure": {
+      "fields": [
+        "ram_min_mb",
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://raw.githubusercontent.com/plausible/community-edition/master/README.md",
+      "note": "Only a RAM recommendation is published, no minimum (Defect Class #2). No core-count CPU figure exists; the only CPU requirement is an instruction-set floor: \"CPU must support SSE 4.2 or NEON instruction set or higher (required by ClickHouse)\" — this excludes some older ARM boards but isn't a core count, so both CPU fields ship as no_official_figure."
+    }
+  },
+  "deps": [
+    {
+      "service": "postgresql",
+      "required": true,
+      "source_url": "https://raw.githubusercontent.com/plausible/community-edition/master/compose.yml"
+    },
+    {
+      "service": "clickhouse",
+      "required": true,
+      "source_url": "https://raw.githubusercontent.com/plausible/community-edition/master/compose.yml"
+    }
+  ],
+  "docker": {
+    "image": "ghcr.io/plausible/community-edition:v3.2.1",
+    "size_mb": 62,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://ghcr.io/v2/plausible/community-edition/manifests/v3.2.1",
+    "retrieved": "2026-07-30"
+  },
+  "sources_of_truth": [
+    "https://raw.githubusercontent.com/plausible/community-edition/master/README.md",
+    "https://raw.githubusercontent.com/plausible/community-edition/master/compose.yml",
+    "https://github.com/plausible/community-edition/pkgs/container/community-edition"
+  ]
+}

@@ -11,7 +11,7 @@ const DIR = join(ROOT, "data", "apps");
 const files = readdirSync(DIR).filter((f) => f.endsWith(".json"));
 
 const STATUSES = ["pending-verification", "pending-qa", "pending-second-qa", "live"];
-const SERVICES = ["postgresql", "mysql", "mariadb", "redis", "valkey", "mongodb", "elasticsearch", "clickhouse", "rabbitmq", "memcached", "ffmpeg", "none"];
+const SERVICES = ["postgresql", "mysql", "mariadb", "redis", "valkey", "mongodb", "elasticsearch", "clickhouse", "rabbitmq", "memcached", "meilisearch", "ffmpeg", "none"];
 const ARCHES = ["amd64", "arm64", "armv7"];
 const FIGURE_KEYS = ["ram_min_mb", "ram_rec_mb", "cpu_min_cores", "cpu_rec_cores"];
 const ISO = /^\d{4}-\d{2}-\d{2}$/;

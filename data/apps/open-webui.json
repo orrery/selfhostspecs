@@ -1,0 +1,43 @@
+{
+  "name": "Open WebUI",
+  "slug": "open-webui",
+  "category": "ai",
+  "website": "https://openwebui.com",
+  "repo": "https://github.com/open-webui/open-webui",
+  "description": "Self-hosted web interface for interacting with local and remote large language models.",
+  "status": "pending-qa",
+  "specs": {
+    "no_official_figure": {
+      "fields": [
+        "ram_min_mb",
+        "ram_rec_mb",
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://raw.githubusercontent.com/open-webui/open-webui/main/README.md",
+      "note": "No RAM/CPU figure published anywhere in the README or docs repo (independently re-checked). Three first-class install paths exist as separate image tags — ghcr.io/open-webui/open-webui:main (CPU-only, no bundled LLM runtime), :ollama (bundles Ollama, GPU or CPU), :cuda (GPU-accelerated) — actual footprint depends entirely on which local models are loaded, which the project doesn't specify a baseline for. This entry documents the :main image. Do not harvest the docs performance page's illustrative `memory: 8G / cpus: 4.0` compose-limits snippet as a figure — it is a commented \"adjust based on usage\" example, not a spec."
+    }
+  },
+  "deps": [
+    {
+      "service": "none",
+      "required": false,
+      "source_url": "https://raw.githubusercontent.com/open-webui/open-webui/main/docker-compose.yaml"
+    }
+  ],
+  "docker": {
+    "image": "ghcr.io/open-webui/open-webui:main",
+    "size_mb": 1741,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://ghcr.io/v2/open-webui/open-webui/manifests/main",
+    "retrieved": "2026-07-30"
+  },
+  "sources_of_truth": [
+    "https://raw.githubusercontent.com/open-webui/open-webui/main/README.md",
+    "https://raw.githubusercontent.com/open-webui/open-webui/main/docker-compose.yaml",
+    "https://github.com/open-webui/open-webui/pkgs/container/open-webui"
+  ]
+}

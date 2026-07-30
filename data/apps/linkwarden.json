@@ -1,0 +1,54 @@
+{
+  "name": "Linkwarden",
+  "slug": "linkwarden",
+  "category": "bookmarks",
+  "website": "https://linkwarden.app",
+  "repo": "https://github.com/linkwarden/linkwarden",
+  "description": "Self-hosted bookmark manager, read-it-later, and web archiving tool.",
+  "status": "pending-qa",
+  "specs": {
+    "ram_rec_mb": {
+      "value": 4096,
+      "source_url": "https://raw.githubusercontent.com/linkwarden/docs/main/docs/self-hosting/installation.md",
+      "quote": "Linkwarden has pretty minimal hardware requirements - it was tested on a VPS with 4gb of memory and it ran pretty smoothly, the most intense part is when you build the app, but once it's running it's relatively lightweight.",
+      "retrieved": "2026-07-30",
+      "scope": "Docker Compose install, general — informal figure from official docs (a tested-on report, not a stated min/rec spec); building the app is noted as the heaviest phase"
+    },
+    "no_official_figure": {
+      "fields": [
+        "ram_min_mb",
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://raw.githubusercontent.com/linkwarden/docs/main/docs/self-hosting/installation.md",
+      "note": "Only the anecdotal 4GB figure above is published (as ram_rec_mb); no formal minimum RAM and no CPU core-count figure exists anywhere in official docs."
+    }
+  },
+  "deps": [
+    {
+      "service": "postgresql",
+      "required": true,
+      "source_url": "https://raw.githubusercontent.com/linkwarden/linkwarden/main/docker-compose.yml"
+    },
+    {
+      "service": "meilisearch",
+      "required": false,
+      "source_url": "https://raw.githubusercontent.com/linkwarden/docs/main/docs/self-hosting/environment-variables.md"
+    }
+  ],
+  "docker": {
+    "image": "ghcr.io/linkwarden/linkwarden:latest",
+    "size_mb": 496,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://ghcr.io/v2/linkwarden/linkwarden/manifests/latest",
+    "retrieved": "2026-07-30"
+  },
+  "sources_of_truth": [
+    "https://raw.githubusercontent.com/linkwarden/docs/main/docs/self-hosting/installation.md",
+    "https://raw.githubusercontent.com/linkwarden/linkwarden/main/docker-compose.yml",
+    "https://raw.githubusercontent.com/linkwarden/docs/main/docs/self-hosting/environment-variables.md"
+  ]
+}

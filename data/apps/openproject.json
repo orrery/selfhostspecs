@@ -1,0 +1,60 @@
+{
+  "name": "OpenProject",
+  "slug": "openproject",
+  "category": "project-management",
+  "website": "https://www.openproject.org",
+  "repo": "https://github.com/opf/openproject",
+  "description": "Self-hosted project management suite with Gantt charts, agile boards, and time tracking.",
+  "status": "pending-qa",
+  "specs": {
+    "ram_min_mb": {
+      "value": 4096,
+      "source_url": "https://raw.githubusercontent.com/opf/openproject/dev/docs/installation-and-operations/system-requirements/README.md",
+      "quote": "Memory: 4096 MB",
+      "retrieved": "2026-07-30",
+      "scope": "Single server (Docker/packaged install), up to 200 total users"
+    },
+    "cpu_min_cores": {
+      "value": 4,
+      "source_url": "https://raw.githubusercontent.com/opf/openproject/dev/docs/installation-and-operations/system-requirements/README.md",
+      "quote": "CPU: Quad Core CPU (>= 2ghz)",
+      "retrieved": "2026-07-30",
+      "scope": "Single server (Docker/packaged install), up to 200 total users"
+    },
+    "no_official_figure": {
+      "fields": [
+        "ram_rec_mb",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://raw.githubusercontent.com/opf/openproject/dev/docs/installation-and-operations/system-requirements/README.md",
+      "note": "Docs give a minimum for <=200 users and a separate user-count-scaled table (500 users: 8 CPU/8GB; 1500 users: 16 CPU/16GB) instead of a single 'recommended' figure — publishing any one tier as 'recommended' would misrepresent a scaling guideline as a fixed target (Defect Class #2)."
+    }
+  },
+  "deps": [
+    {
+      "service": "postgresql",
+      "required": true,
+      "source_url": "https://raw.githubusercontent.com/opf/openproject-docker-compose/master/docker-compose.yml"
+    },
+    {
+      "service": "memcached",
+      "required": true,
+      "source_url": "https://raw.githubusercontent.com/opf/openproject-docker-compose/master/docker-compose.yml"
+    }
+  ],
+  "docker": {
+    "image": "openproject/openproject:17-slim",
+    "size_mb": 394,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://hub.docker.com/v2/repositories/openproject/openproject/tags/17-slim",
+    "retrieved": "2026-07-30"
+  },
+  "sources_of_truth": [
+    "https://raw.githubusercontent.com/opf/openproject/dev/docs/installation-and-operations/system-requirements/README.md",
+    "https://raw.githubusercontent.com/opf/openproject-docker-compose/master/docker-compose.yml",
+    "https://hub.docker.com/r/openproject/openproject"
+  ]
+}

@@ -68,7 +68,7 @@ test("every app has a page showing its verbatim quotes and honest absences", () 
       const f = a.specs?.[key];
       if (f) {
         // quote must be displayed (HTML-escaped compare on a distinctive fragment)
-        const frag = f.quote.slice(0, 30).replaceAll("&", "&amp;").replaceAll("<", "&lt;");
+        const frag = f.quote.slice(0, 30).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
         assert.ok(html.includes(frag), `${a.slug}: quote for ${key} not displayed`);
         assert.ok(html.includes(f.source_url), `${a.slug}: source link for ${key} missing`);
         assert.ok(html.includes(f.retrieved), `${a.slug}: retrieved date for ${key} missing`);
