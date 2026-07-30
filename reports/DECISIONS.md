@@ -2,34 +2,16 @@
 
 Append-only log of material decisions with their evidence. AUDIT checks cadence gaps here.
 
-- 2026-07-24 — **Business direction: self-hosted requirements database** (owner-approved at
-  checkpoint). Basis: only researched candidate with named-precedent launch channel
-  (awesome-selfhosted on HN: 194/137/91 pts), verified cash monetization (DigitalOcean $25 CPA
-  via Impact, checked 2026-07-24), and captured demand (upstream issues asking for requirement
-  figures). Post-verification score 12/20 — below the 14 bar; proceeded as best-of-sprint with
-  owner sign-off. Full sprint evidence archived in the bootstrap session.
-- 2026-07-24 — **Brand: selfhostspecs.com** (owner-approved; purchase pending). RDAP-checked
-  available; "RunsOn" rejected (runs-on.com is an existing product).
-- 2026-07-24 — **docs/ is gitignored build output; CI builds and deploys from data/.**
-  Deviation from the littlecalcs pattern (committed docs/): eliminates hand-edit drift and
-  makes the schema test the single contract. Red-teamed: risk is deploy-only breakage invisible
-  locally — mitigated by site-invariants running the real build in CI.
-- 2026-07-24 — **Repo made PUBLIC (owner call, trade-off surfaced).** Owner has GitHub Pro so
-  private+Pages was available; owner chose public anyway after hearing both sides (open
-  data/stars/corrections channel vs. visible playbook). Pages had already been enabled +
-  custom domain set via API. Operator flipped visibility via API on owner instruction.
-- 2026-07-24 — **Launch gate installed** (≥100 well-sourced entries etc. — OPERATIONS.md).
-  Evidence: one-shot channel dynamics (LEARNINGS #7).
-- 2026-07-24 — **First full cycle shipped: 14 apps live at selfhostspecs.com** through the
-  complete gate (harvest → independent verification → CI → independent QA BLOCK → fixes →
-  re-QA → deterministic test pins → deploy green). QA refuted/blocked once (4 SEV-2), re-QA
-  blocked once (scope-marker leak) — both rounds produced fixes now CI-enforced.
-- 2026-07-24 — **GPU/hw-transcoding column deferred to the next loop run** (verifier-approved
-  but requires a schema extension; one schema change per reviewed batch — QA-capacity pacing,
-  not calendar pacing). Remains queued in backlog.
-- 2026-07-24 — **Verifier refutation rate 0/11 flagged for AUDIT**: coverage-gap items are
-  mechanically confirmable so a high pass rate is plausible, but Monday's audit must red-team
-  whether FIND verification is soft.
+- 2026-07-24 — **Business direction: self-hosted requirements database** (owner-approved,
+  12/20 post-verification, proceeded as best-of-sprint). Brand selfhostspecs.com. `docs/` is
+  gitignored build output, CI builds+deploys from `data/` (schema test is the single contract).
+  Repo made PUBLIC (owner call, trade-off surfaced). Launch gate installed (≥100 sourced
+  entries — OPERATIONS.md; evidence: one-shot channel dynamics, LEARNINGS #7). Full sprint
+  evidence archived in the bootstrap session.
+- 2026-07-24 — **First full cycle shipped: 14 apps live.** Complete gate exercised end-to-end
+  (harvest→verify→CI→QA BLOCK→fix→re-QA→deploy green); QA blocked once (4 SEV-2), re-QA
+  blocked once — both now CI-enforced. GPU column deferred (schema-pacing). Verifier
+  refutation rate 0/11 flagged for AUDIT #1 to red-team.
 - 2026-07-26 — **ANALYZE this cycle stayed pre-launch/dataset-readiness framed, no traffic
   kills.** Evidence: repo 0 stars/0 forks/0 open issues, site 26 total hits (mostly operator
   checks) — OPERATIONS.md's pre-launch rule (readiness, not traffic, is the metric) applies
@@ -78,3 +60,31 @@ Append-only log of material decisions with their evidence. AUDIT checks cadence 
   Also fixed a confirmed SEV-1: Vaultwarden's `docker.size_mb` had drifted 77→83 (rolling
   `latest` tag rebuilt after harvest) — pulled and corrected, LEARNINGS #27 flags that
   docker-size figures need AUDIT-cadence re-checks, not just the 90-day RAM/CPU sweep.
+- 2026-07-30 — **Repo-integrity check: local `main` was 16 commits behind `origin/main`, not
+  diverged.** Session started on a detached HEAD ahead of the stale local `main` ref; before
+  assuming a fork, `git merge-base` confirmed origin/main was a direct descendant (a prior
+  session had already pushed everything; origin had just moved one commit further). Fast-
+  forwarded, nothing lost. Checking merge-base before treating divergence as real is now the
+  standing move on session start (LEARNINGS).
+- 2026-07-30 — **Re-QA settled Discourse/Zulip/Rocket.Chat to `live` (17 live).** Independent
+  fresh-eyes QA found all three clean, including the four Defect Classes that batch tested
+  positive for last cycle. One non-blocking fix: Discourse's `docker.size_mb` drifted
+  1144→1173, same rolling-`latest`-tag pattern as the Vaultwarden SEV-1 (AUDIT #1) — corrected,
+  plus Vaultwarden's own missing changelog entry from that fix (retroactively logged).
+- 2026-07-30 — **BUILD drained the full verified queue: OpenProject, Plausible CE, Linkwarden,
+  Open WebUI — independent verification found zero discrepancies on any of the four**, unlike
+  the 07-26 batch. Landed `pending-qa` (unattended run, QA below settles to `pending-second-qa`).
+  One enum addition: `meilisearch` in deps SERVICES for Linkwarden (sourced, same precedent as
+  memcached — not counted against the one-schema-change pacing).
+- 2026-07-30 — **Two real bugs fixed, not weakened checks:** `site-invariants.test.mjs` escaped
+  `&`/`<` but not `>` in its quote-display check, so OpenProject's verbatim ">= 2ghz" quote
+  false-failed CI against `build.mjs`'s own (fuller) escaping — test corrected to match. Index
+  search compared names verbatim, so "rocket chat" missed "Rocket.Chat" — query and stored
+  value now both strip non-alphanumeric characters first (caught by this run's QA agent).
+- 2026-07-30 — **Independent QA cleared OpenProject/Plausible CE/Linkwarden/Open WebUI —
+  zero defects across all 12 Known Defect Classes.** All four `pending-second-qa` (unattended-
+  run rule); next run's fresh eyes settle them to live. One soft, non-blocking note for a
+  future BUILD pass: Linkwarden's anecdotal 4GB figure renders under the same bold treatment
+  as genuine "recommended" figures — fully disclosed by its quote/scope, not a defect under
+  current page conventions, but a "reported" vs "recommended" visual distinction would be
+  clearer. 21 apps tracked total (17 live, 4 pending-second-qa).

@@ -5,7 +5,7 @@
   "website": "https://plausible.io",
   "repo": "https://github.com/plausible/community-edition",
   "description": "Self-hosted, privacy-focused web analytics, community edition of Plausible Analytics.",
-  "status": "pending-qa",
+  "status": "pending-second-qa",
   "specs": {
     "ram_rec_mb": {
       "value": 2048,

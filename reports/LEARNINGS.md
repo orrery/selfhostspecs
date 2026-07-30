@@ -3,6 +3,27 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-07-30 — ANALYZE + BUILD (OpenProject, Plausible CE, Linkwarden, Open WebUI shipped)
+
+32. **A stale local `main` ref can look exactly like a diverged fork — check `merge-base`
+    before reconciling anything.** Session started on a detached HEAD carrying 15-16 real
+    commits; local `main` pointed 16 commits behind. Before assuming a fork and trying to
+    merge/rebase, `git merge-base <detached-HEAD> origin/main` showed origin was a direct
+    linear descendant — a prior session had already pushed, origin had just moved further.
+    Fast-forward was the entire fix. → Downstream: every session start with `git status`
+    showing "HEAD detached," run `git fetch` + `git merge-base` before any reconciliation
+    attempt; only treat it as a real fork if merge-base is NOT one of the two tips.
+33. **A test's HTML-escape set must mirror the renderer's exactly, or verbatim quotes with
+    certain characters silently false-fail CI.** `build.mjs` escapes `&<>"`;
+    `site-invariants.test.mjs`'s quote-display check only escaped `&<` — OpenProject's
+    genuinely-verbatim `>=` quote failed CI until corrected. → Downstream: any new
+    HTML-comparison assertion must diff its escape set against `esc()` in `build.mjs` directly.
+34. **Verbatim-quote fidelity tolerates stripping the source's own markdown emphasis (`**bold**`)
+    but nothing else.** OpenProject's/Plausible's docs bold their key numbers; harvested quotes
+    correctly kept the words, dropped the asterisks (verifier confirmed: formatting, not
+    content). → Downstream: markdown emphasis around a quoted figure is safe to strip; any other
+    deviation (reordering, synonyms, unit conversion) is not.
+
 ## 2026-07-26 — FIND run #4 (OpenProject, Plausible CE queued)
 
 25. **WebFetch's AI-summarized pass can silently drift scope-critical wording even when the
@@ -17,22 +38,6 @@ learning. FIND and BUILD read this file first, every run. Newest first.
     official docker-compose runs memcached as its own container (Zulip-shape, LEARNINGS #20,
     second occurrence). → Downstream: always cross-check named deps against the actual official
     compose/docker file, not just the prose requirements section.
-
-## 2026-07-26 — ANALYZE + BUILD (Discourse, Zulip, Rocket.Chat)
-
-23. **A fixed prose block can go stale the moment a new member joins its collection.**
-    The "no external database" collection's copy said "no Postgres, no Redis... to feed and
-    water" — true for every prior member (zero DB dependency) but false once Discourse joined
-    with Postgres/Redis genuinely running, just bundled in its own container. QA caught it as
-    a reader-facing overstatement, not a data error. → Downstream: collection-page copy that
-    makes a blanket claim about members must be re-read against the NEWEST member added, not
-    just checked once at the copy's creation; reworded to "no separate container to run
-    yourself" (true for both zero-dep and bundled-dep members).
-24. **`quote` must stay pure transcription — methodology commentary belongs in `scope`.**
-    Rocket.Chat's quote field had "(table image, transcribed from...)" appended inline; QA
-    flagged it as the first instance of commentary inside a field the schema requires to be
-    verbatim. → Downstream: when a figure comes from a non-text source (image, PDF), put the
-    "how we read this" explanation in `scope`, never appended to `quote` itself.
 
 ## 2026-07-27 — FIND run #5 (Open WebUI queued)
 

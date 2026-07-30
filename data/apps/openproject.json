@@ -5,7 +5,7 @@
   "website": "https://www.openproject.org",
   "repo": "https://github.com/opf/openproject",
   "description": "Self-hosted project management suite with Gantt charts, agile boards, and time tracking.",
-  "status": "pending-qa",
+  "status": "pending-second-qa",
   "specs": {
     "ram_min_mb": {
       "value": 4096,

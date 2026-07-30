@@ -3,73 +3,30 @@
 Statuses: `unverified` → (verifier sign-off) → `queued` → `building` → `shipped`, or
 `rejected` (with refutation, kept below as the graveyard). Dedupe against BOTH lists.
 
-## Shipped (2026-07-24 first cycle) — 14 apps live
-gitea, home-assistant, immich, jellyfin, uptime-kuma, vaultwarden, adguard-home, frigate,
-grafana, n8n, nextcloud, paperless-ngx, pi-hole, syncthing. See reports/DECISIONS.md.
+## Shipped — 17 apps live
+2026-07-24 first cycle (14): gitea, home-assistant, immich, jellyfin, uptime-kuma, vaultwarden,
+adguard-home, frigate, grafana, n8n, nextcloud, paperless-ngx, pi-hole, syncthing.
+2026-07-30 (+3, re-QA settled from 07-26 batch): discourse, zulip, rocket-chat. See DECISIONS.md.
 
 Still pending BUILD (verifier-signed, schema changes, paced one per reviewed batch):
 - **GPU / hardware-transcoding column** (Jellyfin, Immich, Frigate).
 - **Community-figures column** (candidates: vaultwarden, adguard-home, uptime-kuma, syncthing,
   paperless-ngx).
 
-## Building — 2026-07-26 (harvested + independently verified this cycle, status pending-second-qa)
-- **Discourse** — 1GB RAM min/1 core (2 core rec), all-in-one Docker, Postgres/Redis bundled
-  (deps: none, Defect Class #12).
-- **Zulip** — 2GB RAM/1 core min (DAU-tiered above that, no single rec figure), deps:
-  postgresql+redis+rabbitmq+memcached required (verifier caught the initial memcached
-  omission — deps enum extended, see DECISIONS.md).
-- **Rocket.Chat** — 2GiB/1 vCPU min (Starter tier, ≤25 concurrent; live figure differs from
-  the FIND brief's stale "1GB/≤200 users" — re-sourced, see LEARNINGS #21), deps: mongodb
-  required.
-
-## Queued (verifier-signed), buildable now — FIND run #4 (2026-07-26)
-Both fetched clean via GitHub-hosted mirrors this run (no egress block); verifier re-fetched
-independently and signed off. Next BUILD batch candidates.
-- **OpenProject** (project management, heavyweight counterpart to queued Vikunja) — 17/20.
-  `opf/openproject` docs: "Quad Core CPU (>=2ghz)" / "4096 MB" RAM / "20 GB" disk, for
-  "up to 200 total users" single-server; scaling table to 1500 users. **Deps correction from
-  verifier: postgresql + memcached (NOT Postgres-only as first drafted) — memcached runs as
-  its own container per the official docker-compose, not bundled** (Zulip-shape, LEARNINGS #20).
-- **Plausible Community Edition** (self-hosted analytics, new category) — 15/20.
-  `plausible/community-edition` README: "At least 2 GB of RAM is recommended... without fear
-  of OOMs" (RECOMMENDED only — no official minimum, publish minimum as `no_official_figure`
-  per Defect Class #2); CPU requires SSE4.2/NEON (useful ARM-column signal: excludes old
-  ARMv6 boards). Deps: postgres + clickhouse (compose-confirmed).
-
-## Queued (verifier-signed, CONDITIONAL), buildable now — FIND run #6 (2026-07-29)
-- **Linkwarden** (self-hosted bookmark manager / read-it-later / web archiving) — 15/20
-  (Coverage 4, Sourceability 4, Effort 4, Channel 3). New category, no collision with
-  Karakeep (verifier confirmed distinct project — Karakeep's own README lists Linkwarden as
-  a service it imports FROM, not a rename). Docs mirrored via GitHub
-  (`raw.githubusercontent.com/linkwarden/docs/main/docs/self-hosting/installation.md`,
-  verbatim-checked): "Linkwarden has pretty minimal hardware requirements - it was tested on
-  a VPS with 4gb of memory and it ran pretty smoothly, the most intense part is when you
-  build the app, but once it's running it's relatively lightweight." **Anecdotal, not a
-  spec** — file as `ram_rec_mb` informal figure with this quote in scope; CPU/disk ship
-  `no_official_figure`. **BUILD must apply the verifier's conditions:**
-  (a) Meilisearch deps entry = `required: false` — compose's `depends_on` is plain-list form
-  (start-order only, not a health/functional gate) and
-  `docs/self-hosting/environment-variables.md` confirms "Linkwarden only initializes the
-  MeiliSearch client when [MEILI_MASTER_KEY] is set"; keep postgres `required: true`.
-  (b) Trendshift #4006 / HN-301 badges are project-self-reported (both domains proxy-blocked
-  this session) — label as such, don't present as independently confirmed traction unless a
-  future session verifies directly.
-  (c) Image: `ghcr.io/linkwarden/linkwarden:latest`, multi-arch (amd64+arm64 only, no armv7);
-  no Docker Hub image exists (`linkwarden/linkwarden` 404s). amd64 = 496 MiB via GHCR
-  manifest layer-sum (Docker Hub's convenience `size` field isn't available on GHCR).
-
-## Queued (verifier-signed), buildable now — FIND run #5 (2026-07-27)
-- **Open WebUI** (self-hosted AI/LLM chat interface, new category) — 16/20. 147k GitHub
-  stars, no current entry close; real community demand (Cloudron forum, Proxmox-VE
-  Discussion #4505) exists precisely because no official RAM/CPU minimum is published
-  anywhere (README + docs repo, independently reverified) — all four RAM/CPU fields ship
-  `no_official_figure`. What's real and official: GPU vs CPU-only vs bundled-Ollama are three
-  first-class install paths (`ghcr.io/open-webui/open-webui:cuda`/`:ollama`/`:main`); `:main`
-  resolved ~1741MB via ghcr.io (Docker Hub's `openwebui/open-webui` is unofficial/unlinked —
-  ghcr.io only). First genuinely GPU-native (not optional-transcoding) app — direct test case
-  for the still-queued GPU/hardware-transcoding column. BUILD trap: the docs performance page's
-  `memory: 8G/cpus: 4.0` compose-limits snippet is a commented "adjust based on usage" example,
-  not a spec — do not harvest it as a figure (LEARNINGS #29).
+## Building — 2026-07-30 (harvested + independently verified this cycle, status pending-qa
+pending independent QA; will land pending-second-qa this run per the unattended-run rule)
+- **OpenProject** — 4096MB/4 cores min (≤200 users; scaling table beyond that, not a single
+  rec figure — Defect Class #2 avoided). Deps: postgresql + memcached (both required, prod
+  compose-confirmed, memcached not bundled).
+- **Plausible Community Edition** — 2048MB recommended only, no minimum; CPU has no core count,
+  only an SSE4.2/NEON instruction-set floor. Deps: postgresql + clickhouse.
+- **Linkwarden** — anecdotal 4GB figure from official docs, filed as `ram_rec_mb` with scope
+  noting it's informal. Deps: postgresql (required) + meilisearch (required: false — start-order
+  only in compose, docs confirm optional). `meilisearch` added to the deps SERVICES enum.
+- **Open WebUI** — all four RAM/CPU fields `no_official_figure` (147k stars, genuinely
+  undocumented). Documents the `:main` (CPU-only) image tag; `:ollama`/`:cuda` variants noted
+  as separate tags, not conflated in. Did not harvest the docs' illustrative compose-limits
+  snippet as a figure.
 
 ## Queued (verifier-signed), still unbuilt — 2026-07-24/25 FIND runs #2/#3
 Blocked this cycle on a confirmed cloud-egress constraint, not a judgment call: their official
@@ -120,7 +77,9 @@ owner-provisioned network allowlist.
 - Deferred: disk/storage-footprint column — too inconsistently documented (Sourceability ~2).
 
 ### Freshness work
-None crossing the 90-day line. Oldest live entries retrieved 2026-07-24 (2 days).
+None crossing the 90-day line. Oldest live entries retrieved 2026-07-24 (6 days). Docker-size
+figures on rolling `latest` tags now get re-checked every AUDIT, not just the 90-day sweep
+(LEARNINGS #27, reconfirmed on Discourse this run).
 
 ## Rejected (the graveyard — do not re-propose without new evidence)
 - Static JSON "API hub" (2026-07-24): occupied + dead channels + LLM drain.
