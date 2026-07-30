@@ -23,9 +23,9 @@ jobs:
         run: |
           if [ -z "$TOKEN" ]; then echo "GOATCOUNTER_TOKEN not set yet — skipping"; exit 0; fi
           mkdir -p reports/stats
-          curl -sf -H "Authorization: Bearer $TOKEN" \
+          curl -sf --retry 3 --retry-delay 5 --retry-all-errors -H "Authorization: Bearer $TOKEN" \
             "https://selfhostspecs.goatcounter.com/api/v0/stats/hits" > reports/stats/hits.json
-          curl -sf -H "Authorization: Bearer $TOKEN" \
+          curl -sf --retry 3 --retry-delay 5 --retry-all-errors -H "Authorization: Bearer $TOKEN" \
             "https://selfhostspecs.goatcounter.com/api/v0/stats/total" > reports/stats/total.json
           date -u +"%Y-%m-%dT%H:%M:%SZ" > reports/stats/updated-at.txt
       - name: Commit snapshot
