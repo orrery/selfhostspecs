@@ -28,6 +28,39 @@ pending independent QA; will land pending-second-qa this run per the unattended-
   as separate tags, not conflated in. Did not harvest the docs' illustrative compose-limits
   snippet as a figure.
 
+## Queued (verifier-signed), still unbuilt — 2026-07-30 FIND run #7
+Coverage-gap apps, scored /20 (Coverage-value · Sourceability · Effort · Channel-value),
+verifier-signed with independent re-fetches. All sources confirmed reachable this cloud
+session via GitHub-hosted mirrors (LEARNINGS #30 shape) — buildable now, not blocked.
+- **Chatwoot** (18/20) — customer-support platform (Zendesk/Intercom-style), 34.9k stars, no
+  existing entry in this category. Official: `raw.githubusercontent.com/chatwoot/docs/main/
+  self-hosted/deployment/requirements.mdx` — "4GB RAM is the required minimum memory size and
+  supports up to 10,000 conversations a day" / 4 cores recommended baseline. Deps: PostgreSQL
+  (required), Redis >=7.0 (required). Standalone developers.chatwoot.com 403s; use the mirror.
+- **Seafile** (16/20) — file sync/share, 15.1k stars, architecturally distinct from
+  Nextcloud (full suite)/Syncthing (P2P) despite category adjacency. Official:
+  `raw.githubusercontent.com/haiwen/seafile-admin-docs/master/manual/setup/
+  system_requirements.md` — CE: 2G RAM, "2 cores, more than 2GHz are recommended", 10G storage
+  min/50G recommended. Community Edition only — do not conflate with Pro tier figures in that
+  same doc. Standalone manual.seafile.com 403s; use the mirror.
+- **Mattermost** (15/20, chat category now 3rd entry alongside Rocket.Chat/Zulip — legitimate
+  crowding concern per LEARNINGS' Matrix Synapse precedent, tempered but not disqualifying:
+  distinct on-prem/Slack-alternative demand). Official:
+  `raw.githubusercontent.com/mattermost/docs/master/source/deployment-guide/
+  software-hardware-requirements.rst` — tiered by user count: **1–1,000 users: 1 vCPU/2GB RAM
+  (the true floor)**, 1,000–2,000 users: 2 vCPU/4GB RAM. BUILD must harvest the 1-1000 tier as
+  the minimum, not the second tier — first-pass FIND research mis-collapsed this to "~4GB/2vCPU
+  minimum," verifier caught it. Standalone docs.mattermost.com 403s; use the mirror.
+- **BigBlueButton** (14/20) — self-hosted video conferencing (Zoom/Jitsi-adjacent), 9.2k stars,
+  no video-conferencing entry yet, no saturation concern. Official:
+  `raw.githubusercontent.com/bigbluebutton/bigbluebutton/develop/docs/docs/administration/
+  install.md` (v3.0.32) — production minimum: 16GB RAM, 8 CPU cores, Ubuntu 22.04, 500GB
+  storage (50GB w/o recordings). FIND's initial search-derived figures (8GB/4 cores/Ubuntu
+  20.04) were the doc's *development/local* tier, not production — verifier caught the
+  min-vs-recommended-tier conflation (Defect Class #2 risk) before this reached BUILD;
+  harvest only from the mirror above, never a cached search snippet. Standalone
+  docs.bigbluebutton.org 403s; use the mirror.
+
 ## Queued (verifier-signed), still unbuilt — 2026-07-24/25 FIND runs #2/#3
 Blocked this cycle on a confirmed cloud-egress constraint, not a judgment call: their official
 docs domains hard-block from this cloud session (curl exit 56); no GitHub-hosted mirror exists
