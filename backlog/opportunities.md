@@ -8,111 +8,111 @@ Statuses: `unverified` → (verifier sign-off) → `queued` → `building` → `
 adguard-home, frigate, grafana, n8n, nextcloud, paperless-ngx, pi-hole, syncthing.
 2026-07-30 (+3, re-QA settled from 07-26 batch): discourse, zulip, rocket-chat. See DECISIONS.md.
 
-Still pending BUILD (verifier-signed, schema changes, paced one per reviewed batch):
+Still pending BUILD (verifier-signed schema changes, paced one per reviewed batch):
 - **GPU / hardware-transcoding column** (Jellyfin, Immich, Frigate).
 - **Community-figures column** (candidates: vaultwarden, adguard-home, uptime-kuma, syncthing,
   paperless-ngx).
 
-## Building — 2026-07-30 (harvested + independently verified this cycle, status pending-qa
-pending independent QA; will land pending-second-qa this run per the unattended-run rule)
-- **OpenProject** — 4096MB/4 cores min (≤200 users; scaling table beyond that, not a single
-  rec figure — Defect Class #2 avoided). Deps: postgresql + memcached (both required, prod
-  compose-confirmed, memcached not bundled).
-- **Plausible Community Edition** — 2048MB recommended only, no minimum; CPU has no core count,
-  only an SSE4.2/NEON instruction-set floor. Deps: postgresql + clickhouse.
-- **Linkwarden** — anecdotal 4GB figure from official docs, filed as `ram_rec_mb` with scope
-  noting it's informal. Deps: postgresql (required) + meilisearch (required: false — start-order
-  only in compose, docs confirm optional). `meilisearch` added to the deps SERVICES enum.
-- **Open WebUI** — all four RAM/CPU fields `no_official_figure` (147k stars, genuinely
-  undocumented). Documents the `:main` (CPU-only) image tag; `:ollama`/`:cuda` variants noted
-  as separate tags, not conflated in. Did not harvest the docs' illustrative compose-limits
-  snippet as a figure.
+## Building — 2026-07-30 (harvested + independently verified; pending-second-qa this run)
+- **OpenProject** — 4096MB/4 cores min (≤200 users tier). Deps: postgresql + memcached (required).
+- **Plausible CE** — 2048MB rec only, no min; CPU is SSE4.2/NEON floor, no core count. Deps:
+  postgresql + clickhouse.
+- **Linkwarden** — anecdotal 4GB `ram_rec_mb`, scope notes informal. Deps: postgresql (required)
+  + meilisearch (optional, start-order only). `meilisearch` added to deps SERVICES enum.
+- **Open WebUI** — all RAM/CPU fields `no_official_figure` (147k stars, undocumented). `:main`
+  (CPU-only) tag documented; `:ollama`/`:cuda` noted as separate tags.
+
+## Queued (verifier-signed), still unbuilt — 2026-07-31 FIND run #8
+- **GitLab CE** (18/20) — full DevOps platform, distinct from Gitea (lightweight git host).
+  `raw.githubusercontent.com/gitlabhq/gitlabhq/master/doc/install/requirements.md` — "8 vCPU is
+  the baseline" / "16 GB is the baseline" for single-node (verifier confirmed this is the real
+  general min, not the separate reference-architecture tier table; alt 8GB memory-constrained
+  floor also documented, worth a footnote). Deps: PostgreSQL + Redis-or-Valkey (both required).
+  **BUILD:** Gitaly is bundled-internal — do not list as an external dep (Defect Class #12).
+- **Zammad** (16/20) — ticket-queue helpdesk, distinct from Chatwoot (queued: chat widget)
+  despite adjacency. `raw.githubusercontent.com/zammad/zammad-documentation/main/prerequisites/
+  hardware.rst` — Minimum Setup: "2 CPU cores; 6 GB of RAM (+4 GB if Elasticsearch on same
+  server)". PostgreSQL required. Watch: 2nd customer-support-adjacent app — don't let this
+  category crowd unchecked like chat did.
+
+## Collection page, verified with caveat, pending SERP check — 2026-07-31
+- **"Apps with no separate DB/cache service required"** — verifier read 9+ of 14 claimed
+  members' JSON directly (discourse, nextcloud, gitea, grafana, n8n, frigate, open-webui,
+  vaultwarden, home-assistant, syncthing + spot-checks): all have zero `required:true` deps —
+  confirmed accurate, 14 members (healthier than the held "1GB VPS" collection's 3). **Real
+  risk:** `required:false` means no operator-provisioned service, NOT dependency-free in
+  production (Discourse AIO bundles Postgres/Redis in-container; Nextcloud-on-SQLite is
+  docs-discouraged for prod — Defect Class #3 shape). Page copy must disclose this before BUILD.
+  SERP check still not done — required before scheduling.
+
+## Refuted this run — 2026-07-31 FIND run #8
+- **Column: "minimum dependency version floor"** — proposed as a free byproduct of existing
+  RAM/CPU fetches; refuted — GitLab's version-support table lives in a separate doc subsection,
+  only found by reading the full page. Applying retroactively needs a fresh fetch per
+  already-shipped app, not free. Re-cost before queuing behind GPU/community-figures.
+
+## Held (insufficient evidence, not discarded) — 2026-07-31 FIND run #8
+- **Keycloak** (~13/20, identity/SSO gap) — no reachable OSS keycloak-documentation source
+  (guessed paths 404, GitHub API contents endpoint failed too); Red Hat's downstream docs
+  correctly declined (different product). Revisit with repo-file-tree access.
+- **Snipe-IT** (~12/20, IT asset mgmt) — README has no figures, readme.io 403s. Below propose
+  bar without data; revisit if a GitHub-mirrored doc appears.
+- **Cal.com** (~12/20, scheduling) — confirmed zero production RAM/CPU figures anywhere (only a
+  dev-only Node heap flag, correctly not harvested). Open WebUI-shape; needs channel-value case.
 
 ## Queued (verifier-signed), still unbuilt — 2026-07-30 FIND run #7
-Coverage-gap apps, scored /20 (Coverage-value · Sourceability · Effort · Channel-value),
-verifier-signed with independent re-fetches. All sources confirmed reachable this cloud
-session via GitHub-hosted mirrors (LEARNINGS #30 shape) — buildable now, not blocked.
-- **Chatwoot** (18/20) — customer-support platform (Zendesk/Intercom-style), 34.9k stars, no
-  existing entry in this category. Official: `raw.githubusercontent.com/chatwoot/docs/main/
-  self-hosted/deployment/requirements.mdx` — "4GB RAM is the required minimum memory size and
-  supports up to 10,000 conversations a day" / 4 cores recommended baseline. Deps: PostgreSQL
-  (required), Redis >=7.0 (required). Standalone developers.chatwoot.com 403s; use the mirror.
-- **Seafile** (16/20) — file sync/share, 15.1k stars, architecturally distinct from
-  Nextcloud (full suite)/Syncthing (P2P) despite category adjacency. Official:
+All sources confirmed reachable via GitHub-hosted mirrors — buildable now, not blocked.
+- **Chatwoot** (18/20) — 34.9k stars. `raw.githubusercontent.com/chatwoot/docs/main/self-hosted/
+  deployment/requirements.mdx` — "4GB RAM required minimum... up to 10,000 conversations/day" /
+  4 cores rec. Deps: PostgreSQL + Redis>=7.0 (required). Standalone docs 403; use mirror.
+- **Seafile** (16/20) — 15.1k stars, distinct from Nextcloud/Syncthing.
   `raw.githubusercontent.com/haiwen/seafile-admin-docs/master/manual/setup/
-  system_requirements.md` — CE: 2G RAM, "2 cores, more than 2GHz are recommended", 10G storage
-  min/50G recommended. Community Edition only — do not conflate with Pro tier figures in that
-  same doc. Standalone manual.seafile.com 403s; use the mirror.
-- **Mattermost** (15/20, chat category now 3rd entry alongside Rocket.Chat/Zulip — legitimate
-  crowding concern per LEARNINGS' Matrix Synapse precedent, tempered but not disqualifying:
-  distinct on-prem/Slack-alternative demand). Official:
+  system_requirements.md` — CE: 2G RAM, 2 cores >2GHz rec, 10G/50G storage. CE only, don't
+  conflate Pro tier figures in same doc. Standalone docs 403; use mirror.
+- **Mattermost** (15/20, 3rd chat entry — tempered crowding concern, distinct on-prem demand).
   `raw.githubusercontent.com/mattermost/docs/master/source/deployment-guide/
-  software-hardware-requirements.rst` — tiered by user count: **1–1,000 users: 1 vCPU/2GB RAM
-  (the true floor)**, 1,000–2,000 users: 2 vCPU/4GB RAM. BUILD must harvest the 1-1000 tier as
-  the minimum, not the second tier — first-pass FIND research mis-collapsed this to "~4GB/2vCPU
-  minimum," verifier caught it. Standalone docs.mattermost.com 403s; use the mirror.
-- **BigBlueButton** (14/20) — self-hosted video conferencing (Zoom/Jitsi-adjacent), 9.2k stars,
-  no video-conferencing entry yet, no saturation concern. Official:
+  software-hardware-requirements.rst` — **1-1,000 users: 1 vCPU/2GB (true floor)**,
+  1,000-2,000: 2 vCPU/4GB. BUILD must harvest the first tier, not the second (FIND mis-collapsed
+  this once already, verifier caught it). Standalone docs 403; use mirror.
+- **BigBlueButton** (14/20) — video conferencing, 9.2k stars, no crowding.
   `raw.githubusercontent.com/bigbluebutton/bigbluebutton/develop/docs/docs/administration/
-  install.md` (v3.0.32) — production minimum: 16GB RAM, 8 CPU cores, Ubuntu 22.04, 500GB
-  storage (50GB w/o recordings). FIND's initial search-derived figures (8GB/4 cores/Ubuntu
-  20.04) were the doc's *development/local* tier, not production — verifier caught the
-  min-vs-recommended-tier conflation (Defect Class #2 risk) before this reached BUILD;
-  harvest only from the mirror above, never a cached search snippet. Standalone
-  docs.bigbluebutton.org 403s; use the mirror.
+  install.md` (v3.0.32) — production min: 16GB/8 cores/Ubuntu 22.04/500GB (50GB w/o recordings).
+  FIND's initial 8GB/4-core/Ubuntu 20.04 was the dev/local tier — verifier caught the
+  min-vs-tier conflation. Harvest only from the mirror, never a cached search snippet.
 
 ## Queued (verifier-signed), still unbuilt — 2026-07-24/25 FIND runs #2/#3
-Blocked this cycle on a confirmed cloud-egress constraint, not a judgment call: their official
-docs domains hard-block from this cloud session (curl exit 56); no GitHub-hosted mirror exists
-for any of these four, unlike Discourse/Zulip (LEARNINGS #18). Needs a local session or an
-owner-provisioned network allowlist.
-- **Portainer** — docs.portainer.io; live-page RAM figure (1GB vs 2GB disputed by third
-  parties) needs a direct fetch, don't inherit either number.
-- **Netdata** — learn.netdata.cloud; harvest the stated default-footprint quote ("100MB–200MB
-  depending on metrics"), not the scaling formula, as the figure (n8n-usage-figure precedent).
-- **PeerTube** — docs.joinpeertube.org; strongest sourceability of its batch ("1.5GB RAM
-  plenty… usually takes at most 500MB", tiered guidance for viewers/transcoding).
-- **Vikunja** — vikunja.io/docs/installing; ~256MB min, lightest footprint in the pipeline;
-  pin the exact quote locally, don't inherit third-party corroboration numbers.
+Blocked on confirmed cloud-egress constraint: docs domains hard-block, no GitHub mirror exists.
+Needs a local session or owner-provisioned network allowlist.
+- **Portainer** — docs.portainer.io; 1GB vs 2GB disputed, needs a direct fetch.
+- **Netdata** — learn.netdata.cloud; harvest "100MB-200MB depending on metrics", not the formula.
+- **PeerTube** — docs.joinpeertube.org; "1.5GB plenty... usually at most 500MB", tiered guidance.
+- **Vikunja** — vikunja.io/docs/installing; ~256MB min, pin the exact quote locally.
 
 ## Unverified / held (not sent further)
-- **Collection: "runs on a 1GB VPS"** — 3 honest qualifiers today (gitea 1024, grafana 512,
-  pi-hole 512); Nextcloud excluded (128MB is per-process, Defect Class #3 shape, logged
-  LEARNINGS). Zulip/Rocket.Chat's min RAM (2048) don't qualify. Vikunja (~256MB) would be a
-  strong 4th member once built — re-check its scope text before counting it. Still thin;
-  revisit once Portainer/Netdata/PeerTube/Vikunja ship.
-- **No new column proposed** — GPU/community-figures/memcached-enum already queued; pacing
-  is one schema change per batch, a fourth would be backlog bloat ahead of capacity.
+- **Collection: "runs on a 1GB VPS"** — 3 qualifiers (gitea 1024, grafana 512, pi-hole 512);
+  Nextcloud excluded (per-process 128MB, Defect Class #3). Vikunja (~256MB) would be a 4th once
+  built. Still thin; revisit once Portainer/Netdata/PeerTube/Vikunja ship.
+- **No new column proposed beyond GPU/community-figures** — pacing is one schema change/batch.
 - **Below the ≥14 score bar** (do not re-propose without new sourceability evidence): Navidrome
   (13), Audiobookshelf (13), Miniflux (13), Photoprism (12), Mealie (12), BookStack (12),
-  Firefly III (12), Zabbix (13, stale legacy floor), NetBox (12, product/URL collision risk),
-  Outline (no official reqs doc found), Authentik (~12-13, official floor stale vs. a real
-  7.4GB deployment in issue #21413 — revisit only if a realistic tier is published).
-  FIND run #4: Matrix Synapse (12, only a scoped "large public rooms" caveat, no general min;
-  chat category already saturated this cycle), FreshRSS (11, prose only, no figure — Miniflux
-  shape), Umami (11, deps only, no RAM figure — superseded by Plausible CE this run), Karakeep
-  (10), Beszel (10), Passbolt (9), Wiki.js (9), Duplicati (9), Kavita (8), Kopia (7),
-  Calibre-Web (6) — all: no numeric official hardware figure reachable from any fetchable
-  source this run.
-  FIND run #6: Actual Budget (13, near-miss — docs fully GitHub-mirrored and read in full,
-  genuinely zero ram/cpu figure anywhere; revisit only if a future doc revision adds one),
-  NocoDB (11, high egress risk — no in-repo docs mirror found, only standalone
-  nocodb.com/docs), Tandoor Recipes (10, distinct from Mealie but same recipe-manager
-  category already below-bar; no requirements page in its mirrored mkdocs docs), ntfy (9,
-  zero official minimum; only figures found are illustrative Kubernetes example manifests —
-  misharvest trap, do not source from those if revisited), Homepage/gethomepage (9, docs
-  mirrored, zero hardware figures — closer to a widget aggregator than a resource-pressure
-  workload), Listmonk (9, high egress risk — standalone docs only, tiny 14.8MB image but no
-  figure), changedetection.io (8, high egress risk — standalone docs + GitHub wiki also
-  confirmed blocked this run, new evidence below).
-- Rejected: **"ARM/Pi-ready" collection** — 14/14 live entries already arm64/armv7, zero
-  differentiating value.
+  Firefly III (12), Zabbix (13, stale legacy floor), NetBox (12, collision risk), Outline (no
+  reqs doc), Authentik (~12-13, stale floor vs. real 7.4GB deployment issue).
+  Run #4: Matrix Synapse (12, scoped caveat only, chat saturated), FreshRSS (11, no figure),
+  Umami (11, superseded by Plausible CE), Karakeep (10), Beszel (10), Passbolt (9), Wiki.js (9),
+  Duplicati (9), Kavita (8), Kopia (7), Calibre-Web (6) — no fetchable official figure.
+  Run #6: Actual Budget (13, near-miss, fully read, zero figure), NocoDB (11, high egress risk),
+  Tandoor Recipes (10, category below-bar already), ntfy (9, only illustrative K8s manifests —
+  misharvest trap), Homepage/gethomepage (9, widget aggregator not workload), Listmonk (9, high
+  egress risk), changedetection.io (8, docs+wiki confirmed blocked).
+  Run #8: Docmost (11, 21.1k stars, zero figures, wiki category thick), Baserow (10, zero
+  figures), Woodpecker CI (~8, doc paths unlocated, not confirmed unreachable), Cachet (8, no
+  RAM/CPU, crowds Uptime Kuma).
+- Rejected: **"ARM/Pi-ready" collection** — 14/14 live entries already arm64/armv7, zero value.
 - Deferred: disk/storage-footprint column — too inconsistently documented (Sourceability ~2).
 
 ### Freshness work
-None crossing the 90-day line. Oldest live entries retrieved 2026-07-24 (6 days). Docker-size
-figures on rolling `latest` tags now get re-checked every AUDIT, not just the 90-day sweep
-(LEARNINGS #27, reconfirmed on Discourse this run).
+None crossing the 90-day line. Oldest live entries retrieved 2026-07-24 (7 days). Docker-size
+figures on rolling `latest` tags get re-checked every AUDIT, not just the 90-day sweep.
 
 ## Rejected (the graveyard — do not re-propose without new evidence)
 - Static JSON "API hub" (2026-07-24): occupied + dead channels + LLM drain.

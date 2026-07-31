@@ -39,6 +39,18 @@ learning. FIND and BUILD read this file first, every run. Newest first.
     re-fetched; don't route a candidate to the blocked-local-session bucket without checking
     the doc repo's actual file tree, not just guessing common paths.
 
+## 2026-07-31 — FIND run #8 (GitLab CE, Zammad queued; column proposal refuted)
+
+36. **A column proposal's "piggybacks on existing fetches" cost claim must be checked against
+    the actual doc structure, not assumed from the field's conceptual proximity to figures
+    already harvested.** Finder proposed a "minimum dependency version floor" column as
+    low-effort because RAM/CPU and version-support info "should be nearby." Verifier opened
+    GitLab's actual requirements.md and found the Postgres version-support table lives in a
+    separate `#### Supported versions` subsection, only visible because the verifier read the
+    whole file rather than the quoted fragment — a targeted fetch for RAM/CPU alone would
+    have missed it. → Downstream: score column-opportunity Effort by reading at least one
+    real source page end-to-end, not by reasoning about where the data "ought" to live.
+
 ## Compacted (graduated into CI tests / defect classes — see OPERATIONS.md, tests/*.test.mjs)
 - GitHub-hosted mirrors (raw.githubusercontent.com, Docker Hub v2, ghcr.io v2) reach from cloud
   sessions; standalone docs domains AND github.com HTML/wikis hard-block (widened 2026-07-27,
