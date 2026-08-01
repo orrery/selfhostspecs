@@ -51,6 +51,18 @@ learning. FIND and BUILD read this file first, every run. Newest first.
     have missed it. → Downstream: score column-opportunity Effort by reading at least one
     real source page end-to-end, not by reasoning about where the data "ought" to live.
 
+## 2026-08-01 — FIND run #9 (Ghost, Mastodon, Lemmy queued; Netdata/Portainer unblocked; MinIO rejected)
+
+37. **`git clone --depth 1` of a github.com repo reaches further than guessing
+    raw.githubusercontent.com paths or api.github.com** — unblocked Netdata/Portainer (stuck
+    since run #2/#3). Docs-site mirror repos can differ in path from the canonical repo
+    (`netdata/learn` vs. real `netdata/netdata`) — verifier caught it by cloning both. →
+    Downstream: try `git clone` before marking anything "blocked, needs local session"; verifier
+    always clones-and-greps independently, never trusts a finder-cited path as-is.
+38. **A dead/archived upstream (MinIO, archived 2026-04-25) disqualifies outright, isn't just a
+    low score** — future staleness re-verification would chase a project that never updates. →
+    Downstream: check archive status before scoring any high-star candidate.
+
 ## Compacted (graduated into CI tests / defect classes — see OPERATIONS.md, tests/*.test.mjs)
 - GitHub-hosted mirrors (raw.githubusercontent.com, Docker Hub v2, ghcr.io v2) reach from cloud
   sessions; standalone docs domains AND github.com HTML/wikis hard-block (widened 2026-07-27,
