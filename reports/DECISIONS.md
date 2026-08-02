@@ -3,54 +3,30 @@
 Append-only log of material decisions with their evidence. AUDIT checks cadence gaps here.
 
 - 2026-07-24 — **Business direction: self-hosted requirements database** (owner-approved,
-  12/20 post-verification, proceeded as best-of-sprint). Brand selfhostspecs.com. `docs/` is
-  gitignored build output, CI builds+deploys from `data/` (schema test is the single contract).
-  Repo made PUBLIC (owner call, trade-off surfaced). Launch gate installed (≥100 sourced
-  entries — OPERATIONS.md; evidence: one-shot channel dynamics, LEARNINGS #7). Full sprint
-  evidence archived in the bootstrap session.
-- 2026-07-24 — **First full cycle shipped: 14 apps live.** Complete gate exercised end-to-end
-  (harvest→verify→CI→QA BLOCK→fix→re-QA→deploy green); QA blocked once (4 SEV-2), re-QA
-  blocked once — both now CI-enforced. GPU column deferred (schema-pacing). Verifier
-  refutation rate 0/11 flagged for AUDIT #1 to red-team.
-- 2026-07-26 — **ANALYZE this cycle stayed pre-launch/dataset-readiness framed, no traffic
-  kills.** Evidence: repo 0 stars/0 forks/0 open issues, site 26 total hits (mostly operator
-  checks) — OPERATIONS.md's pre-launch rule (readiness, not traffic, is the metric) applies
-  cleanly; nothing meets any kill bar yet, nothing to kill.
-- 2026-07-26 — **BUILD batch scoped down from 7 queued apps to 3 (Discourse, Zulip,
-  Rocket.Chat) on a confirmed infrastructure constraint, not a judgment call.** Tested: Docker
-  Hub API, ghcr.io registry API, and raw.githubusercontent.com are reachable from this cloud
-  session; docs.portainer.io, learn.netdata.cloud, docs.joinpeertube.org, and vikunja.io are
-  not (curl exit 56, both via WebFetch and direct Bash curl — connection-level block, not a
-  tool limitation). Portainer/Netdata/PeerTube/Vikunja stay `queued`, unbuilt, for a local
-  session or an owner-provisioned network allowlist (LEARNINGS #11, reconfirmed #18).
-- 2026-07-26 — **Rocket.Chat's minimum-tier figure re-sourced live, not inherited from the
-  FIND brief, and it had drifted:** brief said "1 core/1GB, ≤200 users/50 concurrent"; the
-  live official table (a PNG embedded in otherwise-fetchable markdown, viewed directly) reads
-  1 vCPU/2 GiB for a "Starter" tier at ≤25 concurrent users. Built on the live figure only.
-- 2026-07-26 — **Independent verifier BLOCKED Zulip on first pass**: memcached (a real,
-  confirmed-required compose.yaml service) had been omitted from deps rather than flagged, and
-  `docker.source_url` cited compose.yaml for size/arches data that page doesn't contain. Fixed:
-  added `memcached` to the deps enum (this batch's one schema change — GPU/community-figures
-  stay queued) and re-pointed `docker.source_url` to the GHCR package page. Harvester≠verifier
-  working exactly as designed — first pass caught a real gap before it reached QA.
-- 2026-07-26 — **Discourse's Postgres/Redis classified as bundled (`service: none`), not
-  external deps**, per Defect Class #12: the official all-in-one Docker image runs them via
-  runit inside the same container (confirmed in discourse_docker's postgres template), same
-  shape as Frigate's bundled ffmpeg. An advanced multi-container path exists but isn't the
-  default/documented image this entry describes.
-- 2026-07-26 — **Analytics-snapshot Action failure (2026-07-25, exit 22) flagged to owner**,
-  not silently retried or worked around: cloud sessions can't reach the GoatCounter API to
-  diagnose further (egress policy), and CI's two workflows don't cross-gate so the outage was
-  invisible without checking Actions directly. Stats are 1 day stale as of this run.
-- 2026-07-26 — **Independent QA BLOCKED the batch on first pass**: no fabricated/wrong figures
-  (all sampled figures re-verified byte-accurate against live sources), but the "no external
-  database" collection's fixed intro text ("no Postgres, no Redis... to feed and water") went
-  false the moment Discourse joined with bundled-but-real Postgres/Redis. Fixed: reworded to
-  "no separate container to run yourself" (build.mjs copy, not data). Also cleaned two QA nits:
-  moved non-verbatim commentary out of Rocket.Chat's `quote` field into `scope`, and re-pointed
-  Discourse's bundled-deps citation at discourse_docker's README (the actual bundling claim)
-  instead of one template file. Rebuilt, full suite re-run green (38/38). All three entries
-  marked `pending-second-qa` per the unattended-run rule — next run's fresh-eyes QA settles them.
+  12/20 post-verification). Brand selfhostspecs.com; `docs/` gitignored build output; schema
+  test is the contract; repo PUBLIC (owner call); launch gate ≥100 sourced entries. Full sprint
+  evidence in the bootstrap session.
+- 2026-07-24 — **First full cycle: 14 apps live**, gate exercised end-to-end (harvest→verify→
+  CI→QA BLOCK→fix→re-QA→deploy green); QA/re-QA each blocked once, both now CI-enforced.
+- 2026-07-26 — **ANALYZE stayed pre-launch/readiness-framed**: 0 stars/forks/issues, 26 hits
+  (operator checks) — no traffic kills, none meet any bar yet.
+- 2026-07-26 — **BUILD scoped 7→3 queued apps** (Discourse/Zulip/Rocket.Chat) on a confirmed
+  egress constraint: docs.portainer.io/learn.netdata.cloud/docs.joinpeertube.org/vikunja.io
+  block (curl exit 56); raw.githubusercontent.com doesn't. Those four stayed queued.
+- 2026-07-26 — **Rocket.Chat's min-tier re-sourced live, had drifted from the FIND brief**:
+  brief said 1 core/1GB; live table (PNG in fetchable markdown) reads 1 vCPU/2GiB Starter tier,
+  ≤25 concurrent. Built on the live figure only.
+- 2026-07-26 — **Verifier BLOCKED Zulip first pass**: memcached omitted from deps,
+  `docker.source_url` miscited. Fixed (memcached added to deps enum, source repointed) —
+  harvester≠verifier caught a real gap before QA.
+- 2026-07-26 — **Discourse's Postgres/Redis classified bundled** (`service: none`, Defect
+  Class #12): official all-in-one image runs them via runit in the same container.
+- 2026-07-26 — **Analytics-snapshot failure (exit 22) flagged to owner**, not silently
+  retried: cloud sessions can't reach the GoatCounter API to diagnose (egress policy).
+- 2026-07-26 — **QA BLOCKED batch first pass**: no wrong figures, but the "no external
+  database" collection's intro text went false once Discourse joined with bundled-but-real
+  Postgres/Redis. Reworded ("no separate container to run yourself"); two QA nits also fixed.
+  Suite green (38/38); all three `pending-second-qa`.
 - 2026-07-27 — **AUDIT #1: added a post-deploy smoke test to `ci.yml`** (curl the live Pages
   URL after `deploy-pages`, assert HTTP 200 + title marker, 5 retries). Evidence: this cloud
   session cannot reach `selfhostspecs.com` at all (proxy CONNECT 403, confirmed policy denial,
@@ -88,3 +64,15 @@ Append-only log of material decisions with their evidence. AUDIT checks cadence 
   as genuine "recommended" figures — fully disclosed by its quote/scope, not a defect under
   current page conventions, but a "reported" vs "recommended" visual distinction would be
   clearer. 21 apps tracked total (17 live, 4 pending-second-qa).
+- 2026-08-02 — **Fresh-eyes re-QA settled OpenProject to live; found 3 real defects on the
+  rest, not zero this time.** OpenProject clean. Plausible CE/Linkwarden/Open WebUI all cited
+  an unauthenticated `ghcr.io/v2/.../manifests/<tag>` URL as `docker.source_url` — 401s for any
+  reader clicking it; new Known Defect Class #13, repointed all three to the browsable package
+  page. Linkwarden's meilisearch was `required:false` citing a manual-install-only doc, while
+  the actual compose file (already cited for postgresql) has it in `depends_on` — reclassified
+  `required:true` (memcached/OpenProject precedent). Open WebUI's "none required" deps entry
+  cited a compose file that itself defines an `ollama` service — self-contradicting; repointed
+  to the README's OpenAI-only docker-run block, the real zero-dependency evidence. Fixed,
+  rebuilt, 45/45 green, kept `pending-second-qa` for the three fixed entries per the
+  unattended-run rule (only OpenProject moved to live). DECISIONS/LEARNINGS compacted to stay
+  under budget.

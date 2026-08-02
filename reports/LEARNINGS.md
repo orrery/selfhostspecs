@@ -24,33 +24,6 @@ learning. FIND and BUILD read this file first, every run. Newest first.
     content). → Downstream: markdown emphasis around a quoted figure is safe to strip; any other
     deviation (reordering, synonyms, unit conversion) is not.
 
-## 2026-07-30 — FIND run #7 (Chatwoot, Seafile, Mattermost, BigBlueButton queued)
-
-35. **A WebSearch-derived figure can silently be the wrong row of an official scaling table,
-    and a 1-2 guessed raw.githubusercontent.com path 404ing is not proof no mirror exists.**
-    Finder's search-only pass mis-quoted Mattermost's 1,000-2,000-user tier (4GB/2vCPU) as the
-    minimum when the true floor is the 1-1,000-user tier (2GB/1vCPU); same shape on
-    BigBlueButton, where the finder's "8GB/4 cores" was the doc's dev/local tier, not the
-    16GB/8-core production minimum. Both times the finder also concluded "no mirror, needs a
-    local session" after 1-2 path guesses 404'd, but the verifier found working mirrors at
-    different paths (`mattermost/docs` master branch `.rst`, not `main`/`.mdx`;
-    `bigbluebutton/bigbluebutton` monorepo `docs/docs/...`, not a separate `docs` repo).
-    → Downstream: FIND-stage figures/mirror-availability are provisional until independently
-    re-fetched; don't route a candidate to the blocked-local-session bucket without checking
-    the doc repo's actual file tree, not just guessing common paths.
-
-## 2026-07-31 — FIND run #8 (GitLab CE, Zammad queued; column proposal refuted)
-
-36. **A column proposal's "piggybacks on existing fetches" cost claim must be checked against
-    the actual doc structure, not assumed from the field's conceptual proximity to figures
-    already harvested.** Finder proposed a "minimum dependency version floor" column as
-    low-effort because RAM/CPU and version-support info "should be nearby." Verifier opened
-    GitLab's actual requirements.md and found the Postgres version-support table lives in a
-    separate `#### Supported versions` subsection, only visible because the verifier read the
-    whole file rather than the quoted fragment — a targeted fetch for RAM/CPU alone would
-    have missed it. → Downstream: score column-opportunity Effort by reading at least one
-    real source page end-to-end, not by reasoning about where the data "ought" to live.
-
 ## 2026-08-01 — FIND run #9 (Ghost, Mastodon, Lemmy queued; Netdata/Portainer unblocked; MinIO rejected)
 
 37. **`git clone --depth 1` of a github.com repo reaches further than guessing
@@ -62,6 +35,31 @@ learning. FIND and BUILD read this file first, every run. Newest first.
 38. **A dead/archived upstream (MinIO, archived 2026-04-25) disqualifies outright, isn't just a
     low score** — future staleness re-verification would chase a project that never updates. →
     Downstream: check archive status before scoring any high-star candidate.
+
+## 2026-08-02 — ANALYZE + BUILD (re-QA settle, Chatwoot/Seafile/Mattermost built)
+
+39. **`git checkout <branch>` does not fast-forward it — a session can start reading a stale
+    tree without any error.** After resolving a detached-HEAD state, `git checkout main`
+    switched onto a local `main` still 3 commits behind `origin/main`; the backlog file read
+    as if FIND runs #8/#9 never happened until `git merge --ff-only origin/main` caught up.
+    Distinct from LEARNINGS #32 (that was detached-HEAD-vs-stale-ref; this is "checkout alone
+    doesn't pull"). → Downstream: after any `git checkout <branch>`, immediately diff
+    `git rev-parse HEAD` against `git rev-parse origin/<branch>` before trusting file contents.
+40. **A `depends_on` entry in the officially-documented default compose path is stronger
+    evidence for `required:true` than a separate manual-install doc's graceful-degradation
+    note for a *different* install path.** Linkwarden's meilisearch was harvested
+    `required:false` from `environment-variables.md`, which only documents manual (non-Docker)
+    installs as able to skip it; the Docker Compose path this entry actually describes has no
+    such escape hatch. Fresh-eyes QA caught the mismatch between the citation and the
+    documented install path. → Downstream: a dep's `required` value is scoped to the specific
+    install path the entry documents (same as `specs.*.scope`) — cite evidence from that path,
+    not a different one, even when both exist in official docs.
+41. **A `ghcr.io/v2/.../manifests/<tag>` registry API URL 401s for any reader without a bearer
+    token — it's fine as a harvesting source, never as the published citation link.** 3 of 4
+    apps in the 2026-07-30 batch used it as `docker.source_url`; QA caught it by fetching each
+    link unauthenticated, the way a real visitor would. Now Known Defect Class #13. →
+    Downstream: any ghcr.io-sourced entry must cite the browsable
+    `github.com/<owner>/<repo>/pkgs/container/<name>` page instead.
 
 ## Compacted (graduated into CI tests / defect classes — see OPERATIONS.md, tests/*.test.mjs)
 - GitHub-hosted mirrors (raw.githubusercontent.com, Docker Hub v2, ghcr.io v2) reach from cloud
