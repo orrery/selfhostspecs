@@ -1,0 +1,60 @@
+{
+  "name": "Chatwoot",
+  "slug": "chatwoot",
+  "category": "customer-support",
+  "website": "https://www.chatwoot.com",
+  "repo": "https://github.com/chatwoot/chatwoot",
+  "description": "Self-hosted customer support and live-chat platform, an alternative to Zendesk or Intercom.",
+  "status": "pending-verification",
+  "specs": {
+    "ram_min_mb": {
+      "value": 4096,
+      "source_url": "https://raw.githubusercontent.com/chatwoot/docs/main/self-hosted/deployment/requirements.mdx",
+      "quote": "4GB RAM is the required minimum memory size and supports up to 10,000 conversations a day",
+      "retrieved": "2026-08-02",
+      "scope": "Official self-hosted deployment, general, up to 10,000 conversations/day workload tier"
+    },
+    "cpu_rec_cores": {
+      "value": 4,
+      "source_url": "https://raw.githubusercontent.com/chatwoot/docs/main/self-hosted/deployment/requirements.mdx",
+      "quote": "4 cores is the recommended minimum number of cores and supports up to 10,000 conversations a day",
+      "retrieved": "2026-08-02",
+      "scope": "Official self-hosted deployment, general, up to 10,000 conversations/day workload tier; doc labels this a recommended-minimum guidance figure, not a hard floor"
+    },
+    "no_official_figure": {
+      "fields": [
+        "ram_rec_mb",
+        "cpu_min_cores"
+      ],
+      "evidence_url": "https://raw.githubusercontent.com/chatwoot/docs/main/self-hosted/deployment/requirements.mdx",
+      "note": "Docs give one required RAM minimum (4GB) and one recommended-minimum CPU figure (4 cores) for the base workload tier. The 8-core/8GB figures are a higher-conversation-volume scaling tier, not a general recommended baseline above the stated minimums (Defect Class #2) — not harvested as rec/min counterparts."
+    }
+  },
+  "deps": [
+    {
+      "service": "postgresql",
+      "required": true,
+      "source_url": "https://raw.githubusercontent.com/chatwoot/docs/main/self-hosted/deployment/requirements.mdx"
+    },
+    {
+      "service": "redis",
+      "required": true,
+      "source_url": "https://raw.githubusercontent.com/chatwoot/docs/main/self-hosted/deployment/requirements.mdx"
+    }
+  ],
+  "docker": {
+    "image": "chatwoot/chatwoot",
+    "size_mb": 685,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://hub.docker.com/v2/repositories/chatwoot/chatwoot/tags/latest",
+    "retrieved": "2026-08-02"
+  },
+  "sources_of_truth": [
+    "https://raw.githubusercontent.com/chatwoot/docs/main/self-hosted/deployment/requirements.mdx",
+    "https://github.com/chatwoot/chatwoot",
+    "https://hub.docker.com/r/chatwoot/chatwoot"
+  ]
+}

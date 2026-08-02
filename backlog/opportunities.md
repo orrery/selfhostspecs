@@ -67,25 +67,24 @@ Detail: DECISIONS.md 2026-07-30.
   1GB RAM baseline, +1CPU/2GB per 20 concurrent users" (distinct from the JVM-heap guide/
   Discourse post already ruled community-figure); domain hard-blocks fetch, no GitHub mirror.
 
-## Queued (verifier-signed), still unbuilt — 2026-07-30 FIND run #7
-All reachable via GitHub-hosted mirrors — buildable now (standalone docs domains 403, use mirror).
-- **Chatwoot** (18/20) — 34.9k stars. `raw.githubusercontent.com/chatwoot/docs/main/self-hosted/
-  deployment/requirements.mdx` — "4GB RAM required minimum... up to 10,000 conversations/day" /
-  4 cores rec. Deps: PostgreSQL + Redis>=7.0 (required).
-- **Seafile** (16/20) — 15.1k stars, distinct from Nextcloud/Syncthing.
-  `raw.githubusercontent.com/haiwen/seafile-admin-docs/master/manual/setup/
-  system_requirements.md` — CE: 2G RAM, 2 cores >2GHz rec, 10G/50G storage. CE only, don't
-  conflate Pro tier figures in same doc.
-- **Mattermost** (15/20, 3rd chat entry — tempered crowding concern, distinct on-prem demand).
-  `raw.githubusercontent.com/mattermost/docs/master/source/deployment-guide/
-  software-hardware-requirements.rst` — **1-1,000 users: 1 vCPU/2GB (true floor)**,
-  1,000-2,000: 2 vCPU/4GB. BUILD must harvest the first tier, not the second (FIND mis-collapsed
-  this once already, verifier caught it).
-- **BigBlueButton** (14/20) — video conferencing, 9.2k stars, no crowding.
-  `raw.githubusercontent.com/bigbluebutton/bigbluebutton/develop/docs/docs/administration/
-  install.md` (v3.0.32) — production min: 16GB/8 cores/Ubuntu 22.04/500GB (50GB w/o recordings).
-  FIND's initial 8GB/4-core/Ubuntu 20.04 was the dev/local tier — verifier caught the
-  min-vs-tier conflation.
+## Building — 2026-08-02 (FIND run #7 queue, independent verification in flight)
+- **Chatwoot** (18/20) — 4096MB min (required), 4 cores rec-minimum (8-core/8GB is a
+  higher-volume scaling tier, not a baseline, Defect Class #2). Deps: postgresql + redis.
+- **Seafile** (16/20) — CE: 2048MB/2 cores min (page IS the minimum spec; Pro tier not
+  harvested). Deps: mariadb + redis.
+- **Mattermost** (15/20) — 2048MB/1 vCPU min (1-1,000 users tier, the true floor). Deps:
+  postgresql only (MySQL also documented; Postgres is the steered/primary path, avoids
+  OR-flattening — verifier to confirm defensible). Docker image **amd64-only, no arm64**
+  (registry-manifest-checked).
+
+## Held — 2026-08-02: BigBlueButton (architecture-fit gap, not sourcing)
+BigBlueButton (14/20, production min 16GB/8 cores confirmed unchanged) installs via
+`bbb-install.sh` onto bare-metal/VM Ubuntu — no official single Docker image exists for the core
+server (only companion images: greenlight, lti-broker, app-rooms, libreoffice — none is "the
+app"). Every other entry is containerized; forcing `docker.image` would misrepresent the install
+model (adversarial pass, CLAUDE.md rule 7). Needs a schema allowance for non-containerized apps
+or a Sourceability screening criterion before apt/script-installed apps proceed — flagged for
+AUDIT/FIND.
 
 ## Queued (verifier-signed), still unbuilt — 2026-07-24/25 FIND runs #2/#3
 Still blocked (no GitHub mirror found; standalone docs domain hard-blocks):

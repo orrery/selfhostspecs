@@ -1,0 +1,60 @@
+{
+  "name": "Seafile",
+  "slug": "seafile",
+  "category": "file-sync",
+  "website": "https://www.seafile.com",
+  "repo": "https://github.com/haiwen/seafile",
+  "description": "Self-hosted file sync and share platform, an open-source alternative to Dropbox (Community Edition).",
+  "status": "pending-verification",
+  "specs": {
+    "ram_min_mb": {
+      "value": 2048,
+      "source_url": "https://raw.githubusercontent.com/haiwen/seafile-admin-docs/master/manual/setup/system_requirements.md",
+      "quote": "Memory requirements: 2G",
+      "retrieved": "2026-08-02",
+      "scope": "Seafile Community Edition, Docker-based deployment, general"
+    },
+    "cpu_min_cores": {
+      "value": 2,
+      "source_url": "https://raw.githubusercontent.com/haiwen/seafile-admin-docs/master/manual/setup/system_requirements.md",
+      "quote": "CPU requirements: 2 cores, more than 2G Hz are recommended",
+      "retrieved": "2026-08-02",
+      "scope": "Seafile Community Edition, Docker-based deployment, general (2 cores; >2GHz clock speed recommended, not additional cores)"
+    },
+    "no_official_figure": {
+      "fields": [
+        "ram_rec_mb",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://raw.githubusercontent.com/haiwen/seafile-admin-docs/master/manual/setup/system_requirements.md",
+      "note": "Page states these figures ARE the minimum system hardware requirements for CE; no separate general recommended RAM/CPU tier exists for CE. Seafile Pro's 4-core/4GB figures are a different, separately-licensed product tier, not a recommended upgrade path for CE (Defect Class #2/#3) — not harvested here."
+    }
+  },
+  "deps": [
+    {
+      "service": "mariadb",
+      "required": true,
+      "source_url": "https://raw.githubusercontent.com/haiwen/seafile-admin-docs/master/manual/setup/system_requirements.md"
+    },
+    {
+      "service": "redis",
+      "required": true,
+      "source_url": "https://raw.githubusercontent.com/haiwen/seafile-admin-docs/master/manual/setup/system_requirements.md"
+    }
+  ],
+  "docker": {
+    "image": "seafileltd/seafile-mc",
+    "size_mb": 490,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://hub.docker.com/v2/repositories/seafileltd/seafile-mc/tags/latest",
+    "retrieved": "2026-08-02"
+  },
+  "sources_of_truth": [
+    "https://raw.githubusercontent.com/haiwen/seafile-admin-docs/master/manual/setup/system_requirements.md",
+    "https://github.com/haiwen/seafile",
+    "https://hub.docker.com/r/seafileltd/seafile-mc"
+  ]
+}

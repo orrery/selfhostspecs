@@ -1,0 +1,54 @@
+{
+  "name": "Mattermost",
+  "slug": "mattermost",
+  "category": "team-chat",
+  "website": "https://mattermost.com",
+  "repo": "https://github.com/mattermost/mattermost",
+  "description": "Self-hosted team chat and collaboration platform, an on-premises alternative to Slack.",
+  "status": "pending-verification",
+  "specs": {
+    "ram_min_mb": {
+      "value": 2048,
+      "source_url": "https://raw.githubusercontent.com/mattermost/docs/master/source/deployment-guide/software-hardware-requirements.rst",
+      "quote": "1 - 1,000 users - 1 vCPU/cores, 2 GB RAM",
+      "retrieved": "2026-08-02",
+      "scope": "Team deployment (single server), 1-1,000 registered users tier — the lowest of two published team-deployment tiers"
+    },
+    "cpu_min_cores": {
+      "value": 1,
+      "source_url": "https://raw.githubusercontent.com/mattermost/docs/master/source/deployment-guide/software-hardware-requirements.rst",
+      "quote": "1 - 1,000 users - 1 vCPU/cores, 2 GB RAM",
+      "retrieved": "2026-08-02",
+      "scope": "Team deployment (single server), 1-1,000 registered users tier — the lowest of two published team-deployment tiers"
+    },
+    "no_official_figure": {
+      "fields": [
+        "ram_rec_mb",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://raw.githubusercontent.com/mattermost/docs/master/source/deployment-guide/software-hardware-requirements.rst",
+      "note": "Only two team-deployment tiers are published (1-1,000 and 1,000-2,000 registered users) plus a separate enterprise multi-server scaling guide. The second tier is a higher-scale bracket, not a general recommended baseline above the minimum (Defect Class #2) — no distinct recommended figure exists."
+    }
+  },
+  "deps": [
+    {
+      "service": "postgresql",
+      "required": true,
+      "source_url": "https://raw.githubusercontent.com/mattermost/docs/master/source/deployment-guide/software-hardware-requirements.rst"
+    }
+  ],
+  "docker": {
+    "image": "mattermost/mattermost-team-edition",
+    "size_mb": 438,
+    "arches": [
+      "amd64"
+    ],
+    "source_url": "https://hub.docker.com/v2/repositories/mattermost/mattermost-team-edition/tags/latest",
+    "retrieved": "2026-08-02"
+  },
+  "sources_of_truth": [
+    "https://raw.githubusercontent.com/mattermost/docs/master/source/deployment-guide/software-hardware-requirements.rst",
+    "https://github.com/mattermost/mattermost",
+    "https://hub.docker.com/r/mattermost/mattermost-team-edition"
+  ]
+}
