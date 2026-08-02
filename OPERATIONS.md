@@ -203,6 +203,10 @@ Total spent: **~$11**. Standing cap: $0 unapproved.
 12. **Bundled-dependency misclassification** (QA 2026-07-24): a binary shipped inside the
     image (ffmpeg in Frigate/Jellyfin) is not an "external service" and must not affect
     external-service filters or collections.
+13. **Unauthenticated-401 source links** (QA 2026-08-02): a `ghcr.io/v2/.../manifests/<tag>`
+    registry API URL as `docker.source_url` 401s for any reader without a bearer token — use
+    the browsable `github.com/<owner>/<repo>/pkgs/container/<name>` package page instead; the
+    API URL is fine for harvesting size/arch data, never fine as the published citation link.
 
 ## Rejected directions (with refutations, from the 2026-07-24 research sprint)
 - Static JSON "API hub" — occupied (dr5hn weekly-updated CDN datasets; concept exists at 21

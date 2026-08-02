@@ -22,7 +22,7 @@
     {
       "service": "none",
       "required": false,
-      "source_url": "https://raw.githubusercontent.com/open-webui/open-webui/main/docker-compose.yaml"
+      "source_url": "https://raw.githubusercontent.com/open-webui/open-webui/main/README.md"
     }
   ],
   "docker": {
@@ -32,7 +32,7 @@
       "amd64",
       "arm64"
     ],
-    "source_url": "https://ghcr.io/v2/open-webui/open-webui/manifests/main",
+    "source_url": "https://github.com/open-webui/open-webui/pkgs/container/open-webui",
     "retrieved": "2026-07-30"
   },
   "sources_of_truth": [

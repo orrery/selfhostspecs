@@ -32,8 +32,8 @@
     },
     {
       "service": "meilisearch",
-      "required": false,
-      "source_url": "https://raw.githubusercontent.com/linkwarden/docs/main/docs/self-hosting/environment-variables.md"
+      "required": true,
+      "source_url": "https://raw.githubusercontent.com/linkwarden/linkwarden/main/docker-compose.yml"
     }
   ],
   "docker": {
@@ -43,7 +43,7 @@
       "amd64",
       "arm64"
     ],
-    "source_url": "https://ghcr.io/v2/linkwarden/linkwarden/manifests/latest",
+    "source_url": "https://github.com/linkwarden/linkwarden/pkgs/container/linkwarden",
     "retrieved": "2026-07-30"
   },
   "sources_of_truth": [

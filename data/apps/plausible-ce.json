@@ -43,7 +43,7 @@
       "amd64",
       "arm64"
     ],
-    "source_url": "https://ghcr.io/v2/plausible/community-edition/manifests/v3.2.1",
+    "source_url": "https://github.com/plausible/community-edition/pkgs/container/community-edition",
     "retrieved": "2026-07-30"
   },
   "sources_of_truth": [
