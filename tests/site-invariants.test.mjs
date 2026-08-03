@@ -39,6 +39,7 @@ test("every page carries analytics, canonical, viewport, and no banned patterns"
     assert.ok(html.includes("goatcounter"), `${p}: missing analytics snippet`);
     assert.ok(html.includes('rel="canonical"'), `${p}: missing canonical`);
     assert.ok(html.includes('name="viewport"'), `${p}: missing viewport`);
+    assert.ok(html.includes('rel="icon"'), `${p}: missing favicon link (every browser auto-requests /favicon.ico and 404s without one)`);
     assert.ok(html.match(/<html lang="en">/), `${p}: missing lang`);
     for (const b of BANNED) {
       assert.ok(!html.includes(b), `${p}: banned pattern present: ${b}`);

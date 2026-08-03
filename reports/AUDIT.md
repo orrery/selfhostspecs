@@ -3,50 +3,86 @@
 Weekly adversarial audit findings, newest first, ranked by severity. An empty audit must say
 what it tried and failed to break. First audit due after the first full loop cycle.
 
+## 2026-08-03 — AUDIT #2
+
+**Mechanical.** 45/45 green before and after fixes. `CI & Deploy` green at HEAD (`383555f`,
+2026-08-02T23:33Z) incl. post-deploy smoke test — `selfhostspecs.com` still 403s at the proxy
+level from here (re-confirmed via curl + WebFetch, same as AUDIT #1).
+
+**SEV-1 — drifted figure, fixed.** Discourse `docker.size_mb` (1173, set 07-30) drifted again —
+`latest` tag rebuilt this morning (`tag_last_pushed` 2026-08-03T08:22Z), amd64 now
+1143.77MiB → corrected to 1144. Third occurrence of this exact shape on this field
+(Vaultwarden AUDIT #1, Discourse 07-30, Discourse again now).
+
+**SEV-2 — second drift, fixed.** Immich `docker.size_mb` (761, 07-24) is 762.57MiB on re-fetch
+→ corrected to 763 (2MB/0.26%, same rolling-tag cause). Changelog entries added for both.
+
+**Data audit.** Re-fetched, verbatim-clean: Discourse ram_min/cpu_min/cpu_rec, OpenProject
+ram_min/cpu_min, Zulip ram_min/cpu_min — 7 fields/3 apps, quote/value/unit/scope/min-vs-rec all
+correct. Docker sizes re-checked for **all 18 live apps** (Docker Hub + GHCR APIs) — 16 matched,
+2 drifted (above). Standalone docs domains (gitea/grafana/home-assistant/nextcloud/frigate/
+jellyfin/pi-hole/immich) still unreachable from this sandbox, unchanged from every prior audit.
+
+**Staleness sweep.** Nothing crosses 90 days (oldest 2026-07-24, 10 days old). None queued.
+
+**Hostile pass — executed for the first time.** `selfhostspecs.com` unreachable, so served the
+actual `docs/` build on localhost and drove it with the pre-installed `playwright`/Chromium:
+320px viewport, zero-result search, 5 URL-tamper payloads (script injection, negative values,
+path traversal, nonexistent app — none reflected unescaped, no JS errors), JS-disabled fallback,
+collection + app page at 320px. **Found and fixed one real defect:** no `<link rel="icon">` /
+no favicon.ico anywhere — every browser 404'd on it since bootstrap (confirmed via CDP network
+capture). Added an inline SVG favicon to `build.mjs` + a new CI invariant (`rel="icon"` check in
+site-invariants.test.mjs) so it can't regress. Remaining failure (GoatCounter script) is this
+sandbox's proxy blocking `gc.zgo.at`, not a live defect.
+
+**Process audit.** LEARNINGS #37–41 all changed downstream behavior (git-clone technique reused
+run #10, archive-check applied to MinIO, depends_on-scoping applied to Linkwarden, Defect Class
+#13 applied to 3 citations); compacted #32–34/37–38 to one-liners for budget. Ledger $11, matches
+Infra section, no unlogged spend. Backlog matches `data/apps/*.json` exactly (18 live, 3
+pending-second-qa, 3 pending-verification), truthful. `git log -- tests/` since AUDIT #1: one
+change (07-30 `>=`-escape fix), a real fix not a weakening. **Cadence gap found:** `specs-find`
+commit exists every day 07-24→07-27 and 07-29→08-02 but **not 07-28** — that day's GH-Actions
+stats-snapshot (separate system) ran, masking it visually. `list_triggers` exposes only
+`last_fired_at`, not history, so this can't be root-caused here — flagged to owner as an open
+question (routine error vs. silent no-op vs. genuine skip). LEARNINGS #43.
+
+**Red-team the week's biggest decision** (shipping 4 apps `pending-second-qa` off a same-run QA
+pass that found zero defects, 07-30): the safety net worked as designed — the later, different-
+day QA pass caught what the first missed. But "zero defects, 12 classes checked" was wrong on
+3 of 4 apps despite a nominally independent agent, so same-session identity separation alone
+isn't buying much. Cheaper fix: never let BUILD and first-QA share a run, making the gap that
+actually caught the defects (time + fresh context) structural, not incidental. LEARNINGS #42.
+
+**Missing invariant, closed this run:** favicon link (above). **Still missing:** nothing
+automated catches a routine silently skipping a day — needs run-history data this sandbox
+lacks; flagged to owner rather than guessed at.
+
+**Evidence:** 45/45 before and after; commits fix Discourse/Immich drift + changelog, add
+favicon (build.mjs + CI invariant), extend LEARNINGS, log this entry.
+
 ## 2026-07-27 — AUDIT #1
 
-**Mechanical.** `node --test tests/*.test.mjs`: 38/38 green. `CI & Deploy` on `main` green at
-HEAD (`f3e3407`, run 16, 2026-07-26T23:34Z) — every run since bootstrap is green except the
-first two bootstrap attempts (fixed same day, pre-existing).
+**Mechanical.** 38/38 green. `CI & Deploy` green at HEAD (`f3e3407`, run 16).
 
-**SEV-1 — drifted figure, fixed this run.** Vaultwarden's `docker.size_mb` was stored as 77
-(retrieved 2026-07-24); re-fetching the same `hub.docker.com/v2/.../tags/latest` URL today
-returned 83MB (amd64). Not fabrication — the image was rebuilt after harvest — but a published
-figure that quietly stopped being true. Fixed: `size_mb` → 83, `retrieved` → 2026-07-27.
-Pipeline gap: docker sizes sourced from a rolling `latest` tag were only queued for the
-90-day RAM/CPU staleness sweep; they can drift within days. Logged as LEARNINGS #27.
-Sampled 9 other live docker images (nextcloud, gitea, grafana, jellyfin, pi-hole, adguard-home,
-syncthing, uptime-kuma, n8n) via Docker Hub/GHCR API — all matched stored size (±1MB rounding)
-and arches. Also sampled 8 RAM/CPU figures (Nextcloud, Frigate ×2, Gitea, Grafana, Home
-Assistant, Immich ×4, Jellyfin, Pi-hole = 11 individual figures across 8 apps) for quote/value
-re-verification — **could not re-fetch any of them**; see next finding.
+**SEV-1, fixed.** Vaultwarden `docker.size_mb` 77→83 (rolling `latest` tag rebuilt after
+harvest, not fabrication). Docker sizes were only on the 90-day sweep, not re-checked per-AUDIT
+— gap logged (LEARNINGS #27). Sampled 9 other docker images (all matched) and tried 11 RAM/CPU
+figures across 8 apps — could not re-fetch any; see next finding.
 
-**SEV-2 — this session cannot perform the live-site check or most source re-fetches at all.**
-Every docs domain tried (docs.nextcloud.com, docs.frigate.video, docs.gitea.com, grafana.com,
-home-assistant.io, docs.immich.app, jellyfin.org, docs.pi-hole.net) 403'd at the proxy CONNECT
-level, confirmed via `/__agentproxy/status` as a policy denial, not a tool bug — and so did
-`selfhostspecs.com` and `goatcounter.com` themselves. This is broader than LEARNINGS #18
-previously documented (which named 4 blocked docs domains as the exception, not the rule).
-Only GitHub-hosted infra and Docker Hub/GHCR's APIs are reachable from this sandbox. Practical
-effect: AUDIT step 2 (live-site spot check) and step 5 (hostile pass) are currently
-**impossible to execute from this environment**, every week, not just this one — and nobody
-had tried the apex domain directly until this audit. Mitigation shipped this run: added a
-post-deploy smoke test to `ci.yml` (curl the deployed URL, assert HTTP 200 + expected marker
-text) — GitHub Actions runners have real internet access, so this is the one place that can
-actually confirm a deploy is live. This closes the mechanical half of the gap (deploy reachable
-at all) but not the hostile/UX half (filters, viewport, non-Chromium) — that still needs either
-a local session or owner-relayed spot checks. Flagged to owner. Logged as LEARNINGS #28.
+**SEV-2.** This sandbox cannot reach any standalone docs domain, nor
+`selfhostspecs.com`/`goatcounter.com` themselves — confirmed policy-level 403 via
+`/__agentproxy/status`, not a tool bug; only GitHub-hosted infra + Docker Hub/GHCR APIs work.
+Live-site check and hostile pass impossible from here, every week. Mitigation: added a
+post-deploy smoke test to `ci.yml` (GH Actions runners have real internet) — closes the
+"deploy reachable" half, not the hostile/UX half. Flagged to owner (LEARNINGS #28).
 
-**Staleness sweep.** Nothing crosses 90 days — oldest entries retrieved 2026-07-24, 3 days ago.
-Nothing queued; correctly so, and expected this early.
+**Staleness sweep.** Nothing crosses 90 days (oldest 3 days old). Nothing queued.
 
-**Hostile pass on the live site.** Not executable — see SEV-2 above. Tried: direct `curl` to
-`selfhostspecs.com`, WebFetch to `selfhostspecs.com/`, `/apps/nextcloud/`, and
-`orrery.github.io/selfhostspecs/` as a control (also 403 — confirms the block is sandbox-side,
-not a selfhostspecs.com-specific misconfiguration, since an unrelated GitHub Pages site got the
-same treatment). Zero-result filters, URL tampering, 320px viewport, and non-Chromium rendering
-remain untested this cycle; the local `docs/` build (via `node scripts/build.mjs`) passes all
-site-invariant tests, which is the only signal available from here.
+**Hostile pass.** Not executable this cycle — see SEV-2. Tried direct curl/WebFetch to
+`selfhostspecs.com` and an unrelated GitHub Pages site as a control (same 403, confirming the
+block is sandbox-side). Zero-result filters/URL tampering/320px/non-Chromium untested; local
+`docs/` build passes all site-invariant tests, the only signal available. (Closed AUDIT #2: a
+locally-served `docs/` build + pre-installed Playwright makes this pass executable after all.)
 
 **Process audit.**
 - LEARNINGS mostly changed behavior this week (memcached enum, quote/scope separation,

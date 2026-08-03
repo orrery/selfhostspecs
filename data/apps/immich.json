@@ -54,13 +54,13 @@
   ],
   "docker": {
     "image": "ghcr.io/immich-app/immich-server",
-    "size_mb": 761,
+    "size_mb": 763,
     "arches": [
       "amd64",
       "arm64"
     ],
     "source_url": "https://github.com/immich-app/immich/pkgs/container/immich-server",
-    "retrieved": "2026-07-24"
+    "retrieved": "2026-08-03"
   },
   "sources_of_truth": [
     "https://docs.immich.app/install/requirements/"

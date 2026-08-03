@@ -3,38 +3,23 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
-## 2026-07-30 — ANALYZE + BUILD (OpenProject, Plausible CE, Linkwarden, Open WebUI shipped)
+## 2026-08-03 — AUDIT #2
 
-32. **A stale local `main` ref can look exactly like a diverged fork — check `merge-base`
-    before reconciling anything.** Session started on a detached HEAD carrying 15-16 real
-    commits; local `main` pointed 16 commits behind. Before assuming a fork and trying to
-    merge/rebase, `git merge-base <detached-HEAD> origin/main` showed origin was a direct
-    linear descendant — a prior session had already pushed, origin had just moved further.
-    Fast-forward was the entire fix. → Downstream: every session start with `git status`
-    showing "HEAD detached," run `git fetch` + `git merge-base` before any reconciliation
-    attempt; only treat it as a real fork if merge-base is NOT one of the two tips.
-33. **A test's HTML-escape set must mirror the renderer's exactly, or verbatim quotes with
-    certain characters silently false-fail CI.** `build.mjs` escapes `&<>"`;
-    `site-invariants.test.mjs`'s quote-display check only escaped `&<` — OpenProject's
-    genuinely-verbatim `>=` quote failed CI until corrected. → Downstream: any new
-    HTML-comparison assertion must diff its escape set against `esc()` in `build.mjs` directly.
-34. **Verbatim-quote fidelity tolerates stripping the source's own markdown emphasis (`**bold**`)
-    but nothing else.** OpenProject's/Plausible's docs bold their key numbers; harvested quotes
-    correctly kept the words, dropped the asterisks (verifier confirmed: formatting, not
-    content). → Downstream: markdown emphasis around a quoted figure is safe to strip; any other
-    deviation (reordering, synonyms, unit conversion) is not.
-
-## 2026-08-01 — FIND run #9 (Ghost, Mastodon, Lemmy queued; Netdata/Portainer unblocked; MinIO rejected)
-
-37. **`git clone --depth 1` of a github.com repo reaches further than guessing
-    raw.githubusercontent.com paths or api.github.com** — unblocked Netdata/Portainer (stuck
-    since run #2/#3). Docs-site mirror repos can differ in path from the canonical repo
-    (`netdata/learn` vs. real `netdata/netdata`) — verifier caught it by cloning both. →
-    Downstream: try `git clone` before marking anything "blocked, needs local session"; verifier
-    always clones-and-greps independently, never trusts a finder-cited path as-is.
-38. **A dead/archived upstream (MinIO, archived 2026-04-25) disqualifies outright, isn't just a
-    low score** — future staleness re-verification would chase a project that never updates. →
-    Downstream: check archive status before scoring any high-star candidate.
+42. **A same-run "independent" QA pass can still miss most defects — the second, later-session
+    QA pass is what's actually catching things.** The 2026-07-30 BUILD's own-run QA cleared 4
+    apps on all 12 Defect Classes; the 2026-08-02 fresh-eyes re-QA (a different day, not just a
+    different agent) found real defects on 3 of those 4. Agent-identity separation within one
+    sitting isn't buying the independence the `pending-second-qa` policy assumes it does. →
+    Downstream: track first-pass-QA miss rate; don't treat same-run QA clearance as strong
+    signal, only the later cross-session pass.
+43. **A scheduled routine can silently skip a day with no error and no trace besides an absent
+    commit.** `specs-find` fired daily 07-24→07-27 and 07-29→08-02 but produced no commit on
+    07-28 — the GH-Actions stats-snapshot (a separate system) ran that day, which is why it went
+    unnoticed; AUDIT #1 (07-27) couldn't have caught it, it happened the day after. →
+    Downstream: AUDIT's cadence check must diff the full commit-date list against the expected
+    daily/weekly schedule, not just check "last N runs look fine"; `list_triggers` only exposes
+    `last_fired_at`, not history, so git commit dates are the only cadence record — flagged to
+    owner, not silently logged.
 
 ## 2026-08-02 — ANALYZE + BUILD (re-QA settle, Chatwoot/Seafile/Mattermost built)
 
@@ -42,8 +27,8 @@ learning. FIND and BUILD read this file first, every run. Newest first.
     tree without any error.** After resolving a detached-HEAD state, `git checkout main`
     switched onto a local `main` still 3 commits behind `origin/main`; the backlog file read
     as if FIND runs #8/#9 never happened until `git merge --ff-only origin/main` caught up.
-    Distinct from LEARNINGS #32 (that was detached-HEAD-vs-stale-ref; this is "checkout alone
-    doesn't pull"). → Downstream: after any `git checkout <branch>`, immediately diff
+    Distinct from the merge-base learning above (that was detached-HEAD-vs-stale-ref; this is
+    "checkout alone doesn't pull"). → Downstream: after any `git checkout <branch>`, immediately diff
     `git rev-parse HEAD` against `git rev-parse origin/<branch>` before trusting file contents.
 40. **A `depends_on` entry in the officially-documented default compose path is stronger
     evidence for `required:true` than a separate manual-install doc's graceful-degradation
@@ -66,10 +51,25 @@ learning. FIND and BUILD read this file first, every run. Newest first.
   sessions; standalone docs domains AND github.com HTML/wikis hard-block (widened 2026-07-27,
   confirmed again 2026-07-29) — check for a raw-mirror before holding an app on "needs a local
   session" (Portainer/Netdata/PeerTube/Vikunja have none, stay held).
-- Rolling `latest`-tag docker image sizes drift within days, not months (Vaultwarden SEV-1,
-  AUDIT #1) — re-check `docker.size_mb` every AUDIT, not just the 90-day RAM/CPU queue.
-  selfhostspecs.com/goatcounter.com are also proxy-blocked from cloud sessions — a post-deploy
-  smoke test in `ci.yml` now covers the live-site check on GH Actions instead.
+- Rolling `latest`-tag docker image sizes drift within days, not months (Vaultwarden AUDIT #1,
+  Discourse twice since, Immich AUDIT #2) — 2 of 18 live docker sizes had drifted by AUDIT #2,
+  a real recurring rate, not a one-off; re-check `docker.size_mb` every AUDIT, not just the
+  90-day RAM/CPU queue. selfhostspecs.com/goatcounter.com are also proxy-blocked from cloud
+  sessions — a post-deploy smoke test in `ci.yml` now covers the live-site check on GH Actions
+  instead; AUDIT can additionally serve docs/ on a local port and drive it with the
+  globally-installed `playwright` package (`executablePath` pointed at `/opt/pw-browsers/`) for
+  a real hostile/viewport pass when the live site itself is unreachable — caught a missing
+  favicon (every browser auto-requests `/favicon.ico`; 404'd since bootstrap) this way, fixed
+  and now CI-enforced (`rel="icon"` check in site-invariants.test.mjs).
+- `git merge-base <tip> origin/main` before reconciling any apparent fork (detached-HEAD or
+  stale-ref cases both resolve to "fast-forward, nothing lost" if merge-base matches);
+  `git checkout <branch>` alone does not pull — diff `rev-parse HEAD` vs. `origin/<branch>`
+  after every checkout. Test escape-sets must mirror `build.mjs`'s `esc()` exactly; verbatim
+  quotes tolerate stripped markdown emphasis, nothing else. `git clone --depth 1` reaches
+  further than guessing raw.githubusercontent.com paths (unblocked Netdata/Portainer) — try it
+  before holding an app as session-blocked; docs-mirror repos can differ in path from canonical
+  (verify by cloning both). A dead/archived upstream disqualifies a candidate outright regardless
+  of score (MinIO).
 - Requirements tables can be images (GitBook PNG) inside otherwise-fetchable markdown — view
   the image directly before declaring a figure unsourceable.
 - Deps-enum gaps are BLOCK-worthy, not a reason to silently drop a confirmed service

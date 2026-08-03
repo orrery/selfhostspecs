@@ -76,3 +76,13 @@ Append-only log of material decisions with their evidence. AUDIT checks cadence 
   rebuilt, 45/45 green, kept `pending-second-qa` for the three fixed entries per the
   unattended-run rule (only OpenProject moved to live). DECISIONS/LEARNINGS compacted to stay
   under budget.
+- 2026-08-03 — **AUDIT #2: 2 more docker-size drifts fixed (Discourse 1173→1144, Immich
+  761→763), one real defect found+fixed (no favicon anywhere, 404 on every page since bootstrap
+  — added + now CI-enforced), and a cadence gap found (`specs-find` produced no commit on
+  2026-07-28, flagged to owner, cause unknown from here).** First cycle the live-site hostile
+  pass was actually executable — served `docs/` locally, drove it with the pre-installed
+  Playwright, found the favicon gap that way. Red-teamed the 07-30 same-run QA pass: it cleared
+  4 apps on all 12 Defect Classes, but the later cross-session QA (08-02) found real defects on
+  3 of 4 — same-session "independent" QA isn't buying much independence; tracking first-pass-QA
+  miss rate going forward (LEARNINGS #42). Governance files compacted (LEARNINGS #32–34/37–38 →
+  one-liners; AUDIT #1 tightened) to stay under budget while adding this entry. 45/45 green.

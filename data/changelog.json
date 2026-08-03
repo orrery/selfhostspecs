@@ -64,5 +64,17 @@
     "app": "discourse",
     "change": "Re-QA: docker.size_mb corrected 1144\u21921173 \u2014 same rolling-`latest`-tag drift pattern as vaultwarden (AUDIT #1); flagged by independent re-QA, not self-caught. Figures/deps otherwise unchanged; status moved pending-second-qa\u2192live.",
     "source_url": "https://hub.docker.com/v2/repositories/discourse/discourse/tags/latest"
+  },
+  {
+    "date": "2026-08-03",
+    "app": "discourse",
+    "change": "AUDIT #2: docker.size_mb corrected 1173\u21921144 \u2014 the `latest` tag was rebuilt again the morning of this audit (tag_last_pushed 2026-08-03T08:22Z); size reverted close to its original 1144 value. Third occurrence of this exact drift shape (vaultwarden AUDIT #1, discourse itself 2026-07-30) \u2014 see AUDIT.md for the structural finding.",
+    "source_url": "https://hub.docker.com/v2/repositories/discourse/discourse/tags/latest"
+  },
+  {
+    "date": "2026-08-03",
+    "app": "immich",
+    "change": "AUDIT #2: docker.size_mb corrected 761\u2192763 \u2014 minor rolling-`latest`-tag drift (image manifest re-summed from GHCR: 799608153 bytes = 762.57MiB). Same pattern as discourse/vaultwarden, smaller magnitude.",
+    "source_url": "https://github.com/immich-app/immich/pkgs/container/immich-server"
   }
 ]
