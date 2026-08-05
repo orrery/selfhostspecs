@@ -62,6 +62,18 @@ paperless-ngx).
   only via a separate override file. Decide the schema's "removable-if-unneeded" modeling
   approach before BUILD starts — no existing app has more than 2 required deps.
 
+- **Twenty CRM** (17/20, run #12) — `raw.githubusercontent.com/twentyhq/twenty/main/packages/
+  twenty-docs/developers/self-host/capabilities/docker-compose.mdx` — "at least 2GB of RAM."
+  No CPU figure (ship no_official_figure). Deps: postgres+redis required. Docker
+  `twentycrm/twenty`, arm64+amd64.
+- **Formbricks** (15/20, run #12) — `raw.githubusercontent.com/formbricks/formbricks/main/docs/
+  self-hosting/overview.mdx` — "Minimum Setup: 1 vCPU, 2 GB RAM, 8 GB SSD." Deps: 4 required
+  (postgres, redis/valkey, hub, cube); taxonomy/vllm optional via profiles. Docker
+  `ghcr.io/formbricks/formbricks`, arm64+amd64.
+- **Zigbee2MQTT** (14/20, run #12) — confirmed no official RAM/CPU figure. Docker:
+  `github.com/Koenkk/zigbee2mqtt/pkgs/container/zigbee2mqtt`, 6-arch. **Blocked:** needs an
+  external MQTT broker; `SERVICES` schema enum has no `mqtt` value — don't build until extended.
+
 ## Collection page, verified — buildable
 - **"Apps with no separate DB/cache service required"** (run #8-10) — 14 members confirmed
   zero `required:true` deps; SERP check found no incumbent. Before BUILD: disclose
@@ -69,27 +81,24 @@ paperless-ngx).
   criterion (Wekan's FerretDB case shows ad hoc dep-labeling isn't enough).
 
 ## Held (insufficient evidence, not discarded)
-- Keycloak (~13/20): no reachable OSS docs source; keycloak.org/server/containers 403 (re-tried
-  08-02).
-- Snipe-IT (~12/20): README has no figures, readme.io 403.
-- Cal.com (~12/20): confirmed zero production RAM/CPU figures; needs channel-value case.
-- Metabase (~13-14/20): metabase.com/learn has a figure but domain hard-blocks, no GitHub mirror.
-- BigBlueButton (14/20): 16GB/8-core prod min confirmed, but installs via `bbb-install.sh` onto
-  bare Ubuntu — no official single Docker image for the core server; needs a schema allowance
-  for non-containerized apps first.
-- PeerTube: hardware guidance only on blocked FramaGit/docs.joinpeertube.org ("1.5GB plenty...
-  usually at most 500MB", tiered) — still no reachable mirror.
-- Vikunja: go-vikunja/website clones fine but the ~256MB figure not yet located in it.
+- Keycloak (~13/20): no reachable docs; keycloak.org/server/containers 403 (retried 08-02).
+- Snipe-IT (~12/20): README has no figures; readme.io 403.
+- Cal.com (~12/20): zero production RAM/CPU figures; needs channel-value case.
+- Metabase (~13-14/20): metabase.com/learn has a figure but domain blocks, no GitHub mirror.
+- BigBlueButton (14/20): 16GB/8-core prod min confirmed, but installs via `bbb-install.sh` on
+  bare Ubuntu — no single official Docker image; needs a non-containerized schema allowance.
+- PeerTube: guidance only on blocked FramaGit/docs.joinpeertube.org ("1.5GB plenty...~500MB",
+  tiered) — no reachable mirror.
+- Vikunja: go-vikunja/website clones fine, ~256MB figure not yet located in it.
 - Plane (~12/20, run #11): only sourced figure is EC2 quick-start advisory text, not a formal
-  requirements section — thin provenance; also crowds OpenProject's category.
-- Redmine (~9/20, run #11): GitHub-mirror INSTALL doc has zero RAM/CPU mention; redmine.org
-  itself fully unreachable this session — access blind spot, not a confirmed absence, retry
-  before final disposition.
-- AFFiNE (~12/20, run #11): full repo grep for RAM/CPU came up empty; docs.affine.pro blocked,
-  no GitHub-mirrored docs repo to fall back on — blind spot, pattern-matches Homepage/Glance.
-- Forgejo (~7/20, run #11): canonical repo on Codeberg, fully session-blocked; GitHub only hosts
-  a stale doc-free unofficial mirror. Hard fork of shipped Gitea, likely near-identical figures
-  (unverified) — low channel-value even if sourced.
+  requirements section — thin; also crowds OpenProject's category.
+- Redmine (~9/20, run #11): GitHub INSTALL doc still zero RAM/CPU mention (retried 08-05);
+  redmine.org still unreachable (2 sessions) — persistent blind spot. New: `library/redmine`
+  is a Docker Official Image, 8-arch. Still held on the figure.
+- AFFiNE (~12/20, run #11): repo grep for RAM/CPU empty; docs.affine.pro blocked, no mirror —
+  blind spot, pattern-matches Homepage/Glance.
+- Forgejo (~7/20, run #11): canonical repo on Codeberg blocked; GitHub hosts a stale doc-free
+  unofficial mirror. Fork of shipped Gitea, likely near-identical (unverified) — low channel-value.
 
 ## Unverified / held (not sent further)
 - Collection "runs on a 1GB VPS": thin (3 qualifiers); revisit once PeerTube/Vikunja ship.
@@ -100,7 +109,8 @@ paperless-ngx).
   Umami(11), Karakeep(10), Beszel(10), Passbolt(9), Wiki.js(9), Duplicati(9), Kavita(8),
   Kopia(7), Calibre-Web(6), Actual Budget(13), NocoDB(11), Tandoor Recipes(10), ntfy(9),
   Homepage(9), Listmonk(9), changedetection.io(8), Docmost(11), Baserow(10), Woodpecker CI(~8),
-  Cachet(8), Headscale(10), Bitwarden(11), Pixelfed(11).
+  Cachet(8), Headscale(10), Bitwarden(11), Pixelfed(11), Wallabag(13), DocuSeal(13, sqlite
+  default), Shiori(10), EspoCRM(9).
 - Rejected: "ARM/Pi-ready" collection — 14/14 live entries already arm64/armv7, no value.
 - Deferred: disk/storage-footprint column — too inconsistently documented (Sourceability ~2).
 
@@ -115,10 +125,12 @@ re-checks every AUDIT, not just the 90-day sweep.
 - Classroom mail-merge printables (07-24): free no-signup incumbents, identical privacy claim.
 - Emergency binder generator (07-24): demand unevidenced twice; trust paradox.
 - CC0 trivia bank (07-24): channels collapsed; accuracy-trust contradiction.
-- MinIO (08-01, ~61k stars): repo archived by GitHub, README declares unmaintained — dead
-  upstream.
-- Strapi (08-03, ~72.8k stars): no official Docker image at all, zero RAM/CPU figures anywhere.
-- Glance (08-03, ~36.1k stars): only a "Low memory usage" marketing bullet, nothing sourced —
-  same failure mode as Homepage.
+- MinIO (08-01, ~61k stars): archived by GitHub, README declares unmaintained — dead upstream.
+- Strapi (08-03, ~72.8k stars): no official Docker image, zero RAM/CPU figures anywhere.
+- Glance (08-03, ~36.1k stars): only a "Low memory usage" marketing bullet, unsourced — same
+  failure mode as Homepage.
+- *arr suite (Sonarr/Radarr/Prowlarr/Lidarr/Bazarr/Readarr/Whisparr) + qBittorrent/Transmission/
+  SABnzbd (08-05): no official Docker image (verified Sonarr/Radarr/Bazarr), no RAM/CPU figure
+  anywhere — same dead-end shape as Strapi.
 - Any calculator/tool or game (owner exclusion — never propose).
 </content>
