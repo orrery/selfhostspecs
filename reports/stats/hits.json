@@ -1,45 +1,13 @@
 {
   "hits": [
     {
-      "count": 17,
+      "count": 16,
       "path_id": 96298192,
       "path": "/",
       "event": false,
       "title": "SelfhostSpecs — hardware requirements for self-hosted apps",
       "max": 3,
       "stats": [
-        {
-          "day": "2026-07-31",
-          "hourly": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            2,
-            0,
-            0,
-            1,
-            0,
-            0,
-            0,
-            0,
-            1
-          ],
-          "daily": 4,
-          "weekly": 16,
-          "monthly": 4
-        },
         {
           "day": "2026-08-01",
           "hourly": [
@@ -69,7 +37,8 @@
             0
           ],
           "daily": 3,
-          "monthly": 13
+          "weekly": 12,
+          "monthly": 16
         },
         {
           "day": "2026-08-02",
@@ -249,8 +218,7 @@
             0,
             0
           ],
-          "daily": 0,
-          "weekly": 1
+          "daily": 0
         },
         {
           "day": "2026-08-08",
@@ -260,6 +228,8 @@
             0,
             0,
             0,
+            0,
+            1,
             0,
             1,
             0,
@@ -273,27 +243,16 @@
             0,
             0,
             0,
-            0,
-            0,
-            0,
+            2,
             0,
             0,
             0
           ],
-          "daily": 1
-        }
-      ]
-    },
-    {
-      "count": 6,
-      "path_id": 99472880,
-      "path": "/apps/adguard-home",
-      "event": false,
-      "title": "AdGuard Home system requirements — RAM, CPU, dependencies | SelfhostSpecs",
-      "max": 3,
-      "stats": [
+          "daily": 4,
+          "weekly": 4
+        },
         {
-          "day": "2026-07-31",
+          "day": "2026-08-09",
           "hourly": [
             0,
             0,
@@ -320,9 +279,18 @@
             0,
             0
           ],
-          "daily": 0,
-          "weekly": 6
-        },
+          "daily": 0
+        }
+      ]
+    },
+    {
+      "count": 6,
+      "path_id": 99472880,
+      "path": "/apps/adguard-home",
+      "event": false,
+      "title": "AdGuard Home system requirements — RAM, CPU, dependencies | SelfhostSpecs",
+      "max": 3,
+      "stats": [
         {
           "day": "2026-08-01",
           "hourly": [
@@ -352,6 +320,7 @@
             0
           ],
           "daily": 0,
+          "weekly": 6,
           "monthly": 6
         },
         {
@@ -563,19 +532,9 @@
             0
           ],
           "daily": 0
-        }
-      ]
-    },
-    {
-      "count": 3,
-      "path_id": 99886069,
-      "path": "/apps/open-webui",
-      "event": false,
-      "title": "Open WebUI system requirements — RAM, CPU, dependencies | SelfhostSpecs",
-      "max": 1,
-      "stats": [
+        },
         {
-          "day": "2026-07-31",
+          "day": "2026-08-09",
           "hourly": [
             0,
             0,
@@ -602,9 +561,18 @@
             0,
             0
           ],
-          "daily": 0,
-          "weekly": 3
-        },
+          "daily": 0
+        }
+      ]
+    },
+    {
+      "count": 3,
+      "path_id": 99886069,
+      "path": "/apps/open-webui",
+      "event": false,
+      "title": "Open WebUI system requirements — RAM, CPU, dependencies | SelfhostSpecs",
+      "max": 1,
+      "stats": [
         {
           "day": "2026-08-01",
           "hourly": [
@@ -634,6 +602,7 @@
             0
           ],
           "daily": 0,
+          "weekly": 3,
           "monthly": 3
         },
         {
@@ -845,261 +814,9 @@
             0
           ],
           "daily": 0
-        }
-      ]
-    },
-    {
-      "count": 1,
-      "path_id": 97882225,
-      "path": "/apps/openproject",
-      "event": false,
-      "title": "OpenProject system requirements — RAM, CPU, dependencies | SelfhostSpecs",
-      "max": 1,
-      "stats": [
-        {
-          "day": "2026-07-31",
-          "hourly": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            1
-          ],
-          "daily": 1,
-          "weekly": 1,
-          "monthly": 1
         },
         {
-          "day": "2026-08-01",
-          "hourly": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "daily": 0
-        },
-        {
-          "day": "2026-08-02",
-          "hourly": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "daily": 0
-        },
-        {
-          "day": "2026-08-03",
-          "hourly": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "daily": 0
-        },
-        {
-          "day": "2026-08-04",
-          "hourly": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "daily": 0
-        },
-        {
-          "day": "2026-08-05",
-          "hourly": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "daily": 0
-        },
-        {
-          "day": "2026-08-06",
-          "hourly": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "daily": 0
-        },
-        {
-          "day": "2026-08-07",
-          "hourly": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "daily": 0
-        },
-        {
-          "day": "2026-08-08",
+          "day": "2026-08-09",
           "hourly": [
             0,
             0,
@@ -1131,6 +848,6 @@
       ]
     }
   ],
-  "total": 27,
+  "total": 25,
   "more": false
 }
