@@ -76,5 +76,11 @@
     "app": "immich",
     "change": "AUDIT #2: docker.size_mb corrected 761\u2192763 \u2014 minor rolling-`latest`-tag drift (image manifest re-summed from GHCR: 799608153 bytes = 762.57MiB). Same pattern as discourse/vaultwarden, smaller magnitude.",
     "source_url": "https://github.com/immich-app/immich/pkgs/container/immich-server"
+  },
+  {
+    "date": "2026-08-09",
+    "app": "linkwarden",
+    "change": "Re-QA: source_url/evidence_url/sources_of_truth citing linkwarden/docs installation.md now 404 (repo restructured, page moved) \u2014 confirmed via live re-fetch; repointed to the new setup.md location where the same verbatim quote still lives. Value/quote unchanged; also tightened scope wording (hardware section precedes the Docker Compose/Manual Installation branch in official docs, so it reads as a general figure, not Docker-specific).",
+    "source_url": "https://raw.githubusercontent.com/linkwarden/docs/main/docs/self-hosting/setup.md"
   }
 ]

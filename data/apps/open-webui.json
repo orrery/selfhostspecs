@@ -5,7 +5,7 @@
   "website": "https://openwebui.com",
   "repo": "https://github.com/open-webui/open-webui",
   "description": "Self-hosted web interface for interacting with local and remote large language models.",
-  "status": "pending-second-qa",
+  "status": "live",
   "specs": {
     "no_official_figure": {
       "fields": [
