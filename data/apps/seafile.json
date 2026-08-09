@@ -5,7 +5,7 @@
   "website": "https://www.seafile.com",
   "repo": "https://github.com/haiwen/seafile",
   "description": "Self-hosted file sync and share platform, an open-source alternative to Dropbox (Community Edition).",
-  "status": "pending-qa",
+  "status": "pending-second-qa",
   "specs": {
     "ram_min_mb": {
       "value": 2048,

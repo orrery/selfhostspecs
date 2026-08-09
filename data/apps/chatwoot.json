@@ -5,7 +5,7 @@
   "website": "https://www.chatwoot.com",
   "repo": "https://github.com/chatwoot/chatwoot",
   "description": "Self-hosted customer support and live-chat platform, an alternative to Zendesk or Intercom.",
-  "status": "pending-qa",
+  "status": "pending-second-qa",
   "specs": {
     "ram_min_mb": {
       "value": 4096,
