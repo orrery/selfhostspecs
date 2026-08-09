@@ -3,6 +3,23 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-08-09 — FIND #16
+
+45. **A candidate's docker-compose service count is a cheap early Effort signal — check it
+    before the full sourcing dive, not after.** Sentry self-hosted and PostHog self-hosted
+    both had excellent official RAM sourcing (Sentry: install-script-enforced
+    `MIN_RAM_HARD`; PostHog: explicit docs "Requirements" section) but the verifier refuted
+    both for queuing anyway — 64 and 47 docker-compose services respectively, several without
+    a SERVICES enum slot (kafka, zookeeper, opensearch, temporal), Sentry with no
+    pull-and-run image at all. → Downstream: `docker-compose.yml` service count is a 2-minute
+    check; run it before spending research budget on sourcing, not after — Sourceability
+    alone doesn't clear the bar when Effort collapses.
+46. **The SERVICES enum gap is now a recurring blocker across independent candidates, not a
+    per-app one-off** (Supabase #11, Sentry+PostHog #16 — kafka/zookeeper/opensearch/temporal
+    all missing). → Downstream: schedule one dedicated BUILD task to extend the enum with a
+    documented policy for workflow-engine-class deps, instead of re-deciding it ad hoc inside
+    whichever heavy entry hits it first.
+
 ## 2026-08-09 — ANALYZE + BUILD
 
 44. **A cadence gap recurring across independent routines is a pattern, not a fluke — escalate

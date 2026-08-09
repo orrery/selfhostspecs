@@ -52,3 +52,14 @@ Append-only log of material decisions with their evidence. AUDIT checks cadence 
   `## BUILD` header with no content) from the 08-02 run. `list_triggers` only exposes
   `last_fired_at`; cause (silent no-op / never fired / crashed mid-run) can't be determined
   from this session. Flagged to owner as a pattern, not a one-off (LEARNINGS #44).
+- 2026-08-09 — **FIND #16: session-start recovery, then Sentry+PostHog refuted for queuing.**
+  Local `main` was again 9 commits behind `origin/main` (detached HEAD from the prior
+  ANALYZE+BUILD session); `merge-base` confirmed pure fast-forward, ff-merged, nothing lost —
+  same recurring pattern as 08-09's earlier recovery, now three sessions running (LEARNINGS
+  #32/#39 lineage). Mined two new coverage-gap candidates (Sentry self-hosted 9.5k★, PostHog
+  self-hosted 37.6k★) — both had strong official RAM sourcing but an independent verifier
+  refuted both for queuing on Effort: 64- and 47-service docker-compose stacks, SERVICES enum
+  gaps (kafka/zookeeper/opensearch/temporal), Sentry lacking a pull-and-run image. Moved to
+  `Held` with reasons, not queued; enum gap flagged as a recurring cross-candidate blocker
+  (LEARNINGS #45/#46). backlog/opportunities.md compacted to fit the 10000-byte budget after
+  the additions (9992 final).
