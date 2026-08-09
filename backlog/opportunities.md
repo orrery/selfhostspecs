@@ -3,19 +3,18 @@
 Statuses: `unverified` → `queued` (verifier sign-off) → `building` → `shipped`, or `rejected`
 (w/ refutation). Dedupe vs all lists. Harvested-app detail lives in `data/apps/<slug>.json`.
 
-## Shipped — 18 apps live
+## Shipped — 20 apps live
 07-24 (14): gitea, home-assistant, immich, jellyfin, uptime-kuma, vaultwarden, adguard-home,
 frigate, grafana, n8n, nextcloud, paperless-ngx, pi-hole, syncthing. 07-30 (+3): discourse,
-zulip, rocket-chat. 08-02 (+1): openproject.
+zulip, rocket-chat. 08-02 (+1): openproject. 08-09 (+2): plausible-ce, open-webui.
 Pending BUILD, paced 1 schema-change/batch: GPU/transcoding column (Jellyfin, Immich,
 Frigate); community-figures column (vaultwarden, adguard-home, uptime-kuma, syncthing,
 paperless-ngx).
 
 ## In pipeline (not yet live)
-- **pending-second-qa** (fixed 08-02, next re-QA settles to live): Plausible CE, Linkwarden,
-  Open WebUI.
-- **pending-verification** (harvested 08-02 from FIND #7): Chatwoot (postgresql+redis),
-  Seafile (mariadb+redis), Mattermost (postgresql, amd64-only).
+- **pending-second-qa** (fresh-eyes re-QA settles next run): Linkwarden (fixed 08-09, dead
+  source link repointed), Chatwoot, Seafile, Mattermost (all 3 cleared independent
+  verification + QA 08-09, zero defects).
 
 ## Queued (verifier-signed), unbuilt
 - **GitLab CE** (18/20, #8) — "8 vCPU / 16 GB" single-node. Deps: PostgreSQL +
