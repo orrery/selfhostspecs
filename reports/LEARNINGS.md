@@ -3,48 +3,35 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-08-09 — ANALYZE + BUILD
+
+44. **A cadence gap recurring across independent routines is a pattern, not a fluke — escalate
+    it as one.** After AUDIT #2 flagged `specs-find`'s single 07-28 skip, two more gaps
+    surfaced this run: `specs-find` skipped 08-04 too, and `specs-loop` (a different routine)
+    skipped its Wed 08-05 firing entirely — no commit, no report entry; that run's
+    `reports/2026-31.md` was also left mid-write (a bare `## BUILD` header). Three gaps across
+    two routines in ~2 weeks, still unexplained (`list_triggers` exposes no run history). →
+    Downstream: stop treating each gap as a fresh one-off to log-and-move-on; the recurrence
+    itself is the finding — escalate to owner as a systemic scheduling-reliability question
+    (e.g. a heartbeat commit, or checking the routine platform), and check the prior report
+    file's completeness at session start, not just its existence.
+
 ## 2026-08-03 — AUDIT #2
 
-42. **A same-run "independent" QA pass can still miss most defects — the second, later-session
-    QA pass is what's actually catching things.** The 2026-07-30 BUILD's own-run QA cleared 4
-    apps on all 12 Defect Classes; the 2026-08-02 fresh-eyes re-QA (a different day, not just a
-    different agent) found real defects on 3 of those 4. Agent-identity separation within one
-    sitting isn't buying the independence the `pending-second-qa` policy assumes it does. →
-    Downstream: track first-pass-QA miss rate; don't treat same-run QA clearance as strong
-    signal, only the later cross-session pass.
 43. **A scheduled routine can silently skip a day with no error and no trace besides an absent
-    commit.** `specs-find` fired daily 07-24→07-27 and 07-29→08-02 but produced no commit on
-    07-28 — the GH-Actions stats-snapshot (a separate system) ran that day, which is why it went
-    unnoticed; AUDIT #1 (07-27) couldn't have caught it, it happened the day after. →
-    Downstream: AUDIT's cadence check must diff the full commit-date list against the expected
-    daily/weekly schedule, not just check "last N runs look fine"; `list_triggers` only exposes
-    `last_fired_at`, not history, so git commit dates are the only cadence record — flagged to
-    owner, not silently logged.
+    commit** (`specs-find` skipped 07-28; recurred 08-04 and on `specs-loop` 08-05 — see #44).
+    `list_triggers` exposes only `last_fired_at`, not history — git commit dates are the only
+    cadence record.
 
 ## 2026-08-02 — ANALYZE + BUILD (re-QA settle, Chatwoot/Seafile/Mattermost built)
 
-39. **`git checkout <branch>` does not fast-forward it — a session can start reading a stale
-    tree without any error.** After resolving a detached-HEAD state, `git checkout main`
-    switched onto a local `main` still 3 commits behind `origin/main`; the backlog file read
-    as if FIND runs #8/#9 never happened until `git merge --ff-only origin/main` caught up.
-    Distinct from the merge-base learning above (that was detached-HEAD-vs-stale-ref; this is
-    "checkout alone doesn't pull"). → Downstream: after any `git checkout <branch>`, immediately diff
-    `git rev-parse HEAD` against `git rev-parse origin/<branch>` before trusting file contents.
-40. **A `depends_on` entry in the officially-documented default compose path is stronger
-    evidence for `required:true` than a separate manual-install doc's graceful-degradation
-    note for a *different* install path.** Linkwarden's meilisearch was harvested
-    `required:false` from `environment-variables.md`, which only documents manual (non-Docker)
-    installs as able to skip it; the Docker Compose path this entry actually describes has no
-    such escape hatch. Fresh-eyes QA caught the mismatch between the citation and the
-    documented install path. → Downstream: a dep's `required` value is scoped to the specific
-    install path the entry documents (same as `specs.*.scope`) — cite evidence from that path,
-    not a different one, even when both exist in official docs.
-41. **A `ghcr.io/v2/.../manifests/<tag>` registry API URL 401s for any reader without a bearer
-    token — it's fine as a harvesting source, never as the published citation link.** 3 of 4
-    apps in the 2026-07-30 batch used it as `docker.source_url`; QA caught it by fetching each
-    link unauthenticated, the way a real visitor would. Now Known Defect Class #13. →
-    Downstream: any ghcr.io-sourced entry must cite the browsable
-    `github.com/<owner>/<repo>/pkgs/container/<name>` page instead.
+40. **A dep's `required` value is scoped to the specific install path the entry documents**
+    (same as `specs.*.scope`) — Linkwarden's meilisearch was `required:false` citing a
+    manual-install-only doc while the cited Docker Compose path has it in `depends_on` with no
+    escape hatch; fresh-eyes QA caught the citation/install-path mismatch. Cite evidence from
+    the documented path, not a different one, even when both exist officially.
+41. **`ghcr.io/v2/.../manifests/<tag>` 401s for unauthenticated readers** — fine to harvest
+    from, never fine as the published citation (now Defect Class #13; see OPERATIONS.md).
 
 ## Compacted (graduated into CI tests / defect classes — see OPERATIONS.md, tests/*.test.mjs)
 - GitHub-hosted mirrors (raw.githubusercontent.com, Docker Hub v2, ghcr.io v2) reach from cloud
