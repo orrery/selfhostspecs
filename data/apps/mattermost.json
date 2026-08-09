@@ -5,7 +5,7 @@
   "website": "https://mattermost.com",
   "repo": "https://github.com/mattermost/mattermost",
   "description": "Self-hosted team chat and collaboration platform, an on-premises alternative to Slack.",
-  "status": "pending-verification",
+  "status": "pending-qa",
   "specs": {
     "ram_min_mb": {
       "value": 2048,
