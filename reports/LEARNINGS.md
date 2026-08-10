@@ -3,6 +3,17 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-08-10 — FIND #17
+
+52. **Hand-summarizing the backlog into a briefing for the finder subagent (instead of passing
+    the file verbatim) drops items buried in section prose** — the finder proposed a GPU/hw-accel
+    column already sitting in the Shipped section's "Pending BUILD" line, and an ARM/Pi-ready
+    collection page already in the Rejected graveyard, because the operator's hand-built
+    candidate/rejected lists omitted both (they weren't under an obvious "Queued"/"Rejected"
+    bullet). The verifier caught both, but only after a full research round-trip. → Downstream:
+    next FIND, paste `backlog/opportunities.md` verbatim into the finder's briefing instead of
+    a curated summary.
+
 ## 2026-08-10 — AUDIT #3
 
 49. **A CI check for a UI marker's presence is not the same as verifying the browser behavior
