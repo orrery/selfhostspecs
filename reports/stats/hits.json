@@ -1,45 +1,13 @@
 {
   "hits": [
     {
-      "count": 14,
+      "count": 13,
       "path_id": 96298192,
       "path": "/",
       "event": false,
       "title": "SelfhostSpecs — hardware requirements for self-hosted apps",
       "max": 3,
       "stats": [
-        {
-          "day": "2026-08-02",
-          "hourly": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            1,
-            0,
-            0
-          ],
-          "daily": 1,
-          "weekly": 13,
-          "monthly": 14
-        },
         {
           "day": "2026-08-03",
           "hourly": [
@@ -50,7 +18,7 @@
             0,
             0,
             0,
-            1,
+            0,
             0,
             0,
             0,
@@ -68,7 +36,9 @@
             1,
             0
           ],
-          "daily": 5
+          "daily": 4,
+          "weekly": 12,
+          "monthly": 13
         },
         {
           "day": "2026-08-04",
@@ -248,11 +218,41 @@
             0,
             0
           ],
+          "daily": 1
+        },
+        {
+          "day": "2026-08-10",
+          "hourly": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
           "daily": 1,
           "weekly": 1
         },
         {
-          "day": "2026-08-10",
+          "day": "2026-08-11",
           "hourly": [
             0,
             0,
@@ -284,45 +284,13 @@
       ]
     },
     {
-      "count": 8,
+      "count": 9,
       "path_id": 99472880,
       "path": "/apps/adguard-home",
       "event": false,
       "title": "AdGuard Home system requirements — RAM, CPU, dependencies | SelfhostSpecs",
       "max": 3,
       "stats": [
-        {
-          "day": "2026-08-02",
-          "hourly": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "daily": 0,
-          "weekly": 6,
-          "monthly": 8
-        },
         {
           "day": "2026-08-03",
           "hourly": [
@@ -351,7 +319,9 @@
             0,
             0
           ],
-          "daily": 0
+          "daily": 0,
+          "weekly": 8,
+          "monthly": 9
         },
         {
           "day": "2026-08-04",
@@ -531,11 +501,41 @@
             0,
             0
           ],
-          "daily": 2,
-          "weekly": 2
+          "daily": 2
         },
         {
           "day": "2026-08-10",
+          "hourly": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "daily": 1,
+          "weekly": 1
+        },
+        {
+          "day": "2026-08-11",
           "hourly": [
             0,
             0,
@@ -567,45 +567,13 @@
       ]
     },
     {
-      "count": 3,
+      "count": 5,
       "path_id": 99886069,
       "path": "/apps/open-webui",
       "event": false,
       "title": "Open WebUI system requirements — RAM, CPU, dependencies | SelfhostSpecs",
       "max": 1,
       "stats": [
-        {
-          "day": "2026-08-02",
-          "hourly": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "daily": 0,
-          "weekly": 3,
-          "monthly": 3
-        },
         {
           "day": "2026-08-03",
           "hourly": [
@@ -634,7 +602,9 @@
             0,
             0
           ],
-          "daily": 0
+          "daily": 0,
+          "weekly": 3,
+          "monthly": 5
         },
         {
           "day": "2026-08-04",
@@ -832,6 +802,37 @@
             0,
             0,
             0,
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "daily": 2,
+          "weekly": 2
+        },
+        {
+          "day": "2026-08-11",
+          "hourly": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
             0,
             0,
             0,
@@ -849,6 +850,6 @@
       ]
     }
   ],
-  "total": 25,
+  "total": 27,
   "more": false
 }
