@@ -40,6 +40,7 @@ test("every page carries analytics, canonical, viewport, and no banned patterns"
     assert.ok(html.includes('rel="canonical"'), `${p}: missing canonical`);
     assert.ok(html.includes('name="viewport"'), `${p}: missing viewport`);
     assert.ok(html.includes('rel="icon"'), `${p}: missing favicon link (every browser auto-requests /favicon.ico and 404s without one)`);
+    assert.ok(existsSync(join(DOCS, "favicon.ico")), `${p}: docs/favicon.ico must exist as a real file — a <link rel="icon"> tag alone does not stop browsers' separate automatic GET /favicon.ico request from 404ing (AUDIT #3 finding: this was believed fixed but wasn't)`);
     assert.ok(html.match(/<html lang="en">/), `${p}: missing lang`);
     for (const b of BANNED) {
       assert.ok(!html.includes(b), `${p}: banned pattern present: ${b}`);

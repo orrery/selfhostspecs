@@ -82,5 +82,29 @@
     "app": "linkwarden",
     "change": "Re-QA: source_url/evidence_url/sources_of_truth citing linkwarden/docs installation.md now 404 (repo restructured, page moved) \u2014 confirmed via live re-fetch; repointed to the new setup.md location where the same verbatim quote still lives. Value/quote unchanged; also tightened scope wording (hardware section precedes the Docker Compose/Manual Installation branch in official docs, so it reads as a general figure, not Docker-specific).",
     "source_url": "https://raw.githubusercontent.com/linkwarden/docs/main/docs/self-hosting/setup.md"
+  },
+  {
+    "date": "2026-08-10",
+    "app": "discourse",
+    "change": "AUDIT #3: docker.size_mb corrected 1144\u21921164 \u2014 `latest` tag rebuilt again the morning of this audit (Docker Hub tag_last_pushed 2026-08-10T07:10Z, ~1.5h before this check). Fourth occurrence of this exact drift shape on this field (AUDIT #1 vaultwarden, 2026-07-30 discourse, AUDIT #2 discourse) \u2014 see AUDIT.md for the structural finding on discourse's rebuild frequency specifically.",
+    "source_url": "https://hub.docker.com/r/discourse/discourse"
+  },
+  {
+    "date": "2026-08-10",
+    "app": "n8n",
+    "change": "AUDIT #3: docker.size_mb corrected 363\u2192362 \u2014 rolling-`latest`-tag drift (Docker Hub amd64 layer sum 379794039 bytes = 362.20MiB, tag_last_pushed 2026-08-07). First recorded drift for this field.",
+    "source_url": "https://hub.docker.com/r/n8nio/n8n"
+  },
+  {
+    "date": "2026-08-10",
+    "app": "rocket-chat",
+    "change": "AUDIT #3: docker.size_mb corrected 295\u2192296 \u2014 rolling-`latest`-tag drift (Docker Hub amd64 layer sum 310338149 bytes = 295.96MiB, tag_last_pushed 2026-08-07). First recorded drift for this field.",
+    "source_url": "https://hub.docker.com/r/rocketchat/rocket.chat"
+  },
+  {
+    "date": "2026-08-10",
+    "app": "home-assistant",
+    "change": "AUDIT #3: docker.size_mb corrected 594\u2192590 \u2014 rolling-`latest`-tag drift (GHCR amd64 manifest re-summed: 618150752 bytes = 589.51MiB). First recorded drift for this field.",
+    "source_url": "https://github.com/home-assistant/core/pkgs/container/home-assistant"
   }
 ]

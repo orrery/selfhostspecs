@@ -63,3 +63,12 @@ Append-only log of material decisions with their evidence. AUDIT checks cadence 
   `Held` with reasons, not queued; enum gap flagged as a recurring cross-candidate blocker
   (LEARNINGS #45/#46). backlog/opportunities.md compacted to fit the 10000-byte budget after
   the additions (9992 final).
+- 2026-08-10 — **AUDIT #3:** 4 docker-size drifts fixed (Discourse 1144→1164 — 4th occurrence
+  on this field specifically; n8n 363→362; Rocket.Chat 295→296; Home Assistant 594→590). New
+  defect found+fixed+CI-enforced: 10 apps' `docker.source_url` cited Docker Hub's `/v2/` JSON
+  API (same shape as Defect Class #13, present since bootstrap, missed twice before) — repointed
+  to browsable pages, schema test now blocks `/v2/` in `docker.source_url` for any registry.
+  Found AUDIT #2's favicon fix was incomplete (tag present, literal `/favicon.ico` still 404'd
+  in production 7 days) — now genuinely fixed with a real generated file + an existence-based
+  CI check. No new cadence gaps; the 08-04/08-05 gaps remain unresolved (3 gaps/2 routines/3
+  weeks — standing owner ask, LEARNINGS Compacted). 45/45 green.

@@ -32,13 +32,13 @@
   ],
   "docker": {
     "image": "ghcr.io/home-assistant/home-assistant",
-    "size_mb": 594,
+    "size_mb": 590,
     "arches": [
       "amd64",
       "arm64"
     ],
     "source_url": "https://github.com/home-assistant/core/pkgs/container/home-assistant",
-    "retrieved": "2026-07-24"
+    "retrieved": "2026-08-10"
   },
   "sources_of_truth": [
     "https://www.home-assistant.io/installation/"

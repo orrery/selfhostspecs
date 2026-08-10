@@ -282,6 +282,60 @@ function changelogBody(entries) {
   return `<header class="site"><p><a href="/">← ${esc(SITE.name)}</a></p><h1>Changelog — data corrections &amp; upstream changes</h1><p>Every change to published data, dated and sourced: our own corrections included, and upstream requirement changes as we detect them. No silent edits.</p></header><ul>${items}</ul>`;
 }
 
+// Minimal 16x16 32bpp ICO matching the inline SVG favicon's brand colors.
+// Browsers request /favicon.ico directly regardless of a <link rel="icon"> tag,
+// so the data-URI SVG alone does not stop that request from 404ing (AUDIT #3 finding).
+function buildFaviconIco() {
+  const W = 16,
+    H = 16;
+  const bg = [0x11, 0x18, 0x27]; // #111827
+  const accent = [0x22, 0xd3, 0xee]; // #22d3ee
+  const pixels = Buffer.alloc(W * H * 4);
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      const inAccent = x >= 6 && x <= 9 && y >= 3 && y <= 12;
+      const [r, g, b] = inAccent ? accent : bg;
+      // bottom-up rows, BGRA
+      const row = H - 1 - y;
+      const off = (row * W + x) * 4;
+      pixels[off] = b;
+      pixels[off + 1] = g;
+      pixels[off + 2] = r;
+      pixels[off + 3] = 0xff;
+    }
+  }
+  const andMaskRowBytes = Math.ceil(W / 8 / 4) * 4;
+  const andMask = Buffer.alloc(andMaskRowBytes * H, 0);
+
+  const dib = Buffer.alloc(40);
+  dib.writeUInt32LE(40, 0); // biSize
+  dib.writeInt32LE(W, 4); // biWidth
+  dib.writeInt32LE(H * 2, 8); // biHeight (doubled for AND mask)
+  dib.writeUInt16LE(1, 12); // biPlanes
+  dib.writeUInt16LE(32, 14); // biBitCount
+  dib.writeUInt32LE(0, 16); // biCompression
+  dib.writeUInt32LE(pixels.length, 20); // biSizeImage
+
+  const image = Buffer.concat([dib, pixels, andMask]);
+
+  const header = Buffer.alloc(6);
+  header.writeUInt16LE(0, 0);
+  header.writeUInt16LE(1, 2); // type = icon
+  header.writeUInt16LE(1, 4); // count = 1
+
+  const entry = Buffer.alloc(16);
+  entry.writeUInt8(W, 0);
+  entry.writeUInt8(H, 1);
+  entry.writeUInt8(0, 2); // colorCount
+  entry.writeUInt8(0, 3); // reserved
+  entry.writeUInt16LE(1, 4); // planes
+  entry.writeUInt16LE(32, 6); // bitCount
+  entry.writeUInt32LE(image.length, 8); // bytesInRes
+  entry.writeUInt32LE(22, 12); // imageOffset (6 + 16)
+
+  return Buffer.concat([header, entry, image]);
+}
+
 export function build(root = ROOT) {
   const apps = loadApps(root);
   const changelog = loadChangelog(root);
@@ -382,6 +436,7 @@ export function build(root = ROOT) {
       .join("\n")}\n</urlset>\n`
   );
   writeFileSync(join(out, "robots.txt"), `User-agent: *\nAllow: /\nSitemap: ${SITE.origin}/sitemap.xml\n`);
+  writeFileSync(join(out, "favicon.ico"), buildFaviconIco());
   writeFileSync(join(out, "CNAME"), "selfhostspecs.com\n");
   writeFileSync(join(out, ".nojekyll"), "");
   return { apps: apps.length, pages: urls.length };

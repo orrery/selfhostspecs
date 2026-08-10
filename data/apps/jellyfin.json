@@ -38,7 +38,7 @@
       "amd64",
       "arm64"
     ],
-    "source_url": "https://hub.docker.com/v2/repositories/jellyfin/jellyfin/tags/latest",
+    "source_url": "https://hub.docker.com/r/jellyfin/jellyfin",
     "retrieved": "2026-07-24"
   },
   "sources_of_truth": [

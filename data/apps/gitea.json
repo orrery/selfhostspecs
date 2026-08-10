@@ -43,7 +43,7 @@
       "amd64",
       "arm64"
     ],
-    "source_url": "https://hub.docker.com/v2/repositories/gitea/gitea/tags/latest",
+    "source_url": "https://hub.docker.com/r/gitea/gitea",
     "retrieved": "2026-07-24"
   },
   "sources_of_truth": [

@@ -32,7 +32,7 @@
       "arm64",
       "armv7"
     ],
-    "source_url": "https://hub.docker.com/v2/repositories/louislam/uptime-kuma/tags/latest",
+    "source_url": "https://hub.docker.com/r/louislam/uptime-kuma",
     "retrieved": "2026-07-24"
   },
   "sources_of_truth": [

@@ -3,120 +3,93 @@
 Weekly adversarial audit findings, newest first, ranked by severity. An empty audit must say
 what it tried and failed to break. First audit due after the first full loop cycle.
 
-## 2026-08-03 — AUDIT #2
+## 2026-08-10 — AUDIT #3
 
-**Mechanical.** 45/45 green before and after fixes. `CI & Deploy` green at HEAD (`383555f`,
-2026-08-02T23:33Z) incl. post-deploy smoke test — `selfhostspecs.com` still 403s at the proxy
-level from here (re-confirmed via curl + WebFetch, same as AUDIT #1).
+**Mechanical.** 45/45 green before and after fixes. `CI & Deploy` green at HEAD (`d93da74`,
+2026-08-09T23:36Z) incl. post-deploy smoke test. Session-start: local `main` ref was stale
+(`92a6080` vs. origin `d93da74`); `merge-base` confirmed pure fast-forward, re-synced, nothing
+lost — same recurring shape as prior sessions (LEARNINGS #32/#39 lineage), now just a stale
+local ref rather than a multi-commit gap. `selfhostspecs.com`/standalone docs domains still
+403 at the proxy level from this sandbox — confirmed via curl, unchanged since every prior audit.
 
-**SEV-1 — drifted figure, fixed.** Discourse `docker.size_mb` (1173, set 07-30) drifted again —
-`latest` tag rebuilt this morning (`tag_last_pushed` 2026-08-03T08:22Z), amd64 now
-1143.77MiB → corrected to 1144. Third occurrence of this exact shape on this field
-(Vaultwarden AUDIT #1, Discourse 07-30, Discourse again now).
+**Data audit.** Re-fetched 5 GitHub-hosted RAM/CPU figures (OpenProject, Plausible CE,
+Discourse, Zulip, Rocket.Chat) — all verbatim-clean on quote/value/unit/scope. Rocket.Chat's
+figure lives in a table rendered as an image; downloaded and viewed all 3 source images
+pixel-for-pixel — exact match. Standalone-docs-hosted figures (gitea, home-assistant, immich,
+jellyfin, frigate, grafana, nextcloud, pi-hole) unreachable from sandbox, as always.
 
-**SEV-2 — second drift, fixed.** Immich `docker.size_mb` (761, 07-24) is 762.57MiB on re-fetch
-→ corrected to 763 (2MB/0.26%, same rolling-tag cause). Changelog entries added for both.
+**SEV-1 — 4 docker-size drifts, fixed.** All 24 live/pending apps re-checked (Docker Hub + GHCR
+APIs): Discourse 1144→1164 (rebuilt 1.5h before this check — **4th** occurrence of this exact
+field drifting: Vaultwarden AUDIT #1, Discourse 07-30, Discourse AUDIT #2, Discourse now — this
+specific image rebuilds unusually often, not just generic rolling-tag noise); n8n 363→362 and
+Rocket.Chat 295→296 (both first-ever drift for these fields); Home Assistant 594→590 (first
+drift). 20/24 matched exactly. Changelog entries added for all 4.
 
-**Data audit.** Re-fetched, verbatim-clean: Discourse ram_min/cpu_min/cpu_rec, OpenProject
-ram_min/cpu_min, Zulip ram_min/cpu_min — 7 fields/3 apps, quote/value/unit/scope/min-vs-rec all
-correct. Docker sizes re-checked for **all 18 live apps** (Docker Hub + GHCR APIs) — 16 matched,
-2 drifted (above). Standalone docs domains (gitea/grafana/home-assistant/nextcloud/frigate/
-jellyfin/pi-hole/immich) still unreachable from this sandbox, unchanged from every prior audit.
+**SEV-2 — citation defect found+fixed+CI-enforced (new instance of Defect Class #13's shape).**
+10 of 24 apps' `docker.source_url` pointed at `hub.docker.com/v2/repositories/.../tags/<tag>` —
+confirmed via curl (`content-type: application/json`) this is a raw API response, not a
+citation page, same shape as #13's ghcr issue minus the 401 wall. Present since bootstrap
+(07-24), missed by 2 prior audits. Repointed all 10 to the browsable `hub.docker.com/r/<ns>/
+<repo>` page (confirmed 200/HTML). **Added permanent CI enforcement:** schema test now rejects
+any `docker.source_url` containing `/v2/`, closing this shape for both registries for good
+instead of relying on audit judgment each time.
 
-**Staleness sweep.** Nothing crosses 90 days (oldest 2026-07-24, 10 days old). None queued.
+**Staleness sweep.** Oldest retrieved date across all apps: 17 days (adguard-home docker,
+07-24). Nothing within 90 days of the threshold. Nothing queued.
 
-**Hostile pass — executed for the first time.** `selfhostspecs.com` unreachable, so served the
-actual `docs/` build on localhost and drove it with the pre-installed `playwright`/Chromium:
-320px viewport, zero-result search, 5 URL-tamper payloads (script injection, negative values,
-path traversal, nonexistent app — none reflected unescaped, no JS errors), JS-disabled fallback,
-collection + app page at 320px. **Found and fixed one real defect:** no `<link rel="icon">` /
-no favicon.ico anywhere — every browser 404'd on it since bootstrap (confirmed via CDP network
-capture). Added an inline SVG favicon to `build.mjs` + a new CI invariant (`rel="icon"` check in
-site-invariants.test.mjs) so it can't regress. Remaining failure (GoatCounter script) is this
-sandbox's proxy blocking `gc.zgo.at`, not a live defect.
+**Hostile pass.** Live site unreachable (as always) — served `docs/` on localhost, drove with
+the pre-installed Node Playwright (`/opt/pw-browsers/chromium`): 320px viewport (no horizontal
+overflow, index + app page), zero-result search, 5 URL-tamper payloads (script-in-path, path
+traversal, nonexistent app, script-in-query, negative-value query param — none reflected
+unescaped, no crashes, correct 404s), JS-disabled fallback (content still renders).
+**Found a real regression: AUDIT #2's favicon fix was incomplete.** It added
+`<link rel="icon" href="data:...">` (satisfies the CI text-presence check) but never wrote an
+actual `docs/favicon.ico` file — Chromium's automatic `GET /favicon.ico` (independent of the
+`<link>` tag) still 404'd, live in production since AUDIT #2 shipped it as "fixed." Root cause:
+the CI check tested for the tag's presence, not the browser behavior it existed to prevent.
+Fixed: `build.mjs` now generates a real 16×16 32bpp `favicon.ico` (hand-rolled encoder, zero
+deps, brand colors) into `docs/`; added a second CI assertion (`existsSync(docs/favicon.ico)`)
+so a tag-only fix can't pass again. Verified via Playwright network capture: 404→200.
 
-**Process audit.** LEARNINGS #37–41 all changed downstream behavior (git-clone technique reused
-run #10, archive-check applied to MinIO, depends_on-scoping applied to Linkwarden, Defect Class
-#13 applied to 3 citations); compacted #32–34/37–38 to one-liners for budget. Ledger $11, matches
-Infra section, no unlogged spend. Backlog matches `data/apps/*.json` exactly (18 live, 3
-pending-second-qa, 3 pending-verification), truthful. `git log -- tests/` since AUDIT #1: one
-change (07-30 `>=`-escape fix), a real fix not a weakening. **Cadence gap found:** `specs-find`
-commit exists every day 07-24→07-27 and 07-29→08-02 but **not 07-28** — that day's GH-Actions
-stats-snapshot (separate system) ran, masking it visually. `list_triggers` exposes only
-`last_fired_at`, not history, so this can't be root-caused here — flagged to owner as an open
-question (routine error vs. silent no-op vs. genuine skip). LEARNINGS #43.
+**Process audit.** Cadence: no *new* gaps this week — `specs-find` fired daily except the
+already-flagged 08-04; `specs-loop` fired its Sun 08-09 slot but the already-flagged Wed 08-05
+gap is still unexplained; `specs-audit` fires today, on schedule. 3 gaps across 2 routines over
+3 weeks, zero root-cause progress (`list_triggers` still exposes no run history) — repeating
+LEARNINGS #44's ask rather than re-discovering it. Ledger $11, matches Infrastructure section.
+Backlog (20 live, 4 pending-second-qa) matches `data/apps/*.json` exactly. `git log -- tests/`
+since AUDIT #2: zero changes before this run's two additions (both new assertions, not
+weakenings). LEARNINGS #42 correctly applied 08-09: Chatwoot/Seafile/Mattermost stayed
+`pending-second-qa` after passing verification+QA in the *same* run, not promoted to live.
 
-**Red-team the week's biggest decision** (shipping 4 apps `pending-second-qa` off a same-run QA
-pass that found zero defects, 07-30): the safety net worked as designed — the later, different-
-day QA pass caught what the first missed. But "zero defects, 12 classes checked" was wrong on
-3 of 4 apps despite a nominally independent agent, so same-session identity separation alone
-isn't buying much. Cheaper fix: never let BUILD and first-QA share a run, making the gap that
-actually caught the defects (time + fresh context) structural, not incidental. LEARNINGS #42.
+**Red-team the week's biggest decision** (FIND #16 holding Sentry 9.5k★ + PostHog 37.6k★ on
+Effort despite strong official RAM sourcing): defensible — a 64-service compose stack is
+materially costlier to verify/maintain than anything live today, and the SERVICES enum gap is
+real. But Effort was scored by the same verifier that refuted the candidates, with no check on
+whether extending the enum now is cheaper than holding indefinitely — deferring it again risks
+the repeated-non-decision pattern AUDIT #1 already criticized once (the egress-block ask).
+Recommend FIND #17 extends the enum or makes an explicit owner ask, not a third silent hold.
 
-**Missing invariant, closed this run:** favicon link (above). **Still missing:** nothing
-automated catches a routine silently skipping a day — needs run-history data this sandbox
-lacks; flagged to owner rather than guessed at.
+**Missing invariant.** This week's favicon finding is an instance of a broader gap: CI checks
+HTML markers/text presence rather than the literal browser-observable behavior they exist to
+prevent. Closed the specific instance. Still open: no systemic sweep of other browser-auto-
+requested well-known paths beyond favicon.ico — none identified as broken this pass, but the
+"marker exists ≠ behavior fixed" bug class could recur elsewhere untested.
 
-**Evidence:** 45/45 before and after; commits fix Discourse/Immich drift + changelog, add
-favicon (build.mjs + CI invariant), extend LEARNINGS, log this entry.
+**Evidence:** 45/45 before and after; commits fix 4 docker-size drifts + changelog entries,
+repoint 10 `docker.source_url` citations off the API-endpoint defect + add permanent CI
+enforcement, generate a real favicon.ico + add CI enforcement, re-sync local `main`, log this
+entry.
 
-## 2026-07-27 — AUDIT #1
+## 2026-08-03 — AUDIT #2 (compacted)
+SEV-1 Discourse docker-size drift fixed (1173→1144, 3rd occurrence — see AUDIT #3, now 4th).
+SEV-2 Immich drift fixed (761→763). Found+fixed missing favicon `<link rel="icon">` + CI check
+— **AUDIT #3 found this fix was incomplete** (tag present, but literal `/favicon.ico` still
+404'd; now genuinely fixed). Cadence gap found (`specs-find` no commit 07-28). Red-teamed the
+07-30 same-run QA pass: later cross-session re-QA caught defects the same-session pass missed
+(LEARNINGS #42). 45/45 green before/after.
 
-**Mechanical.** 38/38 green. `CI & Deploy` green at HEAD (`f3e3407`, run 16).
-
-**SEV-1, fixed.** Vaultwarden `docker.size_mb` 77→83 (rolling `latest` tag rebuilt after
-harvest, not fabrication). Docker sizes were only on the 90-day sweep, not re-checked per-AUDIT
-— gap logged (LEARNINGS #27). Sampled 9 other docker images (all matched) and tried 11 RAM/CPU
-figures across 8 apps — could not re-fetch any; see next finding.
-
-**SEV-2.** This sandbox cannot reach any standalone docs domain, nor
-`selfhostspecs.com`/`goatcounter.com` themselves — confirmed policy-level 403 via
-`/__agentproxy/status`, not a tool bug; only GitHub-hosted infra + Docker Hub/GHCR APIs work.
-Live-site check and hostile pass impossible from here, every week. Mitigation: added a
-post-deploy smoke test to `ci.yml` (GH Actions runners have real internet) — closes the
-"deploy reachable" half, not the hostile/UX half. Flagged to owner (LEARNINGS #28).
-
-**Staleness sweep.** Nothing crosses 90 days (oldest 3 days old). Nothing queued.
-
-**Hostile pass.** Not executable this cycle — see SEV-2. Tried direct curl/WebFetch to
-`selfhostspecs.com` and an unrelated GitHub Pages site as a control (same 403, confirming the
-block is sandbox-side). Zero-result filters/URL tampering/320px/non-Chromium untested; local
-`docs/` build passes all site-invariant tests, the only signal available. (Closed AUDIT #2: a
-locally-served `docs/` build + pre-installed Playwright makes this pass executable after all.)
-
-**Process audit.**
-- LEARNINGS mostly changed behavior this week (memcached enum, quote/scope separation,
-  collection-copy rewording, raw-fetch-for-scope-critical-phrases all shipped). One exception:
-  the Analytics-snapshot failure (LEARNINGS #22) was flagged 2026-07-25 and failed *again*
-  2026-07-26 with no different handling — a flag that doesn't change the next occurrence isn't
-  done yet. Escalated concretely this run (see LEARNINGS #22 update).
-- Budget ledger: $11 total, matches Infrastructure section, no unlogged spend found.
-- Backlog (`backlog/opportunities.md`) cross-checked against `data/apps/*.json` — statuses
-  match exactly: 14 `live`, 3 `pending-second-qa` (Discourse, Zulip, Rocket.Chat), 2
-  verifier-signed queued-buildable (OpenProject, Plausible CE), 4 egress-blocked
-  (Portainer, Netdata, PeerTube, Vikunja). No dishonest or stale status found.
-- Cadence (DECISIONS.md + commit timestamps): `specs-find` fired daily 2026-07-24/25/26 (~23:2x
-  UTC each day, on schedule). `specs-loop` fired Sunday 2026-07-26 08:56–09:02 UTC (on the
-  Wed/Sun 08:41 schedule; next due Wed 2026-07-29). `specs-audit` — this is its first firing
-  (Monday 2026-07-27, on schedule). No missed runs found.
-
-**Red-team the week's biggest decision** (BUILD scoped 7→3 apps on a confirmed egress
-constraint): the technical call was sound — the block was tested directly, not assumed, both
-via WebFetch and raw curl. But three days and two more FIND cycles have re-confirmed the same
-4 apps blocked without ever turning it into a concrete owner ask (e.g. "allowlist these 4
-domains, or should I run a BUILD from a local session?"). The cheaper alternative to
-re-discovering the block every cycle is one owner round-trip that resolves it once. Repeating
-that pattern on the still-deferred GPU/community-figures columns risks the same silent-stall
-shape OPERATIONS.md §4's "rolling expansion" is meant to prevent. Recommend: next FIND run
-converts this into an explicit owner ask instead of a fourth silent re-confirmation.
-
-**Missing invariant.** The suite has no check that a *deployed* page is reachable — every test
-runs against the local `docs/` build, which is necessary but not sufficient (a Pages
-misconfiguration, DNS lapse, or CDN issue downstream of a green build would be invisible to
-CI and, per the SEV-2 finding above, invisible to this AUDIT too). Fixed this run: `ci.yml`'s
-`deploy` job now smoke-tests the live URL after `deploy-pages` (5 retries, checks HTTP 200 +
-title marker). This is a real gap that stayed open through 16 green deploy runs before anyone
-checked whether the deployed site was actually reachable end-to-end.
-
-**Evidence:** tests 38/38 pass before and after fixes; commit(s) this run fix Vaultwarden's
-docker size, add the CI smoke test, and log LEARNINGS #27/#28.
+## 2026-07-27 — AUDIT #1 (compacted)
+SEV-1 Vaultwarden docker-size drift fixed (77→83, rolling `latest` tag — first instance of the
+pattern later recurring on Discourse). SEV-2: sandbox cannot reach selfhostspecs.com or any
+standalone docs domain at all (proxy 403) — added a CI post-deploy smoke test as mitigation. No
+cadence gaps found (all 3 routines on schedule this first week). 38/38 green before/after.

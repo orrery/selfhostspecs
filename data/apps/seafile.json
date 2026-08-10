@@ -49,7 +49,7 @@
       "amd64",
       "arm64"
     ],
-    "source_url": "https://hub.docker.com/v2/repositories/seafileltd/seafile-mc/tags/latest",
+    "source_url": "https://hub.docker.com/r/seafileltd/seafile-mc",
     "retrieved": "2026-08-02"
   },
   "sources_of_truth": [

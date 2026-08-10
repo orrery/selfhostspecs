@@ -39,13 +39,13 @@
   ],
   "docker": {
     "image": "rocketchat/rocket.chat",
-    "size_mb": 295,
+    "size_mb": 296,
     "arches": [
       "amd64",
       "arm64"
     ],
-    "source_url": "https://hub.docker.com/v2/repositories/rocketchat/rocket.chat/tags/latest",
-    "retrieved": "2026-07-26"
+    "source_url": "https://hub.docker.com/r/rocketchat/rocket.chat",
+    "retrieved": "2026-08-10"
   },
   "sources_of_truth": [
     "https://docs.rocket.chat/docs/system-requirements",

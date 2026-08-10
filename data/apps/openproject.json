@@ -49,7 +49,7 @@
       "amd64",
       "arm64"
     ],
-    "source_url": "https://hub.docker.com/v2/repositories/openproject/openproject/tags/17-slim",
+    "source_url": "https://hub.docker.com/r/openproject/openproject",
     "retrieved": "2026-07-30"
   },
   "sources_of_truth": [

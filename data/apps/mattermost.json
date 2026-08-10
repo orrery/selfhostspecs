@@ -43,7 +43,7 @@
     "arches": [
       "amd64"
     ],
-    "source_url": "https://hub.docker.com/v2/repositories/mattermost/mattermost-team-edition/tags/latest",
+    "source_url": "https://hub.docker.com/r/mattermost/mattermost-team-edition",
     "retrieved": "2026-08-02"
   },
   "sources_of_truth": [
