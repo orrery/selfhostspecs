@@ -1,16 +1,15 @@
 # Backlog — opportunities
 
-Statuses: `unverified` → `queued` (verifier sign-off) → `building` → `shipped`, or `rejected`.
-Dedupe vs all lists. Harvested-app detail lives in `data/apps/<slug>.json`.
+Statuses: unverified → queued (verifier sign-off) → building → shipped, or rejected.
+Dedupe vs all lists. App detail: `data/apps/<slug>.json`.
 
 ## Shipped — 20 apps live
 07-24 (14): gitea, home-assistant, immich, jellyfin, uptime-kuma, vaultwarden, adguard-home,
 frigate, grafana, n8n, nextcloud, paperless-ngx, pi-hole, syncthing. 07-30 (+3): discourse,
 zulip, rocket-chat. 08-02 (+1): openproject. 08-09 (+2): plausible-ce, open-webui.
-Pending BUILD, paced 1 schema-change/batch: GPU/transcoding column (Jellyfin, Immich,
-Frigate, +open-webui pending confirm, #17); community-figures column (vaultwarden,
-adguard-home, uptime-kuma, syncthing, paperless-ngx); Discourse high-churn caveat (AUDIT#3,
-no new figure).
+Pending BUILD, paced 1 schema-change/batch: GPU/transcoding column (Jellyfin/Immich/Frigate,
++open-webui?, #17); community-figures column (vaultwarden/adguard-home/uptime-kuma/
+syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
 
 ## In pipeline (not yet live)
 - pending-second-qa (fresh-eyes re-QA settles next run): Linkwarden (fixed 08-09, dead
@@ -69,6 +68,11 @@ no new figure).
   range is community-only). No required deps (local-file flow persistence). Docker
   nodered/node-red: amd64/arm64/armv7 on latest; arm32v6 (Pi Zero/1) only via full
   versioned tag e.g. 1.3.4-10-minimal-arm32v6, no bare tag.
+- Odoo CE (15/20, #18) — 53.7k★ ERP, no dupe (Twenty CRM=CRM-only, OpenProject=PM-only).
+  deploy.rst 19.0 worked example (NOT min) "RAM=9*((0.8*150)+(0.2*1024))~=3GB" @
+  4CPU/8-thread/60 users. PostgreSQL only req dep. Docker Official Image, web+db only.
+  BUILD: scoped rec/no_official_figure (Wazuh precedent, never min, #2/#3). Channel:
+  crowded 3rd-party sizing-calc blogs — win on provenance; never build our own calc.
 
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members confirmed zero
@@ -77,7 +81,7 @@ no new figure).
   shows ad hoc dep-labeling isn't enough).
 
 ## Held (insufficient evidence, not discarded)
-- Snipe-IT (~12/20): no figures, readme.io 403. Cal.com (~12/20): zero RAM/CPU figures.
+- Snipe-IT/Cal.com (~12/20): no RAM/CPU figures (readme.io 403 on Snipe-IT).
 - BigBlueButton (14/20): 16GB/8-core prod min confirmed; bare-Ubuntu install, no single
   Docker image — needs non-container schema allowance.
 - PeerTube (rechecked #15): only figure is v3.0.0-era FAQ.md, 5 versions stale — docs
@@ -85,23 +89,20 @@ no new figure).
 - Vikunja (rechecked #15): docs-mirror angle exhausted — go-vikunja/website grepped clean.
 - Plane (~12/20, #11): only EC2 quick-start advisory — crowds OpenProject. Redmine
   (rechecked #15): doc/INSTALL clean, zero figure; library/redmine Docker Official Image,
-  8-arch — held on figure only.
-- AFFiNE (~12/20, #11): repo grep empty; docs.affine.pro blocked, no mirror. Forgejo
-  (~7/20, #11): Codeberg blocked; GitHub mirror stale/doc-free. Fork of Gitea.
+  8-arch — held on figure.
+- AFFiNE (~12/20,#11): repo grep empty; docs.affine.pro blocked, no mirror. Forgejo
+  (~7/20,#11): Codeberg blocked; GH mirror stale/doc-free. Fork of Gitea.
 - SonarQube (rechecked #15): figure exists (helm-chart README, "Xmx 1536M community
   build") but it's JVM-heap-not-system-RAM — same gap as parked #13 Helm/K8s column.
 - Healthchecks (rechecked+verifier-spot-checked #15): docs blocked, docker README clean.
   Deps ready: postgres req. Docker healthchecks/healthchecks, amd64/arm/v7/arm64.
-- Sentry self-hosted (12/20, #16, refuted): strong RAM sourcing, 64-svc compose, kafka not
-  in enum — hold for deps-schema decision.
-- PostHog self-hosted (11/20, #16, refuted): official 4vCPU/16GB quote, 47-svc compose,
-  dup redis/valkey + kafka/zookeeper/temporal not in enum — same shape, worse.
-- Grocy (15/20, #17): zero RAM/CPU figure; README redirects to third-party
-  linuxserver/grocy (78.7MB) — no org image, no dataset precedent for non-org
-  docker.image; same gap as parked Helm/K8s item. Owner/BUILD policy call needed.
-- Gotify (12/20, #17): org-owned gotify/server (48.1MB) but gotify.net + mirrors
-  unreachable — RAM-absence/SQLite-default unconfirmed. Judged additive vs. shelved
-  ntfy, not redundant — re-attempt sourcing before requeuing.
+- Sentry (12/20,#16) & PostHog (11/20,#16) self-hosted, both refuted: strong sourcing but
+  64/47-svc composes; kafka (+zookeeper/temporal PostHog) not in enum — hold for deps-schema.
+- Grocy (15/20,#17): zero RAM/CPU figure; README redirects to 3rd-party linuxserver/grocy
+  (78.7MB) — no org image, no precedent for non-org docker.image; same gap as Helm/K8s.
+  Owner/BUILD policy call needed.
+- Gotify (12/20,#17): org-owned gotify/server (48.1MB) but gotify.net+mirrors unreachable —
+  RAM-absence/SQLite-default unconfirmed. Additive vs shelved ntfy — re-attempt sourcing.
 
 ## Unverified / held (not sent further)
 - Collection "runs on a 1GB VPS": thin (3 qualifiers); revisit once PeerTube/Vikunja ship.
@@ -116,8 +117,8 @@ no new figure).
 - Parked, #13: Helm/K8s-chart column — nextcloud/helm's README disclaims official support
   despite living in the official org — needs an official/unofficial adjudication rule.
 - Watch, #13: CI/CD collection (Gitea+Jenkins+GitLab) — gate on 3+ built.
-- SERVICES enum gap (Supabase/Sentry/PostHog) — LEARNINGS #46, 3 FIND cycles unbuilt now,
-  escalating past a second silent hold.
+- SERVICES enum gap (Supabase/Sentry/PostHog) — LEARNINGS #46, 4 FIND cycles unbuilt now
+  (#11,#16,#17,#18), zero resolution progress — escalating again.
 
 ### Freshness work
 None crossing 90 days (oldest retrieved 07-24). Docker-size on latest tags re-checks every
@@ -127,16 +128,13 @@ AUDIT, not just the 90-day sweep.
 - Column "minimum dependency version floor" (07-31): buried in a separate doc subsection.
 - 07-24 rejects: Static JSON "API hub"; classroom mail-merge printables; emergency binder
   generator; CC0 trivia bank — full refutations in AUDIT-era history, see git log.
-- MinIO (08-01, ~61k★): archived by GitHub, unmaintained — dead upstream.
-- Strapi (08-03, ~72.8k★): no official Docker image, zero RAM/CPU figures.
-- Glance (08-03, ~36.1k★): only unsourced "Low memory usage" marketing bullet.
-- *arr suite + qBittorrent/Transmission/SABnzbd (08-05): no official Docker image/figure —
-  Strapi shape.
-- Excalidraw (08-06, ~129k★): dev-mode-only compose, no figure — trivial static SPA.
-- Matomo (08-08, ~21.7k★): only a PHP memory_limit ini directive, not system RAM.
-- Memos (08-08, ~62.1k★): zero RAM/CPU mention in-repo, no linkable issue — Excalidraw shape.
-- FreeScout (08-10, ~4.2k★): category overlap w/ queued Zammad, weaker sourcing, no single
-  official Docker image.
+- MinIO (08-01, ~61k★): archived, dead upstream.
+- Strapi (08-03,~72.8k★), *arr suite+qBittorrent/Transmission/SABnzbd (08-05), Memos
+  (08-08,~62.1k★): no official Docker image/figure — same shape.
+- Glance (08-03, ~36.1k★): only unsourced "Low memory usage" bullet.
+- Excalidraw (08-06, ~129k★): dev-mode-only compose, no figure — trivial SPA.
+- Matomo (08-08, ~21.7k★): only a PHP memory_limit directive, not system RAM.
+- FreeScout (08-10, ~4.2k★): overlaps queued Zammad, weaker sourcing, no official image.
 - "ARM/Pi-ready" collection: rejected at 14/14 arm64/armv7, reaffirmed #17 at 23/24 — no
   differentiating angle found either time.
 - Any calculator/tool or game (owner exclusion — never propose).
