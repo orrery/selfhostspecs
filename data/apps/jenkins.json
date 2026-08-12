@@ -1,0 +1,54 @@
+{
+  "name": "Jenkins",
+  "slug": "jenkins",
+  "category": "dev-tools",
+  "website": "https://www.jenkins.io",
+  "repo": "https://github.com/jenkinsci/jenkins",
+  "description": "Self-hosted automation server for building, testing, and deploying software through configurable pipelines.",
+  "status": "pending-verification",
+  "specs": {
+    "ram_min_mb": {
+      "value": 256,
+      "source_url": "https://www.jenkins.io/doc/book/installing/",
+      "quote": "256 MB of RAM",
+      "retrieved": "2026-08-12",
+      "scope": "Jenkins, general (minimum hardware requirements, all install methods including Docker)"
+    },
+    "ram_rec_mb": {
+      "value": 4096,
+      "source_url": "https://www.jenkins.io/doc/book/installing/",
+      "quote": "4 GB+ of RAM",
+      "retrieved": "2026-08-12",
+      "scope": "Jenkins, general — recommended hardware configuration for a small team"
+    },
+    "no_official_figure": {
+      "fields": [
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://www.jenkins.io/doc/book/installing/",
+      "note": "The installation requirements page states RAM and drive space figures but never a CPU core count, minimum or recommended."
+    }
+  },
+  "deps": [
+    {
+      "service": "none",
+      "required": false,
+      "source_url": "https://www.jenkins.io/doc/book/installing/"
+    }
+  ],
+  "docker": {
+    "image": "jenkins/jenkins",
+    "size_mb": 290,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://hub.docker.com/r/jenkins/jenkins",
+    "retrieved": "2026-08-12"
+  },
+  "sources_of_truth": [
+    "https://www.jenkins.io/doc/book/installing/",
+    "https://hub.docker.com/r/jenkins/jenkins"
+  ]
+}

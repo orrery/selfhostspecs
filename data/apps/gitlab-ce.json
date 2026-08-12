@@ -1,0 +1,62 @@
+{
+  "name": "GitLab CE",
+  "slug": "gitlab-ce",
+  "category": "dev-tools",
+  "website": "https://about.gitlab.com",
+  "repo": "https://gitlab.com/gitlab-org/gitlab-foss",
+  "description": "Self-hosted Git repository manager with issue tracking, CI/CD pipelines, and a web-based code review interface.",
+  "status": "pending-verification",
+  "specs": {
+    "ram_min_mb": {
+      "value": 8192,
+      "source_url": "https://docs.gitlab.com/install/requirements/",
+      "quote": "GitLab can run with at least 8 GB of memory",
+      "retrieved": "2026-08-12",
+      "scope": "Single-node installation (Linux package or Docker), memory-constrained environment"
+    },
+    "ram_rec_mb": {
+      "value": 16384,
+      "source_url": "https://docs.gitlab.com/install/requirements/",
+      "quote": "For a single-node installation, 16 GB is the baseline.",
+      "retrieved": "2026-08-12",
+      "scope": "Single-node installation (Linux package or Docker), baseline"
+    },
+    "cpu_rec_cores": {
+      "value": 8,
+      "source_url": "https://docs.gitlab.com/install/requirements/",
+      "quote": "For a single-node installation, 8 vCPU is the baseline.",
+      "retrieved": "2026-08-12",
+      "scope": "Single-node installation (Linux package or Docker), baseline"
+    },
+    "no_official_figure": {
+      "fields": [
+        "cpu_min_cores"
+      ],
+      "evidence_url": "https://docs.gitlab.com/install/requirements/",
+      "note": "The requirements page gives a documented reduced-memory minimum (8 GB) for constrained environments but no analogous reduced CPU figure — only the 8 vCPU baseline."
+    }
+  },
+  "deps": [
+    {
+      "service": "none",
+      "required": true,
+      "source_url": "https://docs.gitlab.com/install/docker/installation/"
+    }
+  ],
+  "docker": {
+    "image": "gitlab/gitlab-ce",
+    "size_mb": 1383,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://hub.docker.com/r/gitlab/gitlab-ce",
+    "retrieved": "2026-08-12"
+  },
+  "sources_of_truth": [
+    "https://docs.gitlab.com/install/requirements/",
+    "https://docs.gitlab.com/administration/reference_architectures/1k_users/",
+    "https://docs.gitlab.com/install/docker/installation/",
+    "https://hub.docker.com/r/gitlab/gitlab-ce"
+  ]
+}

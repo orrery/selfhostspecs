@@ -1,0 +1,55 @@
+{
+  "name": "Keycloak",
+  "slug": "keycloak",
+  "category": "security",
+  "website": "https://www.keycloak.org",
+  "repo": "https://github.com/keycloak/keycloak",
+  "description": "Open-source identity and access management server providing single sign-on, authentication, and authorization.",
+  "status": "pending-verification",
+  "specs": {
+    "ram_min_mb": {
+      "value": 750,
+      "source_url": "https://www.keycloak.org/server/containers",
+      "quote": "you should set the memory limit to at least 750 MB",
+      "retrieved": "2026-08-12",
+      "scope": "Docker container, general (container memory limit needed to approach the previous 512 MB max heap default)"
+    },
+    "ram_rec_mb": {
+      "value": 2048,
+      "source_url": "https://www.keycloak.org/server/containers",
+      "quote": "the recommended memory limit is 2 GB",
+      "retrieved": "2026-08-12",
+      "scope": "Docker container, smaller production-ready deployments"
+    },
+    "no_official_figure": {
+      "fields": [
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://www.keycloak.org/server/containers",
+      "note": "The container-memory guide sizes RAM/heap explicitly but states no CPU core count anywhere in the container or production-configuration docs."
+    }
+  },
+  "deps": [
+    {
+      "service": "postgresql",
+      "required": true,
+      "source_url": "https://www.keycloak.org/server/db"
+    }
+  ],
+  "docker": {
+    "image": "keycloak/keycloak",
+    "size_mb": 270,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://hub.docker.com/r/keycloak/keycloak",
+    "retrieved": "2026-08-12"
+  },
+  "sources_of_truth": [
+    "https://www.keycloak.org/server/containers",
+    "https://www.keycloak.org/server/db",
+    "https://hub.docker.com/r/keycloak/keycloak"
+  ]
+}

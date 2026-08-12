@@ -1,0 +1,43 @@
+{
+  "name": "Node-RED",
+  "slug": "node-red",
+  "category": "automation",
+  "website": "https://nodered.org",
+  "repo": "https://github.com/node-red/node-red",
+  "description": "Flow-based visual programming tool for wiring together hardware devices, APIs, and online services.",
+  "status": "pending-verification",
+  "specs": {
+    "no_official_figure": {
+      "fields": [
+        "ram_min_mb",
+        "ram_rec_mb",
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://nodered.org/docs/getting-started/docker",
+      "note": "The official Docker/getting-started docs cover ports, volumes, and image variants but state no RAM, CPU, or disk figures; the only memory-related guidance is a Raspberry Pi FAQ about tuning Node.js's max-old-space-size, not a stated requirement."
+    }
+  },
+  "deps": [
+    {
+      "service": "none",
+      "required": false,
+      "source_url": "https://nodered.org/docs/getting-started/docker"
+    }
+  ],
+  "docker": {
+    "image": "nodered/node-red",
+    "size_mb": 229,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://hub.docker.com/r/nodered/node-red",
+    "retrieved": "2026-08-12"
+  },
+  "sources_of_truth": [
+    "https://nodered.org/docs/getting-started/docker",
+    "https://github.com/node-red/node-red-docker",
+    "https://hub.docker.com/r/nodered/node-red"
+  ]
+}
