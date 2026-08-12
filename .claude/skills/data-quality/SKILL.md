@@ -19,7 +19,14 @@ verified — or honestly absent."
   install path the figure applies to ("Docker, general", "Home Assistant OS on Raspberry Pi").
 - `specs.no_official_figure`: `{ "fields": [...], "evidence_url" }` — required when RAM/CPU
   figures are absent; point at the upstream issue asking for them if one exists.
-- `deps`: array of `{ "service": "postgresql|mysql|mariadb|redis|valkey|mongodb|elasticsearch|clickhouse|rabbitmq|ffmpeg|none", "required": bool, "source_url" }`.
+- `deps`: array of `{ "service": "postgresql|mysql|mariadb|redis|valkey|mongodb|elasticsearch|clickhouse|rabbitmq|memcached|meilisearch|ffmpeg|ferretdb|pict-rs|soketi|mqtt|none", "required": bool, "source_url" }`.
+  Enum-extension policy (LEARNINGS #45/46, resolved 2026-08-12): add a slot only when a
+  currently-queued candidate's official compose/docs cites it as a distinct required or
+  optional container — the project's own bespoke name for a one-off component (`ferretdb`,
+  `pict-rs`, `soketi`), the generic protocol name when the candidate needs "any X broker"
+  (`mqtt`, not a specific implementation). Don't add slots speculatively for held/refuted
+  candidates (Sentry/PostHog's kafka/zookeeper/opensearch/temporal stay unmapped — Effort-refuted,
+  not queued).
 - `docker`: `{ "image", "size_mb": int|null, "arches": ["amd64","arm64","armv7"], "source_url", "retrieved" }`.
 - `sources_of_truth`: list of official URLs the freshness sweep re-checks.
 
