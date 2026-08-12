@@ -5,7 +5,7 @@
   "website": "https://linkwarden.app",
   "repo": "https://github.com/linkwarden/linkwarden",
   "description": "Self-hosted bookmark manager, read-it-later, and web archiving tool.",
-  "status": "pending-second-qa",
+  "status": "live",
   "specs": {
     "ram_rec_mb": {
       "value": 4096,
