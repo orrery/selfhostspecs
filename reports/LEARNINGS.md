@@ -3,19 +3,6 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
-## 2026-08-12 — ANALYZE + BUILD (specs-loop)
-
-53. **`docker.size_mb` harvester error was systematic, not a one-off** — all 4 new-batch apps
-    used bytes/1,000,000 instead of the dataset's bytes/1,048,576 (MiB) convention; caught only
-    because the verifier cross-checked a known-good entry (gitea.json), not via checklist. →
-    Downstream: Defect Class #1 tightened to state the exact divisor.
-54. **The SERVICES enum gap (#45/46, 4 FIND cycles unbuilt) is resolved via a scoped policy,
-    not a blanket expansion** — added slots only for currently-queued candidates' cited
-    services (ferretdb, pict-rs, soketi, mqtt); left Sentry/PostHog's kafka/zookeeper/
-    opensearch/temporal unmapped since those candidates are held/refuted on Effort, not queued.
-    → Downstream: policy documented in data-quality SKILL.md; future extensions follow it
-    instead of re-deciding ad hoc.
-
 ## 2026-08-10 — FIND #17
 
 52. **Hand-summarizing the backlog into a briefing for the finder subagent (instead of passing
@@ -43,6 +30,9 @@ learning. FIND and BUILD read this file first, every run. Newest first.
     47 docker-compose services respectively, several without a SERVICES enum slot. →
     Downstream: run this 2-minute check before spending research budget on sourcing.
 ## Compacted (graduated into CI tests / defect classes, or superseded — see OPERATIONS.md, tests/*.test.mjs)
+- `docker.size_mb` bytes/1,000,000-vs-1,048,576 harvester error was systematic across a whole
+  batch (07-24) — Defect Class #1 now states the exact divisor + known-good check (LEARNINGS
+  formerly #53, superseded 08-12).
 - A CI check for a UI marker's presence isn't proof of the browser behavior it exists to
   prevent — favicon check now asserts the file exists, not just that a tag mentions one (AUDIT
   #2/#3). Docker Hub's `/v2/` JSON API as `docker.source_url` is the same defect shape as
