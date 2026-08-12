@@ -5,7 +5,7 @@
   "website": "https://www.jenkins.io",
   "repo": "https://github.com/jenkinsci/jenkins",
   "description": "Self-hosted automation server for building, testing, and deploying software through configurable pipelines.",
-  "status": "pending-qa",
+  "status": "pending-second-qa",
   "specs": {
     "ram_min_mb": {
       "value": 256,

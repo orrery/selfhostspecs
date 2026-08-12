@@ -5,7 +5,7 @@
   "website": "https://www.keycloak.org",
   "repo": "https://github.com/keycloak/keycloak",
   "description": "Open-source identity and access management server providing single sign-on, authentication, and authorization.",
-  "status": "pending-qa",
+  "status": "pending-second-qa",
   "specs": {
     "ram_min_mb": {
       "value": 750,
@@ -33,8 +33,18 @@
   "deps": [
     {
       "service": "postgresql",
-      "required": true,
-      "source_url": "https://raw.githubusercontent.com/keycloak/keycloak/main/docs/guides/server/db.adoc"
+      "required": false,
+      "source_url": "https://raw.githubusercontent.com/keycloak/keycloak/main/docs/guides/server/templates/databases.adoc"
+    },
+    {
+      "service": "mysql",
+      "required": false,
+      "source_url": "https://raw.githubusercontent.com/keycloak/keycloak/main/docs/guides/server/templates/databases.adoc"
+    },
+    {
+      "service": "mariadb",
+      "required": false,
+      "source_url": "https://raw.githubusercontent.com/keycloak/keycloak/main/docs/guides/server/templates/databases.adoc"
     }
   ],
   "docker": {
@@ -50,6 +60,7 @@
   "sources_of_truth": [
     "https://raw.githubusercontent.com/keycloak/keycloak/main/docs/guides/server/containers.adoc",
     "https://raw.githubusercontent.com/keycloak/keycloak/main/docs/guides/server/db.adoc",
+    "https://raw.githubusercontent.com/keycloak/keycloak/main/docs/guides/server/templates/databases.adoc",
     "https://hub.docker.com/r/keycloak/keycloak"
   ]
 }

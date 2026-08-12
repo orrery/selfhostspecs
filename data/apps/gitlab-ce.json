@@ -5,7 +5,7 @@
   "website": "https://about.gitlab.com",
   "repo": "https://gitlab.com/gitlab-org/gitlab-foss",
   "description": "Self-hosted Git repository manager with issue tracking, CI/CD pipelines, and a web-based code review interface.",
-  "status": "pending-qa",
+  "status": "pending-second-qa",
   "specs": {
     "ram_min_mb": {
       "value": 8192,
