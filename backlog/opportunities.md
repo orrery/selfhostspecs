@@ -13,10 +13,9 @@ Pending BUILD, paced 1 schema-change/batch: GPU/transcoding column (Jellyfin/Imm
 syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
 
 ## In pipeline (not yet live)
-- pending-second-qa (fresh-eyes re-QA settles next run): Jenkins, Keycloak (QA fixed deps —
-  postgresql/mysql/mariadb all optional, not postgres-required), Node-RED, GitLab CE (deps:
-  none — bundled Postgres/Redis in single-container Omnibus, confirmed via live compose)
-  — all cleared verification+QA 08-12.
+- pending-second-qa (fresh-eyes re-QA settles next run): Jenkins, Keycloak (deps:
+  postgresql/mysql/mariadb all optional, not required), Node-RED, GitLab CE (deps: none —
+  bundled Postgres/Redis in single-container Omnibus) — all cleared verification+QA 08-12.
 
 ## Queued (verifier-signed), unbuilt
 - Zammad (16/20, #8) — "2 CPU cores; 6GB RAM (+4GB if ES)". PostgreSQL req.
@@ -34,12 +33,12 @@ syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
 - Directus (17/20, #11) — "min 0.25vCPU/512MB, rec 1vCPU/2GB." Deps: one DB (6 vendors,
   OR); Redis optional. Docker directus/directus, arm64+amd64.
 - Supabase self-hosted (16/20, #11) — ~107.5k★. "RAM 4GB (rec 8GB+)/CPU 2 cores (rec 4+)".
-  Flag: 11 compose services, 7 non-removable — decide schema modeling before BUILD.
+  11 compose services, 7 non-removable — schema modeling TBD before BUILD.
 - Twenty CRM (17/20, #12) — "at least 2GB RAM," no CPU figure. Deps: postgres+redis req.
   Docker twentycrm/twenty, arm64+amd64.
 - Formbricks (15/20, #12) — "Min: 1vCPU, 2GB RAM, 8GB SSD." Deps: 4 req (postgres,
-  redis/valkey, hub, cube); taxonomy/vllm optional. hub/cube meaning still unresearched —
-  don't add enum slots blind.
+  redis/valkey, hub, cube); taxonomy/vllm optional. hub/cube unresearched — no enum slots
+  yet.
 - Zigbee2MQTT (14/20, #12) — no figure. Docker: zigbee2mqtt pkgs page, 6-arch. mqtt now has
   an enum slot (08-12) — needs external broker still, re-check before BUILD.
 - Coolify (20/20, #13) — "Min: 2 CPU, 2GB RAM, 30GB storage" (control-plane scope). Deps:
@@ -57,7 +56,7 @@ syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
 - Wazuh (17/20, #15) — first SIEM/XDR entry, 16,465★. wazuh-documentation
   source/quickstart.rst — rec (no min stated) "4vCPU/8GiB RAM/50GB" for 1-25 agents.
   Docker: wazuh-docker single-node compose, 3 containers pinned :5.1.0, no external DB.
-  BUILD: harvest as rec not min (#2); note compose defaults untested vs this figure (#3).
+  BUILD: harvest as rec not min (#2); compose defaults untested vs figure (#3).
 - License (SPDX) column (14/20, #15, conditional) — GitHub API license.spdx_id + LICENSE
   cross-check (schema+CI+build.mjs, backfill 24). BUILD: never trust spdx_id alone — 2/3
   spot-checked NOASSERTION (n8n fair-code; Wazuh dual GPLv2/AGPLv3) — label non-OSI.
@@ -65,7 +64,12 @@ syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
   deploy.rst 19.0 worked example (NOT min) "RAM=9*((0.8*150)+(0.2*1024))~=3GB" @
   4CPU/8-thread/60 users. PostgreSQL only req dep. Docker Official Image, web+db only.
   BUILD: scoped rec/no_official_figure (Wazuh precedent, never min, #2/#3). Channel:
-  crowded 3rd-party sizing-calc blogs — win on provenance; never build our own calc.
+  crowded 3rd-party calc blogs — win on provenance, never build our own.
+- Prometheus (18/20, #19) — ~65.7k★, CNCF graduated. No official RAM/CPU figure (only a
+  disk-capacity formula, docs/storage.md) — ship no_official_figure:true, link
+  prometheus/prometheus#13608. No deps: embedded TSDB, remote storage optional
+  (service:none). Docker prom/prometheus (+Quay.io). Zero-dep — candidate 15th member of
+  the no-DB/cache collection.
 
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members confirmed zero
@@ -77,43 +81,46 @@ syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
 - Snipe-IT/Cal.com (~12/20): no RAM/CPU figures (readme.io 403 on Snipe-IT).
 - BigBlueButton (14/20): 16GB/8-core prod min confirmed; bare-Ubuntu install, no single
   Docker image — needs non-container schema allowance.
-- PeerTube (rechecked #15): only figure is v3.0.0-era FAQ.md, 5 versions stale — docs
-  blocked, don't ship a superseded figure.
-- Vikunja (rechecked #15): docs-mirror angle exhausted — go-vikunja/website grepped clean.
-- Plane (~12/20, #11): only EC2 quick-start advisory — crowds OpenProject. Redmine
-  (rechecked #15): doc/INSTALL clean, zero figure; library/redmine Docker Official Image,
-  8-arch — held on figure.
-- AFFiNE (~12/20,#11): repo grep empty; docs.affine.pro blocked, no mirror. Forgejo
-  (~7/20,#11): Codeberg blocked; GH mirror stale/doc-free. Fork of Gitea.
-- SonarQube (rechecked #15): figure exists (helm-chart README, "Xmx 1536M community
-  build") but it's JVM-heap-not-system-RAM — same gap as parked #13 Helm/K8s column.
-- Healthchecks (rechecked+verifier-spot-checked #15): docs blocked, docker README clean.
-  Deps ready: postgres req. Docker healthchecks/healthchecks, amd64/arm/v7/arm64.
-- Sentry (12/20,#16) & PostHog (11/20,#16) self-hosted, both refuted: strong sourcing but
-  64/47-svc composes; kafka (+zookeeper/temporal PostHog) not in enum — hold for deps-schema.
-- Grocy (15/20,#17): zero RAM/CPU figure; README redirects to 3rd-party linuxserver/grocy
-  (78.7MB) — no org image, no precedent for non-org docker.image; same gap as Helm/K8s.
-  Owner/BUILD policy call needed.
-- Gotify (12/20,#17): org-owned gotify/server (48.1MB) but gotify.net+mirrors unreachable —
-  RAM-absence/SQLite-default unconfirmed. Additive vs shelved ntfy — re-attempt sourcing.
+- PeerTube (#15): only figure is v3.0.0-era FAQ.md, 5 versions stale — don't ship stale.
+- Vikunja (#15): docs-mirror angle exhausted (go-vikunja/website grepped clean).
+- Plane (~12/20,#11): only EC2 quick-start advisory, crowds OpenProject. Redmine (#15):
+  doc/INSTALL clean, zero figure; library/redmine Docker Official Image, 8-arch.
+- AFFiNE (~12/20,#11): repo grep empty, docs.affine.pro blocked. Forgejo (~7/20,#11):
+  Codeberg blocked, GH mirror stale (Gitea fork).
+- SonarQube (#15): figure exists ("Xmx 1536M community build") but it's JVM-heap not
+  system-RAM — same gap as Helm/K8s (#13).
+- Healthchecks (#15): docs blocked, docker README clean. Deps: postgres req. Docker
+  healthchecks/healthchecks, 4-arch.
+- Sentry (12/20,#16) & PostHog (11/20,#16): strong sourcing but 64/47-svc composes; kafka
+  (+zookeeper/temporal) not in enum — hold for deps-schema.
+- Grocy (15/20,#17): zero figure; README redirects to 3rd-party linuxserver/grocy
+  (78.7MB) — no org image; same gap as Helm/K8s. Owner/BUILD policy call needed.
+- Gotify (12/20,#17): org-owned gotify/server (48.1MB), gotify.net+mirrors unreachable —
+  RAM-absence/SQLite-default unconfirmed.
+- Windmill (~8/20,#19): n8n-alt, ~17.5k★. windmill.dev blocked both sessions; only
+  findable RAM figures sit in a Traefik example compose, not a stated requirement, and
+  are stale vs the vendor's own current default (worker_native now 2048M). Deps: postgres
+  only. Hold until windmill.dev reachable or an official prose minimum surfaces.
+- Ente (~11/20,#19): Immich-alt (E2EE), ~28.3k★. No RAM/CPU figure; self-hosting non-priority
+  support (server/README.md). Deps: postgres + minio (not in enum) + socat shim — same
+  unmapped-service shape as Supabase/Sentry/PostHog.
 
 ## Unverified / held (not sent further)
-- Collection "runs on a 1GB VPS": thin (3 qualifiers); revisit once PeerTube/Vikunja ship.
+- Collection "1GB VPS": thin (3 qualifiers); revisit once PeerTube/Vikunja ship.
 - Below bar (<14), don't re-propose w/o new evidence. 12-13: Navidrome, Audiobookshelf,
   Miniflux, Zabbix, Wallabag, DocuSeal, Actual Budget, Photoprism, Mealie, BookStack,
   Firefly III, NetBox, Matrix Synapse, Authentik. ≤11: Outline, FreshRSS, Umami, NocoDB,
   Docmost, Baserow, Bitwarden, Pixelfed, Karakeep, Beszel, Tandoor Recipes, Headscale,
   Shiori, Passbolt, Wiki.js, Duplicati, ntfy, Homepage, Listmonk, Cachet, EspoCRM, Kavita,
   changedetection.io, Woodpecker CI, Kopia, Calibre-Web.
-- Graylog (~8.1k★, #15): docs repo archived, docs.graylog.org presumed blocked — shallow.
-- Deferred: disk/storage-footprint column — too inconsistently documented (Sourceability~2).
+- Graylog (~8.1k★,#15): docs repo archived, docs.graylog.org presumed blocked — shallow.
+- Deferred: disk-footprint column — too inconsistently documented.
 - Parked, #13: Helm/K8s-chart column — nextcloud/helm's README disclaims official support
-  despite living in the official org — needs an official/unofficial adjudication rule.
-- Watch, #13: CI/CD collection (Gitea+Jenkins+GitLab) — gate on 3+ built.
-- SERVICES enum gap (LEARNINGS #45/46) partly resolved 08-12: ferretdb/pict-rs/soketi/mqtt
-  added (unblocks Wekan/Lemmy/Coolify/Zigbee2MQTT). Supabase/Sentry/PostHog's kafka/
-  zookeeper/opensearch/temporal still unmapped — those are held/refuted on Effort, not
-  queued, so no slots added speculatively (data-quality SKILL.md policy).
+  despite living in the org — needs an official/unofficial adjudication rule.
+- Watch, #13: CI/CD collection (Gitea+Jenkins+GitLab) — gate 3+ built, still 1/3 (#19).
+- SERVICES enum: scoped-extension policy resolved 08-12 (data-quality SKILL.md) —
+  ferretdb/pict-rs/soketi/mqtt added for then-queued candidates only; Supabase/Sentry/
+  PostHog's kafka/zookeeper/opensearch/temporal stay unmapped (held/refuted, not queued).
 
 ### Freshness work
 None crossing 90 days (oldest retrieved 07-24). Docker-size on latest tags re-checks every

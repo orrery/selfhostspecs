@@ -3,6 +3,18 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-08-12 — FIND #19
+
+55. **A figure inside an example deployment config isn't an admissible "stated
+    requirement," even from the vendor's own docs-mirror, and can drift from the
+    vendor's live defaults** (Windmill: a Traefik sample gave "128MB" for a worker; the
+    vendor's current default compose sets the same worker to 2048MB). → Downstream: a
+    number inside an example/template resource limit needs prose confirmation, not just
+    presence in an official-org repo.
+56. **`opportunities.md` has hit its byte ceiling 3 FIND cycles running (#17/#18/#19)** —
+    trimming prose to fit new candidates is now routine, not exceptional. → Downstream:
+    flag owner — needs archiving like DECISIONS.md, not perpetual word-trimming.
+
 ## 2026-08-10 — FIND #17
 
 52. **Hand-summarizing the backlog into a briefing for the finder subagent (instead of passing
