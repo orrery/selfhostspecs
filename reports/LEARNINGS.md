@@ -3,6 +3,19 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-08-12 — ANALYZE + BUILD (specs-loop)
+
+53. **`docker.size_mb` harvester error was systematic, not a one-off** — all 4 new-batch apps
+    used bytes/1,000,000 instead of the dataset's bytes/1,048,576 (MiB) convention; caught only
+    because the verifier cross-checked a known-good entry (gitea.json), not via checklist. →
+    Downstream: Defect Class #1 tightened to state the exact divisor.
+54. **The SERVICES enum gap (#45/46, 4 FIND cycles unbuilt) is resolved via a scoped policy,
+    not a blanket expansion** — added slots only for currently-queued candidates' cited
+    services (ferretdb, pict-rs, soketi, mqtt); left Sentry/PostHog's kafka/zookeeper/
+    opensearch/temporal unmapped since those candidates are held/refuted on Effort, not queued.
+    → Downstream: policy documented in data-quality SKILL.md; future extensions follow it
+    instead of re-deciding ad hoc.
+
 ## 2026-08-10 — FIND #17
 
 52. **Hand-summarizing the backlog into a briefing for the finder subagent (instead of passing
@@ -16,19 +29,6 @@ learning. FIND and BUILD read this file first, every run. Newest first.
 
 ## 2026-08-10 — AUDIT #3
 
-49. **A CI check for a UI marker's presence is not the same as verifying the browser behavior
-    it exists to prevent.** AUDIT #2's favicon fix added `<link rel="icon">` and a CI assertion
-    for that tag — but Chromium's automatic `GET /favicon.ico` is independent of the `<link>`
-    tag and kept 404ing in production for 7 days while the check stayed green. → Downstream:
-    when a hostile-pass fix targets a literal browser behavior (a request, a render, a status
-    code), verify the fix against that behavior directly (network capture), not just the code
-    artifact believed to cause it; the new CI check now asserts `docs/favicon.ico` exists as a
-    file, not just that a tag mentions one.
-50. **Docker Hub's `v2/repositories/.../tags/<tag>` API endpoint as a citation is the same
-    defect shape as Defect Class #13's ghcr issue, just without the 401 wall** — confirmed via
-    `content-type: application/json` on 10 of 24 apps' `docker.source_url`, present since
-    bootstrap, missed by 2 prior audits. → Downstream: Defect Class #13's CI enforcement
-    (schema test) now rejects `/v2/` in `docker.source_url` for any registry, not just ghcr.
 51. **Discourse's `latest` tag rebuilds unusually often** (4 drift-corrections in ~3 weeks vs.
     0–1 for every other tracked image) — no longer generic rolling-tag noise, this image's own
     release cadence. → Downstream: worth a page-copy caveat for high-churn images ("this image
@@ -42,12 +42,14 @@ learning. FIND and BUILD read this file first, every run. Newest first.
     excellent official RAM sourcing but the verifier refuted both for queuing anyway — 64 and
     47 docker-compose services respectively, several without a SERVICES enum slot. →
     Downstream: run this 2-minute check before spending research budget on sourcing.
-46. **The SERVICES enum gap is now a recurring blocker across independent candidates**
-    (Supabase #11, Sentry+PostHog #16). → Downstream: schedule one dedicated BUILD task to
-    extend the enum with a documented policy, instead of re-deciding it ad hoc per app
-    (AUDIT #3: still undone as of this run — escalating past a second silent hold).
-
 ## Compacted (graduated into CI tests / defect classes, or superseded — see OPERATIONS.md, tests/*.test.mjs)
+- A CI check for a UI marker's presence isn't proof of the browser behavior it exists to
+  prevent — favicon check now asserts the file exists, not just that a tag mentions one (AUDIT
+  #2/#3). Docker Hub's `/v2/` JSON API as `docker.source_url` is the same defect shape as
+  ghcr's 401 issue — Defect Class #13 CI-enforced for both registries (AUDIT #3).
+- SERVICES enum gaps are BLOCK-worthy, not a reason to silently drop a confirmed service —
+  extend the enum. Recurring gap (4 FIND cycles unbuilt, #45/46) resolved 2026-08-12: scoped-
+  extension policy in data-quality SKILL.md — add a slot only for a queued candidate's service.
 - A scheduled routine can silently skip a day with no error/trace besides an absent commit —
   `specs-find` missed 07-28 and 08-04, `specs-loop` missed Wed 08-05; `list_triggers` exposes no
   run history so root cause is undeterminable here; 3 gaps/2 routines/3 weeks with zero
@@ -80,8 +82,6 @@ learning. FIND and BUILD read this file first, every run. Newest first.
 - Requirements tables can be images (GitBook PNG) inside otherwise-fetchable markdown — view
   the image directly before declaring a figure unsourceable (confirmed exact-match on
   Rocket.Chat's 3-image table, AUDIT #3).
-- Deps-enum gaps are BLOCK-worthy, not a reason to silently drop a confirmed service — extend
-  the enum instead.
 - Analytics snapshot Action: resolved 08-02, no longer tracked.
 - Auth-adjacent 404s can be permission masks, not absence — verify from a second vantage point.
 - Seed quotes from memory drift; harvest quotes only from a live fetch in the same session.

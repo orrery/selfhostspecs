@@ -180,7 +180,10 @@ Total spent: **~$11**. Standing cap: $0 unapproved.
 
 ## Known Defect Classes (BUILD/TEST checklist — every builder addresses ALL; AUDIT verifies)
 1. **Unit errors:** MB vs GB vs GiB; store MB integers, display with the source quote visible;
-   conversions must be shown in the quote or scope note, never silent.
+   conversions must be shown in the quote or scope note, never silent. `docker.size_mb`
+   specifically is binary MiB (bytes / 1,048,576, rounded), not decimal MB (bytes/1,000,000) —
+   confirmed against gitea.json (bootstrap entry); check a known-good entry if unsure
+   (LEARNINGS #53, a harvester used decimal-MB across a whole batch, caught only by the verifier).
 2. **Minimum vs recommended conflation:** separate fields, never promoted in either direction;
    an app documenting only "recommended" has NO minimum (that's a `no_official_figure` on min).
 3. **Install-path scoping:** a figure valid for one install method (e.g., Home Assistant OS on

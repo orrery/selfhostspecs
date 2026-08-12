@@ -3,33 +3,34 @@
 Statuses: unverified → queued (verifier sign-off) → building → shipped, or rejected.
 Dedupe vs all lists. App detail: `data/apps/<slug>.json`.
 
-## Shipped — 20 apps live
+## Shipped — 24 apps live
 07-24 (14): gitea, home-assistant, immich, jellyfin, uptime-kuma, vaultwarden, adguard-home,
 frigate, grafana, n8n, nextcloud, paperless-ngx, pi-hole, syncthing. 07-30 (+3): discourse,
-zulip, rocket-chat. 08-02 (+1): openproject. 08-09 (+2): plausible-ce, open-webui.
+zulip, rocket-chat. 08-02 (+1): openproject. 08-09 (+2): plausible-ce, open-webui. 08-12 (+4):
+linkwarden, chatwoot, seafile, mattermost.
 Pending BUILD, paced 1 schema-change/batch: GPU/transcoding column (Jellyfin/Immich/Frigate,
 +open-webui?, #17); community-figures column (vaultwarden/adguard-home/uptime-kuma/
 syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
 
 ## In pipeline (not yet live)
-- pending-second-qa (fresh-eyes re-QA settles next run): Linkwarden (fixed 08-09, dead
-  source link repointed), Chatwoot, Seafile, Mattermost (all cleared verification+QA 08-09).
+- pending-second-qa (fresh-eyes re-QA settles next run): Jenkins, Keycloak (QA fixed deps —
+  postgresql/mysql/mariadb all optional, not postgres-required), Node-RED, GitLab CE (deps:
+  none — bundled Postgres/Redis in single-container Omnibus, confirmed via live compose)
+  — all cleared verification+QA 08-12.
 
 ## Queued (verifier-signed), unbuilt
-- GitLab CE (18/20, #8) — "8 vCPU/16GB" single-node. Deps: PostgreSQL + Redis-or-Valkey.
-  Gitaly bundled.
 - Zammad (16/20, #8) — "2 CPU cores; 6GB RAM (+4GB if ES)". PostgreSQL req.
 - Ghost (17/20, #9) — "at least 1GB memory" (Ubuntu+CLI+MySQL prod path); BUILD resolves
   min-vs-rec. MySQL 8 req.
 - Mastodon (16/20, #9) — zero RAM/CPU min — ship no_official_figure:true, link
   mastodon/documentation#912+#805. Postgres+Redis req; ES optional; Sidekiq bundled.
 - Lemmy (16/20, #9) — "~150MB RAM in default Docker install", unlabeled — BUILD decides
-  field. PostgreSQL req; pict-rs own container — add to enum.
+  field. PostgreSQL req; pict-rs now has an enum slot (08-12).
 - Netdata (unblocked, #9) — "100-200MB RAM".
 - Portainer (unblocked, #9) — zero figure; ship no_official_figure:true, link
   portainer/portainer#5406.
 - Wekan (15/20, #10) — "1GB min...4GB production" (BUILD resolves per Ghost precedent).
-  Flag: required ferretdb isn't real MongoDB — no enum slot.
+  ferretdb now has an enum slot (08-12).
 - Directus (17/20, #11) — "min 0.25vCPU/512MB, rec 1vCPU/2GB." Deps: one DB (6 vendors,
   OR); Redis optional. Docker directus/directus, arm64+amd64.
 - Supabase self-hosted (16/20, #11) — ~107.5k★. "RAM 4GB (rec 8GB+)/CPU 2 cores (rec 4+)".
@@ -37,14 +38,13 @@ syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
 - Twenty CRM (17/20, #12) — "at least 2GB RAM," no CPU figure. Deps: postgres+redis req.
   Docker twentycrm/twenty, arm64+amd64.
 - Formbricks (15/20, #12) — "Min: 1vCPU, 2GB RAM, 8GB SSD." Deps: 4 req (postgres,
-  redis/valkey, hub, cube); taxonomy/vllm optional. Docker ghcr.io/formbricks/formbricks.
-- Zigbee2MQTT (14/20, #12) — no figure. Docker: zigbee2mqtt pkgs page, 6-arch. Blocked:
-  needs external MQTT broker; SERVICES enum has no mqtt value.
-- Jenkins (19/20, #13) — "Min: 256MB RAM, 1GB disk (10GB rec if Docker)." Rec (small
-  team): "4GB+ RAM, 50GB+ disk". No deps. Docker jenkins/jenkins:lts, 5-arch. Canonical
-  site 403s — mirror only.
+  redis/valkey, hub, cube); taxonomy/vllm optional. hub/cube meaning still unresearched —
+  don't add enum slots blind.
+- Zigbee2MQTT (14/20, #12) — no figure. Docker: zigbee2mqtt pkgs page, 6-arch. mqtt now has
+  an enum slot (08-12) — needs external broker still, re-check before BUILD.
 - Coolify (20/20, #13) — "Min: 2 CPU, 2GB RAM, 30GB storage" (control-plane scope). Deps:
-  postgres+redis+soketi, all req. Docker coollabsio/coolify:latest, amd64+arm64.
+  postgres+redis+soketi, all req. soketi now has an enum slot (08-12). Docker
+  coollabsio/coolify:latest, amd64+arm64.
 - TriliumNext Trilium (14/20, #13, marginal) — 37.3k★, transferred from zadam/trilium (not
   archived fork). Zero figure — ship no_official_figure:true. No deps. 4-arch.
 - SearXNG (15/20, #14) — no figure. Community (vojkovic, GH#3884): "1vcpu, 512mb...0
@@ -52,9 +52,6 @@ syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
 - Stirling-PDF (16/20, #14) — no figure; per-variant limits (2G/4G/6G) are ceilings not
   floor. Community (Frooodle, founder, GH#2945): "400-500mb baseline". No deps. Docker
   stirlingtools/stirling-pdf, amd64+arm64. 89.1k★.
-- Keycloak (18/20, #15) — "at least 750MB" min/"2GB" rec, container memory limit,
-  community edition, Docker/Podman (not HA — separate 1250MB/pod HA figure). Prod needs
-  external DB (dev mode ships embedded H2).
 - Metabase (17/20, #15) — no_official_figure:true. JVM -Xmx tuning prose only, not a
   stated min — cite as absence evidence, Mastodon/Portainer precedent.
 - Wazuh (17/20, #15) — first SIEM/XDR entry, 16,465★. wazuh-documentation
@@ -64,10 +61,6 @@ syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
 - License (SPDX) column (14/20, #15, conditional) — GitHub API license.spdx_id + LICENSE
   cross-check (schema+CI+build.mjs, backfill 24). BUILD: never trust spdx_id alone — 2/3
   spot-checked NOASSERTION (n8n fair-code; Wazuh dual GPLv2/AGPLv3) — label non-OSI.
-- Node-RED (18/20, #17) — no official RAM min (raw-mirror confirmed; nodered.org forum
-  range is community-only). No required deps (local-file flow persistence). Docker
-  nodered/node-red: amd64/arm64/armv7 on latest; arm32v6 (Pi Zero/1) only via full
-  versioned tag e.g. 1.3.4-10-minimal-arm32v6, no bare tag.
 - Odoo CE (15/20, #18) — 53.7k★ ERP, no dupe (Twenty CRM=CRM-only, OpenProject=PM-only).
   deploy.rst 19.0 worked example (NOT min) "RAM=9*((0.8*150)+(0.2*1024))~=3GB" @
   4CPU/8-thread/60 users. PostgreSQL only req dep. Docker Official Image, web+db only.
@@ -117,8 +110,10 @@ syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
 - Parked, #13: Helm/K8s-chart column — nextcloud/helm's README disclaims official support
   despite living in the official org — needs an official/unofficial adjudication rule.
 - Watch, #13: CI/CD collection (Gitea+Jenkins+GitLab) — gate on 3+ built.
-- SERVICES enum gap (Supabase/Sentry/PostHog) — LEARNINGS #46, 4 FIND cycles unbuilt now
-  (#11,#16,#17,#18), zero resolution progress — escalating again.
+- SERVICES enum gap (LEARNINGS #45/46) partly resolved 08-12: ferretdb/pict-rs/soketi/mqtt
+  added (unblocks Wekan/Lemmy/Coolify/Zigbee2MQTT). Supabase/Sentry/PostHog's kafka/
+  zookeeper/opensearch/temporal still unmapped — those are held/refuted on Effort, not
+  queued, so no slots added speculatively (data-quality SKILL.md policy).
 
 ### Freshness work
 None crossing 90 days (oldest retrieved 07-24). Docker-size on latest tags re-checks every

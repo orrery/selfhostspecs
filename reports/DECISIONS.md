@@ -72,3 +72,18 @@ Append-only log of material decisions with their evidence. AUDIT checks cadence 
   in production 7 days) — now genuinely fixed with a real generated file + an existence-based
   CI check. No new cadence gaps; the 08-04/08-05 gaps remain unresolved (3 gaps/2 routines/3
   weeks — standing owner ask, LEARNINGS Compacted). 45/45 green.
+- 2026-08-12 — **ANALYZE+BUILD: resolved the 4-cycle SERVICES enum gap, promoted 4 apps to
+  live, built+QA'd a new 4-app batch.** Pre-launch signal unchanged (0 stars, 19 hits/30d), no
+  new cadence gaps. Extended the SERVICES enum (ferretdb/pict-rs/soketi/mqtt) via a scoped
+  policy — slots only for currently-queued candidates, not held/refuted ones — unblocking
+  Coolify/Wekan/Lemmy/Zigbee2MQTT for a future batch (not built this run, pacing). Fresh-eyes
+  re-QA cleared Linkwarden/Chatwoot/Seafile/Mattermost with zero defects (all live-resourced
+  re-checks, docker sizes exact-matched live manifests) — promoted to live (24 live). Built
+  Jenkins/Keycloak/Node-RED/GitLab CE from the verified backlog: harvester's cited canonical
+  docs domains were egress-blocked, so it sourced from GitHub raw mirrors without confirming
+  the canonical citation resolved — verifier caught this and repointed citations to
+  self-confirmed mirrors, plus found a systematic `docker.size_mb` decimal-vs-MiB conversion
+  bug across all 4 (fixed, LEARNINGS #53). QA found one real defect (Keycloak's deps wrongly
+  showed only PostgreSQL as required when 4 more vendors are officially supported, fixed to
+  match the grafana/nextcloud multi-backend convention). All 4 land `pending-second-qa` per the
+  unattended-run rule, not live yet. 49/49 green throughout.
