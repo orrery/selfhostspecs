@@ -5,41 +5,41 @@
   "website": "https://www.jenkins.io",
   "repo": "https://github.com/jenkinsci/jenkins",
   "description": "Self-hosted automation server for building, testing, and deploying software through configurable pipelines.",
-  "status": "pending-verification",
+  "status": "pending-qa",
   "specs": {
     "ram_min_mb": {
       "value": 256,
-      "source_url": "https://www.jenkins.io/doc/book/installing/",
+      "source_url": "https://raw.githubusercontent.com/jenkins-infra/jenkins.io/master/content/doc/book/installing/_installation_requirements.adoc",
       "quote": "256 MB of RAM",
       "retrieved": "2026-08-12",
-      "scope": "Jenkins, general (minimum hardware requirements, all install methods including Docker)"
+      "scope": "Jenkins, general (minimum hardware requirements; this prerequisites partial is included on the Linux, Docker, WAR-file, Windows, and offline-install pages)"
     },
     "ram_rec_mb": {
       "value": 4096,
-      "source_url": "https://www.jenkins.io/doc/book/installing/",
+      "source_url": "https://raw.githubusercontent.com/jenkins-infra/jenkins.io/master/content/doc/book/installing/_installation_requirements.adoc",
       "quote": "4 GB+ of RAM",
       "retrieved": "2026-08-12",
-      "scope": "Jenkins, general — recommended hardware configuration for a small team"
+      "scope": "Jenkins, general \u2014 recommended hardware configuration for a small team"
     },
     "no_official_figure": {
       "fields": [
         "cpu_min_cores",
         "cpu_rec_cores"
       ],
-      "evidence_url": "https://www.jenkins.io/doc/book/installing/",
-      "note": "The installation requirements page states RAM and drive space figures but never a CPU core count, minimum or recommended."
+      "evidence_url": "https://raw.githubusercontent.com/jenkins-infra/jenkins.io/master/content/doc/book/installing/_installation_requirements.adoc",
+      "note": "The installation-requirements partial (rendered on the Linux/Docker/WAR/Windows/offline install pages) states RAM and drive space figures but never a CPU core count, minimum or recommended; the linked Hardware Recommendations page also discusses CPU only in prose, no core counts."
     }
   },
   "deps": [
     {
       "service": "none",
       "required": false,
-      "source_url": "https://www.jenkins.io/doc/book/installing/"
+      "source_url": "https://raw.githubusercontent.com/jenkins-infra/jenkins.io/master/content/doc/book/installing/docker.adoc"
     }
   ],
   "docker": {
-    "image": "jenkins/jenkins",
-    "size_mb": 290,
+    "image": "jenkins/jenkins:lts",
+    "size_mb": 276,
     "arches": [
       "amd64",
       "arm64"
@@ -48,7 +48,8 @@
     "retrieved": "2026-08-12"
   },
   "sources_of_truth": [
-    "https://www.jenkins.io/doc/book/installing/",
+    "https://raw.githubusercontent.com/jenkins-infra/jenkins.io/master/content/doc/book/installing/_installation_requirements.adoc",
+    "https://raw.githubusercontent.com/jenkins-infra/jenkins.io/master/content/doc/book/installing/docker.adoc",
     "https://hub.docker.com/r/jenkins/jenkins"
   ]
 }

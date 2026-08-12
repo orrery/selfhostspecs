@@ -5,7 +5,7 @@
   "website": "https://nodered.org",
   "repo": "https://github.com/node-red/node-red",
   "description": "Flow-based visual programming tool for wiring together hardware devices, APIs, and online services.",
-  "status": "pending-verification",
+  "status": "pending-qa",
   "specs": {
     "no_official_figure": {
       "fields": [
@@ -14,20 +14,20 @@
         "cpu_min_cores",
         "cpu_rec_cores"
       ],
-      "evidence_url": "https://nodered.org/docs/getting-started/docker",
-      "note": "The official Docker/getting-started docs cover ports, volumes, and image variants but state no RAM, CPU, or disk figures; the only memory-related guidance is a Raspberry Pi FAQ about tuning Node.js's max-old-space-size, not a stated requirement."
+      "evidence_url": "https://raw.githubusercontent.com/node-red/node-red.github.io/master/docs/getting-started/docker.md",
+      "note": "The official Docker/getting-started docs cover ports, volumes, and image variants but state no RAM, CPU, or disk figures; the only memory-related guidance is a NODE_OPTIONS example tuning Node.js's --max_old_space_size, not a stated requirement."
     }
   },
   "deps": [
     {
       "service": "none",
       "required": false,
-      "source_url": "https://nodered.org/docs/getting-started/docker"
+      "source_url": "https://raw.githubusercontent.com/node-red/node-red.github.io/master/docs/getting-started/docker.md"
     }
   ],
   "docker": {
     "image": "nodered/node-red",
-    "size_mb": 229,
+    "size_mb": 218,
     "arches": [
       "amd64",
       "arm64"
@@ -36,8 +36,8 @@
     "retrieved": "2026-08-12"
   },
   "sources_of_truth": [
-    "https://nodered.org/docs/getting-started/docker",
-    "https://github.com/node-red/node-red-docker",
+    "https://raw.githubusercontent.com/node-red/node-red.github.io/master/docs/getting-started/docker.md",
+    "https://raw.githubusercontent.com/node-red/node-red-docker/master/README.md",
     "https://hub.docker.com/r/nodered/node-red"
   ]
 }
