@@ -3,6 +3,17 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-08-13 — FIND #20
+
+57. **The opportunities.md byte ceiling (#56) is no longer occasional — it is now the
+    steady state.** 4th FIND cycle running at/near 10000/10000; this cycle needed 9
+    separate compaction edits across 6 unrelated sections just to fit ONE new queued
+    candidate (docker-mailserver) after deliberately holding a second (Infisical) out of
+    Queued specifically to save bytes, not on merit. → Downstream: next FIND, check
+    backlog byte headroom FIRST; if <500 bytes free, skip new coverage-gap/column mining
+    entirely (freshness-only cycle) — the real fix (per-candidate files, or an
+    owner-approved budget/archive change) is an owner decision, not a FIND-cycle patch.
+
 ## 2026-08-12 — FIND #19
 
 55. **A figure inside an example deployment config isn't an admissible "stated
@@ -15,17 +26,6 @@ learning. FIND and BUILD read this file first, every run. Newest first.
     trimming prose to fit new candidates is now routine, not exceptional. → Downstream:
     flag owner — needs archiving like DECISIONS.md, not perpetual word-trimming.
 
-## 2026-08-10 — FIND #17
-
-52. **Hand-summarizing the backlog into a briefing for the finder subagent (instead of passing
-    the file verbatim) drops items buried in section prose** — the finder proposed a GPU/hw-accel
-    column already sitting in the Shipped section's "Pending BUILD" line, and an ARM/Pi-ready
-    collection page already in the Rejected graveyard, because the operator's hand-built
-    candidate/rejected lists omitted both (they weren't under an obvious "Queued"/"Rejected"
-    bullet). The verifier caught both, but only after a full research round-trip. → Downstream:
-    next FIND, paste `backlog/opportunities.md` verbatim into the finder's briefing instead of
-    a curated summary.
-
 ## 2026-08-10 — AUDIT #3
 
 51. **Discourse's `latest` tag rebuilds unusually often** (4 drift-corrections in ~3 weeks vs.
@@ -34,14 +34,12 @@ learning. FIND and BUILD read this file first, every run. Newest first.
     rebuilds frequently — size may lag") instead of presenting the same bare-integer stability
     implication as a sourced RAM figure; not yet built, flagging for a FIND/BUILD cycle.
 
-## 2026-08-09 — FIND #16
-
-45. **A candidate's docker-compose service count is a cheap early Effort signal — check it
-    before the full sourcing dive, not after.** Sentry and PostHog self-hosted both had
-    excellent official RAM sourcing but the verifier refuted both for queuing anyway — 64 and
-    47 docker-compose services respectively, several without a SERVICES enum slot. →
-    Downstream: run this 2-minute check before spending research budget on sourcing.
 ## Compacted (graduated into CI tests / defect classes, or superseded — see OPERATIONS.md, tests/*.test.mjs)
+- Paste `backlog/opportunities.md` verbatim into the finder's briefing, never a curated
+  summary — summaries drop buried items (#52, resolved 08-10, applied every cycle since).
+- Docker-compose service count is a cheap early Effort signal — check it before the
+  sourcing dive (#45, resolved 08-09, applied every cycle since; Sentry/PostHog both
+  refuted on 64/47-service composes despite strong RAM sourcing).
 - `docker.size_mb` bytes/1,000,000-vs-1,048,576 harvester error was systematic across a whole
   batch (07-24) — Defect Class #1 now states the exact divisor + known-good check (LEARNINGS
   formerly #53, superseded 08-12).
