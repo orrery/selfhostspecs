@@ -3,16 +3,16 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
-## 2026-08-13 — FIND #20
+## 2026-08-14 — FIND #21
 
-57. **The opportunities.md byte ceiling (#56) is no longer occasional — it is now the
-    steady state.** 4th FIND cycle running at/near 10000/10000; this cycle needed 9
-    separate compaction edits across 6 unrelated sections just to fit ONE new queued
-    candidate (docker-mailserver) after deliberately holding a second (Infisical) out of
-    Queued specifically to save bytes, not on merit. → Downstream: next FIND, check
-    backlog byte headroom FIRST; if <500 bytes free, skip new coverage-gap/column mining
-    entirely (freshness-only cycle) — the real fix (per-candidate files, or an
-    owner-approved budget/archive change) is an owner decision, not a FIND-cycle patch.
+57. **The opportunities.md byte ceiling is now blocking FIND outright, not just costing
+    edits.** 08-13 (#20) needed 9 compaction edits to fit one candidate; 08-14 (#21) found
+    only 2 bytes free (9998/10000) — rule applied (skip new mining, <500 free), and the
+    90-day freshness sweep independently confirmed clean (oldest entry 21 days), so this
+    cycle shipped zero backlog changes. LEARNINGS.md itself is now also near its own
+    budget (7925/8000). → Downstream: unresolved for 3 owner-flagged cycles (#56/#57)
+    running; FIND cannot keep absorbing this — needs the owner's archive/per-candidate-
+    file decision before the next mining cycle, not another compaction pass.
 
 ## 2026-08-12 — FIND #19
 
@@ -22,9 +22,7 @@ learning. FIND and BUILD read this file first, every run. Newest first.
     vendor's current default compose sets the same worker to 2048MB). → Downstream: a
     number inside an example/template resource limit needs prose confirmation, not just
     presence in an official-org repo.
-56. **`opportunities.md` has hit its byte ceiling 3 FIND cycles running (#17/#18/#19)** —
-    trimming prose to fit new candidates is now routine, not exceptional. → Downstream:
-    flag owner — needs archiving like DECISIONS.md, not perpetual word-trimming.
+56. opportunities.md byte-ceiling first flagged #17-19 running — superseded, see #57.
 
 ## 2026-08-10 — AUDIT #3
 
