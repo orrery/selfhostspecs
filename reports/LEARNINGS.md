@@ -3,16 +3,14 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
-## 2026-08-14 — FIND #21
+## 2026-08-14/15 — FIND #21-22
 
-57. **The opportunities.md byte ceiling is now blocking FIND outright, not just costing
-    edits.** 08-13 (#20) needed 9 compaction edits to fit one candidate; 08-14 (#21) found
-    only 2 bytes free (9998/10000) — rule applied (skip new mining, <500 free), and the
-    90-day freshness sweep independently confirmed clean (oldest entry 21 days), so this
-    cycle shipped zero backlog changes. LEARNINGS.md itself is now also near its own
-    budget (7925/8000). → Downstream: unresolved for 3 owner-flagged cycles (#56/#57)
-    running; FIND cannot keep absorbing this — needs the owner's archive/per-candidate-
-    file decision before the next mining cycle, not another compaction pass.
+57. **opportunities.md byte ceiling now blocks FIND outright — 5 cycles running (#18-22),
+    unresolved since #56.** Repeated compaction hits the same wall (9998/10000, 0-2 bytes
+    free) — the file's flat structure is maxed, not under-compacted. Skipped mining both
+    cycles; freshness sweep clean each time (oldest 22 days). → Escalated to owner via
+    notification 08-15: needs an archive/per-candidate-file decision, not another
+    compaction pass.
 
 ## 2026-08-12 — FIND #19
 
