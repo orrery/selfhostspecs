@@ -62,6 +62,11 @@ syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
   required:true deps; SERP check found no incumbent. Before BUILD: disclose required:false
   ≠ dependency-free (#3) AND write an explicit inclusion criterion (Wekan FerretDB case
   shows ad hoc dep-labeling isn't enough).
+- CI/CD & Git requirements (Gitea/Jenkins/GitLab-CE, #22) — gate met 08-16 (all 3 shipped),
+  zero new harvesting. Not an ARM/Pi repeat: corrects a wrong circulating figure (Contabo
+  blog's GitLab "4GB" vs our sourced 8GB min/16GB rec) and fills a gap incumbents skip
+  (Jenkins RAM — no comparison site states it). BUILD condition: page copy must lead with
+  the correction/gap-fill angle explicitly, not generic "sourced and dated" framing.
 
 ## Held (insufficient evidence, not discarded)
 - Snipe-IT/Cal.com (~12/20): no RAM/CPU figures (readme.io 403 on Snipe-IT).
@@ -106,7 +111,12 @@ syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
 - Deferred: disk-footprint column — too inconsistently documented.
 - Parked, #13: Helm/K8s-chart column — nextcloud/helm's README disclaims official support
   despite living in-org — needs an official/unofficial rule.
-- Watch, #13: CI/CD collection (Gitea+Jenkins+GitLab) — gate 3+ built, 1/3 so far.
+- Budibase (#22): low-code internal-tool builder. Official self-host-specification page
+  (budibase.com) domain-blocked from cloud sessions; only a recommended (not min) 4CPU/
+  8GB/150GB figure found second-hand. Hold for a local-session fetch.
+- Revolt/stoatchat chat (#22, ~2.3k★): org renamed revoltchat→stoatchat (alias-sweep flag).
+  Deps Mongo+Redis+MinIO — MinIO unmapped in SERVICES enum, same shape as Ente/Sentry/
+  PostHog. Hold for deps-schema, same as those.
 - SERVICES enum: scoped-extension policy resolved 08-12 (data-quality SKILL.md) —
   ferretdb/pict-rs/soketi/mqtt added for then-queued candidates; Supabase/Sentry/PostHog's
   kafka/zookeeper/opensearch/temporal stay unmapped (held, not queued).
