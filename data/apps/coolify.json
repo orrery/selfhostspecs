@@ -5,7 +5,7 @@
   "website": "https://coolify.io",
   "repo": "https://github.com/coollabsio/coolify",
   "description": "Self-hosted open-source PaaS for deploying and managing applications, databases, and services on your own servers.",
-  "status": "pending-qa",
+  "status": "pending-second-qa",
   "specs": {
     "ram_min_mb": {
       "value": 2048,
