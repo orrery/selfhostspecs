@@ -3,18 +3,20 @@
 Statuses: unverified → queued (verifier sign-off) → building → shipped, or rejected.
 Dedupe vs all lists. App detail: `data/apps/<slug>.json`.
 
-## Shipped — 24 apps live
+## Shipped — 28 apps live
 07-24 (14): gitea, home-assistant, immich, jellyfin, uptime-kuma, vaultwarden, adguard-home,
 frigate, grafana, n8n, nextcloud, paperless-ngx, pi-hole, syncthing. 07-30 (+3): discourse,
 zulip, rocket-chat. 08-02 (+1): openproject. 08-09 (+2): plausible-ce, open-webui. 08-12 (+4):
-linkwarden, chatwoot, seafile, mattermost.
+linkwarden, chatwoot, seafile, mattermost. 08-16 (+4): jenkins, keycloak, node-red, gitlab-ce.
 Pending BUILD, paced 1 schema-change/batch: GPU/transcoding column (Jellyfin/Immich/Frigate,
 +open-webui?, #17); community-figures column (vaultwarden/adguard-home/uptime-kuma/
 syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
 
 ## In pipeline (not yet live)
-- pending-second-qa (re-QA next run): Jenkins, Keycloak, Node-RED, GitLab CE — cleared
-  verification+QA 08-12 (dep detail: data/apps/*.json).
+- pending-second-qa (re-QA next run): coolify, prometheus, docker-mailserver, wazuh —
+  cleared verification+QA 08-16, zero defects (dep detail: data/apps/*.json). Wazuh
+  deps:none ruling (bundled indexer/dashboard, no OpenSearch enum slot added — see
+  LEARNINGS).
 
 ## Queued (verifier-signed), unbuilt
 - Zammad (16/20, #8) — "2 CPU cores; 6GB RAM (+4GB if ES)". PostgreSQL req.
@@ -39,9 +41,6 @@ syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
   redis/valkey, hub, cube); taxonomy/vllm optional. hub/cube unresearched, no enum slot.
 - Zigbee2MQTT (14/20, #12) — no figure. Docker: zigbee2mqtt pkgs page, 6-arch. mqtt has an
   enum slot (08-12) — needs external broker, re-check before BUILD.
-- Coolify (20/20, #13) — "Min: 2 CPU, 2GB RAM, 30GB storage" (control-plane scope). Deps:
-  postgres+redis+soketi, all req, all enum-mapped. Docker coollabsio/coolify:latest,
-  amd64+arm64.
 - TriliumNext Trilium (14/20, #13, marginal) — 37.3k★, transferred from zadam/trilium (not
   archived fork). Zero figure — ship no_official_figure:true. No deps. 4-arch.
 - SearXNG (15/20, #14) — no figure. Community (vojkovic, GH#3884): "1vcpu, 512mb...0
@@ -51,9 +50,6 @@ syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
   stirlingtools/stirling-pdf, amd64+arm64. 89.1k★.
 - Metabase (17/20, #15) — no_official_figure:true. JVM -Xmx tuning prose only, not a
   stated min — cite as absence evidence, Mastodon/Portainer precedent.
-- Wazuh (17/20, #15) — first SIEM/XDR, 16.5k★. wazuh-documentation quickstart.rst — rec
-  (no min) "4vCPU/8GiB RAM/50GB" for 1-25 agents. wazuh-docker single-node compose, 3
-  containers :5.1.0, no external DB. BUILD: harvest as rec not min; compose untested (#3).
 - License (SPDX) column (14/20, #15, conditional) — GitHub license.spdx_id + LICENSE
   cross-check, backfill 24. Never trust spdx_id alone — 2/3 spot-checked NOASSERTION
   (n8n fair-code; Wazuh dual GPLv2/AGPLv3) — label non-OSI.
@@ -61,15 +57,6 @@ syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
   deploy.rst worked example (NOT min) "RAM=9*((0.8*150)+(0.2*1024))~=3GB" @4CPU/60u.
   PostgreSQL only dep. Official Image, web+db only. BUILD: scoped rec (Wazuh precedent,
   never min). Channel: crowded calc blogs — win on provenance.
-- Prometheus (18/20, #19) — ~65.7k★, CNCF graduated. No official RAM/CPU figure (only a
-  disk-capacity formula, docs/storage.md) — ship no_official_figure:true, link
-  prometheus/prometheus#13608. No deps: embedded TSDB, remote storage optional
-  (service:none). Docker prom/prometheus (+Quay.io). Zero-dep — candidate 15th member of
-  the no-DB/cache collection.
-- docker-mailserver (18/20, #20) — 18.7k★, single-container mail server, zero deps. FAQ:
-  rec "1 vCore/2GB RAM+swap", min "1 vCore/512MB (no ClamAV)". Docker ghcr.io/
-  docker-mailserver/docker-mailserver, amd64+arm64. Candidate 16th no-DB/cache member.
-
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members confirmed zero
   required:true deps; SERP check found no incumbent. Before BUILD: disclose required:false

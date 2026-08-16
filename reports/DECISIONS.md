@@ -6,25 +6,19 @@ Append-only log of material decisions with their evidence. AUDIT checks cadence 
   post-verification); brand selfhostspecs.com, `docs/` gitignored build output, schema test is
   the contract, repo PUBLIC (owner call), launch gate ≥100 sourced entries. First full cycle
   shipped 14 apps live, gate exercised end-to-end (harvest→verify→CI→QA block→fix→re-QA→deploy).
-- 2026-07-26 — **ANALYZE pre-launch** (0 stars, 26 hits, no kills). BUILD scoped 7→3 apps on a
-  confirmed egress block (Portainer/Netdata/PeerTube/Vikunja docs domains 403; raw-mirrors ok).
-  Rocket.Chat re-sourced live tier (brief 1cpu/1GB → actual 1vCPU/2GiB). Verifier blocked Zulip
-  first pass (missing memcached dep + bad source, fixed). Discourse Postgres/Redis classified
-  bundled (runit, same container). Analytics-snapshot exit-22 flagged to owner. QA blocked once
-  (collection-copy went false when Discourse's bundled deps joined), fixed; 3 apps
-  pending-second-qa.
+- 2026-07-26 — **ANALYZE pre-launch** (0 stars, 26 hits, no kills). BUILD scoped 7→3 apps on
+  confirmed egress block (docs domains 403; raw-mirrors ok). Rocket.Chat re-sourced live tier;
+  Zulip verifier-blocked first pass (missing memcached dep, fixed); Discourse Postgres/Redis
+  classified bundled (runit, same container); analytics-snapshot exit-22 flagged to owner.
 - 2026-07-27 — **AUDIT #1:** fixed SEV-1 Vaultwarden docker-size drift (77→83, rolling `latest`
   tag). Added CI post-deploy smoke test — this cloud session can't reach
   selfhostspecs.com/goatcounter.com at all (proxy 403, confirmed policy-level not a site issue).
 - 2026-07-30 — **Repo-integrity:** local `main` 16 commits behind `origin/main` (detached-HEAD
-  session start); `merge-base` confirmed non-diverged, ff-merged, nothing lost — standing move
-  on every session start since. Re-QA settled Discourse/Zulip/Rocket.Chat to live (17 live);
-  Discourse docker-size drifted again (1144→1173), fixed.
-- 2026-07-30 — **BUILD drained the queue:** OpenProject/Plausible CE/Linkwarden/Open WebUI —
-  zero verifier discrepancies, zero QA defects across 12 classes; all 4 `pending-second-qa`
-  (unattended-run rule). `meilisearch` added to deps enum (sourced). Two real bugs fixed:
-  quote-escape test gap (`>` unescaped, false-failed OpenProject's quote), search punctuation
-  mismatch ("rocket chat" missed "Rocket.Chat").
+  session start), ff-merged, nothing lost — standing move on every session start since. Re-QA
+  settled Discourse/Zulip/Rocket.Chat to live (17 live); Discourse docker-size drifted
+  (1144→1173), fixed. Drained queue: OpenProject/Plausible CE/Linkwarden/Open WebUI, zero
+  defects, all `pending-second-qa`; `meilisearch` added to deps enum; fixed quote-escape test
+  gap and a search punctuation mismatch.
 - 2026-08-02 — **Fresh-eyes re-QA settled OpenProject live; found 3 real defects on the rest,
   not zero this time.** Plausible CE/Linkwarden/Open WebUI all cited an unauthenticated
   `ghcr.io/v2/.../manifests/<tag>` URL as `docker.source_url` (401s for readers) — new Defect
@@ -87,3 +81,12 @@ Append-only log of material decisions with their evidence. AUDIT checks cadence 
   showed only PostgreSQL as required when 4 more vendors are officially supported, fixed to
   match the grafana/nextcloud multi-backend convention). All 4 land `pending-second-qa` per the
   unattended-run rule, not live yet. 49/49 green throughout.
+- 2026-08-16 — **ANALYZE+BUILD: settled 4 pending-second-qa apps, built+QA'd a new 4-app batch,
+  backlog ceiling relieved.** Fresh-eyes QA fixed one defect (GitLab CE docker.size_mb
+  1319→1313), promoted Jenkins/Keycloak/Node-RED/GitLab CE to live (28 live). Built
+  Coolify/Prometheus/docker-mailserver/Wazuh — zero defects through verify+QA; ruled Wazuh's
+  OpenSearch indexer/dashboard correctly deps:none (bundled, rec figure scopes whole stack —
+  LEARNINGS #59); all 4 land pending-second-qa. Queue-drain compaction (9998→9080 bytes)
+  relieved the 5-cycle FIND-blocking byte ceiling (#56/#57) as a side effect, not by design —
+  still deferred (LEARNINGS #58). No traffic-driven decisions (pre-launch, 0★, ~20 hits/30d).
+  53/53 green throughout.

@@ -3,14 +3,18 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
-## 2026-08-14/15 — FIND #21-22
+## 2026-08-16 — ANALYZE+BUILD (specs-loop)
 
-57. **opportunities.md byte ceiling now blocks FIND outright — 5 cycles running (#18-22),
-    unresolved since #56.** Repeated compaction hits the same wall (9998/10000, 0-2 bytes
-    free) — the file's flat structure is maxed, not under-compacted. Skipped mining both
-    cycles; freshness sweep clean each time (oldest 22 days). → Escalated to owner via
-    notification 08-15: needs an archive/per-candidate-file decision, not another
-    compaction pass.
+58. **#56/#57 byte-ceiling was relieved by ordinary queue drain, not an archive redesign**
+    — building the 4 top queued apps shrank Queued more than new pipeline entries added
+    (9998→9080 bytes). → FIND can resume mining; the architecture question stays open —
+    re-flag if the ceiling recurs within a few cycles.
+59. **A bundled multi-container deployment doesn't need a SERVICES enum slot even when a
+    component resembles a known service** (Wazuh's OpenSearch indexer+dashboard, project-
+    wired, not bring-your-own) — deps:none is honest because the published rec figure
+    scopes the whole bundle, no resource gap hidden (extends Discourse-Postgres/Redis
+    precedent). → Don't force an enum add for embedded-search SIEM/observability
+    candidates unless the app's own docs treat it as separately provisioned.
 
 ## 2026-08-12 — FIND #19
 
@@ -20,7 +24,6 @@ learning. FIND and BUILD read this file first, every run. Newest first.
     vendor's current default compose sets the same worker to 2048MB). → Downstream: a
     number inside an example/template resource limit needs prose confirmation, not just
     presence in an official-org repo.
-56. opportunities.md byte-ceiling first flagged #17-19 running — superseded, see #57.
 
 ## 2026-08-10 — AUDIT #3
 
