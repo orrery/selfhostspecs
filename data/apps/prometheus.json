@@ -5,7 +5,7 @@
   "website": "https://prometheus.io",
   "repo": "https://github.com/prometheus/prometheus",
   "description": "Open-source systems monitoring and alerting toolkit with a built-in time-series database, CNCF graduated project.",
-  "status": "pending-verification",
+  "status": "pending-qa",
   "specs": {
     "no_official_figure": {
       "fields": [
