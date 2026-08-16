@@ -5,7 +5,7 @@
   "website": "https://nodered.org",
   "repo": "https://github.com/node-red/node-red",
   "description": "Flow-based visual programming tool for wiring together hardware devices, APIs, and online services.",
-  "status": "pending-second-qa",
+  "status": "live",
   "specs": {
     "no_official_figure": {
       "fields": [

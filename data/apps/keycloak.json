@@ -5,7 +5,7 @@
   "website": "https://www.keycloak.org",
   "repo": "https://github.com/keycloak/keycloak",
   "description": "Open-source identity and access management server providing single sign-on, authentication, and authorization.",
-  "status": "pending-second-qa",
+  "status": "live",
   "specs": {
     "ram_min_mb": {
       "value": 750,

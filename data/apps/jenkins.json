@@ -5,7 +5,7 @@
   "website": "https://www.jenkins.io",
   "repo": "https://github.com/jenkinsci/jenkins",
   "description": "Self-hosted automation server for building, testing, and deploying software through configurable pipelines.",
-  "status": "pending-second-qa",
+  "status": "live",
   "specs": {
     "ram_min_mb": {
       "value": 256,
@@ -19,7 +19,7 @@
       "source_url": "https://raw.githubusercontent.com/jenkins-infra/jenkins.io/master/content/doc/book/installing/_installation_requirements.adoc",
       "quote": "4 GB+ of RAM",
       "retrieved": "2026-08-12",
-      "scope": "Jenkins, general \u2014 recommended hardware configuration for a small team"
+      "scope": "Jenkins, general — recommended hardware configuration for a small team"
     },
     "no_official_figure": {
       "fields": [

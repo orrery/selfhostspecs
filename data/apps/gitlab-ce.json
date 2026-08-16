@@ -5,7 +5,7 @@
   "website": "https://about.gitlab.com",
   "repo": "https://gitlab.com/gitlab-org/gitlab-foss",
   "description": "Self-hosted Git repository manager with issue tracking, CI/CD pipelines, and a web-based code review interface.",
-  "status": "pending-second-qa",
+  "status": "live",
   "specs": {
     "ram_min_mb": {
       "value": 8192,
@@ -33,19 +33,19 @@
         "cpu_min_cores"
       ],
       "evidence_url": "https://raw.githubusercontent.com/gitlabhq/gitlabhq/master/doc/install/requirements.md",
-      "note": "The requirements page gives a documented reduced-memory minimum (8 GB) for constrained environments but no analogous reduced CPU figure \u2014 only the 8 vCPU baseline."
+      "note": "The requirements page gives a documented reduced-memory minimum (8 GB) for constrained environments but no analogous reduced CPU figure — only the 8 vCPU baseline."
     }
   },
   "deps": [
     {
       "service": "none",
       "required": false,
-      "source_url": "https://raw.githubusercontent.com/gitlabhq/gitlabhq/master/doc/install/docker/installation.md"
+      "source_url": "https://raw.githubusercontent.com/gitlabhq/gitlabhq/master/doc/install/requirements.md"
     }
   ],
   "docker": {
     "image": "gitlab/gitlab-ce",
-    "size_mb": 1319,
+    "size_mb": 1313,
     "arches": [
       "amd64",
       "arm64"
