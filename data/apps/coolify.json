@@ -1,0 +1,65 @@
+{
+  "name": "Coolify",
+  "slug": "coolify",
+  "category": "dev-tools",
+  "website": "https://coolify.io",
+  "repo": "https://github.com/coollabsio/coolify",
+  "description": "Self-hosted open-source PaaS for deploying and managing applications, databases, and services on your own servers.",
+  "status": "pending-verification",
+  "specs": {
+    "ram_min_mb": {
+      "value": 2048,
+      "source_url": "https://raw.githubusercontent.com/coollabsio/coolify-docs/main/content/docs/get-started/installation.mdx",
+      "quote": "- **Memory (RAM)**: 2 GB",
+      "retrieved": "2026-08-16",
+      "scope": "Control-plane requirement for running the Coolify server itself (the manager that orchestrates deployments elsewhere), self-hosted installation via the official install script — not the resources needed by the apps Coolify deploys"
+    },
+    "cpu_min_cores": {
+      "value": 2,
+      "source_url": "https://raw.githubusercontent.com/coollabsio/coolify-docs/main/content/docs/get-started/installation.mdx",
+      "quote": "- **CPU**: 2 cores",
+      "retrieved": "2026-08-16",
+      "scope": "Control-plane requirement for running the Coolify server itself (the manager that orchestrates deployments elsewhere), self-hosted installation via the official install script — not the resources needed by the apps Coolify deploys"
+    },
+    "no_official_figure": {
+      "fields": [
+        "ram_rec_mb",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://raw.githubusercontent.com/coollabsio/coolify-docs/main/content/docs/get-started/installation.mdx",
+      "note": "The docs publish one minimum tier plus a single named user's anecdotal production setup ('Andras runs his production apps on a server with: Memory: 8GB ... CPU: 4 cores') under 'Server Resources for Your Projects' — that is one operator's example workload, not a general recommended baseline above the minimum (Defect Class #2), so it is not harvested as ram_rec_mb/cpu_rec_cores."
+    }
+  },
+  "deps": [
+    {
+      "service": "postgresql",
+      "required": true,
+      "source_url": "https://github.com/coollabsio/coolify/blob/main/docker-compose.prod.yml"
+    },
+    {
+      "service": "redis",
+      "required": true,
+      "source_url": "https://github.com/coollabsio/coolify/blob/main/docker-compose.prod.yml"
+    },
+    {
+      "service": "soketi",
+      "required": true,
+      "source_url": "https://github.com/coollabsio/coolify/blob/main/docker-compose.prod.yml"
+    }
+  ],
+  "docker": {
+    "image": "coollabsio/coolify",
+    "size_mb": 130,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://hub.docker.com/r/coollabsio/coolify",
+    "retrieved": "2026-08-16"
+  },
+  "sources_of_truth": [
+    "https://raw.githubusercontent.com/coollabsio/coolify-docs/main/content/docs/get-started/installation.mdx",
+    "https://github.com/coollabsio/coolify/blob/main/docker-compose.prod.yml",
+    "https://hub.docker.com/r/coollabsio/coolify"
+  ]
+}

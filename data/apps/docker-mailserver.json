@@ -1,0 +1,61 @@
+{
+  "name": "docker-mailserver",
+  "slug": "docker-mailserver",
+  "category": "email",
+  "website": "https://docker-mailserver.github.io/docker-mailserver/latest/",
+  "repo": "https://github.com/docker-mailserver/docker-mailserver",
+  "description": "Self-hosted, single-container mail server (SMTP, IMAP, LDAP, anti-spam, anti-virus) configured entirely via files, no SQL database.",
+  "status": "pending-verification",
+  "specs": {
+    "ram_min_mb": {
+      "value": 512,
+      "source_url": "https://raw.githubusercontent.com/docker-mailserver/docker-mailserver/master/docs/content/faq.md",
+      "quote": "512MB RAM",
+      "retrieved": "2026-08-16",
+      "scope": "Minimum for general Docker deployment; requires avoiding services like ClamAV (disabled by default) to run within this RAM ceiling"
+    },
+    "ram_rec_mb": {
+      "value": 2048,
+      "source_url": "https://raw.githubusercontent.com/docker-mailserver/docker-mailserver/master/docs/content/faq.md",
+      "quote": "2GB RAM",
+      "retrieved": "2026-08-16",
+      "scope": "Recommended for general Docker deployment, with swap enabled for the container"
+    },
+    "cpu_min_cores": {
+      "value": 1,
+      "source_url": "https://raw.githubusercontent.com/docker-mailserver/docker-mailserver/master/docs/content/faq.md",
+      "quote": "1 vCore",
+      "retrieved": "2026-08-16",
+      "scope": "Minimum for general Docker deployment; requires avoiding services like ClamAV (disabled by default) to run within the stated RAM ceiling"
+    },
+    "cpu_rec_cores": {
+      "value": 1,
+      "source_url": "https://raw.githubusercontent.com/docker-mailserver/docker-mailserver/master/docs/content/faq.md",
+      "quote": "1 vCore",
+      "retrieved": "2026-08-16",
+      "scope": "Recommended for general Docker deployment, with swap enabled for the container"
+    }
+  },
+  "deps": [
+    {
+      "service": "none",
+      "required": false,
+      "source_url": "https://github.com/docker-mailserver/docker-mailserver/blob/master/compose.yaml"
+    }
+  ],
+  "docker": {
+    "image": "ghcr.io/docker-mailserver/docker-mailserver",
+    "size_mb": 396,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://github.com/docker-mailserver/docker-mailserver/pkgs/container/docker-mailserver",
+    "retrieved": "2026-08-16"
+  },
+  "sources_of_truth": [
+    "https://raw.githubusercontent.com/docker-mailserver/docker-mailserver/master/docs/content/faq.md",
+    "https://github.com/docker-mailserver/docker-mailserver/blob/master/compose.yaml",
+    "https://github.com/docker-mailserver/docker-mailserver/pkgs/container/docker-mailserver"
+  ]
+}

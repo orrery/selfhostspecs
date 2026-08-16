@@ -1,0 +1,44 @@
+{
+  "name": "Prometheus",
+  "slug": "prometheus",
+  "category": "observability",
+  "website": "https://prometheus.io",
+  "repo": "https://github.com/prometheus/prometheus",
+  "description": "Open-source systems monitoring and alerting toolkit with a built-in time-series database, CNCF graduated project.",
+  "status": "pending-verification",
+  "specs": {
+    "no_official_figure": {
+      "fields": [
+        "ram_min_mb",
+        "ram_rec_mb",
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://github.com/prometheus/prometheus/issues/13608",
+      "note": "Official docs (docs/storage.md) publish only a disk-capacity planning formula ('needed_disk_space = retention_time_seconds * ingested_samples_per_second * bytes_per_sample'); no RAM or CPU minimum/recommended figure is documented anywhere in the project's official docs. Open upstream issue #13608 ('CPU, RAM, Storage Requirements for Prometheus (Storage answered)') tracks the gap, noting a prior response 'only addressed storage' when RAM/CPU were also asked about."
+    }
+  },
+  "deps": [
+    {
+      "service": "none",
+      "required": false,
+      "source_url": "https://raw.githubusercontent.com/prometheus/prometheus/main/docs/storage.md"
+    }
+  ],
+  "docker": {
+    "image": "prom/prometheus",
+    "size_mb": 102,
+    "arches": [
+      "amd64",
+      "arm64",
+      "armv7"
+    ],
+    "source_url": "https://hub.docker.com/r/prom/prometheus",
+    "retrieved": "2026-08-16"
+  },
+  "sources_of_truth": [
+    "https://raw.githubusercontent.com/prometheus/prometheus/main/docs/storage.md",
+    "https://github.com/prometheus/prometheus/issues/13608",
+    "https://hub.docker.com/r/prom/prometheus"
+  ]
+}

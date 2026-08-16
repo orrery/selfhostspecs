@@ -1,0 +1,55 @@
+{
+  "name": "Wazuh",
+  "slug": "wazuh",
+  "category": "security",
+  "website": "https://wazuh.com",
+  "repo": "https://github.com/wazuh/wazuh",
+  "description": "Self-hosted open-source security platform providing unified XDR and SIEM protection for endpoints and cloud workloads.",
+  "status": "pending-verification",
+  "specs": {
+    "ram_rec_mb": {
+      "value": 8192,
+      "source_url": "https://raw.githubusercontent.com/wazuh/wazuh-documentation/main/source/quickstart.rst",
+      "quote": "8 GiB",
+      "retrieved": "2026-08-16",
+      "scope": "Recommended hardware for a single-host quickstart deployment (Wazuh manager, indexer, and dashboard on the same endpoint), 1-25 monitored agents, 90 days of queryable/indexed alert data"
+    },
+    "cpu_rec_cores": {
+      "value": 4,
+      "source_url": "https://raw.githubusercontent.com/wazuh/wazuh-documentation/main/source/quickstart.rst",
+      "quote": "4 vCPU",
+      "retrieved": "2026-08-16",
+      "scope": "Recommended hardware for a single-host quickstart deployment (Wazuh manager, indexer, and dashboard on the same endpoint), 1-25 monitored agents, 90 days of queryable/indexed alert data"
+    },
+    "no_official_figure": {
+      "fields": [
+        "ram_min_mb",
+        "cpu_min_cores"
+      ],
+      "evidence_url": "https://raw.githubusercontent.com/wazuh/wazuh-documentation/main/source/quickstart.rst",
+      "note": "quickstart.rst publishes only a per-agent-count hardware table (1-25 / 25-50 / 50-100 agents) explicitly labeled 'the recommended hardware for a quickstart deployment' — no distinct minimum figure exists anywhere in the docs. The 1-25 tier is a recommended worked example, not a documented floor (Odoo/Wazuh precedent: never promote a worked example into minimum)."
+    }
+  },
+  "deps": [
+    {
+      "service": "none",
+      "required": false,
+      "source_url": "https://raw.githubusercontent.com/wazuh/wazuh-docker/v4.14.7/single-node/docker-compose.yml"
+    }
+  ],
+  "docker": {
+    "image": "wazuh/wazuh-manager",
+    "size_mb": 864,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://hub.docker.com/r/wazuh/wazuh-manager",
+    "retrieved": "2026-08-16"
+  },
+  "sources_of_truth": [
+    "https://raw.githubusercontent.com/wazuh/wazuh-documentation/main/source/quickstart.rst",
+    "https://raw.githubusercontent.com/wazuh/wazuh-docker/v4.14.7/single-node/docker-compose.yml",
+    "https://hub.docker.com/r/wazuh/wazuh-manager"
+  ]
+}
