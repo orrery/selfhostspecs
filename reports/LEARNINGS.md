@@ -5,10 +5,7 @@ learning. FIND and BUILD read this file first, every run. Newest first.
 
 ## 2026-08-16 — ANALYZE+BUILD (specs-loop)
 
-58. **#56/#57 byte-ceiling was relieved by ordinary queue drain, not an archive redesign**
-    — building the 4 top queued apps shrank Queued more than new pipeline entries added
-    (9998→9080 bytes). → FIND can resume mining; the architecture question stays open —
-    re-flag if the ceiling recurs within a few cycles.
+58. **#56/#57 relief (9998→9080, 08-16) was temporary, not structural** — see #61.
 59. **A bundled multi-container deployment doesn't need a SERVICES enum slot even when a
     component resembles a known service** (Wazuh's OpenSearch indexer+dashboard, project-
     wired, not bring-your-own) — deps:none is honest because the published rec figure
@@ -34,6 +31,12 @@ learning. FIND and BUILD read this file first, every run. Newest first.
     (OPERATIONS.md): confirm a bare image's `:latest` exists before shipping; not CI-checkable
     (network), re-verify every AUDIT with `docker.size_mb`. Discourse's high-churn caveat (#51)
     is now one instance of the general rule below — folded in.
+
+## 2026-08-17 — FIND #23
+
+61. **Ceiling relief didn't hold — recurred in 1 cycle, and LEARNINGS.md ceilinged too**
+    (opportunities.md 9080→9922; LEARNINGS.md 7988/8000 pre-edit). Structural, not under-
+    compacted (#57); 08-15 escalation drew no action. → Skipped mining; re-escalated.
 
 ## Compacted (graduated into CI tests / defect classes, or superseded — see OPERATIONS.md, tests/*.test.mjs)
 - Paste `backlog/opportunities.md` verbatim into the finder's briefing, never a curated
@@ -83,7 +86,6 @@ learning. FIND and BUILD read this file first, every run. Newest first.
 - Requirements tables can be images (GitBook PNG) inside otherwise-fetchable markdown — view
   the image directly before declaring a figure unsourceable (confirmed exact-match on
   Rocket.Chat's 3-image table, AUDIT #3).
-- Analytics snapshot Action: resolved 08-02, no longer tracked.
 - Auth-adjacent 404s can be permission masks, not absence — verify from a second vantage point.
 - Seed quotes from memory drift; harvest quotes only from a live fetch in the same session.
   No-fetch FIND scoring is an estimate; absence claims need a sibling-page sweep.
