@@ -3,82 +3,83 @@
 Weekly adversarial audit findings, newest first, ranked by severity. An empty audit must say
 what it tried and failed to break. First audit due after the first full loop cycle.
 
-## 2026-08-10 — AUDIT #3
+## 2026-08-17 — AUDIT #4
 
-**Mechanical.** 45/45 green before and after fixes. `CI & Deploy` green at HEAD (`d93da74`,
-2026-08-09T23:36Z) incl. post-deploy smoke test. Session-start: local `main` ref was stale
-(`92a6080` vs. origin `d93da74`); `merge-base` confirmed pure fast-forward, re-synced, nothing
-lost — same recurring shape as prior sessions (LEARNINGS #32/#39 lineage), now just a stale
-local ref rather than a multi-commit gap. `selfhostspecs.com`/standalone docs domains still
-403 at the proxy level from this sandbox — confirmed via curl, unchanged since every prior audit.
+**SEV-2 — repo-integrity: 8 commits (a full FIND cycle, through "FIND #22") sat unpushed in
+detached HEAD at session start**, the worst instance yet of the recurring pattern (LEARNINGS
+#32/#39 lineage, previously 1–9 commits). `merge-base d793f46 origin/main` confirmed a pure
+fast-forward — nothing lost — reconciled (`checkout -B main d793f46`) and pushed; `CI & Deploy`
+run 31979234630 green (test+deploy+smoke, both jobs, 2 min after push). Root cause still
+undetermined (prior sessions end without a clean push despite the standing check) — repeating
+the owner ask rather than re-discovering it; this is now the largest single gap recorded.
 
-**Data audit.** Re-fetched 5 GitHub-hosted RAM/CPU figures (OpenProject, Plausible CE,
-Discourse, Zulip, Rocket.Chat) — all verbatim-clean on quote/value/unit/scope. Rocket.Chat's
-figure lives in a table rendered as an image; downloaded and viewed all 3 source images
-pixel-for-pixel — exact match. Standalone-docs-hosted figures (gitea, home-assistant, immich,
-jellyfin, frigate, grafana, nextcloud, pi-hole) unreachable from sandbox, as always.
+**SEV-1 — 6 of 26 live `docker.size_mb` figures drifted, fixed with changelog entries:**
+discourse 1164→1250 (6th recorded drift on this field — rebuilt literally minutes before this
+check), home-assistant 590→625 (3rd drift), mattermost 438→441, n8n 362→346, openproject
+394→398, nextcloud 526→530 (all first-recorded drifts). 20/26 matched exactly. Re-checked via
+live Docker Hub v2 API (amd64 layer sum) and GHCR anonymous-token manifest sums, not cache.
 
-**SEV-1 — 4 docker-size drifts, fixed.** All 24 live/pending apps re-checked (Docker Hub + GHCR
-APIs): Discourse 1144→1164 (rebuilt 1.5h before this check — **4th** occurrence of this exact
-field drifting: Vaultwarden AUDIT #1, Discourse 07-30, Discourse AUDIT #2, Discourse now — this
-specific image rebuilds unusually often, not just generic rolling-tag noise); n8n 363→362 and
-Rocket.Chat 295→296 (both first-ever drift for these fields); Home Assistant 594→590 (first
-drift). 20/24 matched exactly. Changelog entries added for all 4.
+**SEV-2 — new defect class: 2 apps' `docker.image` was untagged but has no `:latest` on the
+registry** (would break `docker pull <image>` for a reader following the citation verbatim).
+Wazuh: no `:latest` tag published at all (fixed to `:4.14.7`, matches its stored `size_mb`
+exactly). Immich: real tag is `:release` — already known from Frigate's `:stable` precedent
+(recorded in Immich's own changelog entry!) but never back-applied to Immich's own `docker.image`
+field (fixed to `:release`, size unchanged, live-confirmed 763 MiB). Added Defect Class #14
+(OPERATIONS.md) — not CI-checkable (needs network), re-verify every AUDIT alongside
+`docker.size_mb`. **This is this week's missing-invariant answer** (see below).
 
-**SEV-2 — citation defect found+fixed+CI-enforced (new instance of Defect Class #13's shape).**
-10 of 24 apps' `docker.source_url` pointed at `hub.docker.com/v2/repositories/.../tags/<tag>` —
-confirmed via curl (`content-type: application/json`) this is a raw API response, not a
-citation page, same shape as #13's ghcr issue minus the 401 wall. Present since bootstrap
-(07-24), missed by 2 prior audits. Repointed all 10 to the browsable `hub.docker.com/r/<ns>/
-<repo>` page (confirmed 200/HTML). **Added permanent CI enforcement:** schema test now rejects
-any `docker.source_url` containing `/v2/`, closing this shape for both registries for good
-instead of relying on audit judgment each time.
+**Data audit.** Random-sampled 12 sourced RAM/CPU figures across old and new batches. 7 lived
+on `raw.githubusercontent.com` (reachable): docker-mailserver (min+rec), chatwoot (rec cores),
+gitlab-ce (min RAM + rec cores), jenkins (rec RAM), coolify (min RAM) — all verbatim-clean on
+quote/value/unit/scope, confirmed via direct `curl`+`grep`, not WebFetch summarization. 5 sat on
+`github.com/.../blob/` or standalone docs domains (rocket-chat, gitea, discourse×2, nextcloud) —
+proxy-blocked from this sandbox, as every prior audit; CI's live smoke test is the only channel
+that can reach the real site (confirmed green, see above).
 
-**Staleness sweep.** Oldest retrieved date across all apps: 17 days (adguard-home docker,
-07-24). Nothing within 90 days of the threshold. Nothing queued.
+**Staleness sweep.** Zero figures crossing 90 days (oldest retrieved 07-24, 24 days). Nothing
+queued.
 
-**Hostile pass.** Live site unreachable (as always) — served `docs/` on localhost, drove with
-the pre-installed Node Playwright (`/opt/pw-browsers/chromium`): 320px viewport (no horizontal
-overflow, index + app page), zero-result search, 5 URL-tamper payloads (script-in-path, path
-traversal, nonexistent app, script-in-query, negative-value query param — none reflected
-unescaped, no crashes, correct 404s), JS-disabled fallback (content still renders).
-**Found a real regression: AUDIT #2's favicon fix was incomplete.** It added
-`<link rel="icon" href="data:...">` (satisfies the CI text-presence check) but never wrote an
-actual `docs/favicon.ico` file — Chromium's automatic `GET /favicon.ico` (independent of the
-`<link>` tag) still 404'd, live in production since AUDIT #2 shipped it as "fixed." Root cause:
-the CI check tested for the tag's presence, not the browser behavior it existed to prevent.
-Fixed: `build.mjs` now generates a real 16×16 32bpp `favicon.ico` (hand-rolled encoder, zero
-deps, brand colors) into `docs/`; added a second CI assertion (`existsSync(docs/favicon.ico)`)
-so a tag-only fix can't pass again. Verified via Playwright network capture: 404→200.
+**Hostile pass.** Served `docs/` locally (proxy blocks the live domain), drove with Node
+Playwright (`/opt/pw-browsers/chromium`): 320px viewport (no horizontal overflow, index + app
+page), zero-result search (`#q` filter → "No apps match those filters", exactly 1 visible
+element, no stray `undefined`/`NaN`), 5 URL-tamper payloads (script-in-path, path traversal,
+nonexistent app, script-in-query, negative numeric query param — correct 404s/200s, nothing
+reflected unescaped), JS-disabled fallback (3524 chars of real content, not a blank shell).
+Nothing broke.
 
-**Process audit.** Cadence: no *new* gaps this week — `specs-find` fired daily except the
-already-flagged 08-04; `specs-loop` fired its Sun 08-09 slot but the already-flagged Wed 08-05
-gap is still unexplained; `specs-audit` fires today, on schedule. 3 gaps across 2 routines over
-3 weeks, zero root-cause progress (`list_triggers` still exposes no run history) — repeating
-LEARNINGS #44's ask rather than re-discovering it. Ledger $11, matches Infrastructure section.
-Backlog (20 live, 4 pending-second-qa) matches `data/apps/*.json` exactly. `git log -- tests/`
-since AUDIT #2: zero changes before this run's two additions (both new assertions, not
-weakenings). LEARNINGS #42 correctly applied 08-09: Chatwoot/Seafile/Mattermost stayed
-`pending-second-qa` after passing verification+QA in the *same* run, not promoted to live.
+**Process audit.** Cadence: **first fully gap-free week on record** — `specs-find` fired daily
+08-10 through 08-16 with no misses, `specs-loop` fired both its Wed (08-12) and Sun (08-16)
+slots, `specs-audit` fires today on schedule. Backlog (28 live, 4 pending-second-qa) exact-
+matches `data/apps/*.json` status counts. Ledger $11, matches Infrastructure section, no new
+spend. `git log -- tests/` since AUDIT #3: one change (SERVICES enum +4 entries, a documented
+scoped extension, not a weakening). LEARNINGS #58/#59 both verifiably changed behavior (byte-
+ceiling relief let FIND resume; Wazuh's deps:none ruling was applied as written).
 
-**Red-team the week's biggest decision** (FIND #16 holding Sentry 9.5k★ + PostHog 37.6k★ on
-Effort despite strong official RAM sourcing): defensible — a 64-service compose stack is
-materially costlier to verify/maintain than anything live today, and the SERVICES enum gap is
-real. But Effort was scored by the same verifier that refuted the candidates, with no check on
-whether extending the enum now is cheaper than holding indefinitely — deferring it again risks
-the repeated-non-decision pattern AUDIT #1 already criticized once (the egress-block ask).
-Recommend FIND #17 extends the enum or makes an explicit owner ask, not a third silent hold.
+**Red-team the week's biggest decision** (FIND #22: queue the CI/CD collection page on gate-met,
+hold Budibase + Revolt): the hold calls are sound, evidence-based single-cycle holds, not the
+repeated-non-decision pattern AUDIT #3 criticized. The queue call is also reasonable — Gitea/
+Jenkins/GitLab-CE are live and the Jenkins-RAM gap is real — but its "corrects a wrong 4GB figure"
+framing rests on one competing blog, not a survey; if only one incumbent is actually wrong, that
+angle is thinner than it reads. Recommend BUILD spot-checks 2–3 more circulating GitLab RAM
+figures before writing page copy that leans on "correction" rather than "gap-fill" alone.
 
-**Missing invariant.** This week's favicon finding is an instance of a broader gap: CI checks
-HTML markers/text presence rather than the literal browser-observable behavior they exist to
-prevent. Closed the specific instance. Still open: no systemic sweep of other browser-auto-
-requested well-known paths beyond favicon.ico — none identified as broken this pass, but the
-"marker exists ≠ behavior fixed" bug class could recur elsewhere untested.
+**Missing invariant.** Answered above: nothing checked that an untagged `docker.image` actually
+resolves — a citation could be silently unpullable for months (Wazuh: since 08-16; Immich: since
+07-24) with all 53 tests green throughout. Can't be closed in CI (needs network) so it's now a
+standing AUDIT re-check, same shape as `docker.size_mb`'s non-CI-checkable drift.
 
-**Evidence:** 45/45 before and after; commits fix 4 docker-size drifts + changelog entries,
-repoint 10 `docker.source_url` citations off the API-endpoint defect + add permanent CI
-enforcement, generate a real favicon.ico + add CI enforcement, re-sync local `main`, log this
-entry.
+**Evidence:** 53/53 before and after (32 apps, +4 this batch vs. AUDIT #3's 45/45). Commits:
+repo-integrity push (`d793f46`, CI run 31979234630 green); 6 docker-size fixes + changelog
+entries; 2 docker.image tag fixes; Defect Class #14 added; this entry.
+
+## 2026-08-10 — AUDIT #3 (compacted; full text `reports/archive/AUDIT-2026-08-10.md`)
+45/45 green. SEV-1: 4 docker-size drifts fixed (Discourse 1144→1164, 4th occurrence on that
+field; n8n, Rocket.Chat, Home Assistant first drifts). SEV-2: 10 apps' `docker.source_url` cited
+a raw Docker Hub `/v2/` API JSON endpoint, not a citation page — repointed, CI now rejects `/v2/`
+in `docker.source_url` for any registry. Found AUDIT #2's favicon fix was tag-only (never wrote
+`docs/favicon.ico`, 404 in prod 7 days) — genuinely fixed + CI existence check added. No new
+cadence gaps (3 gaps/2 routines/3 weeks still open). Red-teamed FIND #16's Sentry/PostHog hold —
+defensible but flagged risk of a third silent hold.
 
 ## 2026-08-03 — AUDIT #2 (compacted)
 SEV-1 Discourse docker-size drift fixed (1173→1144, 3rd occurrence — see AUDIT #3, now 4th).

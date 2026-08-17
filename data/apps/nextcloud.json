@@ -48,14 +48,14 @@
   ],
   "docker": {
     "image": "nextcloud",
-    "size_mb": 526,
+    "size_mb": 530,
     "arches": [
       "amd64",
       "arm64",
       "armv7"
     ],
     "source_url": "https://hub.docker.com/_/nextcloud",
-    "retrieved": "2026-07-24"
+    "retrieved": "2026-08-17"
   },
   "sources_of_truth": [
     "https://docs.nextcloud.com/server/latest/admin_manual/installation/system_requirements.html",

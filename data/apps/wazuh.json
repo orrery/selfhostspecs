@@ -38,14 +38,14 @@
     }
   ],
   "docker": {
-    "image": "wazuh/wazuh-manager",
+    "image": "wazuh/wazuh-manager:4.14.7",
     "size_mb": 864,
     "arches": [
       "amd64",
       "arm64"
     ],
     "source_url": "https://hub.docker.com/r/wazuh/wazuh-manager",
-    "retrieved": "2026-08-16"
+    "retrieved": "2026-08-17"
   },
   "sources_of_truth": [
     "https://raw.githubusercontent.com/wazuh/wazuh-documentation/main/source/quickstart.rst",

@@ -44,13 +44,13 @@
   ],
   "docker": {
     "image": "openproject/openproject:17-slim",
-    "size_mb": 394,
+    "size_mb": 398,
     "arches": [
       "amd64",
       "arm64"
     ],
     "source_url": "https://hub.docker.com/r/openproject/openproject",
-    "retrieved": "2026-07-30"
+    "retrieved": "2026-08-17"
   },
   "sources_of_truth": [
     "https://raw.githubusercontent.com/opf/openproject/dev/docs/installation-and-operations/system-requirements/README.md",

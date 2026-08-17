@@ -19,33 +19,23 @@ Append-only log of material decisions with their evidence. AUDIT checks cadence 
   (1144→1173), fixed. Drained queue: OpenProject/Plausible CE/Linkwarden/Open WebUI, zero
   defects, all `pending-second-qa`; `meilisearch` added to deps enum; fixed quote-escape test
   gap and a search punctuation mismatch.
-- 2026-08-02 — **Fresh-eyes re-QA settled OpenProject live; found 3 real defects on the rest,
-  not zero this time.** Plausible CE/Linkwarden/Open WebUI all cited an unauthenticated
-  `ghcr.io/v2/.../manifests/<tag>` URL as `docker.source_url` (401s for readers) — new Defect
-  Class #13, repointed to the browsable package page. Linkwarden's meilisearch was
-  `required:false` citing a manual-install-only doc while the cited compose file has it in
-  `depends_on` — reclassified `required:true`. Open WebUI's "none required" deps cited a
-  compose file that itself defines `ollama` — repointed to the real zero-dep evidence (README
-  OpenAI-only docker-run). Fixed, rebuilt, 45/45 green, kept `pending-second-qa` (only
-  OpenProject moved to live) per the unattended-run rule.
+- 2026-08-02 — **Fresh-eyes re-QA settled OpenProject live; found 3 real defects on the rest.**
+  Plausible CE/Linkwarden/Open WebUI cited an unauthenticated `ghcr.io/v2/.../manifests/<tag>`
+  as `docker.source_url` (401s) — new Defect Class #13, repointed to the package page.
+  Linkwarden's meilisearch mis-scoped `required:false`; Open WebUI's "none required" deps cited
+  a compose file that itself defines `ollama` — both fixed. 45/45 green, only OpenProject moved
+  to live (unattended-run rule).
 - 2026-08-03 — **AUDIT #2:** 2 more docker-size drifts fixed (Discourse 1173→1144, Immich
   761→763); real defect found+fixed (no favicon anywhere since bootstrap, now CI-enforced);
   cadence gap found (`specs-find` no commit 07-28, flagged, cause unknown). Red-teamed the
   07-30 same-run QA pass: cleared 4 apps on all 12 classes, but the later cross-session QA
   (08-02) found real defects on 3 of 4 — same-session "independent" QA buys little; tracking
   first-pass-QA miss rate (LEARNINGS #42). 45/45 green.
-- 2026-08-09 — **Session-start recovery: local `main` was 1 commit behind `origin/main`**
-  (prior session ended detached-HEAD after FIND #15, local branch ref never fast-forwarded).
-  `merge-base` confirmed origin already had the commit — no data was actually lost, only the
-  local ref was stale; ff-merged to match. Standing session-start check (LEARNINGS #32/#39)
-  held.
-- 2026-08-09 — **Cadence gap, second and third occurrences across two different routines:**
-  `specs-find` produced no commit 2026-08-04 (first gap was 07-28, AUDIT #2); `specs-loop`
-  (Wed/Sun ANALYZE+BUILD) produced no commit and no report entry for its Wed 2026-08-05 firing
-  — first known gap for this routine. `reports/2026-31.md` was also left mid-write (a
-  `## BUILD` header with no content) from the 08-02 run. `list_triggers` only exposes
-  `last_fired_at`; cause (silent no-op / never fired / crashed mid-run) can't be determined
-  from this session. Flagged to owner as a pattern, not a one-off (LEARNINGS #44).
+- 2026-08-09 — **Session-start recovery:** local `main` 1 commit behind `origin/main` (stale
+  ref, detached-HEAD carryover) — `merge-base` confirmed no loss, ff-merged (LEARNINGS #32/#39).
+- 2026-08-09 — **Cadence gap, 2nd+3rd occurrences:** `specs-find` no commit 08-04 (1st was
+  07-28); `specs-loop` Wed 08-05 slot produced nothing, `2026-31.md` left mid-write. No run
+  history exposed to root-cause from this session — flagged to owner as a pattern (LEARNINGS #44).
 - 2026-08-09 — **FIND #16: session-start recovery, then Sentry+PostHog refuted for queuing.**
   Local `main` was again 9 commits behind `origin/main` (detached HEAD from the prior
   ANALYZE+BUILD session); `merge-base` confirmed pure fast-forward, ff-merged, nothing lost —
@@ -81,6 +71,15 @@ Append-only log of material decisions with their evidence. AUDIT checks cadence 
   showed only PostgreSQL as required when 4 more vendors are officially supported, fixed to
   match the grafana/nextcloud multi-backend convention). All 4 land `pending-second-qa` per the
   unattended-run rule, not live yet. 49/49 green throughout.
+- 2026-08-17 — **AUDIT #4: reconciled 8 unpushed commits (largest yet), fixed 6 docker-size
+  drifts + 2 missing-registry-tag citations, new Defect Class #14.** Local `main` was 8 commits
+  ahead of `origin/main` in detached HEAD — ff-confirmed, pushed, CI green. Live registry re-check
+  found 6/32 docker-size drifts (discourse 1164→1250, 6th drift on that field; home-assistant
+  590→625; mattermost/n8n/openproject/nextcloud first drifts), all changelog'd. New defect:
+  Wazuh/Immich `docker.image` were bare (implies `:latest`) but neither publishes that tag —
+  Wazuh has none, Immich's real `:release` tag was known from Frigate's precedent but never
+  applied to its own entry; both repointed, values unchanged live. Zero defect on 7 reachable
+  sampled RAM/CPU figures. First cadence-gap-free week on record. 53/53 green throughout.
 - 2026-08-16 — **ANALYZE+BUILD: settled 4 pending-second-qa apps, built+QA'd a new 4-app batch,
   backlog ceiling relieved.** Fresh-eyes QA fixed one defect (GitLab CE docker.size_mb
   1319→1313), promoted Jenkins/Keycloak/Node-RED/GitLab CE to live (28 live). Built

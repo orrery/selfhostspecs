@@ -210,6 +210,13 @@ Total spent: **~$11**. Standing cap: $0 unapproved.
     registry API URL as `docker.source_url` 401s for any reader without a bearer token — use
     the browsable `github.com/<owner>/<repo>/pkgs/container/<name>` package page instead; the
     API URL is fine for harvesting size/arch data, never fine as the published citation link.
+14. **Untagged `docker.image` assumed to resolve to `:latest`** (AUDIT #4, 2026-08-17): a bare
+    `docker.image` (no `:tag`) implies `docker pull <image>` = `:latest` — Wazuh and Immich both
+    had no `:latest` tag on their registry (Wazuh: none published at all; Immich: real tag is
+    `:release`, already known from Frigate's `:stable` precedent but never back-applied to
+    Immich's own entry). Before shipping any bare image name, confirm a `:latest` tag actually
+    exists on the registry; if not, append the real tag. Not CI-checkable (network); re-verify
+    every AUDIT alongside `docker.size_mb`.
 
 ## Rejected directions (with refutations, from the 2026-07-24 research sprint)
 - Static JSON "API hub" — occupied (dr5hn weekly-updated CDN datasets; concept exists at 21

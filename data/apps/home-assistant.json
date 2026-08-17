@@ -12,7 +12,7 @@
       "source_url": "https://www.home-assistant.io/installation/",
       "quote": "Raspberry Pi 4 or 5 with power supply (minimum 2 GB RAM)",
       "retrieved": "2026-07-24",
-      "scope": "Home Assistant OS on Raspberry Pi ONLY \u2014 no official x86 figure published"
+      "scope": "Home Assistant OS on Raspberry Pi ONLY — no official x86 figure published"
     },
     "no_official_figure": {
       "fields": [
@@ -32,13 +32,13 @@
   ],
   "docker": {
     "image": "ghcr.io/home-assistant/home-assistant",
-    "size_mb": 590,
+    "size_mb": 625,
     "arches": [
       "amd64",
       "arm64"
     ],
     "source_url": "https://github.com/home-assistant/core/pkgs/container/home-assistant",
-    "retrieved": "2026-08-10"
+    "retrieved": "2026-08-17"
   },
   "sources_of_truth": [
     "https://www.home-assistant.io/installation/"

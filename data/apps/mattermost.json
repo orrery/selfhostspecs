@@ -39,12 +39,12 @@
   ],
   "docker": {
     "image": "mattermost/mattermost-team-edition",
-    "size_mb": 438,
+    "size_mb": 441,
     "arches": [
       "amd64"
     ],
     "source_url": "https://hub.docker.com/r/mattermost/mattermost-team-edition",
-    "retrieved": "2026-08-02"
+    "retrieved": "2026-08-17"
   },
   "sources_of_truth": [
     "https://raw.githubusercontent.com/mattermost/docs/master/source/deployment-guide/software-hardware-requirements.rst",

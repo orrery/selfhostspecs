@@ -25,13 +25,15 @@ learning. FIND and BUILD read this file first, every run. Newest first.
     number inside an example/template resource limit needs prose confirmation, not just
     presence in an official-org repo.
 
-## 2026-08-10 — AUDIT #3
+## 2026-08-17 — AUDIT #4
 
-51. **Discourse's `latest` tag rebuilds unusually often** (4 drift-corrections in ~3 weeks vs.
-    0–1 for every other tracked image) — no longer generic rolling-tag noise, this image's own
-    release cadence. → Downstream: worth a page-copy caveat for high-churn images ("this image
-    rebuilds frequently — size may lag") instead of presenting the same bare-integer stability
-    implication as a sourced RAM figure; not yet built, flagging for a FIND/BUILD cycle.
+60. **A lesson recorded only in changelog prose doesn't reach the entry it was learned from**
+    — Immich's changelog already noted Frigate uses `:stable` because no `:latest` tag exists,
+    but Immich's own `docker.image` stayed untagged (real tag `:release`); Wazuh shipped the
+    same way (no `:latest` at all). Neither CI nor QA checked for it — new Defect Class #14
+    (OPERATIONS.md): confirm a bare image's `:latest` exists before shipping; not CI-checkable
+    (network), re-verify every AUDIT with `docker.size_mb`. Discourse's high-churn caveat (#51)
+    is now one instance of the general rule below — folded in.
 
 ## Compacted (graduated into CI tests / defect classes, or superseded — see OPERATIONS.md, tests/*.test.mjs)
 - Paste `backlog/opportunities.md` verbatim into the finder's briefing, never a curated

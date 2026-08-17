@@ -2,25 +2,25 @@
   {
     "date": "2026-07-24",
     "app": "gitea",
-    "change": "Verification: RAM/CPU figure source corrected \u2014 the quote lives on the docs home page (System Requirements), not /installation/comparison; quote restored to the literal sentence ending 'small teams/projects.' (seed had truncated it). Values unchanged.",
+    "change": "Verification: RAM/CPU figure source corrected — the quote lives on the docs home page (System Requirements), not /installation/comparison; quote restored to the literal sentence ending 'small teams/projects.' (seed had truncated it). Values unchanged.",
     "source_url": "https://docs.gitea.com/"
   },
   {
     "date": "2026-07-24",
     "app": "immich",
-    "change": "Verification: redis dependency re-sourced to the official docker-compose.yml \u2014 the requirements page no longer mentions Redis/Valkey, but the compose file still runs a required redis service (valkey image). Dependency itself unchanged.",
+    "change": "Verification: redis dependency re-sourced to the official docker-compose.yml — the requirements page no longer mentions Redis/Valkey, but the compose file still runs a required redis service (valkey image). Dependency itself unchanged.",
     "source_url": "https://github.com/immich-app/immich/blob/main/docker/docker-compose.yml"
   },
   {
     "date": "2026-07-24",
     "app": "home-assistant",
-    "change": "Verification: RAM minimum quote replaced with the full literal bullet 'Raspberry Pi 4 or 5 with power supply (minimum 2 GB RAM)' \u2014 seed had an ellipsis-joined fragment. Value and scope unchanged.",
+    "change": "Verification: RAM minimum quote replaced with the full literal bullet 'Raspberry Pi 4 or 5 with power supply (minimum 2 GB RAM)' — seed had an ellipsis-joined fragment. Value and scope unchanged.",
     "source_url": "https://www.home-assistant.io/installation/"
   },
   {
     "date": "2026-07-24",
     "app": "jellyfin",
-    "change": "Verification: recommended-RAM quote replaced with the full literal sentences (seed paraphrase dropped the word 'running'); scope softened \u2014 the docs state no hard minimum but do not 'explicitly avoid' one. Value unchanged.",
+    "change": "Verification: recommended-RAM quote replaced with the full literal sentences (seed paraphrase dropped the word 'running'); scope softened — the docs state no hard minimum but do not 'explicitly avoid' one. Value unchanged.",
     "source_url": "https://jellyfin.org/docs/general/administration/hardware-selection/"
   },
   {
@@ -32,79 +32,127 @@
   {
     "date": "2026-07-24",
     "app": "paperless-ngx",
-    "change": "Verification: broker dependency restructured \u2014 docs require 'a Redis-compatible broker (a current release of Valkey or Redis)' and the official compose ships valkey, so valkey is listed required with redis as an accepted alternative (optional); filled GHCR image size/arches.",
+    "change": "Verification: broker dependency restructured — docs require 'a Redis-compatible broker (a current release of Valkey or Redis)' and the official compose ships valkey, so valkey is listed required with redis as an accepted alternative (optional); filled GHCR image size/arches.",
     "source_url": "https://github.com/paperless-ngx/paperless-ngx/blob/main/docker/compose/docker-compose.sqlite.yml"
   },
   {
     "date": "2026-07-24",
     "app": "frigate",
-    "change": "QA: ffmpeg reclassified \u2014 it is bundled inside the official image, not an external service the operator runs; deps now 'none required'.",
+    "change": "QA: ffmpeg reclassified — it is bundled inside the official image, not an external service the operator runs; deps now 'none required'.",
     "source_url": "https://docs.frigate.video/frigate/installation/"
   },
   {
     "date": "2026-07-24",
     "app": "jellyfin",
-    "change": "QA: ffmpeg reclassified \u2014 jellyfin-ffmpeg ships with the server, not an external service; deps now 'none required'.",
+    "change": "QA: ffmpeg reclassified — jellyfin-ffmpeg ships with the server, not an external service; deps now 'none required'.",
     "source_url": "https://jellyfin.org/docs/general/administration/hardware-selection/"
   },
   {
     "date": "2026-07-24",
     "app": "adguard-home",
-    "change": "QA: absence evidence_url replaced \u2014 discussion 7350 did not evidence the gap; now cites the official getting-started page that publishes no hardware figures.",
+    "change": "QA: absence evidence_url replaced — discussion 7350 did not evidence the gap; now cites the official getting-started page that publishes no hardware figures.",
     "source_url": "https://adguard-dns.io/kb/adguard-home/getting-started/"
   },
   {
     "date": "2026-07-27",
     "app": "vaultwarden",
-    "change": "AUDIT #1: docker.size_mb corrected 77\u219283 \u2014 the rolling `latest` tag rebuilt after harvest (real image change, not a fabrication). Retroactively logged 2026-07-30: this correction should have produced a changelog entry the day it was made and didn't.",
+    "change": "AUDIT #1: docker.size_mb corrected 77→83 — the rolling `latest` tag rebuilt after harvest (real image change, not a fabrication). Retroactively logged 2026-07-30: this correction should have produced a changelog entry the day it was made and didn't.",
     "source_url": "https://hub.docker.com/v2/repositories/vaultwarden/server/tags/latest"
   },
   {
     "date": "2026-07-30",
     "app": "discourse",
-    "change": "Re-QA: docker.size_mb corrected 1144\u21921173 \u2014 same rolling-`latest`-tag drift pattern as vaultwarden (AUDIT #1); flagged by independent re-QA, not self-caught. Figures/deps otherwise unchanged; status moved pending-second-qa\u2192live.",
+    "change": "Re-QA: docker.size_mb corrected 1144→1173 — same rolling-`latest`-tag drift pattern as vaultwarden (AUDIT #1); flagged by independent re-QA, not self-caught. Figures/deps otherwise unchanged; status moved pending-second-qa→live.",
     "source_url": "https://hub.docker.com/v2/repositories/discourse/discourse/tags/latest"
   },
   {
     "date": "2026-08-03",
     "app": "discourse",
-    "change": "AUDIT #2: docker.size_mb corrected 1173\u21921144 \u2014 the `latest` tag was rebuilt again the morning of this audit (tag_last_pushed 2026-08-03T08:22Z); size reverted close to its original 1144 value. Third occurrence of this exact drift shape (vaultwarden AUDIT #1, discourse itself 2026-07-30) \u2014 see AUDIT.md for the structural finding.",
+    "change": "AUDIT #2: docker.size_mb corrected 1173→1144 — the `latest` tag was rebuilt again the morning of this audit (tag_last_pushed 2026-08-03T08:22Z); size reverted close to its original 1144 value. Third occurrence of this exact drift shape (vaultwarden AUDIT #1, discourse itself 2026-07-30) — see AUDIT.md for the structural finding.",
     "source_url": "https://hub.docker.com/v2/repositories/discourse/discourse/tags/latest"
   },
   {
     "date": "2026-08-03",
     "app": "immich",
-    "change": "AUDIT #2: docker.size_mb corrected 761\u2192763 \u2014 minor rolling-`latest`-tag drift (image manifest re-summed from GHCR: 799608153 bytes = 762.57MiB). Same pattern as discourse/vaultwarden, smaller magnitude.",
+    "change": "AUDIT #2: docker.size_mb corrected 761→763 — minor rolling-`latest`-tag drift (image manifest re-summed from GHCR: 799608153 bytes = 762.57MiB). Same pattern as discourse/vaultwarden, smaller magnitude.",
     "source_url": "https://github.com/immich-app/immich/pkgs/container/immich-server"
   },
   {
     "date": "2026-08-09",
     "app": "linkwarden",
-    "change": "Re-QA: source_url/evidence_url/sources_of_truth citing linkwarden/docs installation.md now 404 (repo restructured, page moved) \u2014 confirmed via live re-fetch; repointed to the new setup.md location where the same verbatim quote still lives. Value/quote unchanged; also tightened scope wording (hardware section precedes the Docker Compose/Manual Installation branch in official docs, so it reads as a general figure, not Docker-specific).",
+    "change": "Re-QA: source_url/evidence_url/sources_of_truth citing linkwarden/docs installation.md now 404 (repo restructured, page moved) — confirmed via live re-fetch; repointed to the new setup.md location where the same verbatim quote still lives. Value/quote unchanged; also tightened scope wording (hardware section precedes the Docker Compose/Manual Installation branch in official docs, so it reads as a general figure, not Docker-specific).",
     "source_url": "https://raw.githubusercontent.com/linkwarden/docs/main/docs/self-hosting/setup.md"
   },
   {
     "date": "2026-08-10",
     "app": "discourse",
-    "change": "AUDIT #3: docker.size_mb corrected 1144\u21921164 \u2014 `latest` tag rebuilt again the morning of this audit (Docker Hub tag_last_pushed 2026-08-10T07:10Z, ~1.5h before this check). Fourth occurrence of this exact drift shape on this field (AUDIT #1 vaultwarden, 2026-07-30 discourse, AUDIT #2 discourse) \u2014 see AUDIT.md for the structural finding on discourse's rebuild frequency specifically.",
+    "change": "AUDIT #3: docker.size_mb corrected 1144→1164 — `latest` tag rebuilt again the morning of this audit (Docker Hub tag_last_pushed 2026-08-10T07:10Z, ~1.5h before this check). Fourth occurrence of this exact drift shape on this field (AUDIT #1 vaultwarden, 2026-07-30 discourse, AUDIT #2 discourse) — see AUDIT.md for the structural finding on discourse's rebuild frequency specifically.",
     "source_url": "https://hub.docker.com/r/discourse/discourse"
   },
   {
     "date": "2026-08-10",
     "app": "n8n",
-    "change": "AUDIT #3: docker.size_mb corrected 363\u2192362 \u2014 rolling-`latest`-tag drift (Docker Hub amd64 layer sum 379794039 bytes = 362.20MiB, tag_last_pushed 2026-08-07). First recorded drift for this field.",
+    "change": "AUDIT #3: docker.size_mb corrected 363→362 — rolling-`latest`-tag drift (Docker Hub amd64 layer sum 379794039 bytes = 362.20MiB, tag_last_pushed 2026-08-07). First recorded drift for this field.",
     "source_url": "https://hub.docker.com/r/n8nio/n8n"
   },
   {
     "date": "2026-08-10",
     "app": "rocket-chat",
-    "change": "AUDIT #3: docker.size_mb corrected 295\u2192296 \u2014 rolling-`latest`-tag drift (Docker Hub amd64 layer sum 310338149 bytes = 295.96MiB, tag_last_pushed 2026-08-07). First recorded drift for this field.",
+    "change": "AUDIT #3: docker.size_mb corrected 295→296 — rolling-`latest`-tag drift (Docker Hub amd64 layer sum 310338149 bytes = 295.96MiB, tag_last_pushed 2026-08-07). First recorded drift for this field.",
     "source_url": "https://hub.docker.com/r/rocketchat/rocket.chat"
   },
   {
     "date": "2026-08-10",
     "app": "home-assistant",
-    "change": "AUDIT #3: docker.size_mb corrected 594\u2192590 \u2014 rolling-`latest`-tag drift (GHCR amd64 manifest re-summed: 618150752 bytes = 589.51MiB). First recorded drift for this field.",
+    "change": "AUDIT #3: docker.size_mb corrected 594→590 — rolling-`latest`-tag drift (GHCR amd64 manifest re-summed: 618150752 bytes = 589.51MiB). First recorded drift for this field.",
     "source_url": "https://github.com/home-assistant/core/pkgs/container/home-assistant"
+  },
+  {
+    "date": "2026-08-17",
+    "app": "discourse",
+    "change": "AUDIT #4: docker.size_mb corrected 1164→1250 — rolling-`latest`-tag drift (Docker Hub amd64 layer 1310370993 bytes = 1250.03MiB, tag_last_pushed 2026-08-17T00:04Z, minutes before this check). 6th recorded drift on this field — this image rebuilds unusually often.",
+    "source_url": "https://hub.docker.com/r/discourse/discourse"
+  },
+  {
+    "date": "2026-08-17",
+    "app": "home-assistant",
+    "change": "AUDIT #4: docker.size_mb corrected 590→625 — rolling-`latest`-tag drift (GHCR amd64 manifest re-summed: 655436525 bytes = 625.00MiB). 3rd recorded drift on this field.",
+    "source_url": "https://github.com/home-assistant/core/pkgs/container/home-assistant"
+  },
+  {
+    "date": "2026-08-17",
+    "app": "mattermost",
+    "change": "AUDIT #4: docker.size_mb corrected 438→441 — rolling-`latest`-tag drift (Docker Hub amd64 layer 462562076 bytes = 441.12MiB, tag_last_pushed 2026-08-04). First recorded drift for this field.",
+    "source_url": "https://hub.docker.com/r/mattermost/mattermost-team-edition"
+  },
+  {
+    "date": "2026-08-17",
+    "app": "n8n",
+    "change": "AUDIT #4: docker.size_mb corrected 362→346 — rolling-`latest`-tag drift (Docker Hub amd64 layer 362818469 bytes = 346.02MiB, tag_last_pushed 2026-08-14). First recorded drift for this field since AUDIT #3's correction.",
+    "source_url": "https://hub.docker.com/r/n8nio/n8n"
+  },
+  {
+    "date": "2026-08-17",
+    "app": "openproject",
+    "change": "AUDIT #4: docker.size_mb corrected 394→398 — rolling-`latest`-tag drift (Docker Hub amd64 layer 417707610 bytes = 398.32MiB, tag_last_pushed 2026-08-13). First recorded drift for this field.",
+    "source_url": "https://hub.docker.com/r/openproject/openproject"
+  },
+  {
+    "date": "2026-08-17",
+    "app": "nextcloud",
+    "change": "AUDIT #4: docker.size_mb corrected 526→530 — rolling-`latest`-tag drift (Docker Hub amd64 layer 555244112 bytes = 529.62MiB, tag_last_pushed 2026-08-14). First recorded drift for this field.",
+    "source_url": "https://hub.docker.com/_/nextcloud"
+  },
+  {
+    "date": "2026-08-17",
+    "app": "wazuh",
+    "change": "AUDIT #4: docker.image repointed from bare `wazuh/wazuh-manager` (implies `:latest`, which Wazuh has never published on Docker Hub — a literal `docker pull` on our citation would fail) to the explicit `:4.14.7` tag actually current at harvest time. size_mb (864) unchanged — confirmed it already matched the :4.14.7 manifest exactly. New Defect Class #14.",
+    "source_url": "https://hub.docker.com/r/wazuh/wazuh-manager"
+  },
+  {
+    "date": "2026-08-17",
+    "app": "immich",
+    "change": "AUDIT #4: docker.image repointed from bare `ghcr.io/immich-app/immich-server` (implies `:latest`, which does not exist on GHCR for this image) to the explicit `:release` tag — already known from Frigate's `:stable` precedent but never back-applied to this entry. size_mb (763) unchanged, live-confirmed exact match. New Defect Class #14.",
+    "source_url": "https://github.com/immich-app/immich/pkgs/container/immich-server"
   }
 ]
