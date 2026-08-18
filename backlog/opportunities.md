@@ -57,6 +57,13 @@ syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
   deploy.rst worked example (NOT min) "RAM=9*((0.8*150)+(0.2*1024))~=3GB" @4CPU/60u.
   PostgreSQL only dep. Official Image, web+db only. BUILD: scoped rec (Wazuh precedent,
   never min). Channel: crowded calc blogs — win on provenance.
+- Dokploy (18/20, #24) — "at least 2GB of RAM and 30GB of disk space" (docs.dokploy.com/
+  docs/core/installation; domain proxy-blocked here, quote confirmed via archived
+  Dokploy/docs raw mirror + live search-index cross-check). Swarm: postgres:16 +
+  traefik:v3.6.7 + dokploy/dokploy, amd64+arm64. Not a Coolify dupe — comparison value.
+- Technitium DNS Server (16/20, #24) — no official min RAM/CPU (honest absence, confirmed).
+  Single-service compose (dns-server only), technitium/dns-server amd64/arm64/armv7.
+  Distinct from Pi-hole/AdGuard (full auth+recursive DNS+DHCP, not just a sinkhole).
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members confirmed zero
   required:true deps; SERP check found no incumbent. Before BUILD: disclose required:false
