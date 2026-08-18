@@ -5,7 +5,6 @@ learning. FIND and BUILD read this file first, every run. Newest first.
 
 ## 2026-08-16 — ANALYZE+BUILD (specs-loop)
 
-58. **#56/#57 relief (9998→9080, 08-16) was temporary, not structural** — see #61.
 59. **A bundled multi-container deployment doesn't need a SERVICES enum slot even when a
     component resembles a known service** (Wazuh's OpenSearch indexer+dashboard, project-
     wired, not bring-your-own) — deps:none is honest because the published rec figure
@@ -13,32 +12,21 @@ learning. FIND and BUILD read this file first, every run. Newest first.
     precedent). → Don't force an enum add for embedded-search SIEM/observability
     candidates unless the app's own docs treat it as separately provisioned.
 
-## 2026-08-12 — FIND #19
+## 2026-08-18 — FIND #24
 
-55. **A figure inside an example deployment config isn't an admissible "stated
-    requirement," even from the vendor's own docs-mirror, and can drift from the
-    vendor's live defaults** (Windmill: a Traefik sample gave "128MB" for a worker; the
-    vendor's current default compose sets the same worker to 2048MB). → Downstream: a
-    number inside an example/template resource limit needs prose confirmation, not just
-    presence in an official-org repo.
-
-## 2026-08-17 — AUDIT #4
-
-60. **A lesson recorded only in changelog prose doesn't reach the entry it was learned from**
-    — Immich's changelog already noted Frigate uses `:stable` because no `:latest` tag exists,
-    but Immich's own `docker.image` stayed untagged (real tag `:release`); Wazuh shipped the
-    same way (no `:latest` at all). Neither CI nor QA checked for it — new Defect Class #14
-    (OPERATIONS.md): confirm a bare image's `:latest` exists before shipping; not CI-checkable
-    (network), re-verify every AUDIT with `docker.size_mb`. Discourse's high-churn caveat (#51)
-    is now one instance of the general rule below — folded in.
-
-## 2026-08-17 — FIND #23
-
-61. **Ceiling relief didn't hold — recurred in 1 cycle, and LEARNINGS.md ceilinged too**
-    (opportunities.md 9080→9922; LEARNINGS.md 7988/8000 pre-edit). Structural, not under-
-    compacted (#57); 08-15 escalation drew no action. → Skipped mining; re-escalated.
+62. **In-place prose-trimming bought only one cycle of headroom each time; moving historical
+    detail OUT of the file is the durable fix** — 3 prior relief attempts (9998→9080→9922)
+    re-ceilinged fast since nothing left the file. 08-18: moved Shipped/Rejected detail to
+    reports/archive/{shipped,rejected}-log.md, names stay inline for dedupe; deleted a dupe
+    SERVICES-enum bullet. 9922→9023, held past 2 new queued items (→9631). → Archive, don't
+    trim, next time any governed file nears budget.
 
 ## Compacted (graduated into CI tests / defect classes, or superseded — see OPERATIONS.md, tests/*.test.mjs)
+- A number inside an example/template resource limit (not the vendor's live default) isn't
+  an admissible stated requirement — needs prose confirmation (Windmill, #55, 08-12).
+- A lesson recorded only in changelog prose doesn't reach the entry it was learned from
+  (Immich/Wazuh untagged `:latest`) — now Defect Class #14 (OPERATIONS.md), re-verified
+  every AUDIT (#60, 08-17).
 - Paste `backlog/opportunities.md` verbatim into the finder's briefing, never a curated
   summary — summaries drop buried items (#52, resolved 08-10, applied every cycle since).
 - Docker-compose service count is a cheap early Effort signal — check it before the
