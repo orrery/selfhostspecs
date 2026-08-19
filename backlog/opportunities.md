@@ -64,6 +64,10 @@ syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
 - Technitium DNS Server (16/20, #24) — no official min RAM/CPU (honest absence, confirmed).
   Single-service compose (dns-server only), technitium/dns-server amd64/arm64/armv7.
   Distinct from Pi-hole/AdGuard (full auth+recursive DNS+DHCP, not just a sinkhole).
+- code-server (17/20,#25) — 79.0k★, zero deps, single container. "At the minimum, we
+  recommend: 1GB RAM, 2 CPU cores" (docs/requirements.md). codercom/code-server,
+  amd64+arm64 (arm32 alt is 3rd-party linuxserver/code-server). ≠coder/coder (same org,
+  diff product). BUILD: docs lead SERP — frame as sourced/dated.
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members confirmed zero
   required:true deps; SERP check found no incumbent. Before BUILD: disclose required:false
@@ -100,7 +104,7 @@ syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
   Firefly III, NetBox, Matrix Synapse, Authentik. ≤11: Outline, FreshRSS, Umami, NocoDB,
   Docmost, Baserow, Bitwarden, Pixelfed, Karakeep, Beszel, Tandoor Recipes, Headscale,
   Shiori, Passbolt, Wiki.js, Duplicati, ntfy, Homepage, Listmonk, Cachet, EspoCRM, Kavita,
-  changedetection.io, Woodpecker CI, Kopia, Calibre-Web.
+  changedetection.io, Woodpecker CI, Kopia, Calibre-Web, NetBird, Garage/deuxfleurs-org.
 - Graylog (~8.1k★,#15): docs repo archived, docs.graylog.org presumed blocked — shallow.
 - Deferred: disk-footprint column — too inconsistently documented.
 - Parked, #13: Helm/K8s-chart column — nextcloud/helm's README disclaims official support
