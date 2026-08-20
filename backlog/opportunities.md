@@ -68,6 +68,21 @@ syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
   recommend: 1GB RAM, 2 CPU cores" (docs/requirements.md). codercom/code-server,
   amd64+arm64 (arm32 alt is 3rd-party linuxserver/code-server). ≠coder/coder (same org,
   diff product). BUILD: docs lead SERP — frame as sourced/dated.
+- Dockge (17/20, #26) — 23.7k★, docker-compose stack manager, louislam (same author as
+  shipped Uptime Kuma) — not a Portainer dupe, compose-only positioning. Zero deps, single
+  container (mounts docker.sock only). No official RAM/CPU figure anywhere (README +
+  FAQ.md/docs/requirements.md/REQUIREMENTS.md all 404'd, verifier swept) — ship
+  no_official_figure:true. Docker Hub only, louislam/dockge:1 (no ghcr; browsable tags
+  page confirmed 200, not a bare API URL). 3-arch: armv7/arm64/amd64.
+- Penpot (16/20, #26) — 58.9k★ Figma-alt design/prototyping tool, no dupe. docker.md
+  states no min RAM/CPU; recommended-settings.md: "4 CPUs and 16GB of RAM are sufficient
+  to support thousands of users" — production/scale framing, cite as no_official_figure
+  evidence on min (Mastodon/Portainer precedent), not as a floor. Deps: postgres + valkey
+  only (both enum-mapped) — storage backend defaults to filesystem
+  (PENPOT_OBJECTS_STORAGE_BACKEND: fs); Minio is an optional S3-alternative backend, NOT
+  required (finder's initial deps-schema-hold call was wrong — verifier corrected against
+  the live compose file; see LEARNINGS). BUILD: confirm exact image names/tags/sizes
+  (multi-image: frontend/backend/exporter under penpotapp/*, not yet harvested).
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members confirmed zero
   required:true deps; SERP check found no incumbent. Before BUILD: disclose required:false
@@ -79,23 +94,14 @@ syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
   (Jenkins RAM — no comparison site states it). BUILD condition: page copy must lead with
   the correction/gap-fill angle explicitly, not generic "sourced and dated" framing.
 
-## Held (insufficient evidence, not discarded)
-- Snipe-IT/Cal.com (~12/20): no RAM/CPU figures (readme.io 403 on Snipe-IT).
-- BigBlueButton (14/20): 16GB/8-core prod min; bare-Ubuntu, no Docker image — non-container schema needed.
-- PeerTube (#15): figure is v3.0.0-era FAQ.md, 5 versions stale — don't ship stale.
-- Vikunja (#15): docs-mirror angle exhausted (go-vikunja/website grepped clean).
-- Plane (~12/20,#11): only EC2 quick-start advisory, crowds OpenProject.
-- Redmine (#15): doc/INSTALL clean, zero figure; library/redmine Official Image, 8-arch.
-- AFFiNE (~12/20,#11): repo grep empty, docs.affine.pro blocked.
-- Forgejo (~7/20,#11): Codeberg blocked, GH mirror stale (Gitea fork).
-- SonarQube (#15): "Xmx 1536M community build" is JVM-heap not system-RAM (Helm/K8s gap #13).
-- Healthchecks (#15): docs blocked, docker README clean. Deps: postgres req, healthchecks/healthchecks, 4-arch.
-- Sentry (12/20,#16) & PostHog (11/20,#16): strong sourcing but 64/47-svc composes; kafka/zookeeper/temporal not in enum — hold for deps-schema.
-- Grocy (15/20,#17): zero figure; README redirects to 3rd-party linuxserver/grocy (78.7MB), no org image (Helm/K8s gap) — owner policy needed.
-- Gotify (12/20,#17): org-owned gotify/server (48.1MB), gotify.net+mirrors unreachable — RAM-absence/SQLite-default unconfirmed.
-- Windmill (~8/20,#19): n8n-alt ~17.5k★, windmill.dev blocked. Only RAM figure is a stale Traefik example (worker_native now 2048M vendor-side). Postgres only dep. Hold for reachable docs or a prose minimum.
-- Ente (~11/20,#19): Immich-alt (E2EE) ~28.3k★. No RAM/CPU figure. Deps postgres+minio(unmapped)+socat — same unmapped-service shape as Supabase/Sentry/PostHog.
-- Infisical (~14/20,#20): 28.8k★ secrets/PKI, non-dupe vs Vaultwarden. Finder's "2-4CPU/4-8GB" is app-tier only — req'd Postgres+Redis add ~6-8vCPU/16-20GB. Hold for full-stack scope write-up; deps enum-mapped, Docker infisical/infisical amd64+arm64 confirmed.
+## Held (insufficient evidence, not discarded — full evidence: reports/archive/held-log.md)
+Snipe-IT/Cal.com (~12/20, no figures); BigBlueButton (14/20, non-container schema needed);
+PeerTube (#15, stale figure); Vikunja (#15, docs exhausted); Plane (~12/20, crowds
+OpenProject); Redmine (#15, zero figure); AFFiNE (~12/20, docs blocked); Forgejo (~7/20,
+Codeberg blocked); SonarQube (#15, JVM-heap≠RAM); Healthchecks (#15, docs blocked);
+Sentry (12/20) & PostHog (11/20, deps-schema); Grocy (15/20, Helm/K8s gap); Gotify
+(12/20, unreachable); Windmill (~8/20, docs blocked); Ente (~11/20, deps-schema);
+Infisical (~14/20, full-stack scope TBD).
 
 ## Unverified / held (not sent further)
 - Collection "1GB VPS": thin (3 qualifiers); revisit once PeerTube/Vikunja ship.
@@ -105,16 +111,12 @@ syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
   Docmost, Baserow, Bitwarden, Pixelfed, Karakeep, Beszel, Tandoor Recipes, Headscale,
   Shiori, Passbolt, Wiki.js, Duplicati, ntfy, Homepage, Listmonk, Cachet, EspoCRM, Kavita,
   changedetection.io, Woodpecker CI, Kopia, Calibre-Web, NetBird, Garage/deuxfleurs-org.
-- Graylog (~8.1k★,#15): docs repo archived, docs.graylog.org presumed blocked — shallow.
+- Graylog (~8.1k★,#15): docs archived, blocked — shallow (detail: held-log.md).
 - Deferred: disk-footprint column — too inconsistently documented.
-- Parked, #13: Helm/K8s-chart column — nextcloud/helm's README disclaims official support
-  despite living in-org — needs an official/unofficial rule.
-- Budibase (#22): low-code internal-tool builder. Official self-host-specification page
-  (budibase.com) domain-blocked from cloud sessions; only a recommended (not min) 4CPU/
-  8GB/150GB figure found second-hand. Hold for a local-session fetch.
-- Revolt/stoatchat chat (#22, ~2.3k★): org renamed revoltchat→stoatchat (alias-sweep flag).
-  Deps Mongo+Redis+MinIO — MinIO unmapped in SERVICES enum (policy: data-quality SKILL.md),
-  same shape as Ente/Sentry/PostHog. Hold for deps-schema, same as those.
+- Parked, #13: Helm/K8s-chart column — needs official/unofficial rule (detail: held-log.md).
+- Budibase (#22): domain-blocked; second-hand rec figure only (detail: held-log.md).
+- Revolt/stoatchat (#22, ~2.3k★, alias-sweep flagged): deps-schema, MinIO unmapped, same
+  as Ente (detail: held-log.md).
 
 ### Freshness work
 None crossing 90 days (oldest 07-24). Docker-size re-checks every AUDIT, not just the
