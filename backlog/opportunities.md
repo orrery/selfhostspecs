@@ -1,21 +1,20 @@
 # Backlog — opportunities
 
-Statuses: unverified → queued (verifier sign-off) → building → shipped, or rejected.
-Dedupe vs all lists. App detail: `data/apps/<slug>.json`.
+Statuses: unverified→queued(verifier sign-off)→building→shipped/rejected. Dedupe vs
+all lists. App detail: `data/apps/<slug>.json`.
 
 ## Shipped — 28 apps live
 gitea, home-assistant, immich, jellyfin, uptime-kuma, vaultwarden, adguard-home, frigate,
 grafana, n8n, nextcloud, paperless-ngx, pi-hole, syncthing, discourse, zulip, rocket-chat,
 openproject, plausible-ce, open-webui, linkwarden, chatwoot, seafile, mattermost, jenkins,
 keycloak, node-red, gitlab-ce. Batch-by-batch dates: reports/archive/shipped-log.md.
-Pending BUILD, paced 1 schema-change/batch: GPU/transcoding column (Jellyfin/Immich/Frigate,
-+open-webui?, #17); community-figures column (vaultwarden/adguard-home/uptime-kuma/
-syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
+Pending BUILD (1 schema-change/batch): GPU column (Jellyfin/Immich/Frigate/open-webui?,
+#17); community-figures column (vaultwarden/adguard-home/uptime-kuma/syncthing/
+paperless-ngx); Discourse churn caveat (AUDIT#3).
 
 ## In pipeline (not yet live)
-- pending-second-qa (re-QA next run): coolify, prometheus, docker-mailserver, wazuh —
-  cleared verification+QA 08-16, zero defects (dep detail: data/apps/*.json). Wazuh
-  deps:none ruling (bundled indexer/dashboard, no OpenSearch enum slot added — see
+- pending-second-qa: coolify, prometheus, docker-mailserver, wazuh — cleared 08-16,
+  zero defects (data/apps/*.json). Wazuh deps:none (bundled indexer/dashboard, see
   LEARNINGS).
 
 ## Queued (verifier-signed), unbuilt
@@ -74,6 +73,17 @@ syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
   FAQ.md/docs/requirements.md/REQUIREMENTS.md all 404'd, verifier swept) — ship
   no_official_figure:true. Docker Hub only, louislam/dockge:1 (no ghcr; browsable tags
   page confirmed 200, not a bare API URL). 3-arch: armv7/arm64/amd64.
+- Kestra (18/20, #27) — workflow orchestrator, 27.9k★, distinct from n8n (data-eng
+  angle). "≥2 vCPUs, 4 GiB memory" (kestra.io/docs/administrator-guide/requirements).
+  Postgres/MySQL req; docker socket: script tasks only.
+- Ollama (17/20, #27) — local LLM runtime backing Open WebUI (shipped, separate
+  footprint), 179k★, GH#8478/#2418 request a min doc. No canonical figure;
+  per-model tiers (ollama.com/library, e.g. 70b→64GB) — cite model pages, not
+  blogs. Zero deps.
+- Mailu (17/20, #27) — modular mail server (Postfix/Dovecot/Rspamd), 7.5k★, vs
+  docker-mailserver (pending-second-qa; differentiate before both ship).
+  "1GB RAM+1GB swap, 3GB w/ClamAV" (mailu.io/master/compose/requirements.html).
+  Redis req (compose-confirmed); SQLite default, PG/MySQL optional.
 - Penpot (16/20, #26) — 58.9k★ Figma-alt design/prototyping tool, no dupe. docker.md
   states no min RAM/CPU; recommended-settings.md: "4 CPUs and 16GB of RAM are sufficient
   to support thousands of users" — production/scale framing, cite as no_official_figure
@@ -84,15 +94,12 @@ syncthing/paperless-ngx); Discourse high-churn caveat (AUDIT#3, no new figure).
   the live compose file; see LEARNINGS). BUILD: confirm exact image names/tags/sizes
   (multi-image: frontend/backend/exporter under penpotapp/*, not yet harvested).
 ## Collection page, verified — buildable
-- "Apps with no separate DB/cache service required" (#8-10) — 14 members confirmed zero
-  required:true deps; SERP check found no incumbent. Before BUILD: disclose required:false
-  ≠ dependency-free (#3) AND write an explicit inclusion criterion (Wekan FerretDB case
-  shows ad hoc dep-labeling isn't enough).
-- CI/CD & Git requirements (Gitea/Jenkins/GitLab-CE, #22) — gate met 08-16 (all 3 shipped),
-  zero new harvesting. Not an ARM/Pi repeat: corrects a wrong circulating figure (Contabo
-  blog's GitLab "4GB" vs our sourced 8GB min/16GB rec) and fills a gap incumbents skip
-  (Jenkins RAM — no comparison site states it). BUILD condition: page copy must lead with
-  the correction/gap-fill angle explicitly, not generic "sourced and dated" framing.
+- "Apps with no separate DB/cache service required" (#8-10) — 14 members, zero-incumbent
+  SERP. BUILD: disclose required:false≠dependency-free (#3), write explicit inclusion
+  criterion (Wekan/FerretDB showed ad hoc dep-labeling isn't enough).
+- CI/CD & Git requirements (Gitea/Jenkins/GitLab-CE, #22) — gate met 08-16, all 3 shipped.
+  Corrects Contabo blog's wrong GitLab "4GB" (ours: 8GB min/16GB rec) + fills Jenkins-RAM
+  gap no comparison site states. BUILD: lead copy with the correction/gap-fill angle.
 
 ## Held (insufficient evidence, not discarded — full evidence: reports/archive/held-log.md)
 Snipe-IT/Cal.com (~12/20, no figures); BigBlueButton (14/20, non-container schema needed);
