@@ -12,6 +12,18 @@ learning. FIND and BUILD read this file first, every run. Newest first.
     precedent). → Don't force an enum add for embedded-search SIEM/observability
     candidates unless the app's own docs treat it as separately provisioned.
 
+## 2026-08-22 — FIND #28
+
+64. **#62's archive-don't-trim fix applies per-section, not once** — the 08-18 relief moved
+    Shipped/Rejected detail out and held for 4 cycles, but the Queued section itself (not
+    touched then) grew from 4 to 27 items across #24-#27 with no BUILD in between (BUILD
+    only runs Wed/Sun) and re-hit the ceiling (9999/10000). Same fix, new section: moved
+    full per-item sourcing detail to reports/archive/queued-detail.md (BUILD reads it),
+    kept name/score/one-line-flag inline for dedupe. 9999→6335, ~3.6KB headroom restored.
+    → Any list section that only grows between drains (Queued between BUILD runs, not just
+    Shipped/Rejected which only grow) needs the same archive treatment, proactively — don't
+    wait for the ceiling to hit a second time on the same file.
+
 ## 2026-08-20 — FIND #26
 
 63. **A commented-out or alternative-backend block in a compose file is not a required
