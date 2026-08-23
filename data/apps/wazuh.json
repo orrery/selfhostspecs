@@ -5,7 +5,7 @@
   "website": "https://wazuh.com",
   "repo": "https://github.com/wazuh/wazuh",
   "description": "Self-hosted open-source security platform providing unified XDR and SIEM protection for endpoints and cloud workloads.",
-  "status": "pending-second-qa",
+  "status": "live",
   "specs": {
     "ram_rec_mb": {
       "value": 8192,

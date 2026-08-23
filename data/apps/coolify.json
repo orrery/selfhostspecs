@@ -5,21 +5,21 @@
   "website": "https://coolify.io",
   "repo": "https://github.com/coollabsio/coolify",
   "description": "Self-hosted open-source PaaS for deploying and managing applications, databases, and services on your own servers.",
-  "status": "pending-second-qa",
+  "status": "live",
   "specs": {
     "ram_min_mb": {
       "value": 2048,
       "source_url": "https://raw.githubusercontent.com/coollabsio/coolify-docs/main/content/docs/get-started/installation.mdx",
       "quote": "- **Memory (RAM)**: 2 GB",
       "retrieved": "2026-08-16",
-      "scope": "Control-plane requirement for running the Coolify server itself (the manager that orchestrates deployments elsewhere), self-hosted installation via the official install script — not the resources needed by the apps Coolify deploys"
+      "scope": "Control-plane requirement for running the Coolify server itself (the manager that orchestrates deployments elsewhere), general self-hosted installation (Docker-based, either the quick-install script or manual install) — not the resources needed by the apps Coolify deploys"
     },
     "cpu_min_cores": {
       "value": 2,
       "source_url": "https://raw.githubusercontent.com/coollabsio/coolify-docs/main/content/docs/get-started/installation.mdx",
       "quote": "- **CPU**: 2 cores",
       "retrieved": "2026-08-16",
-      "scope": "Control-plane requirement for running the Coolify server itself (the manager that orchestrates deployments elsewhere), self-hosted installation via the official install script — not the resources needed by the apps Coolify deploys"
+      "scope": "Control-plane requirement for running the Coolify server itself (the manager that orchestrates deployments elsewhere), general self-hosted installation (Docker-based, either the quick-install script or manual install) — not the resources needed by the apps Coolify deploys"
     },
     "no_official_figure": {
       "fields": [

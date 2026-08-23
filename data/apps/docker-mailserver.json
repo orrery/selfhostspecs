@@ -5,7 +5,7 @@
   "website": "https://docker-mailserver.github.io/docker-mailserver/latest/",
   "repo": "https://github.com/docker-mailserver/docker-mailserver",
   "description": "Self-hosted, single-container mail server (SMTP, IMAP, LDAP, anti-spam, anti-virus) configured entirely via files, no SQL database.",
-  "status": "pending-second-qa",
+  "status": "live",
   "specs": {
     "ram_min_mb": {
       "value": 512,

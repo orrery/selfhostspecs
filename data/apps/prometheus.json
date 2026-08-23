@@ -5,7 +5,7 @@
   "website": "https://prometheus.io",
   "repo": "https://github.com/prometheus/prometheus",
   "description": "Open-source systems monitoring and alerting toolkit with a built-in time-series database, CNCF graduated project.",
-  "status": "pending-second-qa",
+  "status": "live",
   "specs": {
     "no_official_figure": {
       "fields": [
@@ -27,14 +27,14 @@
   ],
   "docker": {
     "image": "prom/prometheus",
-    "size_mb": 102,
+    "size_mb": 104,
     "arches": [
       "amd64",
       "arm64",
       "armv7"
     ],
     "source_url": "https://hub.docker.com/r/prom/prometheus",
-    "retrieved": "2026-08-16"
+    "retrieved": "2026-08-23"
   },
   "sources_of_truth": [
     "https://raw.githubusercontent.com/prometheus/prometheus/main/docs/storage.md",
