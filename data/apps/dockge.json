@@ -1,0 +1,44 @@
+{
+  "name": "Dockge",
+  "slug": "dockge",
+  "category": "dev-tools",
+  "website": "https://github.com/louislam/dockge",
+  "repo": "https://github.com/louislam/dockge",
+  "description": "Web UI for managing Docker Compose stacks: edit, start, stop, and monitor compose.yaml files.",
+  "status": "pending-verification",
+  "specs": {
+    "no_official_figure": {
+      "fields": [
+        "ram_min_mb",
+        "ram_rec_mb",
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://github.com/louislam/dockge/blob/master/README.md",
+      "note": "No RAM/CPU figure exists anywhere in official Dockge sources. The README's install-requirements section states only Docker/Podman version and supported-OS requirements, no hardware figures; FAQ.md, docs/requirements.md, and REQUIREMENTS.md all 404 on the repo (checked directly, same day)."
+    }
+  },
+  "deps": [
+    {
+      "service": "none",
+      "required": false,
+      "source_url": "https://github.com/louislam/dockge/blob/master/README.md"
+    }
+  ],
+  "docker": {
+    "image": "louislam/dockge:1",
+    "size_mb": 251,
+    "arches": [
+      "amd64",
+      "arm64",
+      "armv7"
+    ],
+    "source_url": "https://hub.docker.com/r/louislam/dockge",
+    "retrieved": "2026-08-23"
+  },
+  "sources_of_truth": [
+    "https://github.com/louislam/dockge/blob/master/README.md",
+    "https://raw.githubusercontent.com/louislam/dockge/master/compose.yaml",
+    "https://hub.docker.com/r/louislam/dockge"
+  ]
+}

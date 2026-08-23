@@ -1,0 +1,43 @@
+{
+  "name": "Ollama",
+  "slug": "ollama",
+  "category": "ai",
+  "website": "https://ollama.com",
+  "repo": "https://github.com/ollama/ollama",
+  "description": "Runs and serves large language models locally via a CLI, API, and Docker image; footprint scales with the loaded model.",
+  "status": "pending-verification",
+  "specs": {
+    "no_official_figure": {
+      "fields": [
+        "ram_min_mb",
+        "ram_rec_mb",
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://github.com/ollama/ollama/issues/2418",
+      "note": "Ollama publishes no base/runtime RAM or CPU figure for the app itself — actual memory use is set entirely by which model is loaded (per-model sizes are listed on individual ollama.com/library model pages, not as a single app-level spec). Open upstream issue #2418 ('What are the system requirements?') requests this documentation for disk/RAM/GPU. Per-model tiers are out of scope for this entry — encoding one model's footprint as the app's min/rec figure would misrepresent scope (Open WebUI precedent, Defect Class #2/#3)."
+    }
+  },
+  "deps": [
+    {
+      "service": "none",
+      "required": false,
+      "source_url": "https://github.com/ollama/ollama"
+    }
+  ],
+  "docker": {
+    "image": "ollama/ollama",
+    "size_mb": 3223,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://hub.docker.com/r/ollama/ollama",
+    "retrieved": "2026-08-23"
+  },
+  "sources_of_truth": [
+    "https://github.com/ollama/ollama",
+    "https://github.com/ollama/ollama/issues/2418",
+    "https://hub.docker.com/r/ollama/ollama"
+  ]
+}

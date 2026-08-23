@@ -1,0 +1,62 @@
+{
+  "name": "Kestra",
+  "slug": "kestra",
+  "category": "automation",
+  "website": "https://kestra.io",
+  "repo": "https://github.com/kestra-io/kestra",
+  "description": "Event-driven workflow orchestration platform for scheduling and automating data, AI, and infrastructure pipelines.",
+  "status": "pending-verification",
+  "specs": {
+    "ram_min_mb": {
+      "value": 4096,
+      "source_url": "https://github.com/kestra-io/docs/blob/main/src/contents/docs/10.administrator-guide/00.requirements/index.md",
+      "quote": "A Kestra standalone server requires at least 4 GiB of memory and 2 vCPUs.",
+      "retrieved": "2026-08-23",
+      "scope": "Standalone server install (Docker/VM/JAR), general minimum"
+    },
+    "cpu_min_cores": {
+      "value": 2,
+      "source_url": "https://github.com/kestra-io/docs/blob/main/src/contents/docs/10.administrator-guide/00.requirements/index.md",
+      "quote": "A Kestra standalone server requires at least 4 GiB of memory and 2 vCPUs.",
+      "retrieved": "2026-08-23",
+      "scope": "Standalone server install (Docker/VM/JAR), general minimum"
+    },
+    "no_official_figure": {
+      "fields": [
+        "ram_rec_mb",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://github.com/kestra-io/docs/blob/main/src/contents/docs/10.administrator-guide/00.requirements/index.md",
+      "note": "The requirements page states only the standalone-server minimum (4 GiB / 2 vCPUs); beyond that it directs readers to 'contact us' for deployment-specific sizing guidance rather than publishing a single general recommended figure."
+    }
+  },
+  "deps": [
+    {
+      "service": "postgresql",
+      "required": false,
+      "source_url": "https://github.com/kestra-io/docs/blob/main/src/contents/docs/10.administrator-guide/00.requirements/index.md",
+      "note": "Kestra Open Source requires PostgreSQL OR MySQL for the queue/repository backend, not both — modeled as two independently-optional entries per the OR-flattening rule (Defect Class #11); do not read required:false on both as dependency-free."
+    },
+    {
+      "service": "mysql",
+      "required": false,
+      "source_url": "https://github.com/kestra-io/docs/blob/main/src/contents/docs/10.administrator-guide/00.requirements/index.md",
+      "note": "Kestra Open Source requires PostgreSQL OR MySQL for the queue/repository backend, not both — modeled as two independently-optional entries per the OR-flattening rule (Defect Class #11); do not read required:false on both as dependency-free."
+    }
+  ],
+  "docker": {
+    "image": "kestra/kestra",
+    "size_mb": 3075,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://hub.docker.com/r/kestra/kestra",
+    "retrieved": "2026-08-23"
+  },
+  "sources_of_truth": [
+    "https://github.com/kestra-io/docs/blob/main/src/contents/docs/10.administrator-guide/00.requirements/index.md",
+    "https://hub.docker.com/r/kestra/kestra",
+    "https://github.com/kestra-io/kestra"
+  ]
+}
