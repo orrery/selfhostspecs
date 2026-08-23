@@ -47,3 +47,18 @@ Append-only log of material decisions with their evidence. AUDIT checks cadence 
   relieved the 5-cycle FIND-blocking byte ceiling (#56/#57) as a side effect, not by design —
   still deferred (LEARNINGS #58). No traffic-driven decisions (pre-launch, 0★, ~20 hits/30d).
   53/53 green throughout.
+- 2026-08-23 — **ANALYZE+BUILD: settled 4 pending-second-qa apps, built+QA'd a new 4-app batch
+  (32 live), compacted DECISIONS.md.** Session-start recovery: local `main` was 1 commit behind
+  origin (FIND #28, detached HEAD carryover) — ff-merged, pushed. DECISIONS.md was at
+  7932/8000 bytes, too tight for this entry — archived pre-08-10 decisions to
+  reports/archive/decisions-log.md (7932→4182). Fresh-eyes re-QA cleared Coolify/Prometheus/
+  docker-mailserver/Wazuh: 2 minor fixes (Coolify scope wording, Prometheus docker.size_mb
+  drift 102→104 from a registry repush) — promoted to live. Built Kestra/code-server/Ollama/
+  Dockge from the verified queue (score+simplicity, no SERVICES-enum blocker) through the full
+  harvest→verify→QA pipeline: verifier fixed one stale note (Ollama's issue #2418 mis-described
+  as Open), QA ruled Kestra's Postgres/MySQL OR-dependency modeling consistent with the
+  grafana/keycloak/nextcloud convention (kept as-is) and flagged a real but out-of-scope gap —
+  build.mjs never renders any multi-backend app's OR relationship in prose (LEARNINGS #65). All
+  4 land pending-second-qa per the unattended-run rule. Pre-launch signal unchanged (0★, ~3
+  hits/30d — traffic snapshot stale at 08-23, no kill/promote decision due). No new cadence
+  gaps (CI green 08-17→08-22 continuous). 57/57 green throughout.
