@@ -5,7 +5,7 @@
   "website": "https://kestra.io",
   "repo": "https://github.com/kestra-io/kestra",
   "description": "Event-driven workflow orchestration platform for scheduling and automating data, AI, and infrastructure pipelines.",
-  "status": "pending-qa",
+  "status": "pending-second-qa",
   "specs": {
     "ram_min_mb": {
       "value": 4096,

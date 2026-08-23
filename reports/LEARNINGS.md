@@ -3,6 +3,19 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-08-23 — ANALYZE+BUILD (specs-loop)
+
+65. **`build.mjs` never renders a DB-OR dependency's alternative relationship in prose** —
+    every multi-backend app (grafana/keycloak/nextcloud/now Kestra) lists each vendor as a
+    separate `required:false` dep row with no indication they're alternatives, not all-optional
+    extras. Not new data risk (Defect Class #11 is about false required+optional pairing, which
+    this avoids), but it's a real page-copy gap across the whole existing set, caught by QA on
+    Kestra 08-23 and confirmed pre-existing on the others. → Next BUILD batch that touches the
+    page template: add an OR-prose line wherever ≥2 same-role deps are `required:false`.
+64. **traefik has no SERVICES enum slot** — Dokploy (18/20, top of queue) needs it and got
+    passed over this batch for code-server/Ollama/Dockge instead (score+simplicity, no schema
+    blocker). → Resolve the enum gap before Dokploy's BUILD turn, same pattern as LEARNINGS #54.
+
 ## 2026-08-16 — ANALYZE+BUILD (specs-loop)
 
 59. **A bundled multi-container deployment doesn't need a SERVICES enum slot even when a

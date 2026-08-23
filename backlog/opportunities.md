@@ -3,19 +3,22 @@
 Statuses: unverified→queued(verifier sign-off)→building→shipped/rejected. Dedupe vs
 all lists. App detail: `data/apps/<slug>.json`.
 
-## Shipped — 28 apps live
+## Shipped — 32 apps live
 gitea, home-assistant, immich, jellyfin, uptime-kuma, vaultwarden, adguard-home, frigate,
 grafana, n8n, nextcloud, paperless-ngx, pi-hole, syncthing, discourse, zulip, rocket-chat,
 openproject, plausible-ce, open-webui, linkwarden, chatwoot, seafile, mattermost, jenkins,
-keycloak, node-red, gitlab-ce. Batch-by-batch dates: reports/archive/shipped-log.md.
+keycloak, node-red, gitlab-ce, coolify, prometheus, docker-mailserver, wazuh.
+Batch-by-batch dates: reports/archive/shipped-log.md.
 Pending BUILD (1 schema-change/batch): GPU column (Jellyfin/Immich/Frigate/open-webui?,
 #17); community-figures column (vaultwarden/adguard-home/uptime-kuma/syncthing/
-paperless-ngx); Discourse churn caveat (AUDIT#3).
+paperless-ngx); Discourse churn caveat (AUDIT#3); build.mjs doesn't render DB-OR deps
+in prose for any multi-backend app (QA 08-23, affects Kestra + every existing OR-dep app).
 
 ## In pipeline (not yet live)
-- pending-second-qa: coolify, prometheus, docker-mailserver, wazuh — cleared 08-16,
-  zero defects (data/apps/*.json). Wazuh deps:none (bundled indexer/dashboard, see
-  LEARNINGS).
+- pending-second-qa: kestra, code-server, ollama, dockge — cleared 08-23, zero defects
+  (data/apps/*.json). Ollama has no official base RAM/CPU figure (model-dependent, honest
+  no_official_figure). Kestra's Postgres/MySQL OR modeled as two required:false deps +
+  note (QA-ruled consistent with grafana/keycloak/nextcloud convention, kept as-is).
 
 ## Queued (verifier-signed), unbuilt
 Full sourcing detail (quotes, deps, images, arch) for every item below is archived at
@@ -40,12 +43,9 @@ Queued 08-22 after hitting byte ceiling again).
 - Metabase (17/20, #15) — no_official_figure.
 - License (SPDX) column (14/20, #15, conditional) — never trust spdx_id alone.
 - Odoo CE (15/20, #18) — scoped rec only, never min (Wazuh precedent). PostgreSQL only dep.
-- Dokploy (18/20, #24) — Swarm: postgres+traefik+dokploy. Not a Coolify dupe.
+- Dokploy (18/20, #24) — Swarm: postgres+traefik+dokploy. Not a Coolify dupe. traefik has
+  no SERVICES enum slot (checked 08-23) — resolve before BUILD.
 - Technitium DNS Server (16/20, #24) — no_official_figure, single-service.
-- code-server (17/20, #25) — zero deps. ≠coder/coder.
-- Dockge (17/20, #26) — no_official_figure, zero deps. Not a Portainer dupe.
-- Kestra (18/20, #27) — Postgres/MySQL req. Distinct from n8n.
-- Ollama (17/20, #27) — per-model tiers, zero deps.
 - Mailu (17/20, #27) — Redis req; SQLite default. Differentiate vs docker-mailserver.
 - Penpot (16/20, #26) — postgres+valkey req; multi-image not yet harvested.
 - WordPress (17/20, #28) — no_official_figure. MySQL OR MariaDB req; SQLite not
