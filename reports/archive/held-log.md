@@ -32,3 +32,28 @@ precedent: LEARNINGS #62 shipped/rejected-log split).
 - Revolt/stoatchat chat (#22, ~2.3k★): org renamed revoltchat→stoatchat (alias-sweep flag).
   Deps Mongo+Redis+MinIO — MinIO unmapped in SERVICES enum (policy: data-quality SKILL.md),
   same shape as Ente/Sentry/PostHog. Hold for deps-schema, same as those.
+- PocketBase (~14/20, #29): pocketbase/pocketbase, 60.8k★, single Go binary + embedded
+  SQLite, deps:none. README has no RAM/CPU figure; pocketbase.io (official docs) returned
+  EGRESS_BLOCKED from this session's network proxy both via the harvester and the independent
+  verifier's own WebFetch attempt; GitHub code-search of the pocketbase org found no in-repo
+  docs mirror (unlike Zitadel below) to fall back on. Real demand signal: verifier found ~10
+  open GitHub issues on memory/OOM pain (e.g. "keeps running out of memory" on fly.io).
+  Third-party figures ("under 30MB RAM", "256MB VPS") exist (1vps.com) but are inadmissible
+  (source-or-silence — not an official source). Hold; re-attempt sourcing from an environment
+  that can reach pocketbase.io before re-scoring — do not queue on third-party figures.
+- Zitadel (13/20, #29): zitadel/zitadel, 14.8k★, IAM/SSO (Keycloak/Authentik-style),
+  requires PostgreSQL ≥14 (README, confirmed). zitadel.com/docs and help.zitadel.com both
+  EGRESS_BLOCKED, but the verifier found the docs are mirrored in-repo (Docusaurus monorepo,
+  `apps/docs/content/self-hosting/manage/production.mdx`) and reachable via
+  raw.githubusercontent.com — verbatim: "ZITADEL itself requires approximately 512MB of RAM
+  and can operate with less than one CPU core. The database component... utilizes about one
+  CPU core per 100 requests per second and 4GB of RAM per core... For a minimal high-
+  availability setup, we recommend a cluster of 3 nodes, each with 4 CPU cores and 16GB of
+  memory." (raw.githubusercontent.com/zitadel/zitadel/main branch, retrieved 2026-08-23).
+  Sourceable and real, but scores below bar on coverage-value/channel-value — Keycloak
+  already ships the identity-platform slot and the IAM space is crowded (Authentik also
+  held #12-13). Hold, not a sourcing gap; revisit only if a differentiation angle emerges.
+- Appwrite (9/20, #29): appwrite/appwrite, popular BaaS. README has no RAM/CPU figure;
+  appwrite.io EGRESS_BLOCKED; code-search of the appwrite org found no in-repo docs mirror.
+  Conceptually overlaps Supabase self-hosted (already queued, #11) as a BaaS entry — weakest
+  of this batch's three candidates. Hold.

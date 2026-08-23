@@ -3,6 +3,20 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-08-23 — FIND #29
+
+66. **A vendor's marketing-docs domain being egress-blocked doesn't mean the figure is
+    unsourceable — check for an in-repo docs mirror first.** This session's network proxy
+    blocks nearly every vendor docs domain (pocketbase.io, zitadel.com, appwrite.io, and in
+    earlier ad hoc checks dify.ai/langfuse.com/librechat.ai/netbird.io/mealie.io/reddit.com
+    all 403'd) while github.com/raw.githubusercontent.com/api.github.com/hub.docker.com stay
+    reachable. The harvester wrote off Zitadel as unsourceable on that basis; the verifier
+    found its docs are mirrored in-repo (Docusaurus monorepo under `apps/docs/content/`) and
+    pulled a verbatim official RAM figure via raw.githubusercontent.com. → Before holding a
+    candidate as "docs blocked," GitHub code-search the vendor's own org for a docs-as-code
+    mirror and try raw.githubusercontent.com paths — only hold on reachability after that
+    comes up empty too (as it did for PocketBase and Appwrite this run).
+
 ## 2026-08-23 — ANALYZE+BUILD (specs-loop)
 
 65. **`build.mjs` never renders a DB-OR dependency's alternative relationship in prose** —

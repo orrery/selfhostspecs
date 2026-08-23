@@ -66,6 +66,14 @@ Codeberg blocked); SonarQube (#15, JVM-heap≠RAM); Healthchecks (#15, docs bloc
 Sentry (12/20) & PostHog (11/20, deps-schema); Grocy (15/20, Helm/K8s gap); Gotify
 (12/20, unreachable); Windmill (~8/20, docs blocked); Ente (~11/20, deps-schema);
 Infisical (~14/20, full-stack scope TBD).
+- PocketBase (~14/20, #29, near-miss): 60.8k★, single-binary/SQLite, no deps — real demand
+  (10 GH issues on OOM/memory). No reachable official RAM figure (pocketbase.io blocked,
+  no in-repo docs mirror). Re-check sourcing before re-scoring.
+- Zitadel (13/20, #29): 14.8k★ IAM, crowds Keycloak (shipped). Sourced verbatim via in-repo
+  docs mirror despite zitadel.com blocked (~512MB app / 4GB per DB core, Postgres≥14 req)
+  — below bar on coverage/channel, not sourcing.
+- Appwrite (9/20, #29): BaaS, no reachable figure, no in-repo mirror, overlaps Supabase
+  (already queued). Weakest of the three.
 
 ## Unverified / held (not sent further)
 - Collection "1GB VPS": thin (3 qualifiers); revisit once PeerTube/Vikunja ship.
