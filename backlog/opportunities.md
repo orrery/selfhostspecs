@@ -52,6 +52,14 @@ Queued 08-22 after hitting byte ceiling again).
 - Penpot (16/20, #26) — postgres+valkey req; multi-image not yet harvested.
 - WordPress (17/20, #28) — no_official_figure. MySQL OR MariaDB req; SQLite not
   core-supported. Official Image, 9-arch. Crowded topic — win on provenance.
+- ONLYOFFICE Document Server (18/20, #30) — rec-only "4GB RAM/dual-core 2GHz", deps:none
+  (verified via CE docker-compose.yml, single service — not the EE/DE bundling sentence),
+  arm64+amd64 per Docker Hub manifest (README silent). Source: github.com/ONLYOFFICE/
+  Docker-DocumentServer README "Recommended System Requirements".
+- Coder (15/20, #30) — coder/coder, 14.2k★, ≠code-server (diff product, same org).
+  "2+ CPU cores and 4GB+ RAM" for the Coder-server host (not workspaces), docs/get-started/
+  index.md. Postgres required (compose.yaml). Demand evidence weak (memory-leak issues,
+  not direct RAM asks) — note at BUILD.
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members, zero-incumbent
   SERP. BUILD: disclose required:false≠dependency-free (#3), write explicit inclusion
@@ -59,6 +67,10 @@ Queued 08-22 after hitting byte ceiling again).
 - CI/CD & Git requirements (Gitea/Jenkins/GitLab-CE, #22) — gate met 08-16, all 3 shipped.
   Corrects Contabo blog's wrong GitLab "4GB" (ours: 8GB min/16GB rec) + fills Jenkins-RAM
   gap no comparison site states. BUILD: lead copy with the correction/gap-fill angle.
+- Smallest Docker images across self-hosted apps (16/20, #30) — zero new harvest, sorts
+  existing docker.size_mb (36/36 apps already have it). SERP has subjective "best
+  self-hosted apps" listicles but no sourced/dated per-app size ranking — lead copy with
+  that provenance angle, not "no incumbent."
 
 ## Held (insufficient evidence, not discarded — full evidence: reports/archive/held-log.md)
 Snipe-IT/Cal.com (~12/20, no figures); BigBlueButton (14/20, non-container schema needed);

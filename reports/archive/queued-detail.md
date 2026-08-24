@@ -87,3 +87,21 @@ LEARNINGS #62, shipped/rejected-log split). BUILD reads this file before harvest
   Docker: library/wordpress Official Image, 9-arch (amd64/arm32v5/arm32v6/arm32v7/arm64v8/
   i386/ppc64le/riscv64/s390x). Channel: crowded topic (hosting blogs) — win on provenance,
   same play as Odoo/code-server.
+- ONLYOFFICE Document Server (18/20, #30) — office-editing backend, pairs with shipped
+  Nextcloud/Seafile. 101M+ Docker pulls (onlyoffice/documentserver). "Recommended System
+  Requirements: RAM: 4 GB or more; CPU: dual-core 2 GHz or higher; Swap: at least 2 GB; HDD:
+  at least 2 GB of free space" (github.com/ONLYOFFICE/Docker-DocumentServer README, no
+  minimum section — rec-only). Deps: none for CE — verified against the CE docker-compose.yml
+  itself (single onlyoffice-documentserver service); the README's Postgres/RabbitMQ/Redis
+  bundling sentence refers to EE/DE images, not CE, don't cite it for the deps claim.
+  Docker Hub :latest manifest: amd64+arm64 (README silent on arch — image-manifest evidence
+  only, Defect Class #6). Demand: ONLYOFFICE/Docker-DocumentServer#69/#352,
+  DocumentServer#591 (RAM/OOM complaints).
+- Coder (15/20, #30) — coder/coder, 14.2k★, dev-environment orchestration platform, ≠
+  code-server (same org, different product — code-server's own entry above already flags
+  this distinction but never queued Coder itself). "A machine with 2+ CPU cores and 4GB+
+  RAM (ideally a separate machine or VM, not your primary dev machine)" (docs/get-started/
+  index.md Prerequisites) — scoped to the Coder-server host, NOT managed workspaces; note
+  that scope distinction at BUILD. Postgres required — docs/install/docker.md's compose.yaml
+  defines a postgres:17 service. Demand evidence weak: coder/coder#13559/#9364 are
+  memory-leak bug reports, not direct min-RAM asks — honest gap, not disqualifying.
