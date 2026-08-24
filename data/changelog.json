@@ -154,5 +154,53 @@
     "app": "immich",
     "change": "AUDIT #4: docker.image repointed from bare `ghcr.io/immich-app/immich-server` (implies `:latest`, which does not exist on GHCR for this image) to the explicit `:release` tag — already known from Frigate's `:stable` precedent but never back-applied to this entry. size_mb (763) unchanged, live-confirmed exact match. New Defect Class #14.",
     "source_url": "https://github.com/immich-app/immich/pkgs/container/immich-server"
+  },
+  {
+    "date": "2026-08-24",
+    "app": "linkwarden",
+    "change": "AUDIT #5: quote drift — docs/self-hosting/setup.md was rewritten since the 2026-08-09 re-QA (which had confirmed 'the same verbatim quote still lives' at this URL); the anecdotal \"tested on a VPS with 4gb of memory\" prose is gone, replaced by a formal Hardware Requirements list. Quote re-sourced to the new literal line ('**Memory:** 4 GB is a comfortable starting point.'); ram_rec_mb value (4096) unchanged — coincidentally still accurate. Scope note updated to drop the now-false \"informal/anecdotal\" characterization. Also noted: the new list publishes a CPU figure ('any 2 core machine') that didn't exist in the old prose — not harvested here (AUDIT doesn't self-grade new figures); flagged to backlog for next BUILD's harvest+verify pass.",
+    "source_url": "https://raw.githubusercontent.com/linkwarden/docs/main/docs/self-hosting/setup.md"
+  },
+  {
+    "date": "2026-08-24",
+    "app": "keycloak",
+    "change": "AUDIT #5: docker.size_mb drift 258→255 — rolling `:latest` tag repush (Docker Hub amd64 layer sum, tag_last_pushed 2026-08-21, 9 days after our 2026-08-12 retrieval).",
+    "source_url": "https://hub.docker.com/r/keycloak/keycloak"
+  },
+  {
+    "date": "2026-08-24",
+    "app": "chatwoot",
+    "change": "AUDIT #5: docker.size_mb drift 685→642 — rolling `:latest` tag repush (Docker Hub amd64 layer sum, tag_last_pushed 2026-08-19, 17 days after our 2026-08-02 retrieval; largest single drift recorded on this field to date).",
+    "source_url": "https://hub.docker.com/r/chatwoot/chatwoot"
+  },
+  {
+    "date": "2026-08-24",
+    "app": "discourse",
+    "change": "AUDIT #5: docker.size_mb drift 1250→1255 — 7th recorded drift on this field (the most volatile in the dataset); Docker Hub tag_last_pushed 2026-08-24T00:05, hours before this check.",
+    "source_url": "https://hub.docker.com/r/discourse/discourse"
+  },
+  {
+    "date": "2026-08-24",
+    "app": "gitlab-ce",
+    "change": "AUDIT #5: docker.size_mb drift 1313→1382 — rolling `:latest` tag repush (Docker Hub tag_last_pushed 2026-08-20, 8 days after our 2026-08-12 retrieval).",
+    "source_url": "https://hub.docker.com/r/gitlab/gitlab-ce"
+  },
+  {
+    "date": "2026-08-24",
+    "app": "grafana",
+    "change": "AUDIT #5: docker.size_mb drift 361→452 (+25%, largest relative drift recorded on this field) — this was the 2026-07-24 bootstrap entry, never re-verified since launch; Docker Hub tag_last_pushed 2026-08-18.",
+    "source_url": "https://hub.docker.com/r/grafana/grafana"
+  },
+  {
+    "date": "2026-08-24",
+    "app": "n8n",
+    "change": "AUDIT #5: docker.size_mb drift 346→356 — rolling `:latest` tag repush (Docker Hub tag_last_pushed 2026-08-21, 4 days after our 2026-08-17 retrieval; 3rd recorded drift on this field).",
+    "source_url": "https://hub.docker.com/r/n8nio/n8n"
+  },
+  {
+    "date": "2026-08-24",
+    "app": "linkwarden",
+    "change": "AUDIT #5: docker.size_mb drift 496→499 — rolling `:latest` tag repush (GHCR amd64 manifest, our 2026-07-30 retrieval).",
+    "source_url": "https://github.com/linkwarden/linkwarden/pkgs/container/linkwarden"
   }
 ]

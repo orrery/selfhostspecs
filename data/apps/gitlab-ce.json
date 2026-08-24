@@ -45,13 +45,13 @@
   ],
   "docker": {
     "image": "gitlab/gitlab-ce",
-    "size_mb": 1313,
+    "size_mb": 1382,
     "arches": [
       "amd64",
       "arm64"
     ],
     "source_url": "https://hub.docker.com/r/gitlab/gitlab-ce",
-    "retrieved": "2026-08-12"
+    "retrieved": "2026-08-24"
   },
   "sources_of_truth": [
     "https://raw.githubusercontent.com/gitlabhq/gitlabhq/master/doc/install/requirements.md",

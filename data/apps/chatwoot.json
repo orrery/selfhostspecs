@@ -10,14 +10,14 @@
     "ram_min_mb": {
       "value": 4096,
       "source_url": "https://raw.githubusercontent.com/chatwoot/docs/main/self-hosted/deployment/requirements.mdx",
-      "quote": "4GB RAM is the required minimum memory size and supports up to 10,000 conversations a day",
+      "quote": "**4GB RAM** is the **required** minimum memory size and supports up to 10,000 conversations a day.",
       "retrieved": "2026-08-02",
       "scope": "Official self-hosted deployment, general, up to 10,000 conversations/day workload tier"
     },
     "cpu_rec_cores": {
       "value": 4,
       "source_url": "https://raw.githubusercontent.com/chatwoot/docs/main/self-hosted/deployment/requirements.mdx",
-      "quote": "4 cores is the recommended minimum number of cores and supports up to 10,000 conversations a day",
+      "quote": "**4 cores** is the **recommended** minimum number of cores and supports up to 10,000 conversations a day.",
       "retrieved": "2026-08-02",
       "scope": "Official self-hosted deployment, general, up to 10,000 conversations/day workload tier; doc labels this a recommended-minimum guidance figure, not a hard floor"
     },
@@ -44,13 +44,13 @@
   ],
   "docker": {
     "image": "chatwoot/chatwoot",
-    "size_mb": 685,
+    "size_mb": 642,
     "arches": [
       "amd64",
       "arm64"
     ],
     "source_url": "https://hub.docker.com/r/chatwoot/chatwoot",
-    "retrieved": "2026-08-02"
+    "retrieved": "2026-08-24"
   },
   "sources_of_truth": [
     "https://raw.githubusercontent.com/chatwoot/docs/main/self-hosted/deployment/requirements.mdx",

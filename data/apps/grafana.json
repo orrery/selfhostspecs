@@ -46,14 +46,14 @@
   ],
   "docker": {
     "image": "grafana/grafana",
-    "size_mb": 361,
+    "size_mb": 452,
     "arches": [
       "amd64",
       "arm64",
       "armv7"
     ],
     "source_url": "https://hub.docker.com/r/grafana/grafana",
-    "retrieved": "2026-07-24"
+    "retrieved": "2026-08-24"
   },
   "sources_of_truth": [
     "https://grafana.com/docs/grafana/latest/setup-grafana/installation/",

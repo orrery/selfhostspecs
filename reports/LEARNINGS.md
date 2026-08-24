@@ -3,6 +3,26 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-08-24 — AUDIT #5
+
+68. **No automated cadence-gap detector exists — the 4th time across 5 audits that "did a
+    scheduled routine actually fire" has been the finding, always discovered up to 6 days late
+    by AUDIT manually diffing commits against cron expressions.** This run: `specs-loop`
+    (Sun+Wed cron) has commits for Sun 08-16 and Sun 08-23 but nothing for Wed 08-19, while
+    `specs-find` (daily) committed every day in between — the trigger API's `last_fired_at` only
+    reports the most recent fire, so it can't confirm whether 08-19 fired silently or not at
+    all. → Owner flag: a cheap CI-independent tripwire (scheduled Action failing/notifying if no
+    operator commit lands within N hours of each cron slot) would catch this same-day; not built
+    this run (AUDIT doesn't build).
+67. **A harvested `quote` must be copy-pasted from the fetched source, never retyped** — 7
+    quote fields across 4 live apps (chatwoot, openproject, seafile, plausible-ce) had markdown
+    emphasis markers silently dropped during harvest (e.g. "Memory: 4096 MB" stored vs the
+    source's literal "**Memory:** 4096 MB"), failing Defect Class #8's literal-presence bar with
+    zero value/scope drift — caught only because this audit did a byte-for-byte substring check
+    against freshly-fetched sources instead of an LLM gist match. Newer batches (coolify, 08-16)
+    already preserve markdown verbatim, so the fix is discipline, not code: harvesters should
+    paste the exact source string, not transcribe its meaning.
+
 ## 2026-08-23 — FIND #29
 
 66. **A vendor's marketing-docs domain being egress-blocked doesn't mean the figure is

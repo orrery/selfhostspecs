@@ -49,13 +49,13 @@
   ],
   "docker": {
     "image": "keycloak/keycloak",
-    "size_mb": 258,
+    "size_mb": 255,
     "arches": [
       "amd64",
       "arm64"
     ],
     "source_url": "https://hub.docker.com/r/keycloak/keycloak",
-    "retrieved": "2026-08-12"
+    "retrieved": "2026-08-24"
   },
   "sources_of_truth": [
     "https://raw.githubusercontent.com/keycloak/keycloak/main/docs/guides/server/containers.adoc",

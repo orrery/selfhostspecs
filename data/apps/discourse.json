@@ -45,13 +45,13 @@
   ],
   "docker": {
     "image": "discourse/discourse",
-    "size_mb": 1250,
+    "size_mb": 1255,
     "arches": [
       "amd64",
       "arm64"
     ],
     "source_url": "https://hub.docker.com/r/discourse/discourse",
-    "retrieved": "2026-08-17"
+    "retrieved": "2026-08-24"
   },
   "sources_of_truth": [
     "https://github.com/discourse/discourse/blob/main/docs/INSTALL.md",

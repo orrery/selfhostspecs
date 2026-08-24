@@ -10,7 +10,7 @@
     "ram_rec_mb": {
       "value": 2048,
       "source_url": "https://raw.githubusercontent.com/plausible/community-edition/master/README.md",
-      "quote": "At least 2 GB of RAM is recommended for running ClickHouse and Plausible without fear of OOMs.",
+      "quote": "At least **2 GB of RAM** is recommended for running ClickHouse and Plausible without fear of OOMs.",
       "retrieved": "2026-07-30",
       "scope": "Docker Compose install, general"
     },

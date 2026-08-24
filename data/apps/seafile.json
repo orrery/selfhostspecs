@@ -10,14 +10,14 @@
     "ram_min_mb": {
       "value": 2048,
       "source_url": "https://raw.githubusercontent.com/haiwen/seafile-admin-docs/master/manual/setup/system_requirements.md",
-      "quote": "Memory requirements: 2G",
+      "quote": "**Memory requirements**: 2G",
       "retrieved": "2026-08-02",
       "scope": "Seafile Community Edition, general — source states these figures apply to all deployment scenarios (Docker, binary, K8s alike) unless otherwise specified"
     },
     "cpu_min_cores": {
       "value": 2,
       "source_url": "https://raw.githubusercontent.com/haiwen/seafile-admin-docs/master/manual/setup/system_requirements.md",
-      "quote": "CPU requirements: 2 cores, more than 2G Hz are recommended",
+      "quote": "**CPU requirements**: 2 cores, more than 2G Hz are recommended",
       "retrieved": "2026-08-02",
       "scope": "Seafile Community Edition, general — source states these figures apply to all deployment scenarios (Docker, binary, K8s alike) unless otherwise specified (2 cores; >2GHz clock speed recommended, not additional cores)"
     },

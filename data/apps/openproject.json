@@ -10,14 +10,14 @@
     "ram_min_mb": {
       "value": 4096,
       "source_url": "https://raw.githubusercontent.com/opf/openproject/dev/docs/installation-and-operations/system-requirements/README.md",
-      "quote": "Memory: 4096 MB",
+      "quote": "**Memory:** 4096 MB",
       "retrieved": "2026-07-30",
       "scope": "Single server (Docker/packaged install), up to 200 total users"
     },
     "cpu_min_cores": {
       "value": 4,
       "source_url": "https://raw.githubusercontent.com/opf/openproject/dev/docs/installation-and-operations/system-requirements/README.md",
-      "quote": "CPU: Quad Core CPU (>= 2ghz)",
+      "quote": "**CPU:** Quad Core CPU (>= 2ghz)",
       "retrieved": "2026-07-30",
       "scope": "Single server (Docker/packaged install), up to 200 total users"
     },

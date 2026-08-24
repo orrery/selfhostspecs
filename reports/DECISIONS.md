@@ -47,6 +47,20 @@ Append-only log of material decisions with their evidence. AUDIT checks cadence 
   relieved the 5-cycle FIND-blocking byte ceiling (#56/#57) as a side effect, not by design —
   still deferred (LEARNINGS #58). No traffic-driven decisions (pre-launch, 0★, ~20 hits/30d).
   53/53 green throughout.
+- 2026-08-24 — **AUDIT #5: 7 docker-size drifts + 1 quote drift + 7 quote-fidelity fixes,
+  reconciled 9 unpushed commits, flagged a likely cadence gap.** Full sweep of all 32 live apps'
+  `docker.size_mb` (not a sample) found 7 drifted (22%, worst week on record) — keycloak,
+  chatwoot (-6%, largest ever), discourse (7th drift on that field), gitlab-ce, grafana (+25%,
+  the never-re-verified 07-24 bootstrap entry), n8n, linkwarden — all fixed+changelog'd. Direct
+  byte-substring checks (not WebFetch gist-matching) against 10 sampled sources found linkwarden's
+  quote no longer verbatim-present (source rewritten since the 08-09 re-QA; value coincidentally
+  still correct) and 7 more quote fields (chatwoot/openproject/seafile/plausible-ce) with
+  markdown silently stripped at harvest — all restored to literal source text. 9 commits sat
+  unpushed in detached HEAD at session start (recurring pattern, AUDIT #3/#4 lineage) — pure
+  fast-forward, reconciled and pushed, CI green. Process: no commit trail for `specs-loop`'s
+  08-19 Wed slot while `specs-find` committed daily around it — can't confirm fired-silently vs.
+  didn't-fire from the trigger API; owner flag + LEARNINGS #68 proposes a cadence tripwire.
+  Hostile pass (10 checks) and live smoke test both clean. 57/57 green throughout.
 - 2026-08-23 — **ANALYZE+BUILD: settled 4 pending-second-qa apps, built+QA'd a new 4-app batch
   (32 live), compacted DECISIONS.md.** Session-start recovery: local `main` was 1 commit behind
   origin (FIND #28, detached HEAD carryover) — ff-merged, pushed. DECISIONS.md was at

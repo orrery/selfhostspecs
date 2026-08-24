@@ -12,7 +12,9 @@ Batch-by-batch dates: reports/archive/shipped-log.md.
 Pending BUILD (1 schema-change/batch): GPU column (Jellyfin/Immich/Frigate/open-webui?,
 #17); community-figures column (vaultwarden/adguard-home/uptime-kuma/syncthing/
 paperless-ngx); Discourse churn caveat (AUDIT#3); build.mjs doesn't render DB-OR deps
-in prose for any multi-backend app (QA 08-23, affects Kestra + every existing OR-dep app).
+in prose for any multi-backend app (QA 08-23, affects Kestra + every existing OR-dep app);
+Linkwarden cpu_rec_cores now has an official figure ("any 2 core machine", AUDIT#5, source
+rewritten 08-24) — harvest+verify next BUILD, don't add unverified.
 
 ## In pipeline (not yet live)
 - pending-second-qa: kestra, code-server, ollama, dockge — cleared 08-23, zero defects
