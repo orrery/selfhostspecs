@@ -1,45 +1,13 @@
 {
   "hits": [
     {
-      "count": 2,
+      "count": 1,
       "path_id": 96298192,
       "path": "/",
       "event": false,
       "title": "SelfhostSpecs — hardware requirements for self-hosted apps",
       "max": 1,
       "stats": [
-        {
-          "day": "2026-08-17",
-          "hourly": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            1
-          ],
-          "daily": 1,
-          "weekly": 1,
-          "monthly": 2
-        },
         {
           "day": "2026-08-18",
           "hourly": [
@@ -68,7 +36,9 @@
             0,
             0
           ],
-          "daily": 0
+          "daily": 0,
+          "weekly": 1,
+          "monthly": 1
         },
         {
           "day": "2026-08-19",
@@ -248,11 +218,40 @@
             0,
             0
           ],
-          "daily": 1,
-          "weekly": 1
+          "daily": 1
         },
         {
           "day": "2026-08-25",
+          "hourly": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "daily": 0
+        },
+        {
+          "day": "2026-08-26",
           "hourly": [
             0,
             0,
@@ -284,6 +283,6 @@
       ]
     }
   ],
-  "total": 2,
+  "total": 1,
   "more": false
 }
