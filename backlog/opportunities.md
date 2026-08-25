@@ -60,6 +60,14 @@ Queued 08-22 after hitting byte ceiling again).
   "2+ CPU cores and 4GB+ RAM" for the Coder-server host (not workspaces), docs/get-started/
   index.md. Postgres required (compose.yaml). Demand evidence weak (memory-leak issues,
   not direct RAM asks) — note at BUILD.
+- Langfuse (18/20, #31) — LLM observability/tracing, fills AI-stack gap next to Ollama/
+  open-webui. Official per-service min-reqs table (langfuse-docs scaling.mdx). 6-svc
+  compose (web+worker+postgres+clickhouse+redis+minio) — heaviest in queue, effort flag.
+- Nginx Proxy Manager (16/20, #31) — no_official_figure (confirmed absent: docs+wiki+repo
+  search, both agents). deps:none, SQLite default, arm64 (armv7 dropped 2.14+).
+- wg-easy (14/20, #31, marginal) — no_official_figure (confirmed absent incl. wiki).
+  deps:none, arm64 but host needs in-kernel WireGuard support — real deploy caveat, note
+  at BUILD. Weakest demand signal of the batch.
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members, zero-incumbent
   SERP. BUILD: disclose required:false≠dependency-free (#3), write explicit inclusion

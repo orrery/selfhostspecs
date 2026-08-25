@@ -105,3 +105,32 @@ LEARNINGS #62, shipped/rejected-log split). BUILD reads this file before harvest
   that scope distinction at BUILD. Postgres required — docs/install/docker.md's compose.yaml
   defines a postgres:17 service. Demand evidence weak: coder/coder#13559/#9364 are
   memory-leak bug reports, not direct min-RAM asks — honest gap, not disqualifying.
+- Langfuse (18/20, #31) — LLM engineering/observability (tracing, evals, prompt mgmt),
+  33.7k★, YC-backed. "Minimum Infrastructure Requirements" table (raw.githubusercontent.com/
+  langfuse/langfuse-docs/main/content/self-hosting/configuration/scaling.mdx, retrieved
+  2026-08-25, verifier byte-checked): Web Container 2 CPU/4 GiB; Worker Container 2 CPU/
+  4 GiB; PostgreSQL 2 CPU/4 GiB; Redis/Valkey 1 CPU/1.5 GiB; ClickHouse 2 CPU/8 GiB; Blob
+  Storage "Serverless (S3 or compatible) or MinIO (2 CPU, 4 GiB Memory)". Deps confirmed via
+  langfuse/langfuse docker-compose.yml: postgres+clickhouse+redis+minio all required
+  (minio ships in default compose, not merely optional — S3-compatible external storage is
+  the prod alternative). Docker: docker.langfuse.com/langfuse/langfuse(-worker):4, arm64
+  supported (exact "since vX.X" version unconfirmed by verifier, don't cite a version at
+  BUILD without re-checking). Category overlap note: 3rd AI-stack entry alongside Ollama/
+  Open WebUI — not a dupe, but flag for BUILD pacing.
+- Nginx Proxy Manager (16/20, #31) — NginxProxyManager/nginx-proxy-manager, 34.0k★, near-
+  universal reverse-proxy+LetsEncrypt UI. No official RAM/CPU figure: nginxproxymanager.com
+  proxy-blocked for both agents; full-repo GitHub code search for RAM/CPU/memory/
+  requirements/resources found zero real hits; repo has no wiki (has_wiki:false) — ship
+  no_official_figure:true. Deps: single `app` service, SQLite default (MySQL/MariaDB
+  user-optional) — confirmed via docs/src/setup/index.md (source of the compose snippet;
+  no standalone compose file at repo root). Docker: jc21/nginx-proxy-manager, arm64
+  confirmed (docs/src/setup/index.md architecture list); armv7 dropped since 2.14+.
+- wg-easy (14/20, #31, marginal) — wg-easy/wg-easy, 26.8k★, WireGuard VPN + web UI. No
+  official RAM/CPU figure: wg-easy.github.io proxy-blocked for both agents; repo-wide code
+  search clean; GitHub wiki (11 pages, has_wiki:true, mostly integration tutorials) also
+  checked and clean — ship no_official_figure:true. Deps: single `wg-easy` service, no DB
+  (raw docker-compose.yml confirmed). Docker: ghcr.io/wg-easy/wg-easy:15, arm64 built on
+  every release (CI matrix confirmed) — but host kernel needs in-kernel WireGuard support
+  (SYS_MODULE cap + /lib/modules mount) — note this caveat explicitly on the page, not just
+  in the arch note. Demand evidence thinnest of the batch (one lightly-commented closed
+  issue on resource usage vs. NPM's sustained memory-leak discussion).
