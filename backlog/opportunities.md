@@ -62,6 +62,14 @@ Queued 08-22 after hitting byte ceiling again).
 - wg-easy (14/20, #31, marginal) — no_official_figure (confirmed absent incl. wiki).
   deps:none, arm64 but host needs in-kernel WireGuard support — real deploy caveat, note
   at BUILD. Weakest demand signal of the batch.
+- Dify (16/20, #32) — 153.6k★, AI app-builder/LLMOps (workflows/agents/RAG), distinct from
+  Ollama/open-webui/Langfuse. Official min figure IN REPO README (not docs.dify.ai, blocked):
+  "CPU >= 2 Core - RAM >= 4 GiB" (github.com/langgenius/dify/blob/main/README.md, retrieved
+  2026-08-26), min-only, no rec stated. Deps: postgres/mysql OR (postgres default), redis req,
+  nginx req, vector store OR-required-by-default (weaviate via COMPOSE_PROFILES, not fully
+  optional — swappable to qdrant/pgvector/etc) — model all three as OR like Directus/Kestra.
+  CAUTION: harvester's first-pass compose-comment quote didn't exist in the file (verifier
+  caught it) — re-confirm every quote against the live file at BUILD, don't reuse draft text.
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members, zero-incumbent
   SERP. BUILD: disclose required:false≠dependency-free (#3), write explicit inclusion
@@ -82,6 +90,15 @@ Codeberg blocked); SonarQube (#15, JVM-heap≠RAM); Healthchecks (#15, docs bloc
 Sentry (12/20) & PostHog (11/20, deps-schema); Grocy (15/20, Helm/K8s gap); Gotify
 (12/20, unreachable); Windmill (~8/20, docs blocked); Ente (~11/20, deps-schema);
 Infisical (~14/20, full-stack scope TBD).
+- LibreChat (13/20, #32) — 42.5k★, multi-provider AI chat UI. NOT an open-webui dupe
+  (verified: open-webui is deps:none, LibreChat requires 5 services — genuinely different
+  deployment weight, Grafana/Keycloak-style multi-competitor precedent, not FreeScout/Zammad
+  overlap). Held on sourcing only: no official RAM/CPU figure anywhere (README, Helm
+  values.yaml boilerplate, no docs-mirror repo — librechat.ai/www.librechat.ai blocked and
+  no separate danny-avila/librechat.ai docs repo exists, confirmed). Deps if re-scored:
+  mongodb+meilisearch+pgvector+rag_api+admin-panel ALL required (no `profiles:` key in
+  compose — admin-panel is not optional, correct this if promoted). Re-check for an official
+  figure before re-proposing.
 - PocketBase (~14/20, #29, near-miss): 60.8k★, single-binary/SQLite, no deps — real demand
   (10 GH issues on OOM/memory). No reachable official RAM figure (pocketbase.io blocked,
   no in-repo docs mirror). Re-check sourcing before re-scoring.

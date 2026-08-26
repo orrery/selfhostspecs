@@ -38,6 +38,12 @@ tests/*.test.mjs for the live enforcement each of these graduated into.
 - `ghcr.io/v2/.../manifests/<tag>` and `hub.docker.com/v2/repositories/...` both 401/return raw
   JSON for unauthenticated readers — fine to harvest from, never fine as the published citation
   (Defect Class #13, now CI-enforced for both registries via a `/v2/` path check).
+- A commented-out or alternative-backend block in a compose file isn't a required service —
+  confirm the flagged service is actually instantiated before calling a deps-schema hold
+  (Penpot/Minio near-miss, #63, 08-20).
+- In-place prose-trimming only bought one cycle each time; archiving historical detail out of
+  the file (not trimming it in place) is the durable fix for any governed file nearing its
+  byte budget — applied repeatedly since (#62, 08-18; extended per-section by #64, 08-22).
 - GitHub-hosted mirrors (raw.githubusercontent.com, Docker Hub v2, ghcr.io v2) reach from cloud
   sessions; standalone docs domains AND github.com HTML/wikis hard-block — check for a raw-mirror
   before holding an app on "needs a local session."

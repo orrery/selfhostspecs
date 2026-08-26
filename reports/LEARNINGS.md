@@ -3,6 +3,18 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-08-26 — FIND #32
+
+71. **A harvester-drafted quote can be fabricated even with a real file open in front of it** —
+    FIND #32's Dify candidate cited a "Minimum required for operation: ..." line as a compose
+    file comment; the verifier grepped both the file and its template for "minimum" and found
+    zero matches, while the REAL official figure (`CPU >= 2 Core - RAM >= 4 GiB`) was sitting
+    in the repo's own top-level README the whole time, unchecked. Cost nothing here only
+    because verification is mandatory pre-queue. → FIND/BUILD harvesters: check the repo
+    README for a stated system-requirements section before declaring `no_official_figure` or
+    drafting any quote from memory of a fetched page; never paraphrase a quote into a
+    plausible-sounding line, copy the literal string or don't cite it.
+
 ## 2026-08-26 — ANALYZE+BUILD (specs-loop)
 
 69. **LEARNINGS #65's OR-dep prose gap was live-site-harmful, not just cosmetic** — fresh-eyes
@@ -86,26 +98,6 @@ learning. FIND and BUILD read this file first, every run. Newest first.
     → Any list section that only grows between drains (Queued between BUILD runs, not just
     Shipped/Rejected which only grow) needs the same archive treatment, proactively — don't
     wait for the ceiling to hit a second time on the same file.
-
-## 2026-08-20 — FIND #26
-
-63. **A commented-out or alternative-backend block in a compose file is not a required
-    service** — finder read Penpot's docker-compose and flagged Minio as a required dep
-    (deps-schema hold, same shape as Ente/Sentry/PostHog), but the verifier's live re-fetch
-    showed the default storage backend is filesystem (`PENPOT_OBJECTS_STORAGE_BACKEND: fs`)
-    and Minio is only an optional S3-alternative — no minio service is even defined in the
-    compose. Cost: a real 16/20 candidate almost got parked on a nonexistent blocker.
-    → Before calling a deps-schema hold, confirm the flagged service is actually
-    instantiated in the compose file (not just mentioned in config docs as an option).
-
-## 2026-08-18 — FIND #24
-
-62. **In-place prose-trimming bought only one cycle of headroom each time; moving historical
-    detail OUT of the file is the durable fix** — 3 prior relief attempts (9998→9080→9922)
-    re-ceilinged fast since nothing left the file. 08-18: moved Shipped/Rejected detail to
-    reports/archive/{shipped,rejected}-log.md, names stay inline for dedupe; deleted a dupe
-    SERVICES-enum bullet. 9922→9023, held past 2 new queued items (→9631). → Archive, don't
-    trim, next time any governed file nears budget.
 
 ## Compacted (graduated into CI tests / defect classes, or superseded — see OPERATIONS.md,
 tests/*.test.mjs, full history: reports/archive/learnings-compacted.md)
