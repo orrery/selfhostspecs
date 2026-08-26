@@ -1,0 +1,55 @@
+{
+  "name": "Coder",
+  "slug": "coder",
+  "category": "dev-tools",
+  "website": "https://coder.com",
+  "repo": "https://github.com/coder/coder",
+  "description": "Self-hosted platform for provisioning and managing remote development environments on your own infrastructure.",
+  "status": "pending-qa",
+  "specs": {
+    "ram_min_mb": {
+      "value": 4096,
+      "source_url": "https://github.com/coder/coder/blob/main/docs/install/docker.md",
+      "quote": "2 CPU cores and 4 GB memory free on your machine.",
+      "retrieved": "2026-08-26",
+      "scope": "Coder server (control plane) host, Docker installation, general"
+    },
+    "cpu_min_cores": {
+      "value": 2,
+      "source_url": "https://github.com/coder/coder/blob/main/docs/install/docker.md",
+      "quote": "2 CPU cores and 4 GB memory free on your machine.",
+      "retrieved": "2026-08-26",
+      "scope": "Coder server (control plane) host, Docker installation, general"
+    },
+    "no_official_figure": {
+      "fields": [
+        "ram_rec_mb",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://github.com/coder/coder/blob/main/docs/install/docker.md"
+    }
+  },
+  "deps": [
+    {
+      "service": "postgresql",
+      "required": true,
+      "source_url": "https://github.com/coder/coder/blob/main/compose.yaml"
+    }
+  ],
+  "docker": {
+    "image": "ghcr.io/coder/coder",
+    "size_mb": 229,
+    "arches": [
+      "amd64",
+      "arm64",
+      "armv7"
+    ],
+    "source_url": "https://github.com/coder/coder/pkgs/container/coder",
+    "retrieved": "2026-08-26"
+  },
+  "sources_of_truth": [
+    "https://github.com/coder/coder/blob/main/docs/install/docker.md",
+    "https://github.com/coder/coder/blob/main/compose.yaml",
+    "https://github.com/coder/coder/pkgs/container/coder"
+  ]
+}

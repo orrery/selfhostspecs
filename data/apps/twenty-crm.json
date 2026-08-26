@@ -1,0 +1,53 @@
+{
+  "name": "Twenty",
+  "slug": "twenty-crm",
+  "category": "crm",
+  "website": "https://twenty.com",
+  "repo": "https://github.com/twentyhq/twenty",
+  "description": "Self-hosted open-source CRM for managing contacts, companies, and sales pipelines.",
+  "status": "pending-qa",
+  "specs": {
+    "ram_min_mb": {
+      "value": 2048,
+      "source_url": "https://github.com/twentyhq/twenty/blob/main/packages/twenty-docs/developers/self-host/capabilities/docker-compose.mdx",
+      "quote": "RAM: Ensure your environment has at least 2GB of RAM. Insufficient memory can cause processes to crash.",
+      "retrieved": "2026-08-26",
+      "scope": "Docker Compose self-host, general installation"
+    },
+    "no_official_figure": {
+      "fields": [
+        "ram_rec_mb",
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://github.com/twentyhq/twenty/blob/main/packages/twenty-docs/developers/self-host/capabilities/docker-compose.mdx"
+    }
+  },
+  "deps": [
+    {
+      "service": "postgresql",
+      "required": true,
+      "source_url": "https://github.com/twentyhq/twenty/blob/main/packages/twenty-docker/docker-compose.yml"
+    },
+    {
+      "service": "redis",
+      "required": true,
+      "source_url": "https://github.com/twentyhq/twenty/blob/main/packages/twenty-docker/docker-compose.yml"
+    }
+  ],
+  "docker": {
+    "image": "twentycrm/twenty",
+    "size_mb": 239,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://hub.docker.com/r/twentycrm/twenty",
+    "retrieved": "2026-08-26"
+  },
+  "sources_of_truth": [
+    "https://docs.twenty.com/developers/self-host/capabilities/docker-compose",
+    "https://github.com/twentyhq/twenty/blob/main/packages/twenty-docker/docker-compose.yml",
+    "https://hub.docker.com/r/twentycrm/twenty"
+  ]
+}

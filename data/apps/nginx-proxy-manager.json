@@ -1,0 +1,61 @@
+{
+  "name": "Nginx Proxy Manager",
+  "slug": "nginx-proxy-manager",
+  "category": "networking",
+  "website": "https://nginxproxymanager.com",
+  "repo": "https://github.com/NginxProxyManager/nginx-proxy-manager",
+  "description": "Web UI for managing an Nginx reverse proxy, free SSL certificates, and access lists.",
+  "status": "pending-qa",
+  "specs": {
+    "no_official_figure": {
+      "fields": [
+        "ram_min_mb",
+        "ram_rec_mb",
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://nginxproxymanager.com/setup/"
+    }
+  },
+  "deps": [
+    {
+      "service": "none",
+      "required": false,
+      "source_url": "https://nginxproxymanager.com/setup/",
+      "note": "NPM ships SQLite built in \u2014 no external database required by default. Postgres and MySQL/MariaDB are optional alternate backends; picking one disables SQLite (NPM's own docs: 'DB_MYSQL_* environment variables will take precedent over DB_SQLITE_* variables... you will not be able to use SQLite'). Use at most one alternate backend, never several."
+    },
+    {
+      "service": "postgresql",
+      "required": false,
+      "source_url": "https://github.com/NginxProxyManager/nginx-proxy-manager/blob/develop/docs/src/setup/index.md#using-postgres-database",
+      "note": "Optional alternate backend to the built-in SQLite \u2014 see the 'none' entry's note."
+    },
+    {
+      "service": "mysql",
+      "required": false,
+      "source_url": "https://github.com/NginxProxyManager/nginx-proxy-manager/blob/develop/docs/src/setup/index.md#using-mysql--mariadb-database",
+      "note": "Docs section is titled 'Using MySQL / MariaDB Database' and covers both by name (env vars DB_MYSQL_*) \u2014 cited as two separate entries per the nextcloud/keycloak precedent. Optional alternate backend to the built-in SQLite \u2014 see the 'none' entry's note."
+    },
+    {
+      "service": "mariadb",
+      "required": false,
+      "source_url": "https://github.com/NginxProxyManager/nginx-proxy-manager/blob/develop/docs/src/setup/index.md#using-mysql--mariadb-database",
+      "note": "Docs section is titled 'Using MySQL / MariaDB Database' and covers both by name (env vars DB_MYSQL_*) \u2014 cited as two separate entries per the nextcloud/keycloak precedent. Optional alternate backend to the built-in SQLite \u2014 see the 'none' entry's note."
+    }
+  ],
+  "docker": {
+    "image": "jc21/nginx-proxy-manager",
+    "size_mb": 432,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://hub.docker.com/r/jc21/nginx-proxy-manager",
+    "retrieved": "2026-08-26"
+  },
+  "sources_of_truth": [
+    "https://nginxproxymanager.com/setup/",
+    "https://github.com/NginxProxyManager/nginx-proxy-manager",
+    "https://hub.docker.com/r/jc21/nginx-proxy-manager"
+  ]
+}

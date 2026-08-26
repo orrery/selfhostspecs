@@ -1,0 +1,54 @@
+{
+  "name": "ONLYOFFICE Document Server",
+  "slug": "onlyoffice-document-server",
+  "category": "documents",
+  "website": "https://www.onlyoffice.com/",
+  "repo": "https://github.com/ONLYOFFICE/Docker-DocumentServer",
+  "description": "Self-hosted online office suite for collaborative editing of documents, spreadsheets, and presentations.",
+  "status": "pending-qa",
+  "specs": {
+    "ram_rec_mb": {
+      "value": 4096,
+      "source_url": "https://github.com/ONLYOFFICE/Docker-DocumentServer/blob/master/README.md",
+      "quote": "**RAM**: 4 GB or more",
+      "retrieved": "2026-08-26",
+      "scope": "Community Edition, Docker image, general installation"
+    },
+    "cpu_rec_cores": {
+      "value": 2,
+      "source_url": "https://github.com/ONLYOFFICE/Docker-DocumentServer/blob/master/README.md",
+      "quote": "**CPU**: dual-core 2 GHz or higher",
+      "retrieved": "2026-08-26",
+      "scope": "Community Edition, Docker image, general installation"
+    },
+    "no_official_figure": {
+      "fields": [
+        "ram_min_mb",
+        "cpu_min_cores"
+      ],
+      "evidence_url": "https://github.com/ONLYOFFICE/Docker-DocumentServer/blob/master/README.md"
+    }
+  },
+  "deps": [
+    {
+      "service": "none",
+      "required": false,
+      "source_url": "https://github.com/ONLYOFFICE/Docker-DocumentServer/blob/master/docker-compose.yml"
+    }
+  ],
+  "docker": {
+    "image": "onlyoffice/documentserver",
+    "size_mb": 1334,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://hub.docker.com/r/onlyoffice/documentserver",
+    "retrieved": "2026-08-26"
+  },
+  "sources_of_truth": [
+    "https://github.com/ONLYOFFICE/Docker-DocumentServer/blob/master/README.md",
+    "https://github.com/ONLYOFFICE/Docker-DocumentServer/blob/master/docker-compose.yml",
+    "https://hub.docker.com/r/onlyoffice/documentserver"
+  ]
+}
