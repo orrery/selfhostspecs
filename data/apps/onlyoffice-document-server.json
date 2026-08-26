@@ -5,7 +5,7 @@
   "website": "https://www.onlyoffice.com/",
   "repo": "https://github.com/ONLYOFFICE/Docker-DocumentServer",
   "description": "Self-hosted online office suite for collaborative editing of documents, spreadsheets, and presentations.",
-  "status": "pending-qa",
+  "status": "pending-second-qa",
   "specs": {
     "ram_rec_mb": {
       "value": 4096,

@@ -5,7 +5,7 @@
   "website": "https://coder.com",
   "repo": "https://github.com/coder/coder",
   "description": "Self-hosted platform for provisioning and managing remote development environments on your own infrastructure.",
-  "status": "pending-qa",
+  "status": "pending-second-qa",
   "specs": {
     "ram_min_mb": {
       "value": 4096,

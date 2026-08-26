@@ -3,24 +3,29 @@
 Statuses: unverified→queued(verifier sign-off)→building→shipped/rejected. Dedupe vs
 all lists. App detail: `data/apps/<slug>.json`.
 
-## Shipped — 32 apps live
+## Shipped — 36 apps live
 gitea, home-assistant, immich, jellyfin, uptime-kuma, vaultwarden, adguard-home, frigate,
 grafana, n8n, nextcloud, paperless-ngx, pi-hole, syncthing, discourse, zulip, rocket-chat,
 openproject, plausible-ce, open-webui, linkwarden, chatwoot, seafile, mattermost, jenkins,
-keycloak, node-red, gitlab-ce, coolify, prometheus, docker-mailserver, wazuh.
+keycloak, node-red, gitlab-ce, coolify, prometheus, docker-mailserver, wazuh, kestra,
+code-server, ollama, dockge.
 Batch-by-batch dates: reports/archive/shipped-log.md.
 Pending BUILD (1 schema-change/batch): GPU column (Jellyfin/Immich/Frigate/open-webui?,
 #17); community-figures column (vaultwarden/adguard-home/uptime-kuma/syncthing/
-paperless-ngx); Discourse churn caveat (AUDIT#3); build.mjs doesn't render DB-OR deps
-in prose for any multi-backend app (QA 08-23, affects Kestra + every existing OR-dep app);
-Linkwarden cpu_rec_cores now has an official figure ("any 2 core machine", AUDIT#5, source
-rewritten 08-24) — harvest+verify next BUILD, don't add unverified.
+paperless-ngx); Discourse churn caveat (AUDIT#3); grafana/keycloak/nextcloud's own OR-deps
+still lack `note` fields (build.mjs renders them now, 08-26 — only Kestra/Nginx Proxy
+Manager have notes so far, retrofit the rest opportunistically); Linkwarden cpu_rec_cores
+now has an official figure ("any 2 core machine", AUDIT#5, source rewritten 08-24) —
+harvest+verify next BUILD, don't add unverified.
 
 ## In pipeline (not yet live)
-- pending-second-qa: kestra, code-server, ollama, dockge — cleared 08-23, zero defects
-  (data/apps/*.json). Ollama has no official base RAM/CPU figure (model-dependent, honest
-  no_official_figure). Kestra's Postgres/MySQL OR modeled as two required:false deps +
-  note (QA-ruled consistent with grafana/keycloak/nextcloud convention, kept as-is).
+- pending-second-qa: onlyoffice-document-server, coder, nginx-proxy-manager, twenty-crm —
+  cleared 08-26, zero defects (data/apps/*.json). nginx-proxy-manager's deps array (none/
+  postgresql/mysql/mariadb, all optional) needed a missing mysql entry added by the
+  verifier plus `note` fields — QA confirmed correct rendering incl. the OR-dep prose fix.
+  Coder/Twenty CRM: coder.com/docs.twenty.com egress-blocked in sandbox both harvest and
+  verify passes — citations rest on raw.githubusercontent.com source files, independently
+  re-fetched twice (verifier + QA), not canonical-domain-confirmed.
 
 ## Queued (verifier-signed), unbuilt
 Full sourcing detail (quotes, deps, images, arch) for every item below is archived at
@@ -36,7 +41,6 @@ Queued 08-22 after hitting byte ceiling again).
 - Wekan (15/20, #10) — min-vs-rec TBD at BUILD (Ghost precedent).
 - Directus (17/20, #11) — DB OR (6 vendors); Redis optional.
 - Supabase self-hosted (16/20, #11) — 11-svc compose, schema modeling TBD.
-- Twenty CRM (17/20, #12) — postgres+redis req.
 - Formbricks (15/20, #12) — 4 req deps; hub/cube unresearched, no enum slot.
 - Zigbee2MQTT (14/20, #12) — needs external broker, re-check before BUILD.
 - TriliumNext Trilium (14/20, #13, marginal) — no_official_figure, no deps.
@@ -52,19 +56,9 @@ Queued 08-22 after hitting byte ceiling again).
 - Penpot (16/20, #26) — postgres+valkey req; multi-image not yet harvested.
 - WordPress (17/20, #28) — no_official_figure. MySQL OR MariaDB req; SQLite not
   core-supported. Official Image, 9-arch. Crowded topic — win on provenance.
-- ONLYOFFICE Document Server (18/20, #30) — rec-only "4GB RAM/dual-core 2GHz", deps:none
-  (verified via CE docker-compose.yml, single service — not the EE/DE bundling sentence),
-  arm64+amd64 per Docker Hub manifest (README silent). Source: github.com/ONLYOFFICE/
-  Docker-DocumentServer README "Recommended System Requirements".
-- Coder (15/20, #30) — coder/coder, 14.2k★, ≠code-server (diff product, same org).
-  "2+ CPU cores and 4GB+ RAM" for the Coder-server host (not workspaces), docs/get-started/
-  index.md. Postgres required (compose.yaml). Demand evidence weak (memory-leak issues,
-  not direct RAM asks) — note at BUILD.
 - Langfuse (18/20, #31) — LLM observability/tracing, fills AI-stack gap next to Ollama/
   open-webui. Official per-service min-reqs table (langfuse-docs scaling.mdx). 6-svc
   compose (web+worker+postgres+clickhouse+redis+minio) — heaviest in queue, effort flag.
-- Nginx Proxy Manager (16/20, #31) — no_official_figure (confirmed absent: docs+wiki+repo
-  search, both agents). deps:none, SQLite default, arm64 (armv7 dropped 2.14+).
 - wg-easy (14/20, #31, marginal) — no_official_figure (confirmed absent incl. wiki).
   deps:none, arm64 but host needs in-kernel WireGuard support — real deploy caveat, note
   at BUILD. Weakest demand signal of the batch.

@@ -5,7 +5,7 @@
   "website": "https://twenty.com",
   "repo": "https://github.com/twentyhq/twenty",
   "description": "Self-hosted open-source CRM for managing contacts, companies, and sales pipelines.",
-  "status": "pending-qa",
+  "status": "pending-second-qa",
   "specs": {
     "ram_min_mb": {
       "value": 2048,

@@ -3,6 +3,22 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-08-26 — ANALYZE+BUILD (specs-loop)
+
+69. **LEARNINGS #65's OR-dep prose gap was live-site-harmful, not just cosmetic** — fresh-eyes
+    QA on Kestra found `noExternalServices()` used required:false+required:false OR-modeling to
+    falsely list it on the "no external database" collection page (Kestra's own compose has no
+    db-free standalone mode). Fixed by making the compose-file default `required:true` (matches
+    paperless-ngx precedent) and rendering `deps[].note` in `build.mjs` (previously written but
+    never rendered). → Any future either/or dep: default-per-official-compose is `required:true`,
+    alternates `required:false`, always with a `note`; check collection-membership predicates
+    against the fix, don't just eyeball the per-app page.
+70. **`depNotes`'s `Set`-based dedup silently collapses byte-identical `note` strings across
+    multiple dep entries** (found on nginx-proxy-manager's mysql+mariadb, same note text) —
+    harmless today (no content lost, reads as one shared paragraph) but untested, per QA 08-26.
+    → Next build.mjs touch: add a build-integrity test asserting every distinct dep note in the
+    data appears in its rendered app page, so a future regression here fails CI, not QA eyeballing.
+
 ## 2026-08-24 — AUDIT #5
 
 68. **No automated cadence-gap detector exists — the 4th time across 5 audits that "did a
