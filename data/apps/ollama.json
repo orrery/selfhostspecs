@@ -5,7 +5,7 @@
   "website": "https://ollama.com",
   "repo": "https://github.com/ollama/ollama",
   "description": "Runs and serves large language models locally via a CLI, API, and Docker image; footprint scales with the loaded model.",
-  "status": "pending-second-qa",
+  "status": "live",
   "specs": {
     "no_official_figure": {
       "fields": [
@@ -15,7 +15,7 @@
         "cpu_rec_cores"
       ],
       "evidence_url": "https://github.com/ollama/ollama/issues/2418",
-      "note": "Ollama publishes no base/runtime RAM or CPU figure for the app itself — actual memory use is set entirely by which model is loaded (per-model sizes are listed on individual ollama.com/library model pages, not as a single app-level spec). Upstream issue #2418 ('What are the system requirements?', closed without a docs resolution — no linked PR or requirements page) requested this documentation for disk/RAM/GPU; the docs/ tree (faq.mdx, gpu.mdx, linux.mdx, etc., checked 2026-08-23) still has no general RAM/CPU minimum. Per-model tiers are out of scope for this entry — encoding one model's footprint as the app's min/rec figure would misrepresent scope (Open WebUI precedent, Defect Class #2/#3)."
+      "note": "Ollama publishes no base/runtime RAM or CPU figure for the app itself \u2014 actual memory use is set entirely by which model is loaded (per-model sizes are listed on individual ollama.com/library model pages, not as a single app-level spec). Upstream issue #2418 ('What are the system requirements?', closed without a docs resolution \u2014 no linked PR or requirements page) requested this documentation for disk/RAM/GPU; the docs/ tree (faq.mdx, gpu.mdx, linux.mdx, etc., checked 2026-08-23) still has no general RAM/CPU minimum. Per-model tiers are out of scope for this entry \u2014 encoding one model's footprint as the app's min/rec figure would misrepresent scope (Open WebUI precedent, Defect Class #2/#3)."
     }
   },
   "deps": [

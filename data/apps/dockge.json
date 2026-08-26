@@ -5,7 +5,7 @@
   "website": "https://github.com/louislam/dockge",
   "repo": "https://github.com/louislam/dockge",
   "description": "Web UI for managing Docker Compose stacks: edit, start, stop, and monitor compose.yaml files.",
-  "status": "pending-second-qa",
+  "status": "live",
   "specs": {
     "no_official_figure": {
       "fields": [

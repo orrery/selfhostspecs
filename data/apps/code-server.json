@@ -5,21 +5,21 @@
   "website": "https://coder.com/docs/code-server",
   "repo": "https://github.com/coder/code-server",
   "description": "Runs VS Code in the browser on a remote server so you can code from any device.",
-  "status": "pending-second-qa",
+  "status": "live",
   "specs": {
     "ram_min_mb": {
       "value": 1024,
       "source_url": "https://raw.githubusercontent.com/coder/code-server/main/docs/requirements.md",
       "quote": "1 GB of RAM",
       "retrieved": "2026-08-23",
-      "scope": "code-server, general — 'At the minimum, we recommend' section of docs/requirements.md"
+      "scope": "code-server, general \u2014 'At the minimum, we recommend' section of docs/requirements.md"
     },
     "cpu_min_cores": {
       "value": 2,
       "source_url": "https://raw.githubusercontent.com/coder/code-server/main/docs/requirements.md",
       "quote": "2 CPU cores",
       "retrieved": "2026-08-23",
-      "scope": "code-server, general — 'At the minimum, we recommend' section of docs/requirements.md"
+      "scope": "code-server, general \u2014 'At the minimum, we recommend' section of docs/requirements.md"
     },
     "no_official_figure": {
       "fields": [
@@ -27,7 +27,7 @@
         "cpu_rec_cores"
       ],
       "evidence_url": "https://raw.githubusercontent.com/coder/code-server/main/docs/requirements.md",
-      "note": "Beyond the stated minimum, requirements.md only walks through a GCP custom-VM sizing example ('set at least 2 cores and 2 GB of RAM') as part of its recommended cloud setup walkthrough — a provider-specific instance-sizing example, not a general recommended figure for the app (Coolify/OpenProject precedent, Defect Class #2)."
+      "note": "Beyond the stated minimum, requirements.md only walks through a GCP custom-VM sizing example ('set at least 2 cores and 2 GB of RAM') as part of its recommended cloud setup walkthrough \u2014 a provider-specific instance-sizing example, not a general recommended figure for the app (Coolify/OpenProject precedent, Defect Class #2)."
     }
   },
   "deps": [

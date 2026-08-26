@@ -5,7 +5,7 @@
   "website": "https://kestra.io",
   "repo": "https://github.com/kestra-io/kestra",
   "description": "Event-driven workflow orchestration platform for scheduling and automating data, AI, and infrastructure pipelines.",
-  "status": "pending-second-qa",
+  "status": "live",
   "specs": {
     "ram_min_mb": {
       "value": 4096,
@@ -33,15 +33,15 @@
   "deps": [
     {
       "service": "postgresql",
-      "required": false,
-      "source_url": "https://github.com/kestra-io/docs/blob/main/src/contents/docs/10.administrator-guide/00.requirements/index.md",
-      "note": "Kestra Open Source requires PostgreSQL OR MySQL for the queue/repository backend, not both — modeled as two independently-optional entries per the OR-flattening rule (Defect Class #11); do not read required:false on both as dependency-free."
+      "required": true,
+      "source_url": "https://github.com/kestra-io/kestra/blob/develop/docker-compose.yml",
+      "note": "Kestra Open Source requires PostgreSQL OR MySQL for the queue/repository backend, not both. Postgres is modeled as required because it is what Kestra's own official reference docker-compose.yml wires up by default (repository/queue type: postgres); MySQL is the documented alternative \u2014 swap in required:false MySQL for required:true Postgres, never run neither (paperless-ngx valkey/redis precedent, Defect Class #11)."
     },
     {
       "service": "mysql",
       "required": false,
       "source_url": "https://github.com/kestra-io/docs/blob/main/src/contents/docs/10.administrator-guide/00.requirements/index.md",
-      "note": "Kestra Open Source requires PostgreSQL OR MySQL for the queue/repository backend, not both — modeled as two independently-optional entries per the OR-flattening rule (Defect Class #11); do not read required:false on both as dependency-free."
+      "note": "Alternative to PostgreSQL for the queue/repository backend \u2014 pick one, not both, not neither. See the postgresql entry's note."
     }
   ],
   "docker": {

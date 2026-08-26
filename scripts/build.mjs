@@ -205,6 +205,9 @@ function appBody(apps, i) {
         : `<li>${esc(d.service)}${d.required ? " (required)" : " (optional)"} — <a href="${esc(d.source_url)}">source</a></li>`
     )
     .join("");
+  const depNotes = [...new Set((a.deps ?? []).map((d) => d.note).filter(Boolean))]
+    .map((n) => `<p class="meta">${esc(n)}</p>`)
+    .join("");
   const dockerSize = a.docker?.size_mb ? fmtMb(a.docker.size_mb) : "not yet checked";
   const rel = related(apps, i)
     .map((r) => `<li><a href="/apps/${esc(r.slug)}/">${esc(r.name)}</a> — ${esc(r.description)}</li>`)
@@ -215,7 +218,7 @@ function appBody(apps, i) {
 </header>
 ${figs.join("\n")}
 ${absentHtml}
-<h2>External services</h2><ul>${deps}</ul>
+<h2>External services</h2><ul>${deps}</ul>${depNotes}
 <h2>Container</h2><p>Image: <code>${esc(a.docker?.image ?? "not yet checked")}</code> · compressed size (amd64): ${esc(dockerSize)} · architectures: ${esc((a.docker?.arches ?? []).length ? a.docker.arches.join(", ") : "not yet checked")}${a.docker?.retrieved ? ` · <a href="${esc(a.docker.source_url)}">source</a>, retrieved ${esc(a.docker.retrieved)}` : ""}</p>
 <h2>Related apps</h2><ul>${rel}</ul>`;
 }
