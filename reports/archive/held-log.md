@@ -21,6 +21,21 @@ precedent: LEARNINGS #62 shipped/rejected-log split).
 - Windmill (~8/20,#19): n8n-alt ~17.5k★, windmill.dev blocked. Only RAM figure is a stale Traefik example (worker_native now 2048M vendor-side). Postgres only dep. Hold for reachable docs or a prose minimum.
 - Ente (~11/20,#19): Immich-alt (E2EE) ~28.3k★. No RAM/CPU figure. Deps postgres+minio(unmapped)+socat — same unmapped-service shape as Supabase/Sentry/PostHog.
 - Infisical (~14/20,#20): 28.8k★ secrets/PKI, non-dupe vs Vaultwarden. Finder's "2-4CPU/4-8GB" is app-tier only — req'd Postgres+Redis add ~6-8vCPU/16-20GB. Hold for full-stack scope write-up; deps enum-mapped, Docker infisical/infisical amd64+arm64 confirmed.
+- LibreChat (13/20,#32): 42.5k★ multi-provider AI chat UI, NOT open-webui dupe (open-webui
+  deps:none, LibreChat requires 5 services — genuine weight difference, Grafana/Keycloak-
+  style multi-competitor precedent). Held on sourcing only: no official RAM/CPU figure
+  anywhere (README, Helm values.yaml boilerplate; librechat.ai/www.librechat.ai blocked,
+  no danny-avila/librechat.ai docs repo). Deps if re-scored: mongodb+meilisearch+pgvector+
+  rag_api+admin-panel ALL required (no `profiles:` key in compose). Re-check for an
+  official figure before re-proposing.
+- PocketBase (~14/20,#29, near-miss): 60.8k★, single-binary/SQLite, no deps — real demand
+  (10 GH issues on OOM/memory). No reachable official RAM figure (pocketbase.io blocked, no
+  in-repo docs mirror). Re-check sourcing before re-scoring.
+- Zitadel (13/20,#29): 14.8k★ IAM, crowds Keycloak (shipped). Sourced verbatim via in-repo
+  docs mirror despite zitadel.com blocked (~512MB app / 4GB per DB core, Postgres≥14 req)
+  — below bar on coverage/channel, not sourcing.
+- Appwrite (9/20,#29): BaaS, no reachable figure, no in-repo mirror, overlaps Supabase
+  (already queued). Weakest of the three.
 
 ## Unverified sub-detail
 - Graylog (~8.1k★,#15): docs repo archived, docs.graylog.org presumed blocked — shallow.

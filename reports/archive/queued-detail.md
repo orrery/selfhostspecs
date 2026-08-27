@@ -134,3 +134,42 @@ LEARNINGS #62, shipped/rejected-log split). BUILD reads this file before harvest
   (SYS_MODULE cap + /lib/modules mount) — note this caveat explicitly on the page, not just
   in the arch note. Demand evidence thinnest of the batch (one lightly-commented closed
   issue on resource usage vs. NPM's sustained memory-leak discussion).
+- Activepieces (17/20, #33) — activepieces/activepieces, 24,064★ (checked 2026-08-27, not
+  harvester's stale 23.4k), n8n-alt AI/workflow automation, self-tagged `n8n-alternative`
+  topic — distinct org/codebase/trajectory, not a rename or dupe. Official per-component
+  sizing table, verbatim from docs/install/configure-operate/production-setup.mdx (mirrors
+  activepieces.com/docs, blocked; raw.githubusercontent.com reachable), retrieved
+  2026-08-27: "| **Worker** | 0.5 vCPU / 1 GB, concurrency **1** | one per concurrent flow |"
+  / "| **App** | 1 vCPU / 1 GB | one per ten workers |" / "| **Postgres** | 2 vCPU / 4 GB,
+  managed | one — **size it against peak throughput**, see below |" / "| **Redis** | 1 vCPU
+  / 1 GB, managed | one |". Same table also states object storage (S3) "**required**" at
+  production scale ("S3 is a hard requirement, not a nice-to-have... without it... the
+  throughput numbers below no longer hold") — but default docker-compose.yml (repo root,
+  `app` depends_on [postgres, redis] only) has no S3 service, so S3 is optional at
+  quickstart scale only. Model as min-vs-rec split (quickstart=optional, official
+  production=required), like Ghost, not a flat optional. Deps: postgres+redis required
+  (docker-compose.yml confirmed). License not clean SPDX: MIT core + separate EE license
+  under packages/ee/ — flag if a license field is ever added (rule: never trust spdx_id
+  alone).
+- Stalwart (15/20, #33) — stalwartlabs/stalwart, 14,373★, all-in-one Rust mail/collab
+  server (JMAP/IMAP4/POP3/SMTP/CalDAV/CardDAV/WebDAV in one binary). `stalwartlabs/
+  mail-server` is confirmed to be the same repo's old name (transparent GH redirect, badges
+  point at current org), not a separate project — no dupe risk. Architecturally distinct
+  from docker-mailserver (shipped) and Mailu (queued): both are Postfix/Dovecot(/Rspamd)
+  multi-daemon stacks, Stalwart is a single compiled binary, no docker-compose.yml anywhere
+  in the repo outside CI test fixtures. Deps: none required by default — embedded RocksDB
+  confirmed verbatim via Docker Hub `full_description` field (hub.docker.com/v2/
+  repositories/stalwartlabs/stalwart/, reachable, stalw.art itself blocked), retrieved
+  2026-08-27: "Stalwart comes pre-configured with `RocksDB` as the default backend for all
+  stores. You can skip this step if you are happy with the default configuration." Postgres/
+  MySQL/Redis/S3/Elasticsearch/Meilisearch all optional pluggable backends per README.
+  RAM figure UNVERIFIED to byte-for-byte bar: github.com/stalwartlabs/stalwart/
+  discussions/580, maintainer mdecimus (GitHub "Maintainer" badge, per WebFetch-mediated
+  re-fetch only — direct API/HTML blocked this session, repo-scope restriction) allegedly
+  states "For a small setup you can start with any VPS with 1GB or RAM. Stalwart has low
+  memory requirements." Two independent agents reproduced the same idiosyncratic "1GB or
+  RAM" wording, and multiple other commenters independently report 122-250MiB actual usage
+  — corroborating but not a literal capture. BUILD must get a true byte-for-byte fetch
+  (retry raw HTML/API, or a screenshot) before shipping as a labeled COMMUNITY figure
+  (maintainer-statement is top basis grade per OPERATIONS.md rule 8); if that fails too,
+  ship no_official_figure:true instead.

@@ -70,6 +70,17 @@ Queued 08-22 after hitting byte ceiling again).
   optional — swappable to qdrant/pgvector/etc) — model all three as OR like Directus/Kestra.
   CAUTION: harvester's first-pass compose-comment quote didn't exist in the file (verifier
   caught it) — re-confirm every quote against the live file at BUILD, don't reuse draft text.
+- Activepieces (17/20, #33) — 24.1k★, n8n-alt workflow automation, not a dupe (self-tagged
+  `n8n-alternative`, distinct codebase). Official per-component sizing table in-repo docs
+  mirror. Postgres+Redis req; S3 min-vs-rec split (optional at quickstart, official docs say
+  "required" at prod scale) — model like Ghost, not flat optional. Split MIT/EE license, flag
+  if license field ever added.
+- Stalwart (15/20, #33) — 14.4k★, all-in-one Rust mail/collab server (JMAP/IMAP/SMTP/CalDAV/
+  CardDAV/WebDAV), embedded RocksDB, deps:none by default. Not a docker-mailserver/Mailu
+  dupe (single-binary vs Postfix/Dovecot stack); `stalwartlabs/mail-server` is its own old
+  name (confirmed redirect), not a separate project. RAM figure is maintainer-statement only,
+  not byte-verified (WebFetch-mediated, GH discussions API blocked this session) — BUILD must
+  get a literal re-fetch before shipping as community figure, else no_official_figure.
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members, zero-incumbent
   SERP. BUILD: disclose required:false≠dependency-free (#3), write explicit inclusion
@@ -89,24 +100,9 @@ OpenProject); Redmine (#15, zero figure); AFFiNE (~12/20, docs blocked); Forgejo
 Codeberg blocked); SonarQube (#15, JVM-heap≠RAM); Healthchecks (#15, docs blocked);
 Sentry (12/20) & PostHog (11/20, deps-schema); Grocy (15/20, Helm/K8s gap); Gotify
 (12/20, unreachable); Windmill (~8/20, docs blocked); Ente (~11/20, deps-schema);
-Infisical (~14/20, full-stack scope TBD).
-- LibreChat (13/20, #32) — 42.5k★, multi-provider AI chat UI. NOT an open-webui dupe
-  (verified: open-webui is deps:none, LibreChat requires 5 services — genuinely different
-  deployment weight, Grafana/Keycloak-style multi-competitor precedent, not FreeScout/Zammad
-  overlap). Held on sourcing only: no official RAM/CPU figure anywhere (README, Helm
-  values.yaml boilerplate, no docs-mirror repo — librechat.ai/www.librechat.ai blocked and
-  no separate danny-avila/librechat.ai docs repo exists, confirmed). Deps if re-scored:
-  mongodb+meilisearch+pgvector+rag_api+admin-panel ALL required (no `profiles:` key in
-  compose — admin-panel is not optional, correct this if promoted). Re-check for an official
-  figure before re-proposing.
-- PocketBase (~14/20, #29, near-miss): 60.8k★, single-binary/SQLite, no deps — real demand
-  (10 GH issues on OOM/memory). No reachable official RAM figure (pocketbase.io blocked,
-  no in-repo docs mirror). Re-check sourcing before re-scoring.
-- Zitadel (13/20, #29): 14.8k★ IAM, crowds Keycloak (shipped). Sourced verbatim via in-repo
-  docs mirror despite zitadel.com blocked (~512MB app / 4GB per DB core, Postgres≥14 req)
-  — below bar on coverage/channel, not sourcing.
-- Appwrite (9/20, #29): BaaS, no reachable figure, no in-repo mirror, overlaps Supabase
-  (already queued). Weakest of the three.
+Infisical (~14/20, full-stack scope TBD); LibreChat (13/20, #32, no fig); PocketBase
+(~14/20, #29, near-miss, no fig); Zitadel (13/20, #29, below bar); Appwrite (9/20, #29,
+weakest). Full detail on all 5: reports/archive/held-log.md.
 
 ## Unverified / held (not sent further)
 - Collection "1GB VPS": thin (3 qualifiers); revisit once PeerTube/Vikunja ship.

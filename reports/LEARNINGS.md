@@ -3,6 +3,16 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-08-27 — FIND #33
+
+72. **A harvester can silently soften a source's own "required" label into "recommended"**
+    — Activepieces' cited sizing table states S3 is "a hard requirement, not a nice-to-have"
+    at production scale, but the harvester's dep summary called it "strongly recommended,"
+    caught only because the verifier re-read the same doc the quote came from. → verifiers:
+    when a candidate's own cited source contains a severity word (required/optional/
+    recommended), diff the harvester's paraphrase against that exact word, not just the
+    quoted figure.
+
 ## 2026-08-26 — FIND #32
 
 71. **A harvester-drafted quote can be fabricated even with a real file open in front of it** —
