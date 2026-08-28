@@ -81,6 +81,8 @@ Queued 08-22 after hitting byte ceiling again).
   name (confirmed redirect), not a separate project. RAM figure is maintainer-statement only,
   not byte-verified (WebFetch-mediated, GH discussions API blocked this session) — BUILD must
   get a literal re-fetch before shipping as community figure, else no_official_figure.
+- Mailcow (17/20, #34) — 13.3k★, mail-server bundle; official min 6GiB+1GiB swap (docs
+  mirror); deps:none (18-svc, Wazuh-pattern); distinct from docker-mailserver/Mailu/Stalwart.
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members, zero-incumbent
   SERP. BUILD: disclose required:false≠dependency-free (#3), write explicit inclusion
