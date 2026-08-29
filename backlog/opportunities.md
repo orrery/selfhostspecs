@@ -10,22 +10,13 @@ openproject, plausible-ce, open-webui, linkwarden, chatwoot, seafile, mattermost
 keycloak, node-red, gitlab-ce, coolify, prometheus, docker-mailserver, wazuh, kestra,
 code-server, ollama, dockge.
 Batch-by-batch dates: reports/archive/shipped-log.md.
-Pending BUILD (1 schema-change/batch): GPU column (Jellyfin/Immich/Frigate/open-webui?,
-#17); community-figures column (vaultwarden/adguard-home/uptime-kuma/syncthing/
-paperless-ngx); Discourse churn caveat (AUDIT#3); grafana/keycloak/nextcloud's own OR-deps
-still lack `note` fields (build.mjs renders them now, 08-26 — only Kestra/Nginx Proxy
-Manager have notes so far, retrofit the rest opportunistically); Linkwarden cpu_rec_cores
-now has an official figure ("any 2 core machine", AUDIT#5, source rewritten 08-24) —
-harvest+verify next BUILD, don't add unverified.
+Pending BUILD (1 schema-change/batch), full detail: reports/archive/queued-detail.md
+(GPU column, community-figures column, Discourse churn caveat, OR-dep note retrofit,
+Linkwarden cpu_rec_cores).
 
 ## In pipeline (not yet live)
 - pending-second-qa: onlyoffice-document-server, coder, nginx-proxy-manager, twenty-crm —
-  cleared 08-26, zero defects (data/apps/*.json). nginx-proxy-manager's deps array (none/
-  postgresql/mysql/mariadb, all optional) needed a missing mysql entry added by the
-  verifier plus `note` fields — QA confirmed correct rendering incl. the OR-dep prose fix.
-  Coder/Twenty CRM: coder.com/docs.twenty.com egress-blocked in sandbox both harvest and
-  verify passes — citations rest on raw.githubusercontent.com source files, independently
-  re-fetched twice (verifier + QA), not canonical-domain-confirmed.
+  cleared 08-26, zero defects. Full detail: reports/archive/queued-detail.md.
 
 ## Queued (verifier-signed), unbuilt
 Full sourcing detail (quotes, deps, images, arch) for every item below is archived at
@@ -83,6 +74,11 @@ Queued 08-22 after hitting byte ceiling again).
   get a literal re-fetch before shipping as community figure, else no_official_figure.
 - Mailcow (17/20, #34) — 13.3k★, mail-server bundle; official min 6GiB+1GiB swap (docs
   mirror); deps:none (18-svc, Wazuh-pattern); distinct from docker-mailserver/Mailu/Stalwart.
+- Homebox (17/20, #35) — 7.0k★, home-inventory app (novel category). Official idle-mem
+  figure in README: "idle memory usage is less than 50MB for the whole container" — file as
+  idle/observed, not ram_min (Defect Class #2). deps:none (SQLite embedded).
+  ghcr.io/sysadminsmedia/homebox, :latest = amd64+arm64 only (armv7 dropped; predecessor
+  hay-kot/homebox archived, this is successor). AGPL-3.0.
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members, zero-incumbent
   SERP. BUILD: disclose required:false≠dependency-free (#3), write explicit inclusion
@@ -110,7 +106,8 @@ weakest). Full detail on all 5: reports/archive/held-log.md.
 - Collection "1GB VPS": thin (3 qualifiers); revisit once PeerTube/Vikunja ship.
 - Below bar (<14), don't re-propose w/o new evidence. 12-13: Navidrome, Audiobookshelf,
   Miniflux, Zabbix, Wallabag, DocuSeal, Actual Budget, Photoprism, Mealie, BookStack,
-  Firefly III, NetBox, Matrix Synapse, Authentik. ≤11: Outline, FreshRSS, Umami, NocoDB,
+  Firefly III, NetBox, Matrix Synapse, Authentik, Jellyseerr (13/20, #35, no fig). ≤11:
+  Outline, FreshRSS, Umami, NocoDB,
   Docmost, Baserow, Bitwarden, Pixelfed, Karakeep, Beszel, Tandoor Recipes, Headscale,
   Shiori, Passbolt, Wiki.js, Duplicati, ntfy, Homepage, Listmonk, Cachet, EspoCRM, Kavita,
   changedetection.io, Woodpecker CI, Kopia, Calibre-Web, NetBird, Garage/deuxfleurs-org.

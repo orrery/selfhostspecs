@@ -80,3 +80,10 @@ tests/*.test.mjs for the live enforcement each of these graduated into.
   start-order-only `depends_on` entries — check the app's own env-var/graceful-degradation
   docs, not compose syntax alone. `github.com` HTML/wiki pages proxy-block same as standalone
   docs domains — raw mirrors only.
+- A bundled multi-container deployment (embedded search/indexer wired by the project, not
+  bring-your-own) doesn't need a SERVICES enum slot — deps:none is honest when the published
+  figure scopes the whole bundle (Wazuh precedent, #59, 08-16; reused since for Stalwart/Mailcow).
+- DB-OR alternative deps rendered as flat required:false pairs hid the either/or in page prose —
+  fixed 08-26: compose-file default is `required:true`, alternates `required:false`, always with
+  a rendered `note` (#65/#69). grafana/keycloak/nextcloud still need the note retrofitted
+  opportunistically (tracked in backlog/opportunities.md Pending BUILD).

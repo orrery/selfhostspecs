@@ -173,3 +173,22 @@ LEARNINGS #62, shipped/rejected-log split). BUILD reads this file before harvest
   (retry raw HTML/API, or a screenshot) before shipping as a labeled COMMUNITY figure
   (maintainer-statement is top basis grade per OPERATIONS.md rule 8); if that fails too,
   ship no_official_figure:true instead.
+
+## In pipeline — pending-second-qa detail (moved from opportunities.md, 08-29)
+- onlyoffice-document-server, coder, nginx-proxy-manager, twenty-crm — cleared 08-26, zero
+  defects (data/apps/*.json). nginx-proxy-manager's deps array (none/postgresql/mysql/
+  mariadb, all optional) needed a missing mysql entry added by the verifier plus `note`
+  fields — QA confirmed correct rendering incl. the OR-dep prose fix. Coder/Twenty CRM:
+  coder.com/docs.twenty.com egress-blocked in sandbox both harvest and verify passes —
+  citations rest on raw.githubusercontent.com source files, independently re-fetched twice
+  (verifier + QA), not canonical-domain-confirmed.
+
+## Pending BUILD — schema/retrofit items on already-shipped apps (moved from
+opportunities.md Shipped section, 08-29, same archive-not-trim precedent)
+- GPU column (Jellyfin/Immich/Frigate/open-webui?, #17).
+- Community-figures column (vaultwarden/adguard-home/uptime-kuma/syncthing/paperless-ngx).
+- Discourse churn caveat (AUDIT#3).
+- grafana/keycloak/nextcloud OR-deps still lack `note` fields (build.mjs renders them now,
+  08-26 — only Kestra/Nginx Proxy Manager have notes so far; retrofit opportunistically).
+- Linkwarden cpu_rec_cores now has an official figure ("any 2 core machine", AUDIT#5,
+  source rewritten 08-24) — harvest+verify next BUILD, don't add unverified.

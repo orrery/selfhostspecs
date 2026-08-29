@@ -3,6 +3,17 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-08-29 — FIND #35
+
+73. **File-budget headroom must be checked at the START of every FIND/BUILD run, not
+    discovered when a write fails** — this run found LEARNINGS.md at 7976/8000 (24B
+    headroom) and opportunities.md at 9858/10000 (142B headroom) simultaneously, despite
+    #62/#64 already establishing archive-not-trim — that fix was applied reactively
+    per-section each time one file separately hit its ceiling, never as a standing pre-run
+    check. → Every FIND/BUILD run: `wc -c` every path in tests/file-budgets.test.mjs's
+    BUDGETS map before writing anything; compact proactively once headroom drops under
+    ~500 bytes, don't wait for the next write to fail.
+
 ## 2026-08-27 — FIND #33
 
 72. **A harvester can silently soften a source's own "required" label into "recommended"**
@@ -77,37 +88,9 @@ learning. FIND and BUILD read this file first, every run. Newest first.
 
 ## 2026-08-23 — ANALYZE+BUILD (specs-loop)
 
-65. **`build.mjs` never renders a DB-OR dependency's alternative relationship in prose** —
-    every multi-backend app (grafana/keycloak/nextcloud/now Kestra) lists each vendor as a
-    separate `required:false` dep row with no indication they're alternatives, not all-optional
-    extras. Not new data risk (Defect Class #11 is about false required+optional pairing, which
-    this avoids), but it's a real page-copy gap across the whole existing set, caught by QA on
-    Kestra 08-23 and confirmed pre-existing on the others. → Next BUILD batch that touches the
-    page template: add an OR-prose line wherever ≥2 same-role deps are `required:false`.
 64. **traefik has no SERVICES enum slot** — Dokploy (18/20, top of queue) needs it and got
     passed over this batch for code-server/Ollama/Dockge instead (score+simplicity, no schema
     blocker). → Resolve the enum gap before Dokploy's BUILD turn, same pattern as LEARNINGS #54.
-
-## 2026-08-16 — ANALYZE+BUILD (specs-loop)
-
-59. **A bundled multi-container deployment doesn't need a SERVICES enum slot even when a
-    component resembles a known service** (Wazuh's OpenSearch indexer+dashboard, project-
-    wired, not bring-your-own) — deps:none is honest because the published rec figure
-    scopes the whole bundle, no resource gap hidden (extends Discourse-Postgres/Redis
-    precedent). → Don't force an enum add for embedded-search SIEM/observability
-    candidates unless the app's own docs treat it as separately provisioned.
-
-## 2026-08-22 — FIND #28
-
-64. **#62's archive-don't-trim fix applies per-section, not once** — the 08-18 relief moved
-    Shipped/Rejected detail out and held for 4 cycles, but the Queued section itself (not
-    touched then) grew from 4 to 27 items across #24-#27 with no BUILD in between (BUILD
-    only runs Wed/Sun) and re-hit the ceiling (9999/10000). Same fix, new section: moved
-    full per-item sourcing detail to reports/archive/queued-detail.md (BUILD reads it),
-    kept name/score/one-line-flag inline for dedupe. 9999→6335, ~3.6KB headroom restored.
-    → Any list section that only grows between drains (Queued between BUILD runs, not just
-    Shipped/Rejected which only grow) needs the same archive treatment, proactively — don't
-    wait for the ceiling to hit a second time on the same file.
 
 ## Compacted (graduated into CI tests / defect classes, or superseded — see OPERATIONS.md,
 tests/*.test.mjs, full history: reports/archive/learnings-compacted.md)
