@@ -217,6 +217,11 @@ Total spent: **~$11**. Standing cap: $0 unapproved.
     Immich's own entry). Before shipping any bare image name, confirm a `:latest` tag actually
     exists on the registry; if not, append the real tag. Not CI-checkable (network); re-verify
     every AUDIT alongside `docker.size_mb`.
+15. **Representative-image ambiguity for multi-container apps** (QA 2026-08-30): a bundled app
+    with no single "main" container (Mailcow: 18 services, none named `mailcow`) can publish a
+    `docker.size_mb` for one arbitrarily-chosen component that reads as the whole stack's
+    footprint. Any such entry needs `docker.note` disclosing the pick and that the figure covers
+    only that component, not the bundle (CI-checked: the note must render on the page).
 
 ## Rejected directions (with refutations, from the 2026-07-24 research sprint)
 - Static JSON "API hub" — occupied (dr5hn weekly-updated CDN datasets; concept exists at 21

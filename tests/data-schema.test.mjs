@@ -98,6 +98,7 @@ for (const file of files) {
     assert.ok(Array.isArray(a.docker.arches) && a.docker.arches.every((x) => ARCHES.includes(x)), `${file}: docker.arches must be subset of ${ARCHES.join("/")}`);
     assert.ok(a.docker.retrieved === null || ISO.test(a.docker.retrieved), `${file}: docker.retrieved must be null or YYYY-MM-DD`);
     assert.ok(!/\/v2\//.test(a.docker.source_url ?? ""), `${file}: docker.source_url must be a browsable page, not a raw /v2/ registry API endpoint (Defect Class #13)`);
+    assert.ok(a.docker.note === undefined || (typeof a.docker.note === "string" && a.docker.note.length > 0), `${file}: docker.note must be a non-empty string if present`);
 
     // sources of truth
     assert.ok(Array.isArray(a.sources_of_truth) && a.sources_of_truth.length > 0, `${file}: sources_of_truth required`);

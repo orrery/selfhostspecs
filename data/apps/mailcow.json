@@ -5,7 +5,7 @@
   "website": "https://mailcow.email",
   "repo": "https://github.com/mailcow/mailcow-dockerized",
   "description": "Self-hosted groupware mail server bundle with webmail, ActiveSync, antivirus, and antispam.",
-  "status": "pending-qa",
+  "status": "pending-second-qa",
   "specs": {
     "ram_min_mb": {
       "value": 6144,
@@ -58,7 +58,8 @@
       "arm64"
     ],
     "source_url": "https://github.com/orgs/mailcow/packages/container/package/postfix",
-    "retrieved": "2026-08-30"
+    "retrieved": "2026-08-30",
+    "note": "Mailcow ships as an 18-container stack (postfix, dovecot, sogo, nginx, php-fpm, mariadb, redis, memcached, clamav, rspamd, and more). No single container is named \u201cmailcow\u201d; postfix (the SMTP transfer engine) is shown here as the representative image, consistent with the project's core-identity convention for bundled apps (see Wazuh), but this size covers only that one container, not the whole stack's footprint."
   },
   "sources_of_truth": [
     "https://raw.githubusercontent.com/mailcow/mailcow-dockerized-docs/master/docs/getstarted/prerequisite-system.en.md",

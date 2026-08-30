@@ -80,6 +80,10 @@ test("every app has a page showing its verbatim quotes and honest absences", () 
       assert.ok(html.includes("No official figure published"), `${a.slug}: absent figures not honestly declared`);
       assert.ok(html.includes(a.specs.no_official_figure.evidence_url), `${a.slug}: absence evidence link missing`);
     }
+    if (a.docker?.note) {
+      const frag = a.docker.note.slice(0, 30).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+      assert.ok(html.includes(frag), `${a.slug}: docker.note not rendered on page (Defect Class #15 — representative-image ambiguity must be disclosed)`);
+    }
   }
 });
 
