@@ -71,6 +71,12 @@ Queued 08-22 after hitting byte ceiling again).
   name (confirmed redirect), not a separate project. RAM figure is maintainer-statement only,
   not byte-verified (WebFetch-mediated, GH discussions API blocked this session) — BUILD must
   get a literal re-fetch before shipping as community figure, else no_official_figure.
+- Jitsi Meet (17/20, #36) — 29.8k★ video conferencing, first entry in category; distinct
+  from held BigBlueButton (BBB blocked on non-container schema; Jitsi ships official
+  multi-arch images ghcr.io/jitsi/{web,prosody,jicofo,jvb}, no external DB). Bands not point
+  figures (Jitsi Handbook devops-guide/requirements.md, verified verbatim): min~2GB/1core
+  (small/test), rec~8GB/4core (basic server). Jibri (recording, optional) has its own scoped
+  8-12GB figure — do not conflate with base app at BUILD.
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members, zero-incumbent
   SERP. BUILD: disclose required:false≠dependency-free (#3), write explicit inclusion
@@ -82,6 +88,11 @@ Queued 08-22 after hitting byte ceiling again).
   existing docker.size_mb (36/36 apps already have it). SERP has subjective "best
   self-hosted apps" listicles but no sourced/dated per-app size ranking — lead copy with
   that provenance angle, not "no incumbent."
+- "Fits in a 2GB RAM box" (17/20, #36) — 16 live apps qualify (ram_min_mb≤2048): Nextcloud,
+  Jenkins, Grafana, docker-mailserver, Pi-hole, Keycloak, code-server/Gitea/Discourse,
+  Coolify/Home Assistant/Mattermost/Rocket.Chat/Seafile/Twenty CRM/Zulip — verified exact
+  against data/apps/*.json. Supersedes parked 1GB attempt (3 qualifiers, too thin); zero new
+  harvest, sort existing field.
 
 ## Held (insufficient evidence, not discarded — full evidence: reports/archive/held-log.md)
 Snipe-IT/Cal.com (~12/20, no figures); BigBlueButton (14/20, non-container schema needed);
@@ -95,10 +106,11 @@ Infisical (~14/20, full-stack scope TBD); LibreChat (13/20, #32, no fig); Pocket
 weakest). Full detail on all 5: reports/archive/held-log.md.
 
 ## Unverified / held (not sent further)
-- Collection "1GB VPS": thin (3 qualifiers); revisit once PeerTube/Vikunja ship.
 - Below bar (<14), don't re-propose w/o new evidence. 12-13: Navidrome, Audiobookshelf,
   Miniflux, Zabbix, Wallabag, DocuSeal, Actual Budget, Photoprism, Mealie, BookStack,
-  Firefly III, NetBox, Matrix Synapse, Authentik, Jellyseerr (13/20, #35, no fig). ≤11:
+  Firefly III, NetBox, Matrix Synapse, Authentik, Jellyseerr (13/20, #35, no fig), SeaweedFS
+  (12/20, #36, per-file-byte formula not a fixed figure, no schema fit, storage territory
+  already crowded post-MinIO/Garage). ≤11:
   Outline, FreshRSS, Umami, NocoDB,
   Docmost, Baserow, Bitwarden, Pixelfed, Karakeep, Beszel, Tandoor Recipes, Headscale,
   Shiori, Passbolt, Wiki.js, Duplicati, ntfy, Homepage, Listmonk, Cachet, EspoCRM, Kavita,
