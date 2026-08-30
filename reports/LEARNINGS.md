@@ -3,6 +3,14 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-08-30 — FIND #36
+
+75. **A prior session can leave HEAD detached, so its commits never reach `main` or origin
+    with no error surfaced** — this run found 6 commits (a full app-shipping batch) sitting
+    on a detached HEAD, `git status` clean, `origin/main` 6 commits behind, undiscovered
+    until this FIND's own commit+push step. → Every stage: `git branch --show-current` before
+    new work; if empty (detached), `git branch -f main HEAD && git checkout main` first.
+
 ## 2026-08-30 — ANALYZE+BUILD (specs-loop)
 
 74. **A `required:true` dep can still hide a legitimate embedded/self-managed fallback the
@@ -98,11 +106,7 @@ learning. FIND and BUILD read this file first, every run. Newest first.
     mirror and try raw.githubusercontent.com paths — only hold on reachability after that
     comes up empty too (as it did for PocketBase and Appwrite this run).
 
-## 2026-08-23 — ANALYZE+BUILD (specs-loop)
-
-64. **traefik has no SERVICES enum slot** — Dokploy (18/20, top of queue) needs it and got
-    passed over this batch for code-server/Ollama/Dockge instead (score+simplicity, no schema
-    blocker). → Resolve the enum gap before Dokploy's BUILD turn, same pattern as LEARNINGS #54.
+64. traefik SERVICES enum gap — resolve before Dokploy's BUILD (detail: backlog Dokploy entry).
 
 ## Compacted (graduated into CI tests / defect classes, or superseded — see OPERATIONS.md,
 tests/*.test.mjs, full history: reports/archive/learnings-compacted.md)
