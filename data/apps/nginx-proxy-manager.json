@@ -5,7 +5,7 @@
   "website": "https://nginxproxymanager.com",
   "repo": "https://github.com/NginxProxyManager/nginx-proxy-manager",
   "description": "Web UI for managing an Nginx reverse proxy, free SSL certificates, and access lists.",
-  "status": "pending-second-qa",
+  "status": "live",
   "specs": {
     "no_official_figure": {
       "fields": [

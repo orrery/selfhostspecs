@@ -5,7 +5,7 @@
   "website": "https://twenty.com",
   "repo": "https://github.com/twentyhq/twenty",
   "description": "Self-hosted open-source CRM for managing contacts, companies, and sales pipelines.",
-  "status": "pending-second-qa",
+  "status": "live",
   "specs": {
     "ram_min_mb": {
       "value": 2048,
@@ -37,13 +37,13 @@
   ],
   "docker": {
     "image": "twentycrm/twenty",
-    "size_mb": 239,
+    "size_mb": 242,
     "arches": [
       "amd64",
       "arm64"
     ],
     "source_url": "https://hub.docker.com/r/twentycrm/twenty",
-    "retrieved": "2026-08-26"
+    "retrieved": "2026-08-30"
   },
   "sources_of_truth": [
     "https://docs.twenty.com/developers/self-host/capabilities/docker-compose",
