@@ -1,0 +1,44 @@
+{
+  "name": "Homebox",
+  "slug": "homebox",
+  "category": "home-inventory",
+  "website": "https://homebox.software/en/",
+  "repo": "https://github.com/sysadminsmedia/homebox",
+  "description": "Self-hosted home inventory and organization system for tracking items, locations, and warranties.",
+  "status": "pending-verification",
+  "specs": {
+    "no_official_figure": {
+      "fields": [
+        "ram_min_mb",
+        "ram_rec_mb",
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://raw.githubusercontent.com/sysadminsmedia/homebox/main/README.md",
+      "note": "No stated minimum or recommended RAM/CPU requirement exists in official Homebox sources (README, docs site quick-start). The README's project-principles section offers only an observed idle-usage anecdote, not a requirement: \"In general, idle memory usage is less than 50MB for the whole container.\" This is an OBSERVED idle figure for a single-user/empty-inventory instance, not a stated minimum or recommended requirement (Defect Class #2), so it is preserved here as descriptive context only, not filed as ram_min_mb/ram_rec_mb."
+    }
+  },
+  "deps": [
+    {
+      "service": "none",
+      "required": false,
+      "source_url": "https://raw.githubusercontent.com/sysadminsmedia/homebox/main/docker-compose.yml",
+      "note": "Homebox uses an embedded SQLite database and embedded web UI; the official docker-compose.yml and README both run a single homebox container with no external database or cache service."
+    }
+  ],
+  "docker": {
+    "image": "ghcr.io/sysadminsmedia/homebox:latest",
+    "size_mb": 49,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://github.com/sysadminsmedia/homebox/pkgs/container/homebox",
+    "retrieved": "2026-08-30"
+  },
+  "sources_of_truth": [
+    "https://raw.githubusercontent.com/sysadminsmedia/homebox/main/README.md",
+    "https://raw.githubusercontent.com/sysadminsmedia/homebox/main/docker-compose.yml",
+    "https://github.com/sysadminsmedia/homebox/pkgs/container/homebox"
+  ]
+}

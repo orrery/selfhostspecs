@@ -1,0 +1,68 @@
+{
+  "name": "Mailcow",
+  "slug": "mailcow",
+  "category": "email",
+  "website": "https://mailcow.email",
+  "repo": "https://github.com/mailcow/mailcow-dockerized",
+  "description": "Self-hosted groupware mail server bundle with webmail, ActiveSync, antivirus, and antispam.",
+  "status": "pending-verification",
+  "specs": {
+    "ram_min_mb": {
+      "value": 6144,
+      "source_url": "https://raw.githubusercontent.com/mailcow/mailcow-dockerized-docs/master/docs/getstarted/prerequisite-system.en.md",
+      "quote": "6 GiB + 1 GiB swap (default config)",
+      "retrieved": "2026-08-30",
+      "scope": "Minimum system resources table, mailcow: dockerized general install, default configuration (ClamAV antivirus and Flatcurve/FTS indexing both enabled)"
+    },
+    "ram_rec_mb": {
+      "value": 8192,
+      "source_url": "https://raw.githubusercontent.com/mailcow/mailcow-dockerized-docs/master/docs/getstarted/prerequisite-system.en.md",
+      "quote": "8 GiB RAM are recommended for ~5 to 10 users.",
+      "retrieved": "2026-08-30",
+      "scope": "Recommended for small installations with roughly 5-10 mailbox users (official RAM usage examples section, distinct from the general minimum)"
+    },
+    "no_official_figure": {
+      "fields": [
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://raw.githubusercontent.com/mailcow/mailcow-dockerized-docs/master/docs/getstarted/prerequisite-system.en.md",
+      "note": "The Minimum System Resources table states only a clock-speed figure (\"CPU: 1 GHz\"), not a core count, so no cpu_min_cores/cpu_rec_cores value can be sourced without inventing units the docs don't state (Defect Class #1)."
+    }
+  },
+  "deps": [
+    {
+      "service": "mariadb",
+      "required": true,
+      "source_url": "https://raw.githubusercontent.com/mailcow/mailcow-dockerized/master/docker-compose.yml",
+      "note": "The official docker-compose.yml wires a mariadb:10.11 container as mailcow's SQL backend; not optional or swappable in the official compose."
+    },
+    {
+      "service": "redis",
+      "required": true,
+      "source_url": "https://raw.githubusercontent.com/mailcow/mailcow-dockerized/master/docker-compose.yml",
+      "note": "The official docker-compose.yml wires a redis:7.4.10-alpine container used as mailcow's cache; not optional or swappable in the official compose."
+    },
+    {
+      "service": "memcached",
+      "required": true,
+      "source_url": "https://raw.githubusercontent.com/mailcow/mailcow-dockerized/master/docker-compose.yml",
+      "note": "The official docker-compose.yml wires a memcached:alpine container used by Dovecot; not optional or swappable in the official compose."
+    }
+  ],
+  "docker": {
+    "image": "ghcr.io/mailcow/postfix:3.10.12-1",
+    "size_mb": 110,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://github.com/orgs/mailcow/packages/container/package/postfix",
+    "retrieved": "2026-08-30"
+  },
+  "sources_of_truth": [
+    "https://raw.githubusercontent.com/mailcow/mailcow-dockerized-docs/master/docs/getstarted/prerequisite-system.en.md",
+    "https://raw.githubusercontent.com/mailcow/mailcow-dockerized/master/docker-compose.yml",
+    "https://github.com/orgs/mailcow/packages/container/package/postfix"
+  ]
+}

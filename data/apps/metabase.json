@@ -1,0 +1,63 @@
+{
+  "name": "Metabase",
+  "slug": "metabase",
+  "category": "analytics",
+  "website": "https://www.metabase.com",
+  "repo": "https://github.com/metabase/metabase",
+  "description": "Self-hosted business intelligence tool for building dashboards and querying data without SQL.",
+  "status": "pending-verification",
+  "specs": {
+    "no_official_figure": {
+      "fields": [
+        "ram_min_mb",
+        "ram_rec_mb",
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://raw.githubusercontent.com/metabase/metabase/master/docs/troubleshooting-guide/running.md",
+      "note": "No stated minimum or recommended RAM/CPU requirement exists anywhere in official Metabase sources (README, installation docs, Docker guide, troubleshooting guide). The troubleshooting-memory-and-JVM-issues page offers only conditional heap-sizing advice tied to whatever RAM the operator already has (\"you might set -Xmx to 1g on a machine with 2 GB of RAM, 2g on one with 4 GB of RAM\") plus the general note that the JVM defaults to using about one fourth of a machine's RAM for its heap — this is troubleshooting guidance for an already-provisioned machine, not a stated minimum/recommended requirement, so it is not filed as a figure (Defect Class #2)."
+    }
+  },
+  "deps": [
+    {
+      "service": "none",
+      "required": false,
+      "source_url": "https://raw.githubusercontent.com/metabase/metabase/master/docs/installation-and-operation/running-metabase-on-docker.md",
+      "note": "Metabase ships with an embedded H2 application database by default — no external database is required to run it (\"Metabase ships with an embedded H2 database that uses the file system to store its own application data\"). External DBs below are optional production-hardening backends, not defaults."
+    },
+    {
+      "service": "postgresql",
+      "required": false,
+      "source_url": "https://raw.githubusercontent.com/metabase/metabase/master/docs/installation-and-operation/migrating-from-h2.md",
+      "note": "Optional production application-database backend, replacing the default embedded H2. Metabase's own docs state \"We recommend using PostgreSQL for your application database\" — the preferred but not required choice. See the 'none' entry's note."
+    },
+    {
+      "service": "mysql",
+      "required": false,
+      "source_url": "https://raw.githubusercontent.com/metabase/metabase/master/docs/installation-and-operation/migrating-from-h2.md",
+      "note": "Alternative optional production application-database backend to the default embedded H2 (minimum version 8.4.0 per the docs). See the 'none' entry's note."
+    },
+    {
+      "service": "mariadb",
+      "required": false,
+      "source_url": "https://raw.githubusercontent.com/metabase/metabase/master/docs/installation-and-operation/migrating-from-h2.md",
+      "note": "Alternative optional production application-database backend to the default embedded H2 (minimum version 10.6.0 per the docs). See the 'none' entry's note."
+    }
+  ],
+  "docker": {
+    "image": "metabase/metabase:latest",
+    "size_mb": 744,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://hub.docker.com/r/metabase/metabase",
+    "retrieved": "2026-08-30"
+  },
+  "sources_of_truth": [
+    "https://raw.githubusercontent.com/metabase/metabase/master/docs/installation-and-operation/running-metabase-on-docker.md",
+    "https://raw.githubusercontent.com/metabase/metabase/master/docs/installation-and-operation/migrating-from-h2.md",
+    "https://raw.githubusercontent.com/metabase/metabase/master/docs/troubleshooting-guide/running.md",
+    "https://hub.docker.com/r/metabase/metabase"
+  ]
+}
