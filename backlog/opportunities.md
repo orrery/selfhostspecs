@@ -16,8 +16,8 @@ Pending BUILD (1 schema-change/batch), full detail: reports/archive/queued-detai
 Linkwarden cpu_rec_cores).
 
 ## In pipeline (not yet live)
-None — queue drained 08-30, next batch (Homebox/Mailcow/Metabase/Technitium DNS Server)
-in progress, not yet at pending-second-qa.
+- pending-second-qa: homebox, mailcow, metabase, technitium-dns-server — cleared 08-30,
+  Mailcow's rep-image gap fixed (Defect Class #15, docker.note now schema+CI-checked).
 
 ## Queued (verifier-signed), unbuilt
 Full sourcing detail (quotes, deps, images, arch) for every item below is archived at
@@ -38,12 +38,10 @@ Queued 08-22 after hitting byte ceiling again).
 - TriliumNext Trilium (14/20, #13, marginal) — no_official_figure, no deps.
 - SearXNG (15/20, #14) — community figure only (GH#3884).
 - Stirling-PDF (16/20, #14) — community figure only (founder, GH#2945).
-- Metabase (17/20, #15) — no_official_figure.
 - License (SPDX) column (14/20, #15, conditional) — never trust spdx_id alone.
 - Odoo CE (15/20, #18) — scoped rec only, never min (Wazuh precedent). PostgreSQL only dep.
 - Dokploy (18/20, #24) — Swarm: postgres+traefik+dokploy. Not a Coolify dupe. traefik has
   no SERVICES enum slot (checked 08-23) — resolve before BUILD.
-- Technitium DNS Server (16/20, #24) — no_official_figure, single-service.
 - Mailu (17/20, #27) — Redis req; SQLite default. Differentiate vs docker-mailserver.
 - Penpot (16/20, #26) — postgres+valkey req; multi-image not yet harvested.
 - WordPress (17/20, #28) — no_official_figure. MySQL OR MariaDB req; SQLite not
@@ -73,13 +71,6 @@ Queued 08-22 after hitting byte ceiling again).
   name (confirmed redirect), not a separate project. RAM figure is maintainer-statement only,
   not byte-verified (WebFetch-mediated, GH discussions API blocked this session) — BUILD must
   get a literal re-fetch before shipping as community figure, else no_official_figure.
-- Mailcow (17/20, #34) — 13.3k★, mail-server bundle; official min 6GiB+1GiB swap (docs
-  mirror); deps:none (18-svc, Wazuh-pattern); distinct from docker-mailserver/Mailu/Stalwart.
-- Homebox (17/20, #35) — 7.0k★, home-inventory app (novel category). Official idle-mem
-  figure in README: "idle memory usage is less than 50MB for the whole container" — file as
-  idle/observed, not ram_min (Defect Class #2). deps:none (SQLite embedded).
-  ghcr.io/sysadminsmedia/homebox, :latest = amd64+arm64 only (armv7 dropped; predecessor
-  hay-kot/homebox archived, this is successor). AGPL-3.0.
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members, zero-incumbent
   SERP. BUILD: disclose required:false≠dependency-free (#3), write explicit inclusion
