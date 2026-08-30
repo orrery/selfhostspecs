@@ -3,20 +3,21 @@
 Statuses: unverified→queued(verifier sign-off)→building→shipped/rejected. Dedupe vs
 all lists. App detail: `data/apps/<slug>.json`.
 
-## Shipped — 36 apps live
+## Shipped — 40 apps live
 gitea, home-assistant, immich, jellyfin, uptime-kuma, vaultwarden, adguard-home, frigate,
 grafana, n8n, nextcloud, paperless-ngx, pi-hole, syncthing, discourse, zulip, rocket-chat,
 openproject, plausible-ce, open-webui, linkwarden, chatwoot, seafile, mattermost, jenkins,
 keycloak, node-red, gitlab-ce, coolify, prometheus, docker-mailserver, wazuh, kestra,
-code-server, ollama, dockge.
+code-server, ollama, dockge, onlyoffice-document-server, coder, nginx-proxy-manager,
+twenty-crm.
 Batch-by-batch dates: reports/archive/shipped-log.md.
 Pending BUILD (1 schema-change/batch), full detail: reports/archive/queued-detail.md
 (GPU column, community-figures column, Discourse churn caveat, OR-dep note retrofit,
 Linkwarden cpu_rec_cores).
 
 ## In pipeline (not yet live)
-- pending-second-qa: onlyoffice-document-server, coder, nginx-proxy-manager, twenty-crm —
-  cleared 08-26, zero defects. Full detail: reports/archive/queued-detail.md.
+None — queue drained 08-30, next batch (Homebox/Mailcow/Metabase/Technitium DNS Server)
+in progress, not yet at pending-second-qa.
 
 ## Queued (verifier-signed), unbuilt
 Full sourcing detail (quotes, deps, images, arch) for every item below is archived at

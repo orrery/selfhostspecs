@@ -3,6 +3,18 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-08-30 — ANALYZE+BUILD (specs-loop)
+
+74. **A `required:true` dep can still hide a legitimate embedded/self-managed fallback the
+    harvester never checked for** — Coder's `postgresql` dep is correctly `required:true`
+    (compose.yaml default), but fresh-eyes QA found Coder's own docs also document a
+    "Built-in database (quick)" path (`cli/server.go`, embedded-postgres) with no external
+    container, scoped to POC use — not noted on the entry, so the page implied Postgres was
+    unconditionally mandatory. Not a wrong figure, a missing note. → Before filing any
+    `required:true` dep, grep the same source (and the binary's own flags/env vars, not just
+    the compose file) for an embedded/quick-start/all-in-one variant; if one exists, add a
+    `note` (homebox/NPM precedent) even when it doesn't change `required`.
+
 ## 2026-08-29 — FIND #35
 
 73. **File-budget headroom must be checked at the START of every FIND/BUILD run, not
