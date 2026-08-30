@@ -1,0 +1,45 @@
+{
+  "name": "Technitium DNS Server",
+  "slug": "technitium-dns-server",
+  "category": "dns",
+  "website": "https://technitium.com/dns/",
+  "repo": "https://github.com/TechnitiumSoftware/DnsServer",
+  "description": "Self-hosted authoritative and recursive DNS server with ad/malware blocking and a web admin console.",
+  "status": "pending-verification",
+  "specs": {
+    "no_official_figure": {
+      "fields": [
+        "ram_min_mb",
+        "ram_rec_mb",
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://raw.githubusercontent.com/TechnitiumSoftware/DnsServer/master/README.md",
+      "note": "No RAM/CPU figure exists anywhere in official Technitium DNS Server sources: the README's Features/Installation sections state only supported OSes (Windows, Linux, macOS, Raspberry Pi) and a throughput benchmark (\"more than 100,000 request/second\" on a specific test CPU, not a requirement), never a minimum or recommended hardware spec; DockerEnvironmentVariables.md and the docker-compose.yml carry no resource settings either. No GitHub issue titled around 'requirements' exists on the repo to link as open demand; users have separately reported (unofficial, e.g. issue #1558 on RAM usage after a version upgrade) but that is user-reported, not an official figure."
+    }
+  },
+  "deps": [
+    {
+      "service": "none",
+      "required": false,
+      "source_url": "https://raw.githubusercontent.com/TechnitiumSoftware/DnsServer/master/docker-compose.yml",
+      "note": "The official docker-compose.yml runs a single dns-server container with only named volumes for config/logs — no external database or cache service."
+    }
+  ],
+  "docker": {
+    "image": "technitium/dns-server:latest",
+    "size_mb": 106,
+    "arches": [
+      "amd64",
+      "arm64",
+      "armv7"
+    ],
+    "source_url": "https://hub.docker.com/r/technitium/dns-server",
+    "retrieved": "2026-08-30"
+  },
+  "sources_of_truth": [
+    "https://raw.githubusercontent.com/TechnitiumSoftware/DnsServer/master/README.md",
+    "https://raw.githubusercontent.com/TechnitiumSoftware/DnsServer/master/docker-compose.yml",
+    "https://hub.docker.com/r/technitium/dns-server"
+  ]
+}
