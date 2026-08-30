@@ -5,7 +5,7 @@
   "website": "https://mailcow.email",
   "repo": "https://github.com/mailcow/mailcow-dockerized",
   "description": "Self-hosted groupware mail server bundle with webmail, ActiveSync, antivirus, and antispam.",
-  "status": "pending-verification",
+  "status": "pending-qa",
   "specs": {
     "ram_min_mb": {
       "value": 6144,

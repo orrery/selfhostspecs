@@ -5,7 +5,7 @@
   "website": "https://technitium.com/dns/",
   "repo": "https://github.com/TechnitiumSoftware/DnsServer",
   "description": "Self-hosted authoritative and recursive DNS server with ad/malware blocking and a web admin console.",
-  "status": "pending-verification",
+  "status": "pending-qa",
   "specs": {
     "no_official_figure": {
       "fields": [
@@ -23,7 +23,7 @@
       "service": "none",
       "required": false,
       "source_url": "https://raw.githubusercontent.com/TechnitiumSoftware/DnsServer/master/docker-compose.yml",
-      "note": "The official docker-compose.yml runs a single dns-server container with only named volumes for config/logs — no external database or cache service."
+      "note": "The official docker-compose.yml runs a single dns-server container with only named volumes for config/logs \u2014 no external database or cache service."
     }
   ],
   "docker": {

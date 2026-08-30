@@ -5,7 +5,7 @@
   "website": "https://homebox.software/en/",
   "repo": "https://github.com/sysadminsmedia/homebox",
   "description": "Self-hosted home inventory and organization system for tracking items, locations, and warranties.",
-  "status": "pending-verification",
+  "status": "pending-qa",
   "specs": {
     "no_official_figure": {
       "fields": [
