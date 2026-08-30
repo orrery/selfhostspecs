@@ -2,6 +2,20 @@
 
 Append-only log of material decisions with their evidence. AUDIT checks cadence gaps here.
 
+- 2026-08-30 — **ANALYZE+BUILD: settled 4 pending-second-qa apps, built+QA'd a new 4-app
+  batch (44 tracked), new Defect Class #15.** Second firing this ISO week (Wed 08-26 + Sun
+  08-30), no cadence gap. Session-start clean (main already synced with origin, no detached
+  HEAD). Fresh-eyes QA promoted ONLYOFFICE/Coder/Nginx Proxy Manager/Twenty CRM to live (40
+  live): fixed Coder's missing embedded-Postgres-fallback note and Twenty CRM's stale
+  `docker.size_mb` (239→242, upstream `:latest` repushed a day after harvest). Built Homebox/
+  Mailcow/Metabase/Technitium DNS Server through harvest→verify→QA; independent QA found
+  Mailcow's 18-container bundle publishing one component's size (postfix, 110MB) with no
+  disclosure it wasn't the whole stack — new Known Defect Class #15 (representative-image
+  ambiguity), enforced by a `docker.note` schema field + build-integrity test, not just
+  documentation. All 4 land pending-second-qa. Pre-launch signal unchanged (0★, 3 hits total
+  window, no traffic-driven decisions). AUDIT.md flagged at 9992/10000 bytes for next AUDIT to
+  compact first. 65/65 green throughout, 9 commits.
+
 - 2026-07-24 to 2026-08-12 — Business direction approved, launch gate set, AUDIT #1/#2/#3, 3
   session-start ff-merge recoveries, 2 cadence gaps flagged, Sentry/PostHog refuted for queuing,
   SERVICES enum gap resolved, Docker Hub `/v2/` API source-link defect fixed+CI-enforced,
