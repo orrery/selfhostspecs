@@ -3,103 +3,86 @@
 Weekly adversarial audit findings, newest first, ranked by severity. An empty audit must say
 what it tried and failed to break. First audit due after the first full loop cycle.
 
-## 2026-08-24 — AUDIT #5
+## 2026-08-31 — AUDIT #6
 
-**SEV-1 — 7 of 32 live `docker.size_mb` figures drifted (22%, highest single-week rate on
-record), fixed with changelog entries:** keycloak 258→255, chatwoot 685→642 (largest ever, -6%),
-discourse 1250→1255 (7th recorded drift on this field, pushed hours before this check), gitlab-ce
-1313→1382, grafana 361→452 (+25%, largest relative drift ever — the 07-24 bootstrap entry, never
-re-verified since launch), n8n 346→356, linkwarden 496→499. 25/32 matched exactly. Checked live
-via Docker Hub v2 API (amd64 layer sum) and GHCR anonymous-token manifest sums for all 32 live
-apps (full sweep, not a sample) plus the 3 untagged-image pending-second-qa apps for Defect
-Class #14 (kestra/code-server/ollama all confirm a real `:latest`, sizes exact — clean).
+**SEV-2 — 4/12 sampled `docker.size_mb` drifted** (rolling `:latest` repushes, fixed +
+changelog'd): discourse 1255→1259 (8th drift on this field), nextcloud 530→527, n8n 356→360
+(4th), coolify 130→134. Re-derived via Docker Hub v2 registry API (amd64 manifest sum),
+cross-checked against the registry's own `full_size` — exact agreement. 8/12 matched exactly
+(nginx-proxy-manager, grafana, syncthing, code-server, gitlab-ce, jenkins, wazuh, immich); no
+RAM/CPU drift on any of the 12.
 
-**SEV-1 — linkwarden's stored quote no longer appears verbatim at its source.**
-`docs/self-hosting/setup.md` was rewritten since the 2026-08-09 re-QA (which had explicitly
-confirmed "the same verbatim quote still lives" at this URL) — the old anecdotal "tested on a
-VPS with 4gb of memory" prose is gone, replaced by a formal Hardware Requirements list. The
-`ram_rec_mb` value (4096) is coincidentally still accurate against the new text ("Memory: 4 GB is
-a comfortable starting point"), so this wasn't a numeric drift, but Defect Class #8 is explicit
-that literal presence is the bar, not gist — re-sourced the quote, updated scope wording (the
-"informal/anecdotal" framing is now false), changelog'd. The new list also publishes a CPU figure
-("any 2 core machine") that didn't exist before — not harvested here (AUDIT doesn't self-grade
-new figures, rule 9); flagged to `backlog/opportunities.md` for the next BUILD's harvest+verify
-pass.
+**SEV-2 — nextcloud's RAM quote had markdown bold markers stripped at harvest** (Defect Class
+#8, same class as AUDIT #5's fixes): stored "...minimum of 128MB RAM..." vs source's literal
+"...minimum of **128MB** RAM... recommend a minimum of **512MB**..." — confirmed via the
+`nextcloud/documentation` docs-as-code mirror (`docs.nextcloud.com` itself is proxy-blocked).
+No value/scope drift — restored verbatim.
 
-**SEV-2 — quote-formatting fidelity: 7 quote fields across 4 live apps had markdown stripped
-during harvest** (paraphrase-of-formatting, not a literal source substring): chatwoot
-ram_min_mb/cpu_rec_cores, openproject ram_min_mb/cpu_min_cores, seafile ram_min_mb/cpu_min_cores,
-plausible-ce ram_rec_mb — e.g. stored "Memory: 4096 MB" vs source's literal "**Memory:** 4096 MB".
-No value/scope drift in any — caught via byte-for-byte substring check against the fetched
-source, not WebFetch gist-matching. All 7 restored verbatim. Newer batches (coolify, 08-16)
-already preserve markdown, so this is an earlier-batch habit, not a live pipeline bug — harvester
-reminder: **the quote field must be copy-pasted, never retyped.**
+**Data audit.** Random-sampled 12 live apps (nginx-proxy-manager, discourse, nextcloud, n8n,
+grafana, coolify, syncthing, code-server, wazuh, gitlab-ce, immich, jenkins), exceeds the
+≥10 minimum. 6 RAM/CPU sources on `raw.githubusercontent.com` matched verbatim on first pass.
+`docs.nextcloud.com`/`grafana.com`/`nginxproxymanager.com`/`docs.syncthing.net` are
+proxy-blocked (standing since AUDIT #1) — per LEARNINGS #66, used in-repo docs-as-code GitHub
+mirrors instead of holding unverifiable: nextcloud (found the defect above), grafana (clean),
+syncthing + nginx-proxy-manager (both `no_official_figure` absences confirmed still honest).
+immich's docs live inside its main repo — fetched directly, clean. n8n's absence claim could
+NOT be re-verified this session: `docs.n8n.io` blocked, and the `n8n-io/n8n-docs` GitBook
+repo's file layout didn't match any guessed path in budget — flagged, not a defect; next
+audit should resolve the path or `add_repo` it. Bonus (not in the 12, but highest-risk item
+about to go live): Mailcow's pending-second-qa RAM figures + its `postfix` image size
+re-verified byte-for-byte — clean.
 
-**SEV-2 — repo-integrity: 9 commits sat unpushed in detached HEAD at session start** (through
-"FIND #29"), continuing the recurring pattern (LEARNINGS #32/#39 lineage; AUDIT #3 and #4 both
-hit this). `merge-base fc09ae4 11a4f6b` confirmed a pure fast-forward — reconciled
-(`checkout -B main 11a4f6b`) and pushed; `CI & Deploy` run 32673857016 green (test+deploy+smoke).
-Root cause is still undetermined after 3 audits recording it — repeating the owner ask again
-rather than re-diagnosing it blind.
+**Staleness sweep.** Zero figures crossing 90 days across all 44 tracked apps (oldest 07-24,
+38 days) — too young to bind yet.
 
-**SEV-2 — process: no commit/evidence trail for `specs-loop`'s Wednesday 2026-08-19 slot.**
-Cron is `41 8 * * 0,3` (Sun+Wed); `specs-find` committed daily 08-17→08-23 with no gaps, but the
-only ANALYZE+BUILD commits in that window are 08-16 and 08-23 — 7 days apart, not ~3-4. The
-trigger API's `last_fired_at` only shows the most recent fire (08-23), so a 08-19 fire can't be
-confirmed or ruled out from here; either it didn't fire, or it fired and left zero evidence,
-which rule 4 requires either way. Same standing gap class as 07-28/08-04/08-05 (AUDIT #2-#4), not
-a new root cause.
+**Hostile pass.** Built+served `docs/` locally (live domain still proxy-blocked; CI's
+post-deploy smoke test on `ac410bb` reached the real site and passed: HTTP 200 +
+"SelfhostSpecs" marker). Playwright: 320px viewport ×2 pages (no overflow), zero-result
+search (no stray undefined/NaN), 5 URL-tamper payloads (all correct 404/200, nothing
+reflected unescaped), JS-disabled fallback (4582 chars real content), corrupted-localStorage
+reload (no crash). 10/10 passed.
 
-**Data audit.** Random-sampled 10 sourced RAM/CPU figures via direct `curl` + literal substring
-match (not WebFetch gist-matching) on `raw.githubusercontent.com` sources — wazuh, docker-
-mailserver, and gitlab-ce's cpu_rec/ram_rec matched clean on first pass; the other 7 (chatwoot,
-openproject, seafile, plausible-ce, linkwarden) surfaced the quote-fidelity and drift findings
-above. Extended past the initial 10 into a full sweep of all 32 live apps' `docker.size_mb`
-(see SEV-1). rocket-chat's `github.com/.../blob/` source remains proxy-blocked from this sandbox,
-as every prior audit; CI's live smoke test is the only channel that reaches the real site.
+**Process audit.** Session started on clean `main` synced with `origin` — **no detached-HEAD
+reconciliation needed, first time since AUDIT #2** (AUDIT #3/#4/#5 each found 8-9 unpushed
+commits); LEARNINGS #75's fix appears to have worked, one clean run isn't proof yet — recheck
+next audit. `git log -- tests/` since AUDIT #5: one commit (Defect #15's build-integrity
+test) — coverage added, nothing weakened. Backlog counts (40 live/4 pending-second-qa/44
+total) exact-match data files. Ledger unchanged ~$11. Cadence: `specs-find` committed daily
+08-23→08-30 no gaps (FIND #29→#36); `specs-loop` fired both Wed 08-26 + Sun 08-30; `specs-
+audit` fired exactly 7 days after AUDIT #5 — **first cadence-gap-free week confirmed with
+zero ambiguity** (every slot has a matching commit, no `last_fired_at` guessing needed).
 
-**Staleness sweep.** Zero figures crossing 90 days (oldest retrieved 07-24, 31 days). Nothing
-queued.
+**Red-team the week's biggest decision** (Defect Class #15: Mailcow's `postfix` container as
+representative `docker.size_mb` for an 18-container bundle): the disclosure note is real
+mitigation, but the pick is still somewhat arbitrary — dovecot/rspamd/sogo are each
+user-facing in their own right, unlike Wazuh where `wazuh-manager` is unambiguously core. A
+reader skimming the size column can't tell Mailcow's "110MB" apart from a true single-
+container app's without opening the note. Recommend the index page itself mark bundled-app
+rows, not just the per-app note, before this repeats on a less carefully-QA'd entry.
 
-**Hostile pass.** Built `docs/` locally and served it (proxy blocks the live domain), drove with
-Node Playwright (`chromium-1194`): 320px viewport on index + an app page (no horizontal
-overflow), zero-result search (`#q` filter → `#noresults` visible, no stray `undefined`/`NaN`),
-5 URL-tamper payloads (script-in-path, path traversal, nonexistent app, script-in-query XSS,
-negative numeric query param — correct 404s/200s, nothing reflected unescaped), JS-disabled
-fallback (3840 chars of real content). 10/10 checks passed; nothing broke.
+**Missing invariant.** Repeat: no automated cadence-gap detector (AUDIT #5). New this run:
+**no test asserts every `docker.source_url` domain is one this sandbox can actually reach for
+re-verification** — nothing stops a future harvest citing a technically-valid but
+permanently-unauditable source (the n8n gap above is exactly this failure mode, just not yet
+on a `docker.source_url`). Not CI-checkable (no live-reachability test), but a standing
+harvester note: prefer re-checkable sources.
 
-**Process audit.** `git log -- tests/` since AUDIT #4: empty — no test changes at all, nothing to
-scrutinize for weakening. Backlog counts (32 live, 4 pending-second-qa) exact-match
-`data/apps/*.json` status counts. Ledger unchanged at $11, matches Infrastructure section. CI:
-77/77 workflow runs green back through AUDIT #4, including the just-pushed reconciliation.
-LEARNINGS #65/#66 both point at real, checkable claims (OR-dependency prose gap; docs-mirror
-recovery pattern) — neither has had a chance to prove out yet since no BUILD/FIND has hit that
-code path since being written.
+**Evidence:** 65/65 green before/after (40 live, 4 pending-second-qa unchanged; 48 pages from
+44 entries). Commits: 4 docker-size fixes + 1 quote-formatting fix (nextcloud) + 5 changelog
+entries; AUDIT.md compacted for AUDIT #5 (full text `reports/archive/AUDIT-2026-08-24.md`);
+this entry.
 
-**Red-team the week's biggest decision** (FIND #29: hold Zitadel at 13/20 as "crowds Keycloak"
-despite the verifier recovering a clean sourced RAM figure via an in-repo docs mirror): the hold
-is defensible on identical-slot grounds, but the scoring conflates "sourceable" with "worth
-building" in a way that discards the recovery effort — Zitadel's positioning (cloud-native/
-Kubernetes-first IAM, gRPC/API-driven) genuinely differs from Keycloak's (traditional
-enterprise/on-prem), which is exactly the kind of distinction a coverage-gap-focused database
-should weigh, not just star count and category label. Recommend FIND explicitly score
-positioning-distinctiveness within a category, not just presence/absence of a category slot,
-before re-holding a similarly-positioned app next time.
-
-**Missing invariant.** This week's data findings are all already covered by AUDIT's standing
-non-CI-checkable re-verify duty — nothing new there. The real gap is upstream: **there is no
-automated cadence-gap detector.** The only thing that catches a routine silently not firing (or
-firing with zero evidence) is this weekly AUDIT manually diffing commits against cron
-expressions — a gap can sit undetected up to 6 days, and this is the 4th time across 5 audits
-that's been the finding. A cheap tripwire (a scheduled Action that fails/notifies if no operator
-commit lands within N hours of each cron slot) would catch it same-day instead. Not built this
-run (AUDIT doesn't build); logged as LEARNINGS + owner flag.
-
-**Evidence:** 57/57 before and after (32 live apps, 4 pending-second-qa unchanged). Commits this
-run: repo-integrity push (`11a4f6b`→`origin/main`, CI run 32673857016 green); 7 docker-size
-fixes; 1 quote-drift fix (linkwarden); 7 quote-fidelity fixes (chatwoot×2, openproject×2,
-seafile×2, plausible-ce×1); 8 changelog entries; AUDIT.md archived/compacted for AUDIT #4
-(full text: `reports/archive/AUDIT-2026-08-17.md`); this entry.
+## 2026-08-24 — AUDIT #5 (compacted; full text `reports/archive/AUDIT-2026-08-24.md`)
+57/57 green. SEV-1: 7/32 docker-size drifts (22%, worst week on record — keycloak, chatwoot -6%,
+discourse 7th, gitlab-ce, grafana +25% (never-re-verified bootstrap entry), n8n, linkwarden), all
+fixed+changelog'd. SEV-1: linkwarden's quote no longer verbatim at its rewritten source (value
+coincidentally still correct) — re-sourced. SEV-2: 7 quote fields across 4 apps had markdown
+silently stripped at harvest — restored verbatim (Defect Class #8). SEV-2: 9 commits sat unpushed
+in detached HEAD at session start (3rd occurrence, AUDIT #3/#4 lineage) — reconciled+pushed. SEV-2:
+no commit trail for specs-loop's Wed 08-19 slot (4th cadence-gap finding across 5 audits) — owner
+flag + LEARNINGS #68 (cadence tripwire, not built). Hostile pass (10 checks) clean. Red-teamed
+FIND #29's Zitadel hold as conflating sourceable with worth-building. Missing invariant: no
+automated cadence-gap detector (repeat finding).
 
 ## 2026-08-17 — AUDIT #4 (compacted; full text `reports/archive/AUDIT-2026-08-17.md`)
 53/53 green. SEV-2: 8 commits sat unpushed in detached HEAD (worst instance yet of the recurring

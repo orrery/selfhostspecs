@@ -202,5 +202,29 @@
     "app": "linkwarden",
     "change": "AUDIT #5: docker.size_mb drift 496→499 — rolling `:latest` tag repush (GHCR amd64 manifest, our 2026-07-30 retrieval).",
     "source_url": "https://github.com/linkwarden/linkwarden/pkgs/container/linkwarden"
+  },
+  {
+    "date": "2026-08-31",
+    "app": "discourse",
+    "change": "AUDIT #6: docker.size_mb drift 1255→1259 — 8th recorded drift on this field (the most volatile in the dataset); Docker Hub tag_last_pushed 2026-08-31T00:06, hours before this check.",
+    "source_url": "https://hub.docker.com/r/discourse/discourse"
+  },
+  {
+    "date": "2026-08-31",
+    "app": "nextcloud",
+    "change": "AUDIT #6: docker.size_mb drift 530→527 — rolling `:latest` tag repush (Docker Hub tag_last_pushed 2026-08-29, 12 days after our 2026-08-17 retrieval). Also restored ram_min_mb/ram_rec_mb quote's markdown bold markers around the two figures ('**128MB**'/'**512MB**'), silently stripped at original harvest — same quote-formatting-fidelity class as AUDIT #5's chatwoot/openproject/seafile/plausible-ce fixes (Defect Class #8); value/scope unchanged.",
+    "source_url": "https://hub.docker.com/_/nextcloud"
+  },
+  {
+    "date": "2026-08-31",
+    "app": "n8n",
+    "change": "AUDIT #6: docker.size_mb drift 356→360 — rolling `:latest` tag repush (Docker Hub tag_last_pushed 2026-08-31, 7 days after our 2026-08-24 retrieval; 4th recorded drift on this field).",
+    "source_url": "https://hub.docker.com/r/n8nio/n8n"
+  },
+  {
+    "date": "2026-08-31",
+    "app": "coolify",
+    "change": "AUDIT #6: docker.size_mb drift 130→134 — rolling `:latest` tag repush (Docker Hub tag_last_pushed 2026-08-28, 12 days after our 2026-08-16 retrieval).",
+    "source_url": "https://hub.docker.com/r/coollabsio/coolify"
   }
 ]

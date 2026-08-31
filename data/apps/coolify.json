@@ -49,13 +49,13 @@
   ],
   "docker": {
     "image": "coollabsio/coolify",
-    "size_mb": 130,
+    "size_mb": 134,
     "arches": [
       "amd64",
       "arm64"
     ],
     "source_url": "https://hub.docker.com/r/coollabsio/coolify",
-    "retrieved": "2026-08-16"
+    "retrieved": "2026-08-31"
   },
   "sources_of_truth": [
     "https://raw.githubusercontent.com/coollabsio/coolify-docs/main/content/docs/get-started/installation.mdx",

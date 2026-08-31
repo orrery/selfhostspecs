@@ -10,15 +10,15 @@
     "ram_min_mb": {
       "value": 128,
       "source_url": "https://docs.nextcloud.com/server/latest/admin_manual/installation/system_requirements.html",
-      "quote": "Nextcloud needs a minimum of 128MB RAM per process, and we recommend a minimum of 512MB RAM per process.",
-      "retrieved": "2026-07-24",
+      "quote": "Nextcloud needs a minimum of **128MB** RAM per process, and we recommend a minimum of **512MB** RAM per process.",
+      "retrieved": "2026-08-31",
       "scope": "Per process, general server installation"
     },
     "ram_rec_mb": {
       "value": 512,
       "source_url": "https://docs.nextcloud.com/server/latest/admin_manual/installation/system_requirements.html",
-      "quote": "Nextcloud needs a minimum of 128MB RAM per process, and we recommend a minimum of 512MB RAM per process.",
-      "retrieved": "2026-07-24",
+      "quote": "Nextcloud needs a minimum of **128MB** RAM per process, and we recommend a minimum of **512MB** RAM per process.",
+      "retrieved": "2026-08-31",
       "scope": "Per process, general server installation"
     },
     "no_official_figure": {
@@ -48,14 +48,14 @@
   ],
   "docker": {
     "image": "nextcloud",
-    "size_mb": 530,
+    "size_mb": 527,
     "arches": [
       "amd64",
       "arm64",
       "armv7"
     ],
     "source_url": "https://hub.docker.com/_/nextcloud",
-    "retrieved": "2026-08-17"
+    "retrieved": "2026-08-31"
   },
   "sources_of_truth": [
     "https://docs.nextcloud.com/server/latest/admin_manual/installation/system_requirements.html",

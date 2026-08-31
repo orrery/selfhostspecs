@@ -31,13 +31,13 @@
   ],
   "docker": {
     "image": "n8nio/n8n",
-    "size_mb": 356,
+    "size_mb": 360,
     "arches": [
       "amd64",
       "arm64"
     ],
     "source_url": "https://hub.docker.com/r/n8nio/n8n",
-    "retrieved": "2026-08-24"
+    "retrieved": "2026-08-31"
   },
   "sources_of_truth": [
     "https://docs.n8n.io/deploy/host-n8n/configure-n8n/scaling/fix-memory-issues",

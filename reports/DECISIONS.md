@@ -2,6 +2,12 @@
 
 Append-only log of material decisions with their evidence. AUDIT checks cadence gaps here.
 
+- 2026-08-31 — **AUDIT #6: 4 docker-size drifts + 1 quote-formatting fix from a 12-app
+  sample; first cadence-gap-free week confirmed with zero ambiguity; first session-start
+  with no detached-HEAD reconciliation since AUDIT #2.** Full findings: `reports/AUDIT.md`.
+  No structural process changes this run (LEARNINGS #75's detached-HEAD fix held up once,
+  not yet fully proven); n8n's docs-mirror path unresolved, flagged for next AUDIT. 65/65
+  green throughout.
 - 2026-08-30 — **ANALYZE+BUILD: settled 4 pending-second-qa apps, built+QA'd a new 4-app
   batch (44 tracked), new Defect Class #15.** Second firing this ISO week (Wed 08-26 + Sun
   08-30), no cadence gap. Session-start clean (main already synced with origin, no detached

@@ -3,6 +3,26 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-08-31 — AUDIT #6
+
+76. **AUDIT #5's quote-formatting fix (Defect Class #8, markdown stripped at harvest) was
+    applied per-instance to the 7 fields it found, not as a full sweep of every pre-08-16
+    entry** — AUDIT #6's 12-app sample turned up an 8th instance on nextcloud (a 07-24
+    bootstrap entry AUDIT #5 didn't happen to sample) with the exact same signature (bold
+    markers around the numeric figure dropped). Fixed, but the recurrence means more may
+    still be lurking in the 24 apps AUDIT #5/#6 combined haven't yet re-checked. → Next
+    AUDIT: treat Defect Class #8 as a standing full-sweep item on all pre-08-16 entries
+    (the batches known to predate the "harvesters preserve markdown" fix), not just the
+    random sample, until a sweep comes back clean once.
+75b. **A docs-as-code GitHub mirror existing isn't enough — its file layout must actually be
+    found before "docs-mirror recovery" (LEARNINGS #66) counts as done.** n8n's docs live at
+    `github.com/n8n-io/n8n-docs` (confirmed reachable) but it's GitBook-based with an
+    unguessed path structure; several plausible paths 404'd and the repo wasn't browsable
+    without `add_repo`/API access this session. n8n's `no_official_figure` RAM/CPU claim is
+    still unverified two audits running. → Either resolve the n8n-docs path next AUDIT
+    (worth an `add_repo` this once to browse the tree) or explicitly downgrade the claim to
+    "held, sourcing unconfirmed" rather than silently re-carrying it as settled.
+
 ## 2026-08-30 — FIND #36
 
 75. **A prior session can leave HEAD detached, so its commits never reach `main` or origin
@@ -83,29 +103,12 @@ learning. FIND and BUILD read this file first, every run. Newest first.
     all. → Owner flag: a cheap CI-independent tripwire (scheduled Action failing/notifying if no
     operator commit lands within N hours of each cron slot) would catch this same-day; not built
     this run (AUDIT doesn't build).
-67. **A harvested `quote` must be copy-pasted from the fetched source, never retyped** — 7
-    quote fields across 4 live apps (chatwoot, openproject, seafile, plausible-ce) had markdown
-    emphasis markers silently dropped during harvest (e.g. "Memory: 4096 MB" stored vs the
-    source's literal "**Memory:** 4096 MB"), failing Defect Class #8's literal-presence bar with
-    zero value/scope drift — caught only because this audit did a byte-for-byte substring check
-    against freshly-fetched sources instead of an LLM gist match. Newer batches (coolify, 08-16)
-    already preserve markdown verbatim, so the fix is discipline, not code: harvesters should
-    paste the exact source string, not transcribe its meaning.
+67. Quote field must be copy-pasted verbatim (incl. markdown), never retyped — AUDIT #5 fixed
+    7 instances of stripped emphasis markers; recurred once more, see #76.
 
-## 2026-08-23 — FIND #29
-
-66. **A vendor's marketing-docs domain being egress-blocked doesn't mean the figure is
-    unsourceable — check for an in-repo docs mirror first.** This session's network proxy
-    blocks nearly every vendor docs domain (pocketbase.io, zitadel.com, appwrite.io, and in
-    earlier ad hoc checks dify.ai/langfuse.com/librechat.ai/netbird.io/mealie.io/reddit.com
-    all 403'd) while github.com/raw.githubusercontent.com/api.github.com/hub.docker.com stay
-    reachable. The harvester wrote off Zitadel as unsourceable on that basis; the verifier
-    found its docs are mirrored in-repo (Docusaurus monorepo under `apps/docs/content/`) and
-    pulled a verbatim official RAM figure via raw.githubusercontent.com. → Before holding a
-    candidate as "docs blocked," GitHub code-search the vendor's own org for a docs-as-code
-    mirror and try raw.githubusercontent.com paths — only hold on reachability after that
-    comes up empty too (as it did for PocketBase and Appwrite this run).
-
+66. Docs-mirror recovery pattern (blocked vendor domain → GitHub docs-as-code mirror via
+    raw.githubusercontent.com) — proven 4 more times by AUDIT #6 (nextcloud/grafana/
+    syncthing/nginx-proxy-manager), now standard practice, not just a FIND-time move.
 64. traefik SERVICES enum gap — resolve before Dokploy's BUILD (detail: backlog Dokploy entry).
 
 ## Compacted (graduated into CI tests / defect classes, or superseded — see OPERATIONS.md,
