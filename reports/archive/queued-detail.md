@@ -187,6 +187,29 @@ LEARNINGS #62, shipped/rejected-log split). BUILD reads this file before harvest
   figures (Jitsi Handbook devops-guide/requirements.md, verified verbatim): min~2GB/1core
   (small/test), rec~8GB/4core (basic server). Jibri (recording, optional) has its own scoped
   8-12GB figure — do not conflate with base app at BUILD.
+- Monica (15/20, #37) — monicahq/monica, 25,150★ (github.com/monicahq/monica, GitHub API
+  confirmed), AGPL-3.0, not archived. Personal CRM/"PRM" (Personal Relationship Management) —
+  own README: "Imagine a CRM... for your friends and family," explicitly contrasted with
+  sales-team CRM. Not a Twenty CRM dupe (Twenty = "managing contacts, companies, and sales
+  pipelines," data/apps/twenty-crm.json). No official RAM/CPU/disk figure anywhere — checked
+  root README, docs-gitbook (no requirements page exists there), monicahq/docker README + all
+  10 .examples/ compose files, AND the current-stable 4.x branch's own docs/installation/
+  readme.md "Requirements" section (software-only: Git/PHP 8.1+/Composer/MySQL/optional
+  Redis-or-Beanstalk) — ship no_official_figure:true, cite the 4.x readme as the authoritative
+  absence source, not the docker README alone. Demand evidence: github.com/monicahq/monica
+  issue #4677 "System Requirements Specify Software but Not Hardware" — REAL but CLOSED
+  ~2021-04-27 (~5yr stale); cite as closed, not live demand (wg-easy "weakest demand signal"
+  precedent — still clears bar). Deps: mysql/mariadb required:true (all sources agree); redis
+  required:false — it's an officially-supported optional prod dependency per the 4.x
+  Requirements doc, NOT a dev-only extra (root docker-compose.yml's memcached/meilisearch ARE
+  dev-only Sail services and stay excluded, but redis must be modeled, unlike the harvester's
+  first pass). Docker image: harvester's "monicahq/monica" DOES NOT EXIST on Docker Hub
+  (v2 API: "object not found") — correct image is the Docker Official Image `monica`
+  (hub.docker.com/_/monica, maintained by "Monica Team", sourced from monicahq/docker),
+  apache/fpm tag variants, confirmed real `:latest` tag (resolves 4.1.2-apache). Scope note
+  required at BUILD (Defect Class #3): `main` branch is an in-development "Chandler" beta per
+  its own README ("This branch is in development... see the 4.x branch" for stable) — the
+  Official Image builds from 4.x/stable, so pin every citation to the 4.x branch, never main.
 
 ## In pipeline — pending-second-qa detail (moved from opportunities.md, 08-29)
 - onlyoffice-document-server, coder, nginx-proxy-manager, twenty-crm — cleared 08-26, zero

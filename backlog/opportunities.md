@@ -56,6 +56,9 @@ Queued 08-22 after hitting byte ceiling again).
 - Activepieces (17/20, #33) — Postgres+Redis req; S3 min-vs-rec split (Ghost precedent).
 - Stalwart (15/20, #33) — deps:none, RAM figure needs byte-verified re-fetch at BUILD.
 - Jitsi Meet (17/20, #36) — official multi-arch images, no external DB, min/rec bands.
+- Monica (15/20, #37) — personal CRM/PRM, not a Twenty dupe (sales CRM). no_official_figure;
+  deps mysql/mariadb req + redis optional (4.x docs, not docker README); image is Official
+  Image `monica` (NOT `monicahq/monica`); scope-pin to 4.x stable, not `main`/Chandler beta.
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members, zero-incumbent
   SERP. BUILD: disclose required:false≠dependency-free (#3), write explicit inclusion

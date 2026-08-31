@@ -222,6 +222,10 @@ Total spent: **~$11**. Standing cap: $0 unapproved.
     `docker.size_mb` for one arbitrarily-chosen component that reads as the whole stack's
     footprint. Any such entry needs `docker.note` disclosing the pick and that the figure covers
     only that component, not the bundle (CI-checked: the note must render on the page).
+16. **Assumed `org/repo`-pattern Docker image name** (FIND #37 verifier, 2026-08-31): a
+    harvester cited `monicahq/monica` as the image without checking Docker Hub — it doesn't
+    exist; the real image is the Official Image `monica`. Never cite a `docker.image` without a
+    live registry API hit (Docker Hub `/v2/repositories/<image>/`) confirming it resolves.
 
 ## Rejected directions (with refutations, from the 2026-07-24 research sprint)
 - Static JSON "API hub" — occupied (dr5hn weekly-updated CDN datasets; concept exists at 21
