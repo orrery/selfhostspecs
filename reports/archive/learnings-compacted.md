@@ -38,6 +38,8 @@ tests/*.test.mjs for the live enforcement each of these graduated into.
 - `ghcr.io/v2/.../manifests/<tag>` and `hub.docker.com/v2/repositories/...` both 401/return raw
   JSON for unauthenticated readers — fine to harvest from, never fine as the published citation
   (Defect Class #13, now CI-enforced for both registries via a `/v2/` path check).
+- Quote field must be copy-pasted verbatim incl. markdown, never retyped (former #67) —
+  recurrence tracked under Defect Class #8 full-sweep item, see LEARNINGS #76.
 - A commented-out or alternative-backend block in a compose file isn't a required service —
   confirm the flagged service is actually instantiated before calling a deps-schema hold
   (Penpot/Minio near-miss, #63, 08-20).

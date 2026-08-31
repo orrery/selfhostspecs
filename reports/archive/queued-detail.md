@@ -173,6 +173,20 @@ LEARNINGS #62, shipped/rejected-log split). BUILD reads this file before harvest
   (retry raw HTML/API, or a screenshot) before shipping as a labeled COMMUNITY figure
   (maintainer-statement is top basis grade per OPERATIONS.md rule 8); if that fails too,
   ship no_official_figure:true instead.
+- Dify (16/20, #32) — langgenius/dify, AI app-builder/LLMOps (workflows/agents/RAG),
+  distinct from Ollama/open-webui/Langfuse. Official min figure IN REPO README (not
+  docs.dify.ai, blocked): "CPU >= 2 Core - RAM >= 4 GiB" (github.com/langgenius/dify/blob/
+  main/README.md, retrieved 2026-08-26), min-only, no rec stated. Deps: postgres/mysql OR
+  (postgres default), redis req, nginx req, vector store OR-required-by-default (weaviate
+  via COMPOSE_PROFILES, swappable to qdrant/pgvector/etc) — model all three as OR like
+  Directus/Kestra. CAUTION: harvester's first-pass compose-comment quote didn't exist in
+  the file (verifier caught it) — re-confirm every quote against the live file at BUILD.
+- Jitsi Meet (17/20, #36) — 29.8k★ video conferencing, first entry in category; distinct
+  from held BigBlueButton (BBB blocked on non-container schema; Jitsi ships official
+  multi-arch images ghcr.io/jitsi/{web,prosody,jicofo,jvb}, no external DB). Bands not point
+  figures (Jitsi Handbook devops-guide/requirements.md, verified verbatim): min~2GB/1core
+  (small/test), rec~8GB/4core (basic server). Jibri (recording, optional) has its own scoped
+  8-12GB figure — do not conflate with base app at BUILD.
 
 ## In pipeline — pending-second-qa detail (moved from opportunities.md, 08-29)
 - onlyoffice-document-server, coder, nginx-proxy-manager, twenty-crm — cleared 08-26, zero

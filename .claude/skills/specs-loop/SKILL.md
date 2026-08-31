@@ -30,6 +30,9 @@ OPERATIONS.md is the law. If they ever disagree, OPERATIONS.md wins.
    docker/API queries, schema fixes, routine QA sweeps — run on the economical model tier
    (Sonnet). Reserve the strongest model for genuine judgment tiebreaks and only when the
    stakes warrant it. Cloud routines already run claude-sonnet-5.
+9. Before any new work: `git branch --show-current`; if empty (detached HEAD), run
+   `git branch -f main HEAD && git checkout main` and verify against `origin/main` before
+   proceeding (LEARNINGS #75/#77 — recurred once already; check this every single run).
 
 ## Stage notes (details in OPERATIONS.md §1–5)
 - **FIND:** read LEARNINGS; mine coverage gaps / columns / collections / freshness; score /20;

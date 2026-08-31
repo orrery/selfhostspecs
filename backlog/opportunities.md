@@ -52,31 +52,10 @@ Queued 08-22 after hitting byte ceiling again).
 - wg-easy (14/20, #31, marginal) — no_official_figure (confirmed absent incl. wiki).
   deps:none, arm64 but host needs in-kernel WireGuard support — real deploy caveat, note
   at BUILD. Weakest demand signal of the batch.
-- Dify (16/20, #32) — 153.6k★, AI app-builder/LLMOps (workflows/agents/RAG), distinct from
-  Ollama/open-webui/Langfuse. Official min figure IN REPO README (not docs.dify.ai, blocked):
-  "CPU >= 2 Core - RAM >= 4 GiB" (github.com/langgenius/dify/blob/main/README.md, retrieved
-  2026-08-26), min-only, no rec stated. Deps: postgres/mysql OR (postgres default), redis req,
-  nginx req, vector store OR-required-by-default (weaviate via COMPOSE_PROFILES, not fully
-  optional — swappable to qdrant/pgvector/etc) — model all three as OR like Directus/Kestra.
-  CAUTION: harvester's first-pass compose-comment quote didn't exist in the file (verifier
-  caught it) — re-confirm every quote against the live file at BUILD, don't reuse draft text.
-- Activepieces (17/20, #33) — 24.1k★, n8n-alt workflow automation, not a dupe (self-tagged
-  `n8n-alternative`, distinct codebase). Official per-component sizing table in-repo docs
-  mirror. Postgres+Redis req; S3 min-vs-rec split (optional at quickstart, official docs say
-  "required" at prod scale) — model like Ghost, not flat optional. Split MIT/EE license, flag
-  if license field ever added.
-- Stalwart (15/20, #33) — 14.4k★, all-in-one Rust mail/collab server (JMAP/IMAP/SMTP/CalDAV/
-  CardDAV/WebDAV), embedded RocksDB, deps:none by default. Not a docker-mailserver/Mailu
-  dupe (single-binary vs Postfix/Dovecot stack); `stalwartlabs/mail-server` is its own old
-  name (confirmed redirect), not a separate project. RAM figure is maintainer-statement only,
-  not byte-verified (WebFetch-mediated, GH discussions API blocked this session) — BUILD must
-  get a literal re-fetch before shipping as community figure, else no_official_figure.
-- Jitsi Meet (17/20, #36) — 29.8k★ video conferencing, first entry in category; distinct
-  from held BigBlueButton (BBB blocked on non-container schema; Jitsi ships official
-  multi-arch images ghcr.io/jitsi/{web,prosody,jicofo,jvb}, no external DB). Bands not point
-  figures (Jitsi Handbook devops-guide/requirements.md, verified verbatim): min~2GB/1core
-  (small/test), rec~8GB/4core (basic server). Jibri (recording, optional) has its own scoped
-  8-12GB figure — do not conflate with base app at BUILD.
+- Dify (16/20, #32) — README min figure, OR-modeled vector store; re-confirm quote at BUILD.
+- Activepieces (17/20, #33) — Postgres+Redis req; S3 min-vs-rec split (Ghost precedent).
+- Stalwart (15/20, #33) — deps:none, RAM figure needs byte-verified re-fetch at BUILD.
+- Jitsi Meet (17/20, #36) — official multi-arch images, no external DB, min/rec bands.
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members, zero-incumbent
   SERP. BUILD: disclose required:false≠dependency-free (#3), write explicit inclusion

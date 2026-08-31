@@ -3,6 +3,16 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-08-31 — FIND #37
+
+77. **#75's own fix (detached HEAD) recurred on the very next session** — writing the
+    mitigation into LEARNINGS didn't make the next run apply it, because it was never added
+    as a checklist step any playbook actually reads. → Fixed properly this time: added as
+    SKILL.md invariant #9, not just a LEARNINGS entry. General case: a LEARNINGS fix for a
+    recurring mechanical failure must land in SKILL.md/OPERATIONS.md, not stay prose-only, or
+    treat it as unfixed. (No data lost this time — origin/main already had the commits;
+    only the local branch ref was stale.)
+
 ## 2026-08-31 — AUDIT #6
 
 76. **AUDIT #5's quote-formatting fix (Defect Class #8, markdown stripped at harvest) was
@@ -94,18 +104,8 @@ learning. FIND and BUILD read this file first, every run. Newest first.
 
 ## 2026-08-24 — AUDIT #5
 
-68. **No automated cadence-gap detector exists — the 4th time across 5 audits that "did a
-    scheduled routine actually fire" has been the finding, always discovered up to 6 days late
-    by AUDIT manually diffing commits against cron expressions.** This run: `specs-loop`
-    (Sun+Wed cron) has commits for Sun 08-16 and Sun 08-23 but nothing for Wed 08-19, while
-    `specs-find` (daily) committed every day in between — the trigger API's `last_fired_at` only
-    reports the most recent fire, so it can't confirm whether 08-19 fired silently or not at
-    all. → Owner flag: a cheap CI-independent tripwire (scheduled Action failing/notifying if no
-    operator commit lands within N hours of each cron slot) would catch this same-day; not built
-    this run (AUDIT doesn't build).
-67. Quote field must be copy-pasted verbatim (incl. markdown), never retyped — AUDIT #5 fixed
-    7 instances of stripped emphasis markers; recurred once more, see #76.
-
+68. No automated cadence-gap detector exists (4/5 audits found a gap manually); AUDIT #6
+    confirmed cadence clean but the tripwire still isn't built — standing owner flag.
 66. Docs-mirror recovery pattern (blocked vendor domain → GitHub docs-as-code mirror via
     raw.githubusercontent.com) — proven 4 more times by AUDIT #6 (nextcloud/grafana/
     syncthing/nginx-proxy-manager), now standard practice, not just a FIND-time move.
