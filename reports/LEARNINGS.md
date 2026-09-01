@@ -3,6 +3,23 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-09-01 — FIND #38
+
+79. **A blog citing "official docs say X" can still misstate the figure** — noted.lol claimed
+    Pangolin's official minimum is "1GB RAM"; the verifier fetched the real source (docs mirror,
+    `fosrl/docs-v2` raw GitHub, `docs.pangolin.net` itself egress-blocked) and found the actual
+    quote is "1 vCPU, 2GB RAM, 8GB SSD sufficient for most deployments." Same failure family as
+    #71 (fabricated quote) but from a third-party summarizer, not the harvester's own memory. →
+    A blog attributing a figure to "the docs" is not a source; always fetch the primary doc
+    (or its GitHub mirror) before scoring or queuing, never carry a blog's number forward.
+78. **Multiple docker-compose files in a repo don't imply a DB-alternative (OR) dependency
+    schema** — Pangolin ships `compose.example.yaml` (the documented prod reference, no DB) plus
+    `compose.pgr.yaml`/`compose.drizzle.yaml` (dev-only tooling); the finder's filename-only scan
+    guessed a Directus/Penpot-style DB-OR before the verifier read `quick-install.mdx` and found
+    it's actually `deps:none`. → FIND-stage effort/schema scoring from compose filenames alone is
+    unreliable; confirm which compose file the install docs actually reference before assuming
+    an OR-dependency shape (defer the real call to BUILD either way).
+
 ## 2026-08-31 — FIND #37
 
 77. **#75's own fix (detached HEAD) recurred on the very next session** — writing the

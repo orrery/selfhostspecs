@@ -59,6 +59,13 @@ Queued 08-22 after hitting byte ceiling again).
 - Monica (15/20, #37) — personal CRM/PRM, not a Twenty dupe (sales CRM). no_official_figure;
   deps mysql/mariadb req + redis optional (4.x docs, not docker README); image is Official
   Image `monica` (NOT `monicahq/monica`); scope-pin to 4.x stable, not `main`/Chandler beta.
+- Pangolin (18/20, #38, verifier-signed) — WireGuard identity-aware VPN+reverse-proxy
+  (Cloudflare Tunnel alt), 22.6k★. deps:none — `compose.example.yaml` (the documented prod
+  reference) has no DB; `compose.pgr.yaml`/`compose.drizzle.yaml` are dev-only tooling, not
+  deploy options (verifier-corrected from an initial DB-OR guess). Source: docs.pangolin.net
+  (itself egress-blocked) mirrored via `fosrl/docs-v2` raw GitHub — "1 vCPU, 2GB RAM, 8GB SSD
+  sufficient for most deployments" (min), 2vCPU/2GB/20GB (rec), retrieved 2026-09-01. Blogs
+  wrongly paraphrase "1GB min" — do not use, cite the docs-v2 quote.
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members, zero-incumbent
   SERP. BUILD: disclose required:false≠dependency-free (#3), write explicit inclusion
@@ -96,7 +103,9 @@ weakest). Full detail on all 5: reports/archive/held-log.md.
   Outline, FreshRSS, Umami, NocoDB,
   Docmost, Baserow, Bitwarden, Pixelfed, Karakeep, Beszel, Tandoor Recipes, Headscale,
   Shiori, Passbolt, Wiki.js, Duplicati, ntfy, Homepage, Listmonk, Cachet, EspoCRM, Kavita,
-  changedetection.io, Woodpecker CI, Kopia, Calibre-Web, NetBird, Garage/deuxfleurs-org.
+  changedetection.io, Woodpecker CI, Kopia, Calibre-Web, NetBird, Garage/deuxfleurs-org,
+  Komodo (12/20, #38, moghtech/komodo, ~12.1k★ — crowded vs Coolify/Dockge/Portainer; docs
+  a MongoDB+AVX-CPU-support gotcha, worth a fresh look only with a differentiation angle).
 - Graylog (~8.1k★,#15): docs archived, blocked — shallow (detail: held-log.md).
 - Deferred: disk-footprint column — too inconsistently documented.
 - Parked, #13: Helm/K8s-chart column — needs official/unofficial rule (detail: held-log.md).
