@@ -66,41 +66,21 @@ learning. FIND and BUILD read this file first, every run. Newest first.
 
 ## 2026-08-27 — FIND #33
 
-72. **A harvester can silently soften a source's own "required" label into "recommended"**
-    — Activepieces' cited sizing table states S3 is "a hard requirement, not a nice-to-have"
-    at production scale, but the harvester's dep summary called it "strongly recommended,"
-    caught only because the verifier re-read the same doc the quote came from. → verifiers:
-    when a candidate's own cited source contains a severity word (required/optional/
-    recommended), diff the harvester's paraphrase against that exact word, not just the
-    quoted figure.
+72. Harvester softened source's own "required"→"recommended" (Activepieces) — verifiers now
+    diff paraphrase against exact severity word, not just figure (full detail: archive).
 
 ## 2026-08-26 — FIND #32
 
-71. **A harvester-drafted quote can be fabricated even with a real file open in front of it** —
-    FIND #32's Dify candidate cited a "Minimum required for operation: ..." line as a compose
-    file comment; the verifier grepped both the file and its template for "minimum" and found
-    zero matches, while the REAL official figure (`CPU >= 2 Core - RAM >= 4 GiB`) was sitting
-    in the repo's own top-level README the whole time, unchecked. Cost nothing here only
-    because verification is mandatory pre-queue. → FIND/BUILD harvesters: check the repo
-    README for a stated system-requirements section before declaring `no_official_figure` or
-    drafting any quote from memory of a fetched page; never paraphrase a quote into a
-    plausible-sounding line, copy the literal string or don't cite it.
+71. Harvester-drafted quote fabricated despite a real file open (Dify) — check repo README for
+    stated requirements before `no_official_figure`; never paraphrase from memory (archive).
 
 ## 2026-08-26 — ANALYZE+BUILD (specs-loop)
 
-69. **LEARNINGS #65's OR-dep prose gap was live-site-harmful, not just cosmetic** — fresh-eyes
-    QA on Kestra found `noExternalServices()` used required:false+required:false OR-modeling to
-    falsely list it on the "no external database" collection page (Kestra's own compose has no
-    db-free standalone mode). Fixed by making the compose-file default `required:true` (matches
-    paperless-ngx precedent) and rendering `deps[].note` in `build.mjs` (previously written but
-    never rendered). → Any future either/or dep: default-per-official-compose is `required:true`,
-    alternates `required:false`, always with a `note`; check collection-membership predicates
-    against the fix, don't just eyeball the per-app page.
-70. **`depNotes`'s `Set`-based dedup silently collapses byte-identical `note` strings across
-    multiple dep entries** (found on nginx-proxy-manager's mysql+mariadb, same note text) —
-    harmless today (no content lost, reads as one shared paragraph) but untested, per QA 08-26.
-    → Next build.mjs touch: add a build-integrity test asserting every distinct dep note in the
-    data appears in its rendered app page, so a future regression here fails CI, not QA eyeballing.
+69. OR-dep prose gap (Kestra false collection-inclusion) fixed → compose-default `required:true`
+    precedent, now standard (full detail: archive).
+70. `depNotes` `Set`-based dedup silently collapses byte-identical `note` strings across dep
+    entries (nginx-proxy-manager mysql+mariadb) — harmless today, still no CI test for it.
+    → add a build-integrity test asserting every distinct dep note renders on its app page.
 
 ## 2026-08-24 — AUDIT #5
 

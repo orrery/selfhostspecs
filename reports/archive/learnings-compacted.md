@@ -89,3 +89,11 @@ tests/*.test.mjs for the live enforcement each of these graduated into.
   fixed 08-26: compose-file default is `required:true`, alternates `required:false`, always with
   a rendered `note` (#65/#69). grafana/keycloak/nextcloud still need the note retrofitted
   opportunistically (tracked in backlog/opportunities.md Pending BUILD).
+- A harvester-drafted quote can be fabricated even with a real file open in front of it (Dify
+  #71, 08-26: a plausible-sounding "minimum required" line didn't exist in the compose file the
+  harvester claimed it from; the real figure was in the README, unchecked). → check the repo
+  README for a stated requirements section before `no_official_figure`; never paraphrase a quote
+  from memory, copy the literal string or don't cite it. Standing FIND/BUILD practice since.
+- A harvester can soften a source's own severity word ("required"→"recommended", Activepieces
+  #72, 08-27). → verifiers diff the harvester's paraphrase against the source's exact
+  required/optional/recommended word, not just the quoted figure. Standing verifier practice.
