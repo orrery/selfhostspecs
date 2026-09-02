@@ -5,7 +5,7 @@
   "website": "https://technitium.com/dns/",
   "repo": "https://github.com/TechnitiumSoftware/DnsServer",
   "description": "Self-hosted authoritative and recursive DNS server with ad/malware blocking and a web admin console.",
-  "status": "pending-second-qa",
+  "status": "live",
   "specs": {
     "no_official_figure": {
       "fields": [

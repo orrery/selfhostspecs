@@ -3,21 +3,21 @@
 Statuses: unverified→queued(verifier sign-off)→building→shipped/rejected. Dedupe vs
 all lists. App detail: `data/apps/<slug>.json`.
 
-## Shipped — 40 apps live
+## Shipped — 44 apps live
 gitea, home-assistant, immich, jellyfin, uptime-kuma, vaultwarden, adguard-home, frigate,
 grafana, n8n, nextcloud, paperless-ngx, pi-hole, syncthing, discourse, zulip, rocket-chat,
 openproject, plausible-ce, open-webui, linkwarden, chatwoot, seafile, mattermost, jenkins,
 keycloak, node-red, gitlab-ce, coolify, prometheus, docker-mailserver, wazuh, kestra,
 code-server, ollama, dockge, onlyoffice-document-server, coder, nginx-proxy-manager,
-twenty-crm.
+twenty-crm, homebox, mailcow, metabase, technitium-dns-server.
 Batch-by-batch dates: reports/archive/shipped-log.md.
 Pending BUILD (1 schema-change/batch), full detail: reports/archive/queued-detail.md
 (GPU column, community-figures column, Discourse churn caveat, OR-dep note retrofit,
 Linkwarden cpu_rec_cores).
 
 ## In pipeline (not yet live)
-- pending-second-qa: homebox, mailcow, metabase, technitium-dns-server — cleared 08-30,
-  Mailcow's rep-image gap fixed (Defect Class #15, docker.note now schema+CI-checked).
+- none currently pending-second-qa (fresh-eyes re-QA 09-02 cleared homebox/mailcow/metabase/
+  technitium-dns-server, zero defects, all 4 promoted to live — see reports/2026-36.md).
 
 ## Queued (verifier-signed), unbuilt
 Full sourcing detail (quotes, deps, images, arch) for every item below is archived at

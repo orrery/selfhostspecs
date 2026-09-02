@@ -5,7 +5,7 @@
   "website": "https://www.metabase.com",
   "repo": "https://github.com/metabase/metabase",
   "description": "Self-hosted business intelligence tool for building dashboards and querying data without SQL.",
-  "status": "pending-second-qa",
+  "status": "live",
   "specs": {
     "no_official_figure": {
       "fields": [
