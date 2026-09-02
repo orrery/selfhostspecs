@@ -84,6 +84,12 @@ test("every app has a page showing its verbatim quotes and honest absences", () 
       const frag = a.docker.note.slice(0, 30).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
       assert.ok(html.includes(frag), `${a.slug}: docker.note not rendered on page (Defect Class #15 — representative-image ambiguity must be disclosed)`);
     }
+    for (const d of a.deps ?? []) {
+      if (d.note) {
+        const frag = d.note.slice(0, 30).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+        assert.ok(html.includes(frag), `${a.slug}: deps[].note for "${d.service}" not rendered on page (same silent-drop risk as Defect Class #15, for dependency disclosures instead of image disclosures)`);
+      }
+    }
   }
 });
 
