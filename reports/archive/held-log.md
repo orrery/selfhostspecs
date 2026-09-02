@@ -72,3 +72,21 @@ precedent: LEARNINGS #62 shipped/rejected-log split).
   appwrite.io EGRESS_BLOCKED; code-search of the appwrite org found no in-repo docs mirror.
   Conceptually overlaps Supabase self-hosted (already queued, #11) as a BaaS entry — weakest
   of this batch's three candidates. Hold.
+
+## FIND #38 additions (2026-09-02)
+- Apache Guacamole (12/20): remote-desktop/SSH-via-browser gateway. guacd+guacamole+
+  MySQL/Postgres, 3-container. guacamole.apache.org EGRESS_BLOCKED, independently
+  reconfirmed by the verifier (not a one-session fluke). Only third-party blogs found,
+  giving conflicting RAM figures (512MB vs 2GB) with no verbatim primary quote — genuine
+  sourcing gap per LEARNINGS #79 (don't carry a blog's "the docs say X" forward). Hold for
+  a reachable-environment fetch of the official manual.
+- Komga (12/20): comic/manga server, gotson/komga, ~6k★, SQLite, deps:none, single
+  container. Only figure found is a JVM heap ceiling, verbatim: "By default the `java`
+  process will be limited in the maximum amount of memory (RAM) it can use, usually 1gb"
+  (komga-website jar.md) — same heap≠system-RAM trap as the held SonarQube entry, not a
+  real min-RAM claim. Hold until an actual system-RAM figure surfaces.
+- Huly (unscored, ~25k★): hcengineering/platform, all-in-one PM (Linear/Jira/Notion/Motion
+  alternative). Stack: CockroachDB+Elasticsearch+Redpanda+MinIO+Nginx. Official min 2vCPU/
+  8GB, rec 4vCPU/16GB (huly-selfhost README) — sourceable, but CockroachDB/Redpanda/MinIO
+  have no SERVICES enum slot (elasticsearch alone is already in-schema) — same deps-schema
+  gap already holding Ente/Sentry/PostHog. Hold for schema work, not sourcing.

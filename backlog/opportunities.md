@@ -56,6 +56,9 @@ Queued 08-22 after hitting byte ceiling again).
 - Monica (15/20, #37) — personal CRM/PRM, not a Twenty dupe (sales CRM). no_official_figure;
   deps mysql/mariadb req + redis optional (4.x docs, not docker README); image is Official
   Image `monica` (NOT `monicahq/monica`); scope-pin to 4.x stable, not `main`/Chandler beta.
+- Linkding (16/20, #38) — bookmark manager, not a Linkwarden dupe. deps:none, SQLite
+  default (sourced). no_official_figure RAM/CPU (confirmed absent); real demand: 3 GH
+  issues on confused 7-8GB usage.
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members, zero-incumbent
   SERP. BUILD: disclose required:false≠dependency-free (#3), write explicit inclusion
@@ -74,6 +77,9 @@ Queued 08-22 after hitting byte ceiling again).
   harvest, sort existing field.
 
 ## Held (insufficient evidence, not discarded — full evidence: reports/archive/held-log.md)
+Apache Guacamole (12/20, #38, docs egress-blocked, conflicting 3rd-party RAM figs); Komga
+(12/20, #38, comic/manga, only figure is JVM heap not RAM, SonarQube-shape); Huly
+(unscored, #38, CockroachDB/Redpanda/MinIO have no SERVICES enum slot, Ente-shape);
 Snipe-IT/Cal.com (~12/20, no figures); BigBlueButton (14/20, non-container schema needed);
 PeerTube (#15, stale figure); Vikunja (#15, docs exhausted); Plane (~12/20, crowds
 OpenProject); Redmine (#15, zero figure); AFFiNE (~12/20, docs blocked); Forgejo (~7/20,
@@ -113,4 +119,7 @@ None crossing 90 days (oldest 07-24). Docker-size re-checks every AUDIT, not jus
   official image/figure); Glance (unsourced bullet); Excalidraw (dev-mode-only, trivial SPA);
   Matomo (PHP memory_limit ≠ system RAM); FreeScout (overlaps Zammad, weaker sourcing);
   "ARM/Pi-ready" collection (no differentiating angle, checked twice).
+- Overseerr (#38, ~5k★): merged away into "Seerr" w/ Jellyseerr (held), both sunset May 2026.
+- Maybe Finance (#38, ~54k★): archived 2025-07-27, dead upstream (MinIO precedent). Active
+  fork Sure (we-promise/sure, ~9.7k★) is a separate future FIND candidate, unresearched.
 - Any calculator/tool or game (owner exclusion — never propose).

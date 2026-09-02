@@ -229,3 +229,14 @@ opportunities.md Shipped section, 08-29, same archive-not-trim precedent)
   08-26 — only Kestra/Nginx Proxy Manager have notes so far; retrofit opportunistically).
 - Linkwarden cpu_rec_cores now has an official figure ("any 2 core machine", AUDIT#5,
   source rewritten 08-24) — harvest+verify next BUILD, don't add unverified.
+
+## FIND #38 additions (2026-09-02)
+- Linkding (16/20) — sissbruecker/linkding, ~10.8k★, 1M+ Docker pulls. deps:none, SQLite
+  default, verbatim: "linkding uses an SQLite database by default. Alternatively, linkding
+  supports PostgreSQL" (docs/src/content/docs/installation.md — path moved in an 08-31
+  Astro docs-site rewrite; old docs/Installation.md 404s, don't reuse that path). No
+  official RAM/CPU figure anywhere (README, options page, install docs) — confirmed
+  absence, not a fetch failure — ship no_official_figure:true. Real demand: GH#985/#453/#422
+  report confused 7-8GB RAM usage on fresh containers (a `latest-plus` tag note mentions
+  extra Chromium runtime memory, no number). Not a Linkwarden dupe — SQLite-first/minimal
+  vs Linkwarden's Postgres-required archiving/full-text focus, different product class.
