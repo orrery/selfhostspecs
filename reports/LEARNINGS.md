@@ -81,16 +81,6 @@ learning. FIND and BUILD read this file first, every run. Newest first.
     BUDGETS map before writing anything; compact proactively once headroom drops under
     ~500 bytes, don't wait for the next write to fail.
 
-## 2026-08-27 — FIND #33
-
-72. Harvester softened source's own "required"→"recommended" (Activepieces) — verifiers now
-    diff paraphrase against exact severity word, not just figure (full detail: archive).
-
-## 2026-08-26 — FIND #32
-
-71. Harvester-drafted quote fabricated despite a real file open (Dify) — check repo README for
-    stated requirements before `no_official_figure`; never paraphrase from memory (archive).
-
 ## 2026-08-26 — ANALYZE+BUILD (specs-loop)
 
 69. OR-dep prose gap (Kestra false collection-inclusion) fixed → compose-default `required:true`

@@ -5,7 +5,7 @@
   "website": "https://jitsi.org/jitsi-meet/",
   "repo": "https://github.com/jitsi/jitsi-meet",
   "description": "Self-hosted, fully encrypted video conferencing platform, deployable as a multi-container Docker stack.",
-  "status": "pending-verification",
+  "status": "pending-second-qa",
   "specs": {
     "ram_min_mb": {
       "value": 2048,

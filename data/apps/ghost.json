@@ -5,7 +5,7 @@
   "website": "https://ghost.org",
   "repo": "https://github.com/TryGhost/Ghost",
   "description": "Self-hosted publishing platform for blogs and newsletters with built-in memberships and subscriptions.",
-  "status": "pending-verification",
+  "status": "pending-second-qa",
   "specs": {
     "ram_min_mb": {
       "value": 1024,

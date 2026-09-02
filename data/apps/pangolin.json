@@ -5,7 +5,7 @@
   "website": "https://pangolin.net",
   "repo": "https://github.com/fosrl/pangolin",
   "description": "Self-hosted WireGuard identity-aware VPN and tunneled reverse proxy, an alternative to Cloudflare Tunnel.",
-  "status": "pending-verification",
+  "status": "pending-second-qa",
   "specs": {
     "ram_min_mb": {
       "value": 2048,

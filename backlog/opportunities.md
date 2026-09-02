@@ -16,8 +16,8 @@ Pending BUILD (1 schema-change/batch), full detail: reports/archive/queued-detai
 Linkwarden cpu_rec_cores).
 
 ## In pipeline (not yet live)
-- none currently pending-second-qa (fresh-eyes re-QA 09-02 cleared homebox/mailcow/metabase/
-  technitium-dns-server, zero defects, all 4 promoted to live — see reports/2026-36.md).
+- pending-second-qa: pangolin, ghost, activepieces, jitsi-meet — built 09-02 (harvest→verify
+  fixed 3 quote-drift defects→QA added deps[].note render tripwire), zero data defects.
 
 ## Queued (verifier-signed), unbuilt
 Full sourcing detail (quotes, deps, images, arch) for every item below is archived at
@@ -25,7 +25,6 @@ Full sourcing detail (quotes, deps, images, arch) for every item below is archiv
 one-line-flag only, for dedupe + triage (relief: LEARNINGS #62 precedent, applied to
 Queued 08-22 after hitting byte ceiling again).
 - Zammad (16/20, #8) — PostgreSQL req.
-- Ghost (17/20, #9) — MySQL req; min-vs-rec TBD at BUILD.
 - Mastodon (16/20, #9) — no_official_figure. Postgres+Redis req; ES optional.
 - Lemmy (16/20, #9) — PostgreSQL req; unlabeled figure, field TBD at BUILD.
 - Netdata (unblocked, #9) — "100-200MB RAM".
@@ -53,19 +52,10 @@ Queued 08-22 after hitting byte ceiling again).
   deps:none, arm64 but host needs in-kernel WireGuard support — real deploy caveat, note
   at BUILD. Weakest demand signal of the batch.
 - Dify (16/20, #32) — README min figure, OR-modeled vector store; re-confirm quote at BUILD.
-- Activepieces (17/20, #33) — Postgres+Redis req; S3 min-vs-rec split (Ghost precedent).
 - Stalwart (15/20, #33) — deps:none, RAM figure needs byte-verified re-fetch at BUILD.
-- Jitsi Meet (17/20, #36) — official multi-arch images, no external DB, min/rec bands.
 - Monica (15/20, #37) — personal CRM/PRM, not a Twenty dupe (sales CRM). no_official_figure;
   deps mysql/mariadb req + redis optional (4.x docs, not docker README); image is Official
   Image `monica` (NOT `monicahq/monica`); scope-pin to 4.x stable, not `main`/Chandler beta.
-- Pangolin (18/20, #38, verifier-signed) — WireGuard identity-aware VPN+reverse-proxy
-  (Cloudflare Tunnel alt), 22.6k★. deps:none — `compose.example.yaml` (the documented prod
-  reference) has no DB; `compose.pgr.yaml`/`compose.drizzle.yaml` are dev-only tooling, not
-  deploy options (verifier-corrected from an initial DB-OR guess). Source: docs.pangolin.net
-  (itself egress-blocked) mirrored via `fosrl/docs-v2` raw GitHub — "1 vCPU, 2GB RAM, 8GB SSD
-  sufficient for most deployments" (min), 2vCPU/2GB/20GB (rec), retrieved 2026-09-01. Blogs
-  wrongly paraphrase "1GB min" — do not use, cite the docs-v2 quote.
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members, zero-incumbent
   SERP. BUILD: disclose required:false≠dependency-free (#3), write explicit inclusion

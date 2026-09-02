@@ -5,7 +5,7 @@
   "website": "https://www.activepieces.com",
   "repo": "https://github.com/activepieces/activepieces",
   "description": "Self-hosted AI and workflow automation platform, an n8n alternative built on no-code flows and pieces.",
-  "status": "pending-verification",
+  "status": "pending-second-qa",
   "specs": {
     "ram_min_mb": {
       "value": 4096,
