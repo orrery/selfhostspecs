@@ -1,0 +1,50 @@
+{
+  "name": "Ghost",
+  "slug": "ghost",
+  "category": "publishing",
+  "website": "https://ghost.org",
+  "repo": "https://github.com/TryGhost/Ghost",
+  "description": "Self-hosted publishing platform for blogs and newsletters with built-in memberships and subscriptions.",
+  "status": "pending-verification",
+  "specs": {
+    "ram_min_mb": {
+      "value": 1024,
+      "source_url": "https://raw.githubusercontent.com/TryGhost/docs/main/install/ubuntu.mdx",
+      "quote": "A server with at least 1GB memory",
+      "retrieved": "2026-09-02",
+      "scope": "How To Install Ghost On Ubuntu guide, Prerequisites list for \"the officially recommended production installation\" (Ubuntu 22.04/24.04/26.04 + Ghost-CLI + MySQL production stack)"
+    },
+    "no_official_figure": {
+      "fields": [
+        "ram_rec_mb",
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://raw.githubusercontent.com/TryGhost/docs/main/install/ubuntu.mdx",
+      "note": "The Ubuntu+Ghost-CLI+MySQL production guide's Prerequisites list states only \"A server with at least 1GB memory\" as a floor requirement, phrased with \"requires\" (\"The officially recommended production installation requires the following stack\") — read as a minimum, not a recommendation. No separate recommended-RAM figure, and no CPU core count of any kind, appears anywhere in that guide, the Docker install guide, or the Ghost-CLI docs checked at BUILD."
+    }
+  },
+  "deps": [
+    {
+      "service": "mysql",
+      "required": true,
+      "source_url": "https://raw.githubusercontent.com/TryGhost/docs/main/install/ubuntu.mdx",
+      "note": "Official Ubuntu production guide lists \"MySQL 8.0 or 8.4\" as a required prerequisite; the official Docker image's production example also wires a mysql:8.0 container, and its docs state \"you'll also need to be running with MySQL 8\" for production mode. SQLite is used only in the image's non-production development mode, not a supported production alternative."
+    }
+  ],
+  "docker": {
+    "image": "ghost:latest",
+    "size_mb": 234,
+    "arches": [
+      "amd64",
+      "arm64",
+      "armv7"
+    ],
+    "source_url": "https://hub.docker.com/_/ghost",
+    "retrieved": "2026-09-02"
+  },
+  "sources_of_truth": [
+    "https://raw.githubusercontent.com/TryGhost/docs/main/install/ubuntu.mdx",
+    "https://hub.docker.com/_/ghost"
+  ]
+}

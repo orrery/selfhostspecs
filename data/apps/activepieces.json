@@ -1,0 +1,64 @@
+{
+  "name": "Activepieces",
+  "slug": "activepieces",
+  "category": "automation",
+  "website": "https://www.activepieces.com",
+  "repo": "https://github.com/activepieces/activepieces",
+  "description": "Self-hosted AI and workflow automation platform, an n8n alternative built on no-code flows and pieces.",
+  "status": "pending-verification",
+  "specs": {
+    "ram_min_mb": {
+      "value": 4096,
+      "source_url": "https://raw.githubusercontent.com/activepieces/activepieces/main/docs/install/options/docker-compose.mdx",
+      "quote": "At least 2 vCPU and 4 GB RAM.",
+      "retrieved": "2026-09-02",
+      "scope": "\"Self Host Activepieces\" one-command Docker Compose install (recommended quickstart path: app+worker+postgres+redis on one machine), general/single-host requirement -- distinct from the separately-scaled Production Setup guide"
+    },
+    "cpu_min_cores": {
+      "value": 2,
+      "source_url": "https://raw.githubusercontent.com/activepieces/activepieces/main/docs/install/options/docker-compose.mdx",
+      "quote": "At least 2 vCPU and 4 GB RAM.",
+      "retrieved": "2026-09-02",
+      "scope": "\"Self Host Activepieces\" one-command Docker Compose install (recommended quickstart path: app+worker+postgres+redis on one machine), general/single-host requirement -- distinct from the separately-scaled Production Setup guide"
+    },
+    "no_official_figure": {
+      "fields": [
+        "ram_rec_mb",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://raw.githubusercontent.com/activepieces/activepieces/main/docs/install/configure-operate/production-setup.mdx",
+      "note": "At production scale, official sizing is a per-component table, not a single app-wide recommended figure, so no single ram_rec_mb/cpu_rec_cores value can be sourced without inventing a total the docs don't state (Defect Class #1/#2). Verbatim rows (Production Setup guide): \"| **Worker** | 0.5 vCPU / 1 GB, concurrency **1** | one per concurrent flow |\", \"| **App** | 1 vCPU / 1 GB | one per ten workers |\", \"| **Postgres** | 2 vCPU / 4 GB, managed | one -- **size it against peak throughput**, see below |\", \"| **Redis** | 1 vCPU / 1 GB, managed | one |\". The same table marks object storage as required at this scale: \"S3 is a hard requirement, not a nice-to-have: without it, every flow bundle and piece archive funnels through the app tier and the throughput numbers below no longer hold.\" The default docker-compose.yml (app+worker+postgres+redis, no S3 service) has no enum slot for S3/object storage -- it is not cited as a distinct container in any official compose, only as an external managed dependency in this production doc, so it is not modeled in `deps`; this note is the record of the production-scope requirement."
+    }
+  },
+  "deps": [
+    {
+      "service": "postgresql",
+      "required": true,
+      "source_url": "https://raw.githubusercontent.com/activepieces/activepieces/main/docker-compose.yml",
+      "note": "Official root docker-compose.yml wires a pgvector/pgvector:0.8.0-pg14 container (a Postgres 14 image with the pgvector extension) as the `postgres` service; app and worker both depend on it. Not optional or swappable in the official compose."
+    },
+    {
+      "service": "redis",
+      "required": true,
+      "source_url": "https://raw.githubusercontent.com/activepieces/activepieces/main/docker-compose.yml",
+      "note": "Official root docker-compose.yml wires a redis:7.0.7 container as the job queue backend. Not optional or swappable in the official compose."
+    }
+  ],
+  "docker": {
+    "image": "ghcr.io/activepieces/activepieces:0.89.0",
+    "size_mb": 381,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://github.com/orgs/activepieces/packages/container/package/activepieces",
+    "retrieved": "2026-09-02",
+    "note": "The official root docker-compose.yml (the documented self-host path) pins app and worker to this same image/tag; a rolling :latest tag also exists on this registry but the officially documented compose pins a specific release, so that pinned version is cited here rather than :latest."
+  },
+  "sources_of_truth": [
+    "https://raw.githubusercontent.com/activepieces/activepieces/main/docs/install/options/docker-compose.mdx",
+    "https://raw.githubusercontent.com/activepieces/activepieces/main/docs/install/configure-operate/production-setup.mdx",
+    "https://raw.githubusercontent.com/activepieces/activepieces/main/docker-compose.yml",
+    "https://github.com/orgs/activepieces/packages/container/package/activepieces"
+  ]
+}

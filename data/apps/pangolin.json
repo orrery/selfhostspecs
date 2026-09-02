@@ -1,0 +1,64 @@
+{
+  "name": "Pangolin",
+  "slug": "pangolin",
+  "category": "networking",
+  "website": "https://pangolin.net",
+  "repo": "https://github.com/fosrl/pangolin",
+  "description": "Self-hosted WireGuard identity-aware VPN and tunneled reverse proxy, an alternative to Cloudflare Tunnel.",
+  "status": "pending-verification",
+  "specs": {
+    "ram_min_mb": {
+      "value": 2048,
+      "source_url": "https://raw.githubusercontent.com/fosrl/docs-v2/main/self-host/choosing-a-vps.mdx",
+      "quote": "Pangolin generally requires minimal resources to run effectively. A basic VPS with **1 vCPU, 2GB RAM, and 8GB SSD** is sufficient for most deployments.",
+      "retrieved": "2026-09-02",
+      "scope": "Choosing a VPS guide, general self-hosted deployment (basic-VPS tier, before the docs' own \"Recommended Specs\" card)"
+    },
+    "ram_rec_mb": {
+      "value": 2048,
+      "source_url": "https://raw.githubusercontent.com/fosrl/docs-v2/main/self-host/choosing-a-vps.mdx",
+      "quote": "**RAM**: 2GB",
+      "retrieved": "2026-09-02",
+      "scope": "Choosing a VPS guide, \"Recommended Specs\" card (general self-hosted deployment)"
+    },
+    "cpu_min_cores": {
+      "value": 1,
+      "source_url": "https://raw.githubusercontent.com/fosrl/docs-v2/main/self-host/choosing-a-vps.mdx",
+      "quote": "Pangolin generally requires minimal resources to run effectively. A basic VPS with **1 vCPU, 2GB RAM, and 8GB SSD** is sufficient for most deployments.",
+      "retrieved": "2026-09-02",
+      "scope": "Choosing a VPS guide, general self-hosted deployment (basic-VPS tier, before the docs' own \"Recommended Specs\" card)"
+    },
+    "cpu_rec_cores": {
+      "value": 2,
+      "source_url": "https://raw.githubusercontent.com/fosrl/docs-v2/main/self-host/choosing-a-vps.mdx",
+      "quote": "**CPU**: 2 vCPU",
+      "retrieved": "2026-09-02",
+      "scope": "Choosing a VPS guide, \"Recommended Specs\" card (general self-hosted deployment)"
+    }
+  },
+  "deps": [
+    {
+      "service": "none",
+      "required": false,
+      "source_url": "https://raw.githubusercontent.com/fosrl/pangolin/main/compose.example.yaml",
+      "note": "The documented production reference compose (compose.example.yaml: pangolin + gerbil + traefik) wires no database service. compose.pgr.yaml and compose.drizzle.yaml in the same repo are dev-only tooling for working on Pangolin's own Drizzle/Postgres migrations, not deploy options, so they are not modeled as deps."
+    }
+  ],
+  "docker": {
+    "image": "fosrl/pangolin:latest",
+    "size_mb": 333,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://hub.docker.com/r/fosrl/pangolin",
+    "retrieved": "2026-09-02",
+    "note": "Pangolin is a 3-container stack per the official compose.example.yaml (pangolin, gerbil for WireGuard tunneling, traefik as the proxy). No single container is named for the whole bundle; the fosrl/pangolin image (the app/API/dashboard container, and the repo's own primary image) is shown here as representative, consistent with the project's core-identity convention for bundled apps (see Mailcow), but this size covers only that one container, not gerbil or traefik."
+  },
+  "sources_of_truth": [
+    "https://raw.githubusercontent.com/fosrl/docs-v2/main/self-host/choosing-a-vps.mdx",
+    "https://raw.githubusercontent.com/fosrl/docs-v2/main/self-host/quick-install.mdx",
+    "https://raw.githubusercontent.com/fosrl/pangolin/main/compose.example.yaml",
+    "https://hub.docker.com/r/fosrl/pangolin"
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "name": "Jitsi Meet",
+  "slug": "jitsi-meet",
+  "category": "video-conferencing",
+  "website": "https://jitsi.org/jitsi-meet/",
+  "repo": "https://github.com/jitsi/jitsi-meet",
+  "description": "Self-hosted, fully encrypted video conferencing platform, deployable as a multi-container Docker stack.",
+  "status": "pending-verification",
+  "specs": {
+    "ram_min_mb": {
+      "value": 2048,
+      "source_url": "https://raw.githubusercontent.com/jitsi/handbook/master/docs/devops-guide/requirements.md",
+      "quote": "for test servers or very small meetings you can try to use 2 GB",
+      "retrieved": "2026-09-02",
+      "scope": "Jitsi Handbook DevOps guide, Requirements page, test-server/very-small-meeting tier (lowest of the three RAM bands the page gives)"
+    },
+    "ram_rec_mb": {
+      "value": 8192,
+      "source_url": "https://raw.githubusercontent.com/jitsi/handbook/master/docs/devops-guide/requirements.md",
+      "quote": "it's usually suggested to get 8 GB",
+      "retrieved": "2026-09-02",
+      "scope": "Jitsi Handbook DevOps guide, Requirements page, general/basic-server suggestion (the page also lists an intermediate \"4 GB for small meetings\" tier, not captured by this min/rec schema)"
+    },
+    "cpu_rec_cores": {
+      "value": 4,
+      "source_url": "https://raw.githubusercontent.com/jitsi/handbook/master/docs/devops-guide/requirements.md",
+      "quote": "For a basic server, 4 dedicated cores can be enough.",
+      "retrieved": "2026-09-02",
+      "scope": "Jitsi Handbook DevOps guide, Requirements page, basic-server tier"
+    },
+    "no_official_figure": {
+      "fields": [
+        "cpu_min_cores"
+      ],
+      "evidence_url": "https://raw.githubusercontent.com/jitsi/handbook/master/docs/devops-guide/requirements.md",
+      "note": "Live re-fetch surprise vs. earlier research notes: the current Requirements page states no minimum core count for the test/small-meeting tier. It only says Prosody (one stack component) \"can only use ONE (1) core\" -- a per-process ceiling, not a stated system minimum -- so filing that as cpu_min_cores would misattribute a different claim (Defect Class #1/#8). Only the basic-server figure (\"4 dedicated cores\", filed as cpu_rec_cores) is an actual core-count requirement in this source."
+    }
+  },
+  "deps": [
+    {
+      "service": "none",
+      "required": false,
+      "source_url": "https://raw.githubusercontent.com/jitsi/docker-jitsi-meet/master/docker-compose.yml",
+      "note": "Official docker-compose.yml defines web, prosody (bundled internal XMPP server), jicofo, and jvb containers -- no external database service of any kind."
+    }
+  ],
+  "docker": {
+    "image": "ghcr.io/jitsi/web:stable",
+    "size_mb": 129,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://github.com/jitsi/docker-jitsi-meet/pkgs/container/web",
+    "retrieved": "2026-09-02",
+    "note": "Jitsi Meet ships as a 4-container stack (web, prosody, jicofo, jvb) with no single container named \"jitsi-meet\"; web (the user-facing frontend, and the compose file's first-listed service) is shown here as representative, consistent with the project's core-identity convention for bundled apps (see Mailcow), but this size covers only that one container, not prosody/jicofo/jvb. This image has no :latest tag on the registry -- the officially documented rolling-release tag is :stable (README: \"stable | Points to the latest stable release\"), confirmed live to resolve. Jibri, the separate optional recording component, ships its own image and its own 8-12GB RAM figure in the Handbook, not reflected in this entry's specs (do not conflate)."
+  },
+  "sources_of_truth": [
+    "https://raw.githubusercontent.com/jitsi/handbook/master/docs/devops-guide/requirements.md",
+    "https://raw.githubusercontent.com/jitsi/docker-jitsi-meet/master/docker-compose.yml",
+    "https://raw.githubusercontent.com/jitsi/docker-jitsi-meet/master/README.md",
+    "https://github.com/jitsi/docker-jitsi-meet/pkgs/container/web"
+  ]
+}
