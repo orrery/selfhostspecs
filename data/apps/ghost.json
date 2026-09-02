@@ -29,7 +29,7 @@
       "service": "mysql",
       "required": true,
       "source_url": "https://raw.githubusercontent.com/TryGhost/docs/main/install/ubuntu.mdx",
-      "note": "Official Ubuntu production guide lists \"MySQL 8.0 or 8.4\" as a required prerequisite; the official Docker image's production example also wires a mysql:8.0 container, and its docs state \"you'll also need to be running with MySQL 8\" for production mode. SQLite is used only in the image's non-production development mode, not a supported production alternative."
+      "note": "Official Ubuntu production guide lists \"MySQL 8.0 or 8.4\" as a required prerequisite; per faq/supported-databases.mdx (https://raw.githubusercontent.com/TryGhost/docs/main/faq/supported-databases.mdx), \"MySQL 8 is the only supported database in production.\" The official Docker Compose tooling (TryGhost/ghost-docker compose.yml) also wires a mysql:8.0.44 container for the database. SQLite is used only in local/non-production development, not a supported production alternative."
     }
   ],
   "docker": {
