@@ -211,6 +211,30 @@ LEARNINGS #62, shipped/rejected-log split). BUILD reads this file before harvest
   its own README ("This branch is in development... see the 4.x branch" for stable) — the
   Official Image builds from 4.x/stable, so pin every citation to the 4.x branch, never main.
 
+## FIND #39 additions (2026-09-03)
+- Sure (17/20) — we-promise/sure, 9.7k★, personal finance/wealth-tracking app, active
+  community fork of the archived Maybe Finance (rejected FIND #38 09-02 as dead upstream;
+  that rejection explicitly flagged Sure as the follow-up candidate). Deps confirmed via
+  primary compose.example.yml (raw.githubusercontent.com, no `profiles:` key on any):
+  `web`+`worker` (ghcr.io/we-promise/sure:stable), `db` (postgres:16), `redis`
+  (redis:latest) all required; `backup` (alpine:3.20) optional behind `profiles: [backup]`.
+  Image confirmed real: ghcr.io/we-promise/sure, we-promise org package, 2.51M downloads.
+  RAM/CPU: harvester's first pass found no figure in README/wiki/docs/hosting/docker.md —
+  verifier caught a figure the harvester missed, in the SAME docs/hosting/ directory:
+  docs/hosting/hetzner.md, verbatim "A Hetzner Cloud server (recommended: 4GB RAM, 2 CPU
+  cores minimum)" and "Minimum: CX21 (2 vCPU, 4GB RAM) / Recommended: CX31 (2 vCPU, 8GB
+  RAM) for multiple users." Community-contributed (PR #211 by pcamarajr) but merged into
+  and currently live in the official repo — not a vendor-neutral maintainer statement, so
+  BUILD must scope-label it (Defect Class #3: "Hetzner Cloud deployment guide,
+  community-contributed, merged into official docs") rather than either treating it as a
+  clean official figure OR dropping it to no_official_figure — a source exists, silently
+  ignoring it violates source-or-silence in the other direction. Demand: GH Discussions
+  #353 ("Too much Ram and Cpu consumption, possible to optimize?", unanswered) and #212
+  ("Current architecture and idle resource behavior for single-user self-hosting",
+  unanswered) — real captured demand, both open. Not a dupe of held Actual Budget/Firefly
+  III (separate codebases, different product shape — Sure is full wealth/investment
+  dashboard, not envelope budgeting).
+
 ## In pipeline — pending-second-qa detail (moved from opportunities.md, 08-29)
 - onlyoffice-document-server, coder, nginx-proxy-manager, twenty-crm — cleared 08-26, zero
   defects (data/apps/*.json). nginx-proxy-manager's deps array (none/postgresql/mysql/

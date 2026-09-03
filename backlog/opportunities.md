@@ -59,6 +59,10 @@ Queued 08-22 after hitting byte ceiling again).
 - Linkding (16/20, #38) — bookmark manager, not a Linkwarden dupe. deps:none, SQLite
   default (sourced). no_official_figure RAM/CPU (confirmed absent); real demand: 3 GH
   issues on confused 7-8GB usage.
+- Sure (17/20, #39) — personal finance/wealth tracker, we-promise/sure, active fork of
+  dead Maybe Finance (rejected 09-02). Postgres 16 + Redis both required, no OR. Figure
+  EXISTS (docs/hosting/hetzner.md, community-contributed Hetzner guide merged upstream) —
+  min 4GB/2CPU, rec 8GB/2CPU — BUILD must scope-label it, not ship no_official_figure.
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members, zero-incumbent
   SERP. BUILD: disclose required:false≠dependency-free (#3), write explicit inclusion

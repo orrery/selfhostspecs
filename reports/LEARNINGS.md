@@ -3,6 +3,24 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-09-03 — FIND #39
+
+81. **Detached HEAD (#75) recurred a THIRD time despite #77's SKILL.md invariant #9 fix** —
+    this run started detached again (HEAD matched origin/main exactly, no data at risk, but
+    the checklist step alone isn't preventing recurrence, just catching it after the fact).
+    → Root cause still unaddressed: something about how these cloud runs start the session
+    leaves git in detached HEAD. Next AUDIT: check whether this is a container/clone-setup
+    artifact rather than an agent-behavior gap — a checklist item can't fix an environment
+    default.
+80. **A source can exist in a sibling file the harvester never opened, inside the SAME
+    directory it did check** — Sure's RAM/CPU figure lives in `docs/hosting/hetzner.md`
+    (a provider-specific guide), not `docs/hosting/docker.md` (the one the harvester
+    fetched); the verifier only found it because the brief said "check the wider net of
+    docs/hosting/*.md files." → When a docs/ directory has multiple files and one is
+    checked clean, list and skim every file in that directory before concluding
+    no_official_figure — a hosting-provider guide is a common place for a figure the
+    generic install doc omits.
+
 ## 2026-09-01 — FIND #38
 
 79. **A blog citing "official docs say X" can still misstate the figure** — noted.lol claimed
@@ -52,11 +70,8 @@ learning. FIND and BUILD read this file first, every run. Newest first.
 
 ## 2026-08-30 — FIND #36
 
-75. **A prior session can leave HEAD detached, so its commits never reach `main` or origin
-    with no error surfaced** — this run found 6 commits (a full app-shipping batch) sitting
-    on a detached HEAD, `git status` clean, `origin/main` 6 commits behind, undiscovered
-    until this FIND's own commit+push step. → Every stage: `git branch --show-current` before
-    new work; if empty (detached), `git branch -f main HEAD && git checkout main` first.
+75. Detached-HEAD-after-prior-session, first occurrence (full detail: archive). →
+    superseded by #77/#81, still open as a root-cause question.
 
 ## 2026-08-30 — ANALYZE+BUILD (specs-loop)
 
@@ -72,14 +87,8 @@ learning. FIND and BUILD read this file first, every run. Newest first.
 
 ## 2026-08-29 — FIND #35
 
-73. **File-budget headroom must be checked at the START of every FIND/BUILD run, not
-    discovered when a write fails** — this run found LEARNINGS.md at 7976/8000 (24B
-    headroom) and opportunities.md at 9858/10000 (142B headroom) simultaneously, despite
-    #62/#64 already establishing archive-not-trim — that fix was applied reactively
-    per-section each time one file separately hit its ceiling, never as a standing pre-run
-    check. → Every FIND/BUILD run: `wc -c` every path in tests/file-budgets.test.mjs's
-    BUDGETS map before writing anything; compact proactively once headroom drops under
-    ~500 bytes, don't wait for the next write to fail.
+73. File-budget headroom check: reactive → standing pre-run `wc -c` habit (full detail:
+    archive). Applied every run since.
 
 ## 2026-08-26 — ANALYZE+BUILD (specs-loop)
 

@@ -24,6 +24,12 @@ tests/*.test.mjs for the live enforcement each of these graduated into.
 - SERVICES enum gaps are BLOCK-worthy, not a reason to silently drop a confirmed service —
   extend the enum. Recurring gap (4 FIND cycles unbuilt, #45/46) resolved 2026-08-12: scoped-
   extension policy in data-quality SKILL.md — add a slot only for a queued candidate's service.
+- File-budget headroom check moved from reactive (fix on write-fail) to standing pre-run
+  `wc -c` habit against tests/file-budgets.test.mjs's BUDGETS map (#73, 08-29; still
+  recurs as a live discipline item, not fully automated — see #81/detached-HEAD pattern).
+- Detached-HEAD-after-prior-session (#75, 08-30): full incident detail archived; the
+  live, evolving thread is LEARNINGS #77/#81 (checklist fix applied, root cause still
+  open as of FIND #39).
 - A scheduled routine can silently skip a day with no error/trace besides an absent commit —
   `specs-find` missed 07-28 and 08-04, `specs-loop` missed Wed 08-05; `list_triggers` exposes no
   run history so root cause is undeterminable here; 3 gaps/2 routines/3 weeks with zero
