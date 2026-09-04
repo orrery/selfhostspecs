@@ -9,7 +9,7 @@
       "max": 2,
       "stats": [
         {
-          "day": "2026-08-27",
+          "day": "2026-08-28",
           "hourly": [
             0,
             0,
@@ -38,36 +38,6 @@
           ],
           "daily": 0,
           "weekly": 4
-        },
-        {
-          "day": "2026-08-28",
-          "hourly": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "daily": 0
         },
         {
           "day": "2026-08-29",
@@ -279,19 +249,9 @@
             0
           ],
           "daily": 0
-        }
-      ]
-    },
-    {
-      "count": 1,
-      "path_id": 105490516,
-      "path": "/apps/homebox",
-      "event": false,
-      "title": "Homebox system requirements — RAM, CPU, dependencies | SelfhostSpecs",
-      "max": 1,
-      "stats": [
+        },
         {
-          "day": "2026-08-27",
+          "day": "2026-09-05",
           "hourly": [
             0,
             0,
@@ -318,9 +278,18 @@
             0,
             0
           ],
-          "daily": 0,
-          "weekly": 1
-        },
+          "daily": 0
+        }
+      ]
+    },
+    {
+      "count": 1,
+      "path_id": 105490516,
+      "path": "/apps/homebox",
+      "event": false,
+      "title": "Homebox system requirements — RAM, CPU, dependencies | SelfhostSpecs",
+      "max": 1,
+      "stats": [
         {
           "day": "2026-08-28",
           "hourly": [
@@ -349,7 +318,8 @@
             0,
             0
           ],
-          "daily": 0
+          "daily": 0,
+          "weekly": 1
         },
         {
           "day": "2026-08-29",
@@ -534,6 +504,36 @@
         },
         {
           "day": "2026-09-04",
+          "hourly": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "daily": 0
+        },
+        {
+          "day": "2026-09-05",
           "hourly": [
             0,
             0,
