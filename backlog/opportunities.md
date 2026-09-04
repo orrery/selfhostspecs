@@ -63,6 +63,12 @@ Queued 08-22 after hitting byte ceiling again).
   dead Maybe Finance (rejected 09-02). Postgres 16 + Redis both required, no OR. Figure
   EXISTS (docs/hosting/hetzner.md, community-contributed Hetzner guide merged upstream) —
   min 4GB/2CPU, rec 8GB/2CPU — BUILD must scope-label it, not ship no_official_figure.
+- VoiceStudio (19/20, #40) — debpalash/VoiceStudio (ghcr.io/palashdeb/omnivoice-studio),
+  AGPL-3.0, 17,910★ (created 2026-04-09; do NOT cite "~3.7k/week", unverifiable/wrong —
+  lifetime avg ~850/wk). First voice-clone/TTS/ASR entry, fills AI-stack gap next to
+  Ollama/Open WebUI. deps:none. README+Docker Hub cross-confirm RAM 8GB min/16GB+ rec,
+  disk 10GB min/20GB+ rec, VRAM 4GB min/8GB+ rec for BOTH desktop+Docker paths — but the
+  OS row (Win10/macOS13.3/Linux glibc2.39+) is desktop-only, must not apply to Docker path.
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members, zero-incumbent
   SERP. BUILD: disclose required:false≠dependency-free (#3), write explicit inclusion

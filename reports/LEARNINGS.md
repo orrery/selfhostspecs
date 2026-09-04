@@ -3,6 +3,16 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-09-04 — FIND #40
+
+82. **A WebSearch summary's "gaining Nk stars/7 days" velocity claim can be wrong by 4x** —
+    FIND cited VoiceStudio at "~3.7k stars/week" from a search snippet; the verifier checked
+    `created_at` vs `stargazers_count` via the GitHub API and found lifetime average is
+    ~850/week — the snippet's number was unverifiable and likely a stale/wrong trending-site
+    scrape. → Never carry a search-engine velocity/trend claim into a score or backlog entry
+    without an independent count (repo age vs star count, or a specific dated snapshot);
+    cite the confirmed absolute number instead.
+
 ## 2026-09-03 — FIND #39
 
 81. **Detached HEAD (#75) recurred a THIRD time despite #77's SKILL.md invariant #9 fix** —
