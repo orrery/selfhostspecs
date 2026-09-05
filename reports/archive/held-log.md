@@ -90,3 +90,10 @@ precedent: LEARNINGS #62 shipped/rejected-log split).
   8GB, rec 4vCPU/16GB (huly-selfhost README) — sourceable, but CockroachDB/Redpanda/MinIO
   have no SERVICES enum slot (elasticsearch alone is already in-schema) — same deps-schema
   gap already holding Ente/Sentry/PostHog. Hold for schema work, not sourcing.
+
+## Compacted from main list (FIND #41, 09-05 byte-budget relief)
+- Jellyseerr (13/20, #35): no official RAM/CPU figure found.
+- SeaweedFS (12/20, #36): per-file-byte formula, not a fixed figure; no schema fit; storage
+  territory already crowded post-MinIO/Garage.
+- Komodo (12/20, #38): moghtech/komodo, ~12.1k★ — crowded vs Coolify/Dockge/Portainer; docs
+  have a MongoDB+AVX-CPU-support gotcha, worth a fresh look only with a differentiation angle.

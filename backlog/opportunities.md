@@ -69,6 +69,10 @@ Queued 08-22 after hitting byte ceiling again).
   Ollama/Open WebUI. deps:none. README+Docker Hub cross-confirm RAM 8GB min/16GB+ rec,
   disk 10GB min/20GB+ rec, VRAM 4GB min/8GB+ rec for BOTH desktop+Docker paths — but the
   OS row (Win10/macOS13.3/Linux glibc2.39+) is desktop-only, must not apply to Docker path.
+- Gatus (17/20, #41) — status-page/alerting monitor, distinct from Uptime Kuma (fork:false;
+  YAML-declarative vs UI-driven). deps:none default (storage.type=memory; sqlite/postgres
+  optional, per source). no_official_figure RAM/CPU (README+docs+issues checked). License
+  Apache-2.0. Images live: twinproduction/gatus + ghcr.io/twin/gatus, :stable multi-arch.
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members, zero-incumbent
   SERP. BUILD: disclose required:false≠dependency-free (#3), write explicit inclusion
@@ -103,15 +107,12 @@ weakest). Full detail on all 5: reports/archive/held-log.md.
 ## Unverified / held (not sent further)
 - Below bar (<14), don't re-propose w/o new evidence. 12-13: Navidrome, Audiobookshelf,
   Miniflux, Zabbix, Wallabag, DocuSeal, Actual Budget, Photoprism, Mealie, BookStack,
-  Firefly III, NetBox, Matrix Synapse, Authentik, Jellyseerr (13/20, #35, no fig), SeaweedFS
-  (12/20, #36, per-file-byte formula not a fixed figure, no schema fit, storage territory
-  already crowded post-MinIO/Garage). ≤11:
-  Outline, FreshRSS, Umami, NocoDB,
+  Firefly III, NetBox, Matrix Synapse, Authentik, Jellyseerr, SeaweedFS (both detail:
+  held-log.md). ≤11: Outline, FreshRSS, Umami, NocoDB,
   Docmost, Baserow, Bitwarden, Pixelfed, Karakeep, Beszel, Tandoor Recipes, Headscale,
   Shiori, Passbolt, Wiki.js, Duplicati, ntfy, Homepage, Listmonk, Cachet, EspoCRM, Kavita,
   changedetection.io, Woodpecker CI, Kopia, Calibre-Web, NetBird, Garage/deuxfleurs-org,
-  Komodo (12/20, #38, moghtech/komodo, ~12.1k★ — crowded vs Coolify/Dockge/Portainer; docs
-  a MongoDB+AVX-CPU-support gotcha, worth a fresh look only with a differentiation angle).
+  Komodo (detail: held-log.md).
 - Graylog (~8.1k★,#15): docs archived, blocked — shallow (detail: held-log.md).
 - Deferred: disk-footprint column — too inconsistently documented.
 - Parked, #13: Helm/K8s-chart column — needs official/unofficial rule (detail: held-log.md).
