@@ -3,6 +3,19 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-09-05 — FIND #41
+
+83. **Detached HEAD recurred a 4TH time** (#75→#77→#81→now), despite SKILL.md invariant #9
+    existing since #77. Confirmed harmless again (fresh `git fetch origin main` showed 0/0
+    divergence — local HEAD == origin/main exactly) and fixed the same way. → #81's hypothesis
+    (container/clone-setup artifact, not an agent-behavior gap) now has 2 data points since the
+    "fix" landed; a checklist step an agent can only run/skip is not a fix for an environment
+    default. Escalating per #81: next AUDIT should treat this as confirmed-environmental unless
+    it can show a session where the checklist step was actually skipped (i.e. an agent-behavior
+    explanation still on the table). Recommend owner-level fix: a `SessionStart` hook that runs
+    `git symbolic-ref -q HEAD || git checkout main` automatically, since prose/checklist
+    instructions provably don't survive fresh-context sessions 4 times running.
+
 ## 2026-09-04 — FIND #40
 
 82. **A WebSearch summary's "gaining Nk stars/7 days" velocity claim can be wrong by 4x** —
@@ -31,52 +44,17 @@ learning. FIND and BUILD read this file first, every run. Newest first.
     no_official_figure — a hosting-provider guide is a common place for a figure the
     generic install doc omits.
 
-## 2026-09-01 — FIND #38
+## 2026-09-01 — FIND #38 through AUDIT #6 (full detail: archive)
 
-79. **A blog citing "official docs say X" can still misstate the figure** — noted.lol claimed
-    Pangolin's official minimum is "1GB RAM"; the verifier fetched the real source (docs mirror,
-    `fosrl/docs-v2` raw GitHub, `docs.pangolin.net` itself egress-blocked) and found the actual
-    quote is "1 vCPU, 2GB RAM, 8GB SSD sufficient for most deployments." Same failure family as
-    #71 (fabricated quote) but from a third-party summarizer, not the harvester's own memory. →
-    A blog attributing a figure to "the docs" is not a source; always fetch the primary doc
-    (or its GitHub mirror) before scoring or queuing, never carry a blog's number forward.
-78. **Multiple docker-compose files in a repo don't imply a DB-alternative (OR) dependency
-    schema** — Pangolin ships `compose.example.yaml` (the documented prod reference, no DB) plus
-    `compose.pgr.yaml`/`compose.drizzle.yaml` (dev-only tooling); the finder's filename-only scan
-    guessed a Directus/Penpot-style DB-OR before the verifier read `quick-install.mdx` and found
-    it's actually `deps:none`. → FIND-stage effort/schema scoring from compose filenames alone is
-    unreliable; confirm which compose file the install docs actually reference before assuming
-    an OR-dependency shape (defer the real call to BUILD either way).
+76–79, 75b. Blog-cited figure misattribution (Pangolin); compose-filename-only OR-dep
+    guessing (Pangolin); Defect Class #8 recurrence (nextcloud, 8th instance, standing
+    full-sweep item); n8n GitBook docs-mirror path unresolved, `no_official_figure` still
+    unconfirmed. → superseded/detail: archive.
 
-## 2026-08-31 — FIND #37
+## 2026-08-31 — FIND #37 (full detail: archive)
 
-77. **#75's own fix (detached HEAD) recurred on the very next session** — writing the
-    mitigation into LEARNINGS didn't make the next run apply it, because it was never added
-    as a checklist step any playbook actually reads. → Fixed properly this time: added as
-    SKILL.md invariant #9, not just a LEARNINGS entry. General case: a LEARNINGS fix for a
-    recurring mechanical failure must land in SKILL.md/OPERATIONS.md, not stay prose-only, or
-    treat it as unfixed. (No data lost this time — origin/main already had the commits;
-    only the local branch ref was stale.)
-
-## 2026-08-31 — AUDIT #6
-
-76. **AUDIT #5's quote-formatting fix (Defect Class #8, markdown stripped at harvest) was
-    applied per-instance to the 7 fields it found, not as a full sweep of every pre-08-16
-    entry** — AUDIT #6's 12-app sample turned up an 8th instance on nextcloud (a 07-24
-    bootstrap entry AUDIT #5 didn't happen to sample) with the exact same signature (bold
-    markers around the numeric figure dropped). Fixed, but the recurrence means more may
-    still be lurking in the 24 apps AUDIT #5/#6 combined haven't yet re-checked. → Next
-    AUDIT: treat Defect Class #8 as a standing full-sweep item on all pre-08-16 entries
-    (the batches known to predate the "harvesters preserve markdown" fix), not just the
-    random sample, until a sweep comes back clean once.
-75b. **A docs-as-code GitHub mirror existing isn't enough — its file layout must actually be
-    found before "docs-mirror recovery" (LEARNINGS #66) counts as done.** n8n's docs live at
-    `github.com/n8n-io/n8n-docs` (confirmed reachable) but it's GitBook-based with an
-    unguessed path structure; several plausible paths 404'd and the repo wasn't browsable
-    without `add_repo`/API access this session. n8n's `no_official_figure` RAM/CPU claim is
-    still unverified two audits running. → Either resolve the n8n-docs path next AUDIT
-    (worth an `add_repo` this once to browse the tree) or explicitly downgrade the claim to
-    "held, sourcing unconfirmed" rather than silently re-carrying it as settled.
+77. Detached-HEAD fix (#75) recurred next session, prose-only LEARNINGS didn't stick →
+    added as SKILL.md invariant #9. **Superseded: see #83 above, invariant #9 did not hold.**
 
 ## 2026-08-30 — FIND #36
 

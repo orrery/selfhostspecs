@@ -103,3 +103,14 @@ tests/*.test.mjs for the live enforcement each of these graduated into.
 - A harvester can soften a source's own severity word ("required"→"recommended", Activepieces
   #72, 08-27). → verifiers diff the harvester's paraphrase against the source's exact
   required/optional/recommended word, not just the quoted figure. Standing verifier practice.
+- Defect Class #8 (markdown-stripped quotes) recurred an 8th time on nextcloud, a pre-08-16
+  bootstrap entry outside the sampled set (AUDIT #6, 08-31) → standing full-sweep item on all
+  pre-08-16 entries until a sweep comes back clean once. n8n's `no_official_figure` still
+  unconfirmed two audits running (n8n-docs is GitBook, unguessed path structure).
+- FIND #37 (08-31): detached HEAD's own fix (#75) recurred the very next session because the
+  LEARNINGS entry was prose-only, not a checklist step any playbook reads — fixed as SKILL.md
+  invariant #9. (Superseded again: see live #83, recurred a 4th time on FIND #41.)
+- FIND #38 (09-01): a blog's "official docs say X" can misstate the figure (noted.lol on
+  Pangolin, verifier caught via docs mirror) — never carry a blog's number, fetch the primary.
+  Multiple compose files in a repo don't imply a DB-OR schema (Pangolin) — confirm which file
+  the install docs actually reference before assuming an alternative-dependency shape.
