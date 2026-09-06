@@ -62,6 +62,11 @@ Queued 08-22 after hitting byte ceiling again).
 - Linkding (16/20, #38) — bookmark manager, not a Linkwarden dupe. deps:none, SQLite
   default (sourced). no_official_figure RAM/CPU (confirmed absent); real demand: 3 GH
   issues on confused 7-8GB usage.
+- Authelia (15/20, #42) — lightweight SSO/2FA forward-auth portal (28.8k★, 81M+ Docker
+  pulls), pairs with shipped Nginx Proxy Manager/Pangolin; not a Keycloak/Authentik dupe
+  (different shape/weight). deps:none required (SQLite default; Redis/Postgres/MySQL
+  optional, compose-confirmed). RAM figure is a 3-way trap, not a clean no_official_figure
+  — full detail in queued-detail.md, BUILD must read it before harvesting.
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members, zero-incumbent
   SERP. BUILD: disclose required:false≠dependency-free (#3), write explicit inclusion

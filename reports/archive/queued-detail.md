@@ -254,6 +254,40 @@ opportunities.md Shipped section, 08-29, same archive-not-trim precedent)
 - Linkwarden cpu_rec_cores now has an official figure ("any 2 core machine", AUDIT#5,
   source rewritten 08-24) — harvest+verify next BUILD, don't add unverified.
 
+## FIND #42 additions (2026-09-06)
+- Authelia (15/20) — authelia/authelia, 28.8k★ (live page fetch, not search-snippet),
+  81.5M+ Docker pulls (`hub.docker.com/v2/repositories/authelia/authelia/`), image updated
+  same-day both harvest and verify passes ran. Forward-auth/SSO/2FA portal, not a dupe of
+  held Authentik (full IdP, heavier) or shipped Keycloak (different weight class) — verifier
+  confirmed no prior proposal under any name. Deps confirmed against all 3 official compose
+  examples (`examples/compose/{local,lite,production}/compose.yml`): none required — SQLite
+  default storage backend; Redis optional (session/HA, only in the `lite` example, paired
+  with Traefik there); Postgres/MySQL optional alternate storage backends. Docker image
+  `authelia/authelia`, confirmed multi-arch (amd64/arm64/arm/v7 via registry manifest),
+  `:latest` tag real (pushed 2026-09-03). RAM FIGURE — do not ship as a flat
+  no_official_figure + single community quote, three distinct facts, keep them scoped
+  separately (Defect Class #3):
+  1. Baseline observed memory: "compressed container size smaller than 20 megabytes and
+     observed memory usage normally under 30 megabytes" — dual-sourced: maintainer
+     james-d-elliott (confirmed project founder/lead, CITATION.cff) in official GitHub
+     Discussion authelia/authelia#6048 ("Docs: hardware requirements"), Oct 23 2023 AND
+     the same sentence is live marketing copy on authelia.com's homepage, sourced from
+     `docs/layouts/_partials/prefooter/features/en.html` in-repo (authelia.com itself is
+     egress-blocked here; the repo IS the site source, no separate authelia-website repo).
+  2. Argon2id password-hashing memory is separate and config-dependent, NOT baseline
+     process memory: current documented default is 64MiB (`docs/content/configuration/
+     first-factor/file.md` confkey, `default="65536"` KiB); a "Recommended" hardened
+     preset in `docs/content/reference/guides/passwords.md` uses 2GiB. Only applies to
+     file-based (non-LDAP) first-factor auth.
+  3. `docs/content/integration/kubernetes/introduction.md`'s FAQ claims "argon2id... will
+     by default use 1GB of RAM" — this CONTRADICTS the current 64MiB confkey default above
+     and looks stale (likely un-updated after the default changed). Do not cite this FAQ
+     line as current without confirming via git history; prefer the confkey doc.
+  Demand evidence: official Discussion #6048 explicitly requesting hardware-requirements
+  docs (still open), independently corroborated by discussion #5939 (OOM/memory-spike
+  report tied to argon2 config, real and re-fetched) — a genuine documented-confusion
+  pattern, not inferred.
+
 ## FIND #38 additions (2026-09-02)
 - Linkding (16/20) — sissbruecker/linkding, ~10.8k★, 1M+ Docker pulls. deps:none, SQLite
   default, verbatim: "linkding uses an SQLite database by default. Alternatively, linkding

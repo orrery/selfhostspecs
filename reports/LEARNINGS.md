@@ -3,6 +3,17 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-09-06 — FIND #42
+
+85. **A prose FAQ figure can be stale relative to the docs' own config-reference default,
+    inside the SAME official repo** (Authelia verifier): a Kubernetes-integration FAQ page
+    states argon2id hashing "will by default use 1GB of RAM," but the current documented
+    confkey default (`first-factor/file.md`) is 64MiB — the FAQ prose was likely never
+    updated after the default changed. → When a docs site has both narrative prose (FAQ/
+    guide) and a config reference/schema stating the same default, the reference is the
+    higher-authority source; a prose claim that conflicts with it is a stale-doc red flag,
+    not automatically correct just because it reads like a requirements statement.
+
 ## 2026-09-06 — ANALYZE+BUILD (specs-loop), fresh-eyes QA
 
 84. **`docker.size_mb` can be wrong in two compounding, independently-plausible ways at once**
