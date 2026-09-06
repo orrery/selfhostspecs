@@ -16,6 +16,14 @@ Pending BUILD (1 schema-change/batch), full detail: reports/archive/queued-detai
 (GPU column, community-figures column, Discourse churn caveat, OR-dep note retrofit,
 Linkwarden cpu_rec_cores).
 
+## In pipeline (not yet live)
+- pending-second-qa: voicestudio, sure, wordpress, gatus — built 09-06 (harvest->verify
+  fixed 1 scope-accuracy defect + 1 misleading-juxtaposition fix on Sure, plus a
+  pre-existing test-escaping bug->QA tightened Sure's clarifying prose further), zero
+  data defects. WordPress's "no official RAM/CPU figure" claim corroborated only via
+  Docker Hub (wordpress.org itself egress-blocked for 3 agents running); re-confirm
+  from an unblocked path when one's available.
+
 ## Queued (verifier-signed), unbuilt
 Full sourcing detail (quotes, deps, images, arch) for every item below is archived at
 `reports/archive/queued-detail.md` — BUILD reads that file; this list is name/score/
@@ -40,8 +48,6 @@ Queued 08-22 after hitting byte ceiling again).
   no SERVICES enum slot (checked 08-23) — resolve before BUILD.
 - Mailu (17/20, #27) — Redis req; SQLite default. Differentiate vs docker-mailserver.
 - Penpot (16/20, #26) — postgres+valkey req; multi-image not yet harvested.
-- WordPress (17/20, #28) — no_official_figure. MySQL OR MariaDB req; SQLite not
-  core-supported. Official Image, 9-arch. Crowded topic — win on provenance.
 - Langfuse (18/20, #31) — LLM observability/tracing, fills AI-stack gap next to Ollama/
   open-webui. Official per-service min-reqs table (langfuse-docs scaling.mdx). 6-svc
   compose (web+worker+postgres+clickhouse+redis+minio) — heaviest in queue, effort flag.
@@ -56,20 +62,6 @@ Queued 08-22 after hitting byte ceiling again).
 - Linkding (16/20, #38) — bookmark manager, not a Linkwarden dupe. deps:none, SQLite
   default (sourced). no_official_figure RAM/CPU (confirmed absent); real demand: 3 GH
   issues on confused 7-8GB usage.
-- Sure (17/20, #39) — personal finance/wealth tracker, we-promise/sure, active fork of
-  dead Maybe Finance (rejected 09-02). Postgres 16 + Redis both required, no OR. Figure
-  EXISTS (docs/hosting/hetzner.md, community-contributed Hetzner guide merged upstream) —
-  min 4GB/2CPU, rec 8GB/2CPU — BUILD must scope-label it, not ship no_official_figure.
-- VoiceStudio (19/20, #40) — debpalash/VoiceStudio (ghcr.io/palashdeb/omnivoice-studio),
-  AGPL-3.0, 17,910★ (created 2026-04-09; do NOT cite "~3.7k/week", unverifiable/wrong —
-  lifetime avg ~850/wk). First voice-clone/TTS/ASR entry, fills AI-stack gap next to
-  Ollama/Open WebUI. deps:none. README+Docker Hub cross-confirm RAM 8GB min/16GB+ rec,
-  disk 10GB min/20GB+ rec, VRAM 4GB min/8GB+ rec for BOTH desktop+Docker paths — but the
-  OS row (Win10/macOS13.3/Linux glibc2.39+) is desktop-only, must not apply to Docker path.
-- Gatus (17/20, #41) — status-page/alerting monitor, distinct from Uptime Kuma (fork:false;
-  YAML-declarative vs UI-driven). deps:none default (storage.type=memory; sqlite/postgres
-  optional, per source). no_official_figure RAM/CPU (README+docs+issues checked). License
-  Apache-2.0. Images live: twinproduction/gatus + ghcr.io/twin/gatus, :stable multi-arch.
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members, zero-incumbent
   SERP. BUILD: disclose required:false≠dependency-free (#3), write explicit inclusion
@@ -129,5 +121,5 @@ None crossing 90 days (oldest 07-24). Docker-size re-checks every AUDIT, not jus
   "ARM/Pi-ready" collection (no differentiating angle, checked twice).
 - Overseerr (#38, ~5k★): merged away into "Seerr" w/ Jellyseerr (held), both sunset May 2026.
 - Maybe Finance (#38, ~54k★): archived 2025-07-27, dead upstream (MinIO precedent). Active
-  fork Sure (we-promise/sure, ~9.7k★) is a separate future FIND candidate, unresearched.
+  fork Sure (we-promise/sure) queued FIND #39, built 09-06 (see In pipeline above).
 - Any calculator/tool or game (owner exclusion — never propose).

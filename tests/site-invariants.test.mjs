@@ -11,6 +11,12 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DOCS = join(ROOT, "docs");
 let apps;
 
+// Mirrors scripts/build.mjs's esc(): & < > " must all be escaped, or a fragment
+// containing a literal quote (e.g. a note quoting `"memory"`) never matches the
+// rendered page and produces a false failure unrelated to any real defect.
+const escFrag = (s) =>
+  s.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
+
 before(() => {
   build(ROOT);
   apps = loadApps(ROOT);
@@ -70,7 +76,7 @@ test("every app has a page showing its verbatim quotes and honest absences", () 
       const f = a.specs?.[key];
       if (f) {
         // quote must be displayed (HTML-escaped compare on a distinctive fragment)
-        const frag = f.quote.slice(0, 30).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+        const frag = escFrag(f.quote.slice(0, 30));
         assert.ok(html.includes(frag), `${a.slug}: quote for ${key} not displayed`);
         assert.ok(html.includes(f.source_url), `${a.slug}: source link for ${key} missing`);
         assert.ok(html.includes(f.retrieved), `${a.slug}: retrieved date for ${key} missing`);
@@ -81,12 +87,12 @@ test("every app has a page showing its verbatim quotes and honest absences", () 
       assert.ok(html.includes(a.specs.no_official_figure.evidence_url), `${a.slug}: absence evidence link missing`);
     }
     if (a.docker?.note) {
-      const frag = a.docker.note.slice(0, 30).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+      const frag = escFrag(a.docker.note.slice(0, 30));
       assert.ok(html.includes(frag), `${a.slug}: docker.note not rendered on page (Defect Class #15 — representative-image ambiguity must be disclosed)`);
     }
     for (const d of a.deps ?? []) {
       if (d.note) {
-        const frag = d.note.slice(0, 30).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+        const frag = escFrag(d.note.slice(0, 30));
         assert.ok(html.includes(frag), `${a.slug}: deps[].note for "${d.service}" not rendered on page (same silent-drop risk as Defect Class #15, for dependency disclosures instead of image disclosures)`);
       }
     }
@@ -163,7 +169,7 @@ test("scoped figures carry visible markers in tables; legend present", () => {
       const f = a.specs?.[key];
       if (f && f.general !== true) {
         assert.ok(
-          index.includes(`title="${f.scope.replaceAll("&", "&amp;").replaceAll('"', "&quot;")}"`),
+          index.includes(`title="${escFrag(f.scope)}"`),
           `index: ${a.slug} ${key} scoped figure missing scopemark/title`
         );
       }

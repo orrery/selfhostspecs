@@ -1,0 +1,58 @@
+{
+  "name": "VoiceStudio",
+  "slug": "voicestudio",
+  "category": "ai",
+  "website": "https://github.com/debpalash/VoiceStudio",
+  "repo": "https://github.com/debpalash/VoiceStudio",
+  "description": "Self-hosted, local-first voice cloning, text-to-speech, speech recognition, and video-dubbing studio with 16 TTS and 11 ASR engines.",
+  "status": "pending-second-qa",
+  "specs": {
+    "ram_min_mb": {
+      "value": 8192,
+      "source_url": "https://hub.docker.com/r/palashdeb/omnivoice-studio",
+      "quote": "8 GB RAM (16 GB+ recommended)",
+      "retrieved": "2026-09-06",
+      "scope": "Docker Hub image description, 'What you need' section. Cross-confirmed against the README Requirements table (raw.githubusercontent.com/debpalash/VoiceStudio/main/README.md), which gives the identical figure in its Minimum column and is not split by install method, so this applies generally to both the desktop app and the Docker deployment. The README table's separate OS row (Windows 10/macOS 13.3/Linux glibc 2.39+) is a desktop-only platform constraint and is not part of this RAM figure."
+    },
+    "ram_rec_mb": {
+      "value": 16384,
+      "source_url": "https://raw.githubusercontent.com/debpalash/VoiceStudio/main/README.md",
+      "quote": "16 GB+",
+      "retrieved": "2026-09-06",
+      "scope": "README Requirements table, Recommended column; same general (desktop + Docker) scope as ram_min_mb, cross-confirmed by the Docker Hub image description."
+    },
+    "no_official_figure": {
+      "fields": [
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://raw.githubusercontent.com/debpalash/VoiceStudio/main/README.md",
+      "note": "The Requirements table gives OS/RAM/Disk/GPU/VRAM/Python rows but no CPU core-count row for any install path; the only CPU-adjacent guidance is engine-selection prose (e.g. CPU-mode fallback exists for low-VRAM systems), not a stated minimum or recommended core count. VRAM (4 GB min / 8 GB+ rec, GPU optional) and disk (10 GB min / 20 GB+ rec) are also documented but have no corresponding fields in this schema."
+    }
+  },
+  "deps": [
+    {
+      "service": "none",
+      "required": false,
+      "source_url": "https://raw.githubusercontent.com/debpalash/VoiceStudio/main/deploy/docker-compose.yml",
+      "note": "No external database or broker in any compose profile (cpu/gpu/rocm/worker-gpu/worker-rocm) or in the plain `docker run` form — the container runs the full FastAPI backend and model runtime itself; state (voices, projects, settings, encrypted HF token) persists in the omnivoice-data volume."
+    }
+  ],
+  "docker": {
+    "image": "ghcr.io/debpalash/omnivoice-studio:stable",
+    "size_mb": 4819,
+    "arches": [
+      "amd64"
+    ],
+    "source_url": "https://github.com/debpalash/VoiceStudio/pkgs/container/omnivoice-studio",
+    "retrieved": "2026-09-06",
+    "note": "Mirrored identically on Docker Hub as palashdeb/omnivoice-studio (docs/install/docker.md: 'same images, same tags'); the ghcr.io namespace is debpalash, matching the GitHub org — palashdeb is the Docker Hub namespace only, the two are not interchangeable in the image path. Size and architecture confirmed live via the Docker Hub API (:stable tag, single linux/amd64 image, full_size 5,052,729,622 bytes) and the ghcr.io v2 manifest list for the same tag (one real amd64/linux platform manifest plus one attestation manifest; no arm64/armv7 build published for either registry). A separate `:rocm` variant exists for AMD GPUs (~15 GB per the Docker Hub description) and is not reflected in this entry."
+  },
+  "sources_of_truth": [
+    "https://raw.githubusercontent.com/debpalash/VoiceStudio/main/README.md",
+    "https://raw.githubusercontent.com/debpalash/VoiceStudio/main/docs/install/docker.md",
+    "https://raw.githubusercontent.com/debpalash/VoiceStudio/main/deploy/docker-compose.yml",
+    "https://github.com/debpalash/VoiceStudio/pkgs/container/omnivoice-studio",
+    "https://hub.docker.com/r/palashdeb/omnivoice-studio"
+  ]
+}

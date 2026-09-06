@@ -1,0 +1,52 @@
+{
+  "name": "Gatus",
+  "slug": "gatus",
+  "category": "monitoring",
+  "website": "https://github.com/TwiN/gatus",
+  "repo": "https://github.com/TwiN/gatus",
+  "description": "Self-hosted, YAML-declarative status page and health-check monitor with alerting to Slack, Discord, PagerDuty, and more.",
+  "status": "pending-second-qa",
+  "specs": {
+    "no_official_figure": {
+      "fields": [
+        "ram_min_mb",
+        "ram_rec_mb",
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://raw.githubusercontent.com/TwiN/gatus/master/README.md",
+      "note": "The full README (3,700+ lines, every configuration parameter documented in detail) contains no RAM, memory, CPU, or hardware-requirement statement of any kind for any install path. No separate requirements or hardware-sizing doc exists in the repo outside the README."
+    }
+  },
+  "deps": [
+    {
+      "service": "none",
+      "required": false,
+      "source_url": "https://raw.githubusercontent.com/TwiN/gatus/master/README.md",
+      "note": "storage.type defaults to \"memory\" (README: 'Type of storage. Valid types: memory, sqlite, postgres.' default \"memory\") — no external service required out of the box; data does not survive a restart in this mode. sqlite is a documented optional alternative but has no slot in this schema's service enum (sqlite is not yet an enum value); postgres is the enum-representable optional alternative, modeled as a separate entry below. Use at most one storage backend, never several."
+    },
+    {
+      "service": "postgresql",
+      "required": false,
+      "source_url": "https://raw.githubusercontent.com/TwiN/gatus/master/README.md",
+      "note": "Optional alternate persistent-storage backend to the default in-memory storage — see the \"none\" entry's note. README: 'If storage.type is postgres, storage.path must be the connection URL'."
+    }
+  ],
+  "docker": {
+    "image": "ghcr.io/twin/gatus:stable",
+    "size_mb": 24,
+    "arches": [
+      "amd64",
+      "arm64",
+      "armv7"
+    ],
+    "source_url": "https://github.com/TwiN/gatus/pkgs/container/gatus",
+    "retrieved": "2026-09-06",
+    "note": "Also published identically on Docker Hub as twinproduction/gatus:stable (same digests on both registries, confirmed by comparing the ghcr.io and Docker Hub manifest lists live). Size is the compressed linux/amd64 layer total for the :stable tag; arm64 and armv7 builds are slightly smaller."
+  },
+  "sources_of_truth": [
+    "https://raw.githubusercontent.com/TwiN/gatus/master/README.md",
+    "https://github.com/TwiN/gatus/pkgs/container/gatus",
+    "https://hub.docker.com/r/twinproduction/gatus"
+  ]
+}

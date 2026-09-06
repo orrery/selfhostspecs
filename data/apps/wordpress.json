@@ -1,0 +1,53 @@
+{
+  "name": "WordPress",
+  "slug": "wordpress",
+  "category": "publishing",
+  "website": "https://wordpress.org",
+  "repo": "https://github.com/WordPress/WordPress",
+  "description": "Self-hosted content management system and blogging platform, deployed via the Docker Official Image.",
+  "status": "pending-second-qa",
+  "specs": {
+    "no_official_figure": {
+      "fields": [
+        "ram_min_mb",
+        "ram_rec_mb",
+        "cpu_min_cores",
+        "cpu_rec_cores"
+      ],
+      "evidence_url": "https://wordpress.org/about/requirements/",
+      "note": "wordpress.org's own Requirements page states only software requirements (a PHP version floor, MariaDB or MySQL, HTTPS, and that any server supporting PHP + MySQL will do) — no RAM, CPU, or hardware figures anywhere on the page. hub.docker.com/_/wordpress (the Docker Official Image page) was independently checked the same way and also states no hardware requirement, only software tags/PHP variants and a compose example. Both wordpress.org and make.wordpress.org are blocked by this session's network egress policy (org-level proxy denial, not a fetch failure specific to this page) — the verifier should re-confirm this absence from an unblocked network path."
+    }
+  },
+  "deps": [
+    {
+      "service": "mysql",
+      "required": true,
+      "source_url": "https://wordpress.org/about/requirements/",
+      "note": "WordPress core requires MySQL OR MariaDB — exactly one of the two, never both at once. Modeled as two required:true entries (this one and the paired mariadb entry) only because the schema has no native alternatives construct (Defect Class #11); do not read required:true on both as \"both databases running simultaneously\". The Docker Official Image's own compose.yaml example (hub.docker.com/_/wordpress) uses `mysql:8.0` specifically; MariaDB is the documented alternative per wordpress.org's own Requirements page. SQLite is not core-supported for a standard install (plugin/drop-in and Playground-sandbox use only, not a standard WordPress install path)."
+    },
+    {
+      "service": "mariadb",
+      "required": true,
+      "source_url": "https://wordpress.org/about/requirements/",
+      "note": "Alternative to MySQL, not an additional required database — pick one, not both, not neither. See the mysql entry's note."
+    }
+  ],
+  "docker": {
+    "image": "wordpress:latest",
+    "size_mb": 262,
+    "arches": [
+      "amd64",
+      "arm64",
+      "armv7"
+    ],
+    "source_url": "https://hub.docker.com/_/wordpress",
+    "retrieved": "2026-09-06",
+    "note": "Docker Official Image; `:latest` resolves to `7.1.0-apache` (PHP 8.3) per the Docker Hub tag listing, live-confirmed to exist (Defect Class #14). The manifest list for `:latest` publishes 8 real platforms — amd64, arm64/v8, arm/v7, arm/v5, 386 (i386), ppc64le, riscv64, and s390x — confirmed via the Docker Hub API image list; this schema's arches enum only has slots for three of them (amd64/arm64/armv7), shown here, so the other five (i386, ppc64le, s390x, riscv64, arm/v5) are real but not representable in this field. This is 8 architectures, not the 9 an earlier research note claimed (no arm/v6 build exists on the current manifest — re-verify if that earlier figure resurfaces elsewhere)."
+  },
+  "sources_of_truth": [
+    "https://wordpress.org/about/requirements/",
+    "https://hub.docker.com/_/wordpress",
+    "https://github.com/docker-library/wordpress",
+    "https://github.com/WordPress/WordPress"
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "name": "Sure",
+  "slug": "sure",
+  "category": "finance",
+  "website": "https://sure.am",
+  "repo": "https://github.com/we-promise/sure",
+  "description": "Self-hosted personal finance and wealth-tracking app, an active community fork of the archived Maybe Finance.",
+  "status": "pending-second-qa",
+  "specs": {
+    "ram_min_mb": {
+      "value": 512,
+      "source_url": "https://raw.githubusercontent.com/we-promise/sure/main/docs/hosting/docker.md",
+      "quote": "Sure runs comfortably on hosts or containers limited to 512 MB of RAM",
+      "retrieved": "2026-09-06",
+      "scope": "Official hosting docs, 'Running Sure on small (512 MB) hosts' section — authored and merged by repository collaborator jjmata (PR #3368, merged 2026-09-04), \"measured on a production deploy of the official image\" with Sure's built-in memory tuning (jemalloc, YJIT, Puma constrained to 1 worker x 3 threads, WEB_CONCURRENCY=1). Covers the `web` container alone (steady-state ~352 MB per the same doc): does not include the `worker` (Sidekiq) process, or the `db` (Postgres)/`redis` containers that also run in the standard compose stack. The same doc says AI features need more (\"run at least 1 GB\") than this figure, and separately flags the demo-data generator as the one operation that deterministically exceeds 512 MB (observed ~680 MB on a 2 GB container) without stating a specific required minimum for it. Note: the Recommended RAM and CPU figures elsewhere on this page come from an unrelated Hetzner Cloud sizing guide for a full multi-container instance under multi-user load — their own listed RAM numbers (4 GB / 8 GB) measure something different and do not contradict this 512 MB figure."
+    },
+    "ram_rec_mb": {
+      "value": 8192,
+      "source_url": "https://raw.githubusercontent.com/we-promise/sure/main/docs/hosting/hetzner.md",
+      "quote": "Recommended: CX31 (2 vCPU, 8GB RAM) for multiple users.",
+      "retrieved": "2026-09-06",
+      "scope": "Hetzner Cloud deployment guide (docs/hosting/hetzner.md), community-contributed by an outside contributor (GitHub PR #211, author pcamarajr, GitHub role \"Contributor\" not \"Collaborator\") and merged into the official repo by maintainer jjmata — a provider-specific server-sizing recommendation for a Hetzner Cloud CX31 instance under multi-user load, not a vendor-neutral statement of the project's own general recommended footprint. Scope-labeled per OPERATIONS.md's community-figure amendment rather than presented as a clean official general figure."
+    },
+    "cpu_min_cores": {
+      "value": 2,
+      "source_url": "https://raw.githubusercontent.com/we-promise/sure/main/docs/hosting/hetzner.md",
+      "quote": "Minimum: CX21 (2 vCPU, 4GB RAM)",
+      "retrieved": "2026-09-06",
+      "scope": "Hetzner Cloud deployment guide (docs/hosting/hetzner.md), community-contributed (PR #211 by outside contributor pcamarajr, merged by maintainer jjmata) — a provider-specific minimum server tier (Hetzner CX21), not a vendor-neutral statement of the project's own general minimum. Same community-figure caveat as this page's Recommended RAM figure above. Note: this tier's own \"4GB RAM\" is a separate, non-comparable figure from this page's 512 MB RAM-minimum figure above (different scope entirely — see that figure's note); only the CPU core count (2) is used from this quote."
+    },
+    "cpu_rec_cores": {
+      "value": 2,
+      "source_url": "https://raw.githubusercontent.com/we-promise/sure/main/docs/hosting/hetzner.md",
+      "quote": "Recommended: CX31 (2 vCPU, 8GB RAM) for multiple users.",
+      "retrieved": "2026-09-06",
+      "scope": "Hetzner Cloud deployment guide (docs/hosting/hetzner.md), community-contributed (PR #211 by outside contributor pcamarajr, merged by maintainer jjmata) — a provider-specific recommended server tier (Hetzner CX31) for multiple users, not a vendor-neutral statement of the project's own general recommendation. Same community-figure caveat as this page's Recommended RAM figure above; note the CPU core count does not change between Hetzner's own minimum and recommended tiers, only RAM does."
+    }
+  },
+  "deps": [
+    {
+      "service": "postgresql",
+      "required": true,
+      "source_url": "https://raw.githubusercontent.com/we-promise/sure/main/compose.example.yml"
+    },
+    {
+      "service": "redis",
+      "required": true,
+      "source_url": "https://raw.githubusercontent.com/we-promise/sure/main/compose.example.yml"
+    }
+  ],
+  "docker": {
+    "image": "ghcr.io/we-promise/sure:stable",
+    "size_mb": 312,
+    "arches": [
+      "amd64",
+      "arm64"
+    ],
+    "source_url": "https://github.com/we-promise/sure/pkgs/container/sure",
+    "retrieved": "2026-09-06",
+    "note": "The `web` and `worker` compose services both run this same image (worker overrides the command to `bundle exec sidekiq`); size/arch reflects the single shared image, not two separate footprints. A `backup` service (`alpine:3.20`, optional, `profiles: [backup]`) also ships in compose.example.yml but is a helper sidecar, not the app image, and is not reflected in this entry."
+  },
+  "sources_of_truth": [
+    "https://raw.githubusercontent.com/we-promise/sure/main/compose.example.yml",
+    "https://raw.githubusercontent.com/we-promise/sure/main/docs/hosting/docker.md",
+    "https://raw.githubusercontent.com/we-promise/sure/main/docs/hosting/hetzner.md",
+    "https://github.com/we-promise/sure/pkgs/container/sure"
+  ]
+}

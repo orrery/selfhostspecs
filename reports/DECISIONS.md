@@ -2,6 +2,24 @@
 
 Append-only log of material decisions with their evidence. AUDIT checks cadence gaps here.
 
+- 2026-09-06 — **ANALYZE+BUILD (2nd firing this ISO week): settled 4 pending-second-qa apps
+  (48 live), built+verified+QA'd a new 4-app batch (52 tracked).** Session-start recovery:
+  detached HEAD recurred a 5th time (#75/#77/#81/#83) — reconciled per SKILL.md invariant #9,
+  deferred to AUDIT per #83's escalation, no new LEARNINGS entry for the recurrence itself.
+  Fresh-eyes QA cleared Pangolin/Ghost/Activepieces/Jitsi Meet: Ghost/Jitsi Meet zero defects,
+  Pangolin's `docker.size_mb` fixed (wrong-arch + wrong-unit compounding error, LEARNINGS #84),
+  Activepieces' stale pinned image tag fixed (0.89.0→0.90.2) — all 4 promoted live (`943462a`).
+  Harvested VoiceStudio/Sure/WordPress/Gatus (top unblocked queue items, Dokploy/Langfuse still
+  schema-blocked/heaviest-effort); independent verification fixed a scope-accuracy issue and a
+  misleading min-figure juxtaposition on Sure (the batch's highest-complexity entry) plus a
+  pre-existing test-escaping bug (legitimate fix, not a weakening); independent QA tightened
+  Sure's clarifying prose further for tone/clarity, found zero further data defects, flagged
+  WordPress's no-official-figure claim as Docker-Hub-corroborated only (wordpress.org stayed
+  egress-blocked for all 3 agents) for a future unblocked re-check. All 4 land
+  `pending-second-qa` per the unattended-run rule. Pre-launch signal unchanged (0★, 5 hits total
+  window, no traffic-driven decisions; 48 apps vs the ≥100-app launch gate). Compacted
+  `backlog/opportunities.md` (9969→8870) removing built-item detail and a stale note. 73/73
+  green throughout (69→73 as the verifier's test-escaping fix added coverage), 2 commits.
 - 2026-09-02 — **ANALYZE+BUILD: settled 4 pending-second-qa apps (44 live), built+QA'd a new
   4-app batch (48 tracked).** Session-start recovery: detached HEAD (recurring pattern) — pure
   identity match with origin/main, zero commits at risk. Fresh-eyes QA cleared Homebox/Mailcow/
