@@ -3,6 +3,17 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-09-06 — ANALYZE+BUILD (specs-loop), fresh-eyes QA
+
+84. **`docker.size_mb` can be wrong in two compounding, independently-plausible ways at once**
+    (Pangolin, fresh-eyes QA): the stored value (333) traced to the ARM64 image's byte count
+    divided by decimal-MB (÷1,000,000), not the AMD64 manifest's bytes divided by binary-MiB
+    (÷1,048,576, per Class #1) — a wrong-arch pick AND a wrong-unit convention that happened to
+    land on a number plausible enough to pass an earlier check undetected. → When re-deriving
+    `docker.size_mb`, verify both independently: confirm the byte count came from the AMD64
+    manifest specifically (not just "an" arch in the list), then confirm the division is
+    ÷1,048,576. A value that merely looks reasonable is not evidence either check was done.
+
 ## 2026-09-05 — FIND #41
 
 83. **Detached HEAD recurred a 4TH time** (#75→#77→#81→now), despite SKILL.md invariant #9

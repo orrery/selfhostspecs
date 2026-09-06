@@ -5,7 +5,7 @@
   "website": "https://www.activepieces.com",
   "repo": "https://github.com/activepieces/activepieces",
   "description": "Self-hosted AI and workflow automation platform, an n8n alternative built on no-code flows and pieces.",
-  "status": "pending-second-qa",
+  "status": "live",
   "specs": {
     "ram_min_mb": {
       "value": 4096,
@@ -45,14 +45,14 @@
     }
   ],
   "docker": {
-    "image": "ghcr.io/activepieces/activepieces:0.89.0",
+    "image": "ghcr.io/activepieces/activepieces:0.90.2",
     "size_mb": 381,
     "arches": [
       "amd64",
       "arm64"
     ],
     "source_url": "https://github.com/orgs/activepieces/packages/container/package/activepieces",
-    "retrieved": "2026-09-02",
+    "retrieved": "2026-09-06",
     "note": "The official root docker-compose.yml (the documented self-host path) pins app and worker to this same image/tag; a rolling :latest tag also exists on this registry but the officially documented compose pins a specific release, so that pinned version is cited here rather than :latest."
   },
   "sources_of_truth": [

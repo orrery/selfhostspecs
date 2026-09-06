@@ -5,7 +5,7 @@
   "website": "https://pangolin.net",
   "repo": "https://github.com/fosrl/pangolin",
   "description": "Self-hosted WireGuard identity-aware VPN and tunneled reverse proxy, an alternative to Cloudflare Tunnel.",
-  "status": "pending-second-qa",
+  "status": "live",
   "specs": {
     "ram_min_mb": {
       "value": 2048,
@@ -46,13 +46,13 @@
   ],
   "docker": {
     "image": "fosrl/pangolin:latest",
-    "size_mb": 333,
+    "size_mb": 319,
     "arches": [
       "amd64",
       "arm64"
     ],
     "source_url": "https://hub.docker.com/r/fosrl/pangolin",
-    "retrieved": "2026-09-02",
+    "retrieved": "2026-09-06",
     "note": "Pangolin is a 3-container stack per the official compose.example.yaml (pangolin, gerbil for WireGuard tunneling, traefik as the proxy). No single container is named for the whole bundle; the fosrl/pangolin image (the app/API/dashboard container, and the repo's own primary image) is shown here as representative, consistent with the project's core-identity convention for bundled apps (see Mailcow), but this size covers only that one container, not gerbil or traefik."
   },
   "sources_of_truth": [
