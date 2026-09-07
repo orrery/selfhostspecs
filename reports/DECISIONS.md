@@ -2,6 +2,19 @@
 
 Append-only log of material decisions with their evidence. AUDIT checks cadence gaps here.
 
+- 2026-09-07 — **FIND #43: 1 app queued (Teable), 1 dedupe gap caught pre-publish, 2 refuted.**
+  Session-start recovery: detached HEAD recurred a 6th time (#75/77/81/83/09-06) —
+  reconciled per invariant #9, deferred to AUDIT per established precedent, no new
+  LEARNINGS entry for the recurrence itself. Independent mining agent proposed 4
+  candidates; independent verifier agent refuted 2 (LibreNMS — cited figure doesn't
+  exist at the primary source, a mirror's paraphrase; GlitchTip — 163★, far below the
+  weakest held precedent). Teable verifier-confirmed and queued (17/20): real demand
+  (21.8k★) plus an official RAM/CPU figure the miner itself had missed. The 4th
+  candidate (GPU/hardware-accel column) was independently re-proposed as new by both
+  agents but was already queued at FIND #17 — operator caught the dedupe gap (my brief
+  omitted the Pending-BUILD section), logged as LEARNINGS #86, confirmed quotes folded
+  into the existing entry rather than double-queued. Suite: 73/73 green before+after.
+
 - 2026-09-06 — **ANALYZE+BUILD (2nd firing this ISO week): settled 4 pending-second-qa apps
   (48 live), built+verified+QA'd a new 4-app batch (52 tracked).** Session-start recovery:
   detached HEAD recurred a 5th time (#75/#77/#81/#83) — reconciled per SKILL.md invariant #9,

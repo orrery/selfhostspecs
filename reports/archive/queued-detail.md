@@ -246,13 +246,35 @@ LEARNINGS #62, shipped/rejected-log split). BUILD reads this file before harvest
 
 ## Pending BUILD — schema/retrofit items on already-shipped apps (moved from
 opportunities.md Shipped section, 08-29, same archive-not-trim precedent)
-- GPU column (Jellyfin/Immich/Frigate/open-webui?, #17).
+- GPU column (Jellyfin/Immich/Frigate/open-webui?, #17). Boolean/enum capability, not
+  FIGURE_KEYS-shaped — needs a schema decision before BUILD (not just a data column).
+  FIND #43 re-surfaced this independently (dedupe gap, LEARNINGS #86) but confirmed real
+  quotes while doing so: Jellyfin `hardware-acceleration.md` ("full hardware-accelerated
+  filtering... on Intel, AMD and NVIDIA hardware"); Ollama `docs/gpu.mdx` ("supports Nvidia
+  GPUs with compute capability 5.0+... driver 550+", also AMD ROCm/Metal/Vulkan); Immich
+  `hardware-transcoding.md` ("NVENC/Quick Sync/RKMPP/VAAPI"); Frigate
+  `hardware_acceleration_video.md` ("no CPU fallback for hardware acceleration" —
+  VAAPI/QSV/NVDEC/Jetson/Rockchip). All 4 apps already shipped; sourcing is BUILD-ready
+  once the schema shape (boolean vs enum-of-accel-types) is decided.
 - Community-figures column (vaultwarden/adguard-home/uptime-kuma/syncthing/paperless-ngx).
 - Discourse churn caveat (AUDIT#3).
 - grafana/keycloak/nextcloud OR-deps still lack `note` fields (build.mjs renders them now,
   08-26 — only Kestra/Nginx Proxy Manager have notes so far; retrofit opportunistically).
 - Linkwarden cpu_rec_cores now has an official figure ("any 2 core machine", AUDIT#5,
   source rewritten 08-24) — harvest+verify next BUILD, don't add unverified.
+
+## FIND #43 additions (2026-09-07)
+- Teable (17/20) — teableio/teable, 21.8k★ (github.com/teableio/teable, confirmed real org
+  not a fork). Deps: Postgres+Redis required — confirmed via `teableio/teable-deployment`
+  official all-in-one Docker Compose (`postgres:15.4` + `redis:7.2.4`). Official RAM/CPU
+  figure (verifier-fetched `raw.githubusercontent.com/teableio/docs/main/en/deploy/
+  docker.mdx`): "Recommended Scale: 0-50 users... Memory: Minimum 4GB RAM... CPU: At least
+  2 cores... Disk Space: Minimum 40GB available space" — ship ram_min_mb=4096,
+  cpu_min_cores=2, scope "0-50 users, all-in-one Docker deploy" (not general — Defect
+  Class #3). Not a NocoDB/Baserow dupe: those are held with no surviving refutation detail
+  in the archive, but Teable independently clears the bar on both demand (21.8k★, matches
+  miner) and sourceability (real official figure the miner itself missed — verifier found
+  it by checking `teableio/docs` directly rather than the `teable-deployment` repo alone).
 
 ## FIND #42 additions (2026-09-06)
 - Authelia (15/20) — authelia/authelia, 28.8k★ (live page fetch, not search-snippet),

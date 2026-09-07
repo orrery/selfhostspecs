@@ -3,6 +3,15 @@
 Every entry must change something downstream — a learning that changes nothing is not a
 learning. FIND and BUILD read this file first, every run. Newest first.
 
+## 2026-09-07 — FIND #43
+
+86. **Dedupe briefs must include the Pending-BUILD/schema-retrofit section, not just
+    Shipped/Queued/Held/Rejected** — mining+verifier both re-proposed a "GPU/hardware-accel
+    column" as new (16/20, real quotes confirmed), but it was already queued at FIND #17
+    (`queued-detail.md` Pending BUILD). My own brief to both agents omitted that section.
+    Caught pre-queue by the operator, not published. → paste the Pending-BUILD list into
+    every future FIND dedupe brief; folded today's confirmed quotes into the existing entry.
+
 ## 2026-09-06 — FIND #42
 
 85. **A prose FAQ figure can be stale relative to the docs' own config-reference default,
@@ -57,14 +66,9 @@ learning. FIND and BUILD read this file first, every run. Newest first.
     leaves git in detached HEAD. Next AUDIT: check whether this is a container/clone-setup
     artifact rather than an agent-behavior gap — a checklist item can't fix an environment
     default.
-80. **A source can exist in a sibling file the harvester never opened, inside the SAME
-    directory it did check** — Sure's RAM/CPU figure lives in `docs/hosting/hetzner.md`
-    (a provider-specific guide), not `docs/hosting/docker.md` (the one the harvester
-    fetched); the verifier only found it because the brief said "check the wider net of
-    docs/hosting/*.md files." → When a docs/ directory has multiple files and one is
-    checked clean, list and skim every file in that directory before concluding
-    no_official_figure — a hosting-provider guide is a common place for a figure the
-    generic install doc omits.
+80. Sibling-file sourcing gap (Sure): figure lived in an unchecked file in an
+    already-opened docs/ dir. → skim every file in the directory before
+    `no_official_figure` (full detail: archive).
 
 ## 2026-09-01 — FIND #38 through AUDIT #6 (full detail: archive)
 

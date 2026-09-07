@@ -44,29 +44,20 @@ Queued 08-22 after hitting byte ceiling again).
 - Stirling-PDF (16/20, #14) — community figure only (founder, GH#2945).
 - License (SPDX) column (14/20, #15, conditional) — never trust spdx_id alone.
 - Odoo CE (15/20, #18) — scoped rec only, never min (Wazuh precedent). PostgreSQL only dep.
-- Dokploy (18/20, #24) — Swarm: postgres+traefik+dokploy. Not a Coolify dupe. traefik has
-  no SERVICES enum slot (checked 08-23) — resolve before BUILD.
+- Dokploy (18/20, #24) — Swarm: postgres+traefik+dokploy; traefik has no SERVICES enum slot.
 - Mailu (17/20, #27) — Redis req; SQLite default. Differentiate vs docker-mailserver.
 - Penpot (16/20, #26) — postgres+valkey req; multi-image not yet harvested.
-- Langfuse (18/20, #31) — LLM observability/tracing, fills AI-stack gap next to Ollama/
-  open-webui. Official per-service min-reqs table (langfuse-docs scaling.mdx). 6-svc
-  compose (web+worker+postgres+clickhouse+redis+minio) — heaviest in queue, effort flag.
-- wg-easy (14/20, #31, marginal) — no_official_figure (confirmed absent incl. wiki).
-  deps:none, arm64 but host needs in-kernel WireGuard support — real deploy caveat, note
-  at BUILD. Weakest demand signal of the batch.
+- Langfuse (18/20, #31) — LLM observability, 6-svc compose, heaviest in queue (effort flag).
+- wg-easy (14/20, #31, marginal) — no_official_figure. Weakest demand signal of the batch.
 - Dify (16/20, #32) — README min figure, OR-modeled vector store; re-confirm quote at BUILD.
 - Stalwart (15/20, #33) — deps:none, RAM figure needs byte-verified re-fetch at BUILD.
-- Monica (15/20, #37) — personal CRM/PRM, not a Twenty dupe (sales CRM). no_official_figure;
-  deps mysql/mariadb req + redis optional (4.x docs, not docker README); image is Official
-  Image `monica` (NOT `monicahq/monica`); scope-pin to 4.x stable, not `main`/Chandler beta.
-- Linkding (16/20, #38) — bookmark manager, not a Linkwarden dupe. deps:none, SQLite
-  default (sourced). no_official_figure RAM/CPU (confirmed absent); real demand: 3 GH
-  issues on confused 7-8GB usage.
-- Authelia (15/20, #42) — lightweight SSO/2FA forward-auth portal (28.8k★, 81M+ Docker
-  pulls), pairs with shipped Nginx Proxy Manager/Pangolin; not a Keycloak/Authentik dupe
-  (different shape/weight). deps:none required (SQLite default; Redis/Postgres/MySQL
-  optional, compose-confirmed). RAM figure is a 3-way trap, not a clean no_official_figure
-  — full detail in queued-detail.md, BUILD must read it before harvesting.
+- Monica (15/20, #37) — personal CRM/PRM, not a Twenty dupe. Image is Official Image
+  `monica` (NOT `monicahq/monica`); scope-pin to 4.x stable.
+- Linkding (16/20, #38) — bookmark manager, not a Linkwarden dupe. no_official_figure.
+- Authelia (15/20, #42) — SSO/2FA forward-auth (28.8k★); RAM figure is a 3-way trap, full
+  detail in queued-detail.md, BUILD must read it before harvesting.
+- Teable (17/20, #43) — Airtable/spreadsheet-DB alt, 21.8k★, official Postgres+Redis
+  compose + official RAM/CPU figure (not a NocoDB/Baserow dupe — independently stronger).
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members, zero-incumbent
   SERP. BUILD: disclose required:false≠dependency-free (#3), write explicit inclusion
@@ -113,6 +104,12 @@ weakest). Full detail on all 5: reports/archive/held-log.md.
 - Budibase (#22): domain-blocked; second-hand rec figure only (detail: held-log.md).
 - Revolt/stoatchat (#22, ~2.3k★, alias-sweep flagged): deps-schema, MinIO unmapped, same
   as Ente (detail: held-log.md).
+- LibreNMS (~12/20, #43, 4.9k★): verifier fetched actual `librenms/librenms` docs/ source
+  directly — the "2 core/8GB RAM/100GB" figure a mirror attributed to it does NOT appear;
+  Example-Hardware-Setup page is crowd anecdote (2GB-256GB range), not prescriptive. Refuted.
+- GlitchTip (#43): sourcing excellent (official install doc, clean min/rec RAM) but only
+  163★/43 forks (GitLab API-confirmed) — below even Revolt's 2.3k held bar. Refuted on
+  coverage-value alone.
 
 ### Freshness work
 None crossing 90 days (oldest 07-24). Docker-size re-checks every AUDIT, not just the

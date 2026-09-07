@@ -114,3 +114,9 @@ tests/*.test.mjs for the live enforcement each of these graduated into.
   Pangolin, verifier caught via docs mirror) — never carry a blog's number, fetch the primary.
   Multiple compose files in a repo don't imply a DB-OR schema (Pangolin) — confirm which file
   the install docs actually reference before assuming an alternative-dependency shape.
+- FIND #39 (09-03), #80: a source can exist in a sibling file the harvester never opened,
+  inside the SAME directory it did check — Sure's RAM/CPU figure lived in
+  `docs/hosting/hetzner.md`, not `docs/hosting/docker.md` (the one fetched); the verifier
+  only found it because the brief said "check the wider net of docs/hosting/*.md files." →
+  When a docs/ directory has multiple files and one is checked clean, list and skim every
+  file in that directory before concluding no_official_figure.
