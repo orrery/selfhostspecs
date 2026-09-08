@@ -58,6 +58,10 @@ Queued 08-22 after hitting byte ceiling again).
   detail in queued-detail.md, BUILD must read it before harvesting.
 - Teable (17/20, #43) — Airtable/spreadsheet-DB alt, 21.8k★, official Postgres+Redis
   compose + official RAM/CPU figure (not a NocoDB/Baserow dupe — independently stronger).
+- Postiz (17/20, #44) — social-media scheduler, new category, 35.6k★. Official RAM 2GB min/
+  8GB rec, CPU 2/4 vCPU (postiz-docs system-requirements.mdx). Deps: postgres+redis (native,
+  required) PLUS temporal+its-own-2nd-postgres+elasticsearch (required since v2.12.0, not
+  bundled/optional — verify enum slots at BUILD). Heaviest queue item (7-9 containers).
 ## Collection page, verified — buildable
 - "Apps with no separate DB/cache service required" (#8-10) — 14 members, zero-incumbent
   SERP. BUILD: disclose required:false≠dependency-free (#3), write explicit inclusion

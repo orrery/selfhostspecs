@@ -38,6 +38,12 @@ tests/*.test.mjs for the live enforcement each of these graduated into.
   defect classes, but a later cross-session pass found real defects on 3 of 4; the gap that
   caught them was time+fresh-context, not agent identity. Now structural: unattended builds are
   `pending-second-qa` until a later run re-QAs with fresh eyes (applied correctly 08-09).
+- A `required:true` dep can hide a legitimate embedded/self-managed fallback the harvester
+  never checked for (Coder's Postgres, #74, 08-30): docs also documented a "Built-in database
+  (quick)" embedded-postgres path, POC-scoped, no external container, unnoted on the entry —
+  not a wrong figure, a missing note. → before filing any `required:true` dep, grep the same
+  source (and the binary's own flags/env vars) for an embedded/quick-start variant; add a
+  `note` (homebox/NPM precedent) even when it doesn't change `required`. Standard practice since.
 - A dep's `required` value is scoped to the specific install path the entry documents, same as
   `scope` — cite evidence from the documented path, not a different one, even when both exist
   officially (Linkwarden/meilisearch).

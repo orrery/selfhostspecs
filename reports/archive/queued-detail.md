@@ -211,6 +211,30 @@ LEARNINGS #62, shipped/rejected-log split). BUILD reads this file before harvest
   its own README ("This branch is in development... see the 4.x branch" for stable) — the
   Official Image builds from 4.x/stable, so pin every citation to the 4.x branch, never main.
 
+## FIND #44 additions (2026-09-08)
+- Postiz (17/20) — gitroomhq/postiz-app, 35,618★/6,798 forks (GitHub API, independently
+  confirmed by verifier), created 2023-07-08 — sustained ~935★/month over 3+ years, not a
+  hype spike. AGPL-3.0. Self-hosted social-media scheduler (X/LinkedIn/Reddit/Mastodon/
+  Discord/Threads/Facebook/YouTube/TikTok/Pinterest/etc.) — new category, no existing
+  entry overlaps (Mastodon is only a posting target, not a dupe). Official RAM/CPU/disk
+  figure exists (harvester's first grep missed it — LEARNINGS #87 — verifier found it):
+  `gitroomhq/postiz-docs`, `self-host/installation/system-requirements.mdx`, retrieved
+  2026-09-08, verbatim: "CPU | 2 vCPU | 4 vCPU", "RAM | 2 GB (all-in-one, light use) | 8 GB",
+  "Disk | 20 GB | 50 GB + persistent volume for uploads" — scope: "small team (≤20 users)";
+  page also states 2GB/2vCPU is single-user-only, "multiple users or scheduled workflows...
+  plan for 4 GB or more." Deps (Defect Class #12, bundled-vs-external): Postiz-native
+  (required) = PostgreSQL 14+ (`postgres:17-alpine`), Redis 6+ (`redis:7.2`). Temporal
+  sub-stack (required since v2.12.0, confirmed current via `@temporalio/*` direct deps +
+  30+ files under `apps/orchestrator/`, NOT vestigial/optional) = Temporal server
+  (`temporalio/auto-setup:1.28.1`), a SECOND separate PostgreSQL instance dedicated to
+  Temporal (`postgres:16` — do not conflate with Postiz's own Postgres), Elasticsearch
+  (`elasticsearch:7.17.27`, Temporal visibility/search). Optional/not required to run:
+  `temporal-admin-tools`, `temporal-ui`, `spotlight` (Sentry). Image: `ghcr.io/gitroomhq/
+  postiz-app` — confirm `:latest` tag actually resolves at BUILD (Defect Class #14).
+  Official install path is the separate `gitroomhq/postiz-docker-compose` repo (not the
+  app repo's own compose file — both exist and match). Org npm namespace `@gitroom/*` is
+  internal monorepo naming only, not a former product identity — no rebrand, no dedupe risk.
+
 ## FIND #39 additions (2026-09-03)
 - Sure (17/20) — we-promise/sure, 9.7k★, personal finance/wealth-tracking app, active
   community fork of the archived Maybe Finance (rejected FIND #38 09-02 as dead upstream;
