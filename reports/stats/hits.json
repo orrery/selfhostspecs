@@ -2,43 +2,12 @@
   "hits": [
     {
       "count": 1,
-      "path_id": 106197850,
-      "path": "/apps/nginx-proxy-manager",
+      "path_id": 106287763,
+      "path": "/apps/node-red",
       "event": false,
-      "title": "Nginx Proxy Manager system requirements — RAM, CPU, dependencies | SelfhostSpecs",
+      "title": "Node-RED system requirements — RAM, CPU, dependencies | SelfhostSpecs",
       "max": 1,
       "stats": [
-        {
-          "day": "2026-09-02",
-          "hourly": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "daily": 0,
-          "monthly": 1
-        },
         {
           "day": "2026-09-03",
           "hourly": [
@@ -67,7 +36,8 @@
             0,
             0
           ],
-          "daily": 0
+          "daily": 0,
+          "monthly": 1
         },
         {
           "day": "2026-09-04",
@@ -221,6 +191,36 @@
         },
         {
           "day": "2026-09-09",
+          "hourly": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "daily": 0
+        },
+        {
+          "day": "2026-09-10",
           "hourly": [
             0,
             0,
@@ -251,16 +251,16 @@
           "weekly": 1
         },
         {
-          "day": "2026-09-10",
+          "day": "2026-09-11",
           "hourly": [
             0,
             0,
             0,
             0,
             0,
-            0,
-            0,
             1,
+            0,
+            0,
             0,
             0,
             0,
@@ -284,44 +284,12 @@
     },
     {
       "count": 1,
-      "path_id": 105490516,
-      "path": "/apps/homebox",
+      "path_id": 106197850,
+      "path": "/apps/nginx-proxy-manager",
       "event": false,
-      "title": "Homebox system requirements — RAM, CPU, dependencies | SelfhostSpecs",
+      "title": "Nginx Proxy Manager system requirements — RAM, CPU, dependencies | SelfhostSpecs",
       "max": 1,
       "stats": [
-        {
-          "day": "2026-09-02",
-          "hourly": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            1,
-            0,
-            0
-          ],
-          "daily": 1,
-          "weekly": 1,
-          "monthly": 1
-        },
         {
           "day": "2026-09-03",
           "hourly": [
@@ -350,7 +318,8 @@
             0,
             0
           ],
-          "daily": 0
+          "daily": 0,
+          "monthly": 1
         },
         {
           "day": "2026-09-04",
@@ -534,6 +503,37 @@
         },
         {
           "day": "2026-09-10",
+          "hourly": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "daily": 1,
+          "weekly": 1
+        },
+        {
+          "day": "2026-09-11",
           "hourly": [
             0,
             0,
